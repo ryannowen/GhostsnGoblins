@@ -95,11 +95,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GravityScale: 4
-  m_JumpForce: 7
+  m_JumpForce: 12
   m_MovementSpeed: 5
-  m_LayerMask:
+  m_ClimbingSpeed: 3
+  m_Grounded: 0
+  m_Jump: 0
+  m_Climbing: 0
+  m_MovingLeft: 0
+  m_MovingRight: 0
+  m_GroundCheckLayerMask:
     serializedVersion: 2
     m_Bits: 55
+  m_LadderCheckLayerMask:
+    serializedVersion: 2
+    m_Bits: 567
 --- !u!50 &1999879989
 Rigidbody2D:
   serializedVersion: 4
@@ -135,5 +144,5 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.28, y: 2.56}
+  m_Size: {x: 1, y: 2}
   m_Direction: 0

@@ -5,11 +5,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public float m_GravityScale = 4f, m_JumpForce = 7f, m_MovementSpeed = 5f;
+    public float m_GravityScale = 4f, m_JumpForce = 7f, m_MovementSpeed = 5f, m_ClimbingSpeed = 3f;
     Vector3 m_DesiredMove = Vector3.zero;
-    bool m_Grounded, m_Jump, m_MovingLeft = false, m_MovingRight = false;
+    public bool m_Grounded = false, m_Jump = false, m_Climbing = false, m_MovingLeft = false, m_MovingRight = false;
 
-    public LayerMask m_LayerMask;
+    public LayerMask m_GroundCheckLayerMask;
+    public LayerMask m_LadderCheckLayerMask;
 
     Rigidbody2D m_Rigidbody;
     CapsuleCollider2D m_PlayerCollider;
@@ -51,6 +52,9 @@ public class PlayerMovement : MonoBehaviour
 
         GetInput();
         CheckGroundedState();
+
+        CheckClimbingState();
+        ManageClimbingSettings();
 
         CheckForJump();
         m_DesiredMove = GetDesiredMove();
@@ -105,6 +109,17 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.D))
             m_MovingRight = false;
 
+        // Ladder Movement
+        if (m_Climbing) 
+        {
+
+            if (Input.GetKey(KeyCode.W))
+                m_MovingLeft = true;
+            if (Input.GetKey(KeyCode.S))
+                m_MovingRight = true;
+
+        }
+
     }
 
     Vector3 GetDesiredMove()
@@ -112,20 +127,48 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 velocity = Vector3.zero;
 
-        if (m_MovingLeft)
+        if (Input.GetKey(KeyCode.A))
         {
 
             velocity -= Vector3.right;
 
         }
-        if (m_MovingRight)
+        if (Input.GetKey(KeyCode.D))
         {
 
             velocity += Vector3.right;
 
         }
 
-        velocity.y = m_Rigidbody.velocity.y;
+        if (m_Climbing)
+        {
+
+            if (Input.GetKey(KeyCode.W))
+            {
+
+                velocity += Vector3.up;
+
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+
+                velocity -= Vector3.up;
+
+            }
+
+            if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S)) {
+
+                //velocity -= Vector3.up;
+
+            }
+
+        }
+
+        if (!m_Climbing)
+            velocity.y = m_Rigidbody.velocity.y;
+        else
+            velocity.y *= m_ClimbingSpeed;
+
         velocity.x *= m_MovementSpeed;
 
         return velocity;
@@ -135,7 +178,7 @@ public class PlayerMovement : MonoBehaviour
     void CheckGroundedState()
     {
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, m_LayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, m_GroundCheckLayerMask);
 
         //Debug.DrawRay(transform.position, Vector3.down * (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, Color.red);
 
@@ -143,6 +186,64 @@ public class PlayerMovement : MonoBehaviour
             m_Grounded = true;
         else
             m_Grounded = false;
+
+    }
+
+    void CheckClimbingState() {
+
+        //RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.down * m_PlayerCollider.size.y / 2, Vector3.forward, Mathf.Infinity, m_LadderCheckLayerMask);
+
+        //RaycastHit2D hit = Physics2D.CapsuleCast(transform.position, m_PlayerCollider.size, CapsuleDirection2D.Vertical, 0, Vector3.forward, Mathf.Infinity, m_LadderCheckLayerMask);
+
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, m_PlayerCollider.size, 0, Vector3.forward, Mathf.Infinity, m_LadderCheckLayerMask);
+
+        if (hit)
+        {
+
+            if (hit.collider.gameObject.tag == "Ladder")
+            {
+
+                m_Climbing = true;
+
+            }
+            else
+            {
+
+                m_Climbing = false;
+
+            }
+
+        }
+        else 
+        {
+
+            m_Climbing = false;
+
+        }
+
+    }
+
+    void ManageClimbingSettings() {
+
+        if (m_Climbing)
+        {
+
+            m_Rigidbody.gravityScale = 0f;
+            m_Grounded = false;
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                m_Jump = true;
+                m_Climbing = false;
+            }
+
+        }
+        else
+        {
+
+            m_Rigidbody.gravityScale = 4f;
+
+        }
 
     }
 
