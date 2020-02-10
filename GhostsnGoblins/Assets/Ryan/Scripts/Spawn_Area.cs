@@ -8,7 +8,6 @@ public class Spawn_Area : MonoBehaviour
     [System.Serializable]
     struct SSpawnObject
     {
-        public string prefabName;
         public GameObject item;
         public int amount;
 
@@ -16,39 +15,37 @@ public class Spawn_Area : MonoBehaviour
         public int spawnChance;
     }
 
-    [SerializeField] private SSpawnObject[] objects;
-    private BoxCollider2D collider;
+    [SerializeField] private SSpawnObject[] objects = null;
+    private BoxCollider2D boxCollider;
 
-    // Start is called before the first frame update
+    // Start is called before the firsst frame update
     void Start()
     {
-        collider = GetComponent<BoxCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
 
-        for (int i = 0; i < objects.Length; i++)
-            System_Spawn.instance.CreatePool(objects[i].prefabName, objects[i].item, objects[i].amount);
+        for (int i = 0; i < objects.GetLength(0); i++)
+            System_Spawn.instance.CreatePool(objects[i].item.name, objects[i].item, objects[i].amount);
 
-        for (int i = 0; i < objects.Length; i++)
+        for (int i = 0; i < objects.GetLength(0); i++)
         {
-            int chance = 100 - Random.Range(0, 100);
-            if (chance < objects[i].spawnChance)
+            for (int j = 0; j < objects[i].amount; j++)
             {
-                Debug.Log(chance);
-                continue;
+                int chance = Random.Range(1, 100);
+                if (chance >= objects[i].spawnChance || objects[i].spawnChance == 100)
+                {
+                    GameObject gameObject = System_Spawn.instance.GetObjectFromPool(objects[i].item.name);
+                    if (gameObject == null)
+                    {
+                        Debug.LogError("Cannot spawn object, spawn system returned null");
+                        return;
+                    }
+
+                    gameObject.SetActive(true);
+
+                    Vector2 newPosition = new Vector2((int)Random.Range(boxCollider.bounds.min.x, boxCollider.bounds.max.x), (int)Random.Range(boxCollider.bounds.min.y, boxCollider.bounds.max.y));
+                    gameObject.transform.position = newPosition;
+                }
             }
-
-            GameObject gameObject = System_Spawn.instance.GetObjectFromPool(objects[i].prefabName);
-            if (gameObject == null)
-            {
-                Debug.Log("Bloop");
-                return;
-            }
-
-            gameObject.SetActive(true);
-
-            Vector2 newPosition = new Vector2(Random.Range(collider.bounds.min.x, collider.bounds.max.x), Random.Range(collider.bounds.min.y, collider.bounds.max.y));
-            gameObject.transform.position = newPosition;
-
-            Debug.Log("Spawned " + objects[i].prefabName);
         }
     }
 

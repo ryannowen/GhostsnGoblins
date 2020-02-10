@@ -44,6 +44,7 @@ public class System_Spawn : MonoBehaviour
             {
                 gameobject = Instantiate(argGameObject, transform);
                 objectPool[argKey].Enqueue(gameobject);
+
                 gameobject.SetActive(false);
             }
         }
@@ -54,25 +55,29 @@ public class System_Spawn : MonoBehaviour
             {
                 gameobject = Instantiate(argGameObject, transform);
                 newQueue.Enqueue(gameobject);
+
                 gameobject.SetActive(false);
             }
+
             objectPool.Add(argKey, newQueue);
         }
-
-        Debug.Log("Size = " + objectPool[argKey].Count);
     }
 
     public GameObject GetObjectFromPool(string argKey)
     {
         if(objectPool.ContainsKey(argKey))
         {
-            if (!objectPool[argKey].Peek().activeSelf)
+            if (objectPool[argKey].Peek().activeSelf)
             {
                 Debug.LogWarning("All objects in queue are active");
                 return null;
             }
 
-            return objectPool[argKey].Dequeue().gameObject;
+            GameObject gameObject = objectPool[argKey].Dequeue().gameObject;
+            objectPool[argKey].Enqueue(gameObject);
+            gameObject.SetActive(true);
+
+            return gameObject;
 
         }
         else
