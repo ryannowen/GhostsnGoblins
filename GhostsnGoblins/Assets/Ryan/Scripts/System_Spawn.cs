@@ -70,7 +70,6 @@ public class System_Spawn : MonoBehaviour
             if (objectPool[argGameObject.name].Peek().activeSelf)
             {
                 Debug.LogWarning("All objects in queue are active");
-                return null;
             }
 
             GameObject gameObject = objectPool[argGameObject.name].Dequeue().gameObject;
