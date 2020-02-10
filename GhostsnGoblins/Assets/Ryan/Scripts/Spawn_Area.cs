@@ -10,6 +10,7 @@ public class Spawn_Area : MonoBehaviour
     {
         public GameObject item;
         public int amount;
+        public bool spawnstate;
 
         [Range(0, 100)]
         public int spawnChance;
@@ -24,7 +25,7 @@ public class Spawn_Area : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
 
         for (int i = 0; i < objects.GetLength(0); i++)
-            System_Spawn.instance.CreatePool(objects[i].item, objects[i].amount);
+            System_Spawn.instance.CreatePool(objects[i].item, objects[i].amount, objects[i].spawnstate);
 
         for (int i = 0; i < objects.GetLength(0); i++)
         {

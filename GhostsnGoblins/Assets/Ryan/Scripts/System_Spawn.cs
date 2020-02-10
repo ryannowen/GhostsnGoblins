@@ -78,7 +78,6 @@ public class System_Spawn : MonoBehaviour
             gameObject.SetActive(true);
             gameObject.GetComponent<ISpawn>().OnSpawn();
    
-            Camera.
             return gameObject;
 
         }
