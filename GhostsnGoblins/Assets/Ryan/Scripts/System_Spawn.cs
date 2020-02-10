@@ -63,18 +63,18 @@ public class System_Spawn : MonoBehaviour
         }
     }
 
-    public GameObject GetObjectFromPool(string argKey)
+    public GameObject GetObjectFromPool(GameObject argGameObject)
     {
-        if(objectPool.ContainsKey(argKey))
+        if(objectPool.ContainsKey(argGameObject.name))
         {
-            if (objectPool[argKey].Peek().activeSelf)
+            if (objectPool[argGameObject.name].Peek().activeSelf)
             {
                 Debug.LogWarning("All objects in queue are active");
                 return null;
             }
 
-            GameObject gameObject = objectPool[argKey].Dequeue().gameObject;
-            objectPool[argKey].Enqueue(gameObject);
+            GameObject gameObject = objectPool[argGameObject.name].Dequeue().gameObject;
+            objectPool[argGameObject.name].Enqueue(gameObject);
             gameObject.SetActive(true);
 
             return gameObject;

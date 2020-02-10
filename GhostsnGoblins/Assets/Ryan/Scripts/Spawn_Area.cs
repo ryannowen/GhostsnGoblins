@@ -24,7 +24,7 @@ public class Spawn_Area : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
 
         for (int i = 0; i < objects.GetLength(0); i++)
-            System_Spawn.instance.CreatePool(objects[i].item.name, objects[i].item, objects[i].amount);
+            System_Spawn.instance.CreatePool(objects[i].item, objects[i].amount);
 
         for (int i = 0; i < objects.GetLength(0); i++)
         {
@@ -33,7 +33,7 @@ public class Spawn_Area : MonoBehaviour
                 int chance = Random.Range(1, 100);
                 if (chance >= objects[i].spawnChance || objects[i].spawnChance == 100)
                 {
-                    GameObject gameObject = System_Spawn.instance.GetObjectFromPool(objects[i].item.name);
+                    GameObject gameObject = System_Spawn.instance.GetObjectFromPool(objects[i].item);
                     if (gameObject == null)
                     {
                         Debug.LogError("Cannot spawn object, spawn system returned null");
