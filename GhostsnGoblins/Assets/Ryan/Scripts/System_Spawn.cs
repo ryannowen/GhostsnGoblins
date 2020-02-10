@@ -34,7 +34,7 @@ public class System_Spawn : MonoBehaviour
         
     }
 
-    public void CreatePool(GameObject argGameObject, int argAmount)
+    public void CreatePool(GameObject argGameObject, int argAmount, bool argActive)
     {
         GameObject gameobject;
 
@@ -45,7 +45,7 @@ public class System_Spawn : MonoBehaviour
                 gameobject = Instantiate(argGameObject, transform);
                 objectPool[argGameObject.name].Enqueue(gameobject);
 
-                gameobject.SetActive(false);
+                gameobject.SetActive(argActive);
             }
         }
         else
@@ -56,7 +56,7 @@ public class System_Spawn : MonoBehaviour
                 gameobject = Instantiate(argGameObject, transform);
                 newQueue.Enqueue(gameobject);
 
-                gameobject.SetActive(false);
+                gameobject.SetActive(argActive);
             }
 
             objectPool.Add(argGameObject.name, newQueue);
@@ -77,7 +77,8 @@ public class System_Spawn : MonoBehaviour
             objectPool[argGameObject.name].Enqueue(gameObject);
             gameObject.SetActive(true);
             gameObject.GetComponent<ISpawn>().OnSpawn();
-
+   
+            Camera.
             return gameObject;
 
         }
