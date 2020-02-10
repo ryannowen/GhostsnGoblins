@@ -34,16 +34,16 @@ public class System_Spawn : MonoBehaviour
         
     }
 
-    public void CreatePool(string argKey, GameObject argGameObject, int argAmount)
+    public void CreatePool(GameObject argGameObject, int argAmount)
     {
         GameObject gameobject;
 
-        if (objectPool.ContainsKey(argKey))
+        if (objectPool.ContainsKey(argGameObject.name))
         {
             for (int i = 0; i < argAmount; i++)
             {
                 gameobject = Instantiate(argGameObject, transform);
-                objectPool[argKey].Enqueue(gameobject);
+                objectPool[argGameObject.name].Enqueue(gameobject);
 
                 gameobject.SetActive(false);
             }
@@ -59,7 +59,7 @@ public class System_Spawn : MonoBehaviour
                 gameobject.SetActive(false);
             }
 
-            objectPool.Add(argKey, newQueue);
+            objectPool.Add(argGameObject.name, newQueue);
         }
     }
 
