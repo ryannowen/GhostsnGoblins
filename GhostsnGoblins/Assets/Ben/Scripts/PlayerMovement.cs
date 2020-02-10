@@ -151,13 +151,6 @@ public class PlayerMovement : MonoBehaviour, ISpawn
             m_Rigidbody.gravityScale = 0f;
             m_Grounded = false;
 
-            // If the player jumps disable climbing
-            if (Input.GetAxis("Jump") > 0)
-            {
-                m_Jump = true;
-                m_Climbing = false;
-            }
-
         }
         else
         {
