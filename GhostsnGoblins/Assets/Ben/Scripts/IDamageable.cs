@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Interface_Damage
+public interface IDamageable
 {
 
-    void TakeDamage();
+    void TakeDamage(int amount);
 
 }
