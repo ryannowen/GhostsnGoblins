@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, ISpawn
 {
 
     public float m_GravityScale = 4f, m_JumpForce = 7f, m_MovementSpeed = 5f, m_ClimbingSpeed = 3f;
     Vector3 m_DesiredMove = Vector3.zero;
-    public bool m_Grounded = false, m_Jump = false, m_Climbing = false, m_MovingLeft = false, m_MovingRight = false;
+    public bool m_Grounded = false, m_Jump = false, m_Climbing = false;
 
     public LayerMask m_GroundCheckLayerMask;
-    public LayerMask m_LadderCheckLayerMask;
 
     Rigidbody2D m_Rigidbody;
     CapsuleCollider2D m_PlayerCollider;
@@ -19,7 +18,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
 
-
+        // Find the rigidbody and store a reference to it
+        // If no rigidbody is found, create one and store a reference to it
         if (GetComponent<Rigidbody2D>())
         {
             m_Rigidbody = GetComponent<Rigidbody2D>();
@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Find capsule collider and store a reference to it
-        // If there no capsule collider is found, create one and store a reference to it
+        // If no capsule collider is found, create one and store a reference to it
         if (GetComponent<CapsuleCollider2D>())
         {
             m_PlayerCollider = GetComponent<CapsuleCollider2D>();
@@ -50,13 +50,17 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        GetInput();
+        // Check if the player is grounded
         CheckGroundedState();
 
-        CheckClimbingState();
+        // Manage player settings for climbing ladders
         ManageClimbingSettings();
 
-        CheckForJump();
+        // Check if the player wants to jump
+        if (Input.GetAxis("Jump") > 0 && m_Grounded)
+            m_Jump = true;
+
+        // Get the desired movement direction
         m_DesiredMove = GetDesiredMove();
 
     }
@@ -64,11 +68,14 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
 
+        // Lerp the player velocity to the desired movement direction
         m_Rigidbody.velocity = Vector3.Lerp(m_Rigidbody.velocity, m_DesiredMove, 0.25f);
 
+        // Check if the player should jump and apply velocity
         if (m_Jump)
             m_Rigidbody.velocity = Vector2.Lerp(m_Rigidbody.velocity, new Vector2(m_Rigidbody.velocity.x, m_JumpForce), 1f);
 
+        // Set the player jump to false
         m_Jump = false;
 
     }
@@ -96,73 +103,21 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void GetInput()
-    {
-
-        if (Input.GetKey(KeyCode.A))
-            m_MovingLeft = true;
-        if (Input.GetKey(KeyCode.D))
-            m_MovingRight = true;
-
-        if (Input.GetKeyUp(KeyCode.A))
-            m_MovingLeft = false;
-        if (Input.GetKeyUp(KeyCode.D))
-            m_MovingRight = false;
-
-        // Ladder Movement
-        if (m_Climbing) 
-        {
-
-            if (Input.GetKey(KeyCode.W))
-                m_MovingLeft = true;
-            if (Input.GetKey(KeyCode.S))
-                m_MovingRight = true;
-
-        }
-
-    }
-
     Vector3 GetDesiredMove()
     {
 
         Vector3 velocity = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.A))
-        {
-
-            velocity -= Vector3.right;
-
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-
-            velocity += Vector3.right;
-
-        }
+        velocity.x += Input.GetAxis("Horizontal");
 
         if (m_Climbing)
         {
 
-            if (Input.GetKey(KeyCode.W))
-            {
-
-                velocity += Vector3.up;
-
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-
-                velocity -= Vector3.up;
-
-            }
-
-            if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S)) {
-
-                //velocity -= Vector3.up;
-
-            }
+            velocity.y += Input.GetAxis("Vertical");
 
         }
+
+        velocity.Normalize();
 
         if (!m_Climbing)
             velocity.y = m_Rigidbody.velocity.y;
@@ -180,8 +135,6 @@ public class PlayerMovement : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, m_GroundCheckLayerMask);
 
-        //Debug.DrawRay(transform.position, Vector3.down * (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, Color.red);
-
         if (hit)
             m_Grounded = true;
         else
@@ -189,49 +142,17 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void CheckClimbingState() {
-
-        //RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.down * m_PlayerCollider.size.y / 2, Vector3.forward, Mathf.Infinity, m_LadderCheckLayerMask);
-
-        //RaycastHit2D hit = Physics2D.CapsuleCast(transform.position, m_PlayerCollider.size, CapsuleDirection2D.Vertical, 0, Vector3.forward, Mathf.Infinity, m_LadderCheckLayerMask);
-
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, m_PlayerCollider.size, 0, Vector3.forward, Mathf.Infinity, m_LadderCheckLayerMask);
-
-        if (hit)
-        {
-
-            if (hit.collider.gameObject.tag == "Ladder")
-            {
-
-                m_Climbing = true;
-
-            }
-            else
-            {
-
-                m_Climbing = false;
-
-            }
-
-        }
-        else 
-        {
-
-            m_Climbing = false;
-
-        }
-
-    }
-
     void ManageClimbingSettings() {
 
+        // Check if the player is climbing
         if (m_Climbing)
         {
 
             m_Rigidbody.gravityScale = 0f;
             m_Grounded = false;
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            // If the player jumps disable climbing
+            if (Input.GetAxis("Jump") > 0)
             {
                 m_Jump = true;
                 m_Climbing = false;
@@ -247,11 +168,24 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void CheckForJump()
+    public void SetClimbingState(bool state)
     {
 
-        if (Input.GetKey(KeyCode.Space) && m_Grounded)
-            m_Jump = true;
+        m_Climbing = state;
+
+    }
+
+    public void OnSpawn()
+    {
+
+
+
+    }
+
+    public void OnDeSpawn()
+    {
+
+
 
     }
 

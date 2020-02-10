@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8797055893074808123}
   - component: {fileID: 728479301884021639}
   - component: {fileID: 7934348026057928016}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prefab_Spawner_Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
