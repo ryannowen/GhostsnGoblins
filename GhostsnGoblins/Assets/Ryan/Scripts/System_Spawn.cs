@@ -6,8 +6,6 @@ public class System_Spawn : MonoBehaviour
 {
     public static System_Spawn instance;
 
-    [SerializeField] public int test = 10;
-
     Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>(); 
 
     private void Awake()
@@ -22,30 +20,18 @@ public class System_Spawn : MonoBehaviour
             Destroy(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void CreatePool(GameObject argGameObject, int argAmount, bool argActive)
     {
-        GameObject gameobject;
+        GameObject newGameObject;
 
         if (objectPool.ContainsKey(argGameObject.name))
         {
             for (int i = 0; i < argAmount; i++)
             {
-                gameobject = Instantiate(argGameObject, transform);
-                objectPool[argGameObject.name].Enqueue(gameobject);
+                newGameObject = Instantiate(argGameObject, transform);
+                objectPool[argGameObject.name].Enqueue(newGameObject);
 
-                gameobject.SetActive(argActive);
+                newGameObject.SetActive(argActive);
             }
         }
         else
@@ -53,31 +39,31 @@ public class System_Spawn : MonoBehaviour
             Queue<GameObject> newQueue = new Queue<GameObject>();
             for (int i = 0; i < argAmount; i++)
             {
-                gameobject = Instantiate(argGameObject, transform);
-                newQueue.Enqueue(gameobject);
+                newGameObject = Instantiate(argGameObject, transform);
+                newQueue.Enqueue(newGameObject);
 
-                gameobject.SetActive(argActive);
+                newGameObject.SetActive(argActive);
             }
 
             objectPool.Add(argGameObject.name, newQueue);
         }
     }
 
-    public GameObject GetObjectFromPool(GameObject argGameObject)
+    public GameObject GetObjectFromPool(GameObject argGameObject, bool argIgnoreAllActiveCheck = false)
     {
         if(objectPool.ContainsKey(argGameObject.name))
         {
-            if (objectPool[argGameObject.name].Peek().activeSelf)
+            if (objectPool[argGameObject.name].Peek().activeSelf && !argIgnoreAllActiveCheck)
             {
                 Debug.LogWarning("All objects in queue are active");
             }
 
-            GameObject gameObject = objectPool[argGameObject.name].Dequeue().gameObject;
-            objectPool[argGameObject.name].Enqueue(gameObject);
-            gameObject.SetActive(true);
-            gameObject.GetComponent<ISpawn>().OnSpawn();
+            GameObject poolObject = objectPool[argGameObject.name].Dequeue().gameObject;
+            objectPool[argGameObject.name].Enqueue(poolObject);
+            poolObject.SetActive(true);
+            poolObject.GetComponent<ISpawn>().OnSpawn();
    
-            return gameObject;
+            return poolObject;
 
         }
         else
