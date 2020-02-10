@@ -76,6 +76,7 @@ public class System_Spawn : MonoBehaviour
             GameObject gameObject = objectPool[argGameObject.name].Dequeue().gameObject;
             objectPool[argGameObject.name].Enqueue(gameObject);
             gameObject.SetActive(true);
+            gameObject.GetComponent<ISpawn>().OnSpawn();
 
             return gameObject;
 

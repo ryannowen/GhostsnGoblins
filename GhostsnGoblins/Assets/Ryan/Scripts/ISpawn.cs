@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Interface_Spawn
+public interface ISpawn
 {
     void OnSpawn();
 
