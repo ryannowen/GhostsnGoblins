@@ -6,14 +6,14 @@ using UnityEngine;
 public class Spawn_Area : MonoBehaviour
 {
     [System.Serializable]
-    struct SSpawnObject
+    class SSpawnObject
     {
-        public GameObject item;
-        public int amount;
-        public bool spawnstate;
+        public GameObject item = null;
+        public int amount = 0;
+        public bool spawnstate = false;
 
         [Range(0, 100)]
-        public int spawnChance;
+        public int spawnChance = 0;
     }
 
     [SerializeField] private SSpawnObject[] objects = null;
