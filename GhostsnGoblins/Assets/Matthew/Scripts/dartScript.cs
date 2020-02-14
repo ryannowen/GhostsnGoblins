@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class dartScript : MonoBehaviour, ISpawn {
 
-    [SerializeField] private float dartSpeed;
+    private float dartSpeed = 5;
+    private int dartDamage = 1;
 
     // Start is called before the first frame update
     void Start() {
-        dartSpeed = 5;
+
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
@@ -32,5 +33,13 @@ public class dartScript : MonoBehaviour, ISpawn {
 
     public void OnDeSpawn() {
 
+    }
+
+    public void setDartSpeed(float dSpeed) {
+        dartSpeed = dSpeed;
+    }
+
+    public void setDartDamage(int dDamage) {
+        dartDamage = dDamage;
     }
 }

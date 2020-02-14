@@ -71,7 +71,6 @@ public class ZombieAI : MonoBehaviour
             }
             Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z);
         }
-        print(speed);
     }
 
 }
