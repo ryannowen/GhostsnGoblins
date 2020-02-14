@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class dartTrapScript : MonoBehaviour {
 
-    [SerializeField] private GameObject dartObj;
+    [SerializeField] private GameObject dartObj = null;
     [SerializeField] private bool canSpawnPart;
 
     // Start is called before the first frame update
