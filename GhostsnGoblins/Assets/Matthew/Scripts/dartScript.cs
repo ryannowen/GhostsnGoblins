@@ -8,13 +8,13 @@ public class dartScript : MonoBehaviour, ISpawn {
 
     // Start is called before the first frame update
     void Start() {
-        dartSpeed = 0.1f;
+        dartSpeed = 5;
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.tag == "Player") {
-            // Take health from the player here.
-            col.gameObject.GetComponent<PlayerController>().TakeDamage(1);
+            // Call the TakeDamage function from IDamageable interface here.
+            col.gameObject.GetComponent<IDamageable>().TakeDamage(1);
 
             // Destroy the game object.
             gameObject.SetActive(false);
@@ -23,7 +23,7 @@ public class dartScript : MonoBehaviour, ISpawn {
 
     // Update is called once per frame
     void Update() {
-        transform.position += (transform.up * dartSpeed);
+        transform.position += (transform.up * dartSpeed) * Time.deltaTime;
     }
 
     public void OnSpawn() {

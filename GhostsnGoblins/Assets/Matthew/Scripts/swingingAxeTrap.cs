@@ -9,23 +9,23 @@ public class swingingAxeTrap : MonoBehaviour {
     [Range(-1, 1)] [SerializeField] private float rightRotationCap;
     [SerializeField] private float velThresh;
 
-    private int axeDamage;
+    [SerializeField] private int axeDamage;
 
-    // Start is called before the first frame update
-    void Start() {
+	// Start is called before the first frame update
+	void Start() {
         rb2D = gameObject.GetComponent<Rigidbody2D>();
 
         leftRotationCap = -0.4f;
         rightRotationCap = 0.4f;
         velThresh = 120;
-        axeDamage = 0;
+        axeDamage = 1;
 
         rb2D.angularVelocity = velThresh;
     }
 
     void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.tag == "Player") {
-            col.gameObject.GetComponent<PlayerController>().TakeDamage(1);
+            col.gameObject.GetComponent<IDamageable>().TakeDamage(axeDamage);
         }
     }
 
