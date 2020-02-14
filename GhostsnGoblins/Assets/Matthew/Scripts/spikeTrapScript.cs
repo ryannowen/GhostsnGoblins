@@ -11,6 +11,8 @@ public class spikeTrapScript : MonoBehaviour {
 	private bool hasTriggered;
 
 	[SerializeField] private float trapSpeed;
+    [SerializeField] private float trapTriggerDelay;
+    [SerializeField] private float trapResetDelay;
 	[SerializeField] private int spikeTrapDamage;
 
     // Start is called before the first frame update
@@ -22,6 +24,8 @@ public class spikeTrapScript : MonoBehaviour {
         hasTriggered = false;
 		trapSpeed = 12;
 		spikeTrapDamage = 1;
+        trapTriggerDelay = 0.2f;
+        trapResetDelay = 2;
     }
 
     void resizeTrapCollider(BoxCollider2D bCol) {
@@ -34,18 +38,10 @@ public class spikeTrapScript : MonoBehaviour {
 		bCol.offset = originalTriggerOffset;
 	}
 
-	void OnTriggerStay2D(Collider2D col) {
-		if (col.gameObject.tag == "Player") {
-			
-		}
-	}
-
     void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.tag == "Player") {
 			if (!hasTriggered) {
-				hasTriggered = true;
-				resizeTrapCollider(this.gameObject.GetComponent<BoxCollider2D>());
-				StartCoroutine(resetSpikeCollider(2.0f, this.gameObject.GetComponent<BoxCollider2D>()));
+                StartCoroutine(delayTrapActivation(trapTriggerDelay));		
 			} else {
 				col.gameObject.GetComponent<IDamageable>().TakeDamage(spikeTrapDamage);
 			}
@@ -61,7 +57,6 @@ public class spikeTrapScript : MonoBehaviour {
         } else {
 			transform.position = Vector3.Lerp(transform.position, originalTrapPosition, Time.deltaTime * trapSpeed);
 		}
-
     }
 
 	private IEnumerator resetSpikeCollider(float wTime, BoxCollider2D boxCol) {
@@ -69,4 +64,12 @@ public class spikeTrapScript : MonoBehaviour {
 		hasTriggered = false;
 		resetTrapCollider(boxCol);
 	}
+
+    private IEnumerator delayTrapActivation(float wTime) {
+        yield return new WaitForSeconds(wTime);
+
+        hasTriggered = true;
+        resizeTrapCollider(this.gameObject.GetComponent<BoxCollider2D>());
+        StartCoroutine(resetSpikeCollider(trapResetDelay, this.gameObject.GetComponent<BoxCollider2D>()));
+    }
 }
