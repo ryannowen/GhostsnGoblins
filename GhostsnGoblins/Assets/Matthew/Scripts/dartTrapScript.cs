@@ -13,7 +13,7 @@ public class dartTrapScript : MonoBehaviour {
         System_Spawn.instance.CreatePool(dartObj, 5, false);
     }
 
-    void OnTriggerEnter2D(Collider2D col) {
+    void OnTriggerStay2D(Collider2D col) {
         if (col.gameObject.tag == "Player") {
             if (canSpawnPart) {
                 GameObject tmpDart = System_Spawn.instance.GetObjectFromPool(dartObj);
@@ -21,8 +21,8 @@ public class dartTrapScript : MonoBehaviour {
                 tmpDart.transform.position = transform.position;
                 tmpDart.transform.rotation = transform.rotation;
 
-                delayDartSpawn(3.0f);
                 canSpawnPart = false;
+                StartCoroutine(delayDartSpawn(3.0f));
             }
         }
     }

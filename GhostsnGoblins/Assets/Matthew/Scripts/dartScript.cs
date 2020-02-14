@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class dartScript : MonoBehaviour, ISpawn {
 
-    private float dartSpeed;
+    [SerializeField] private float dartSpeed;
 
     // Start is called before the first frame update
     void Start() {
@@ -14,7 +14,7 @@ public class dartScript : MonoBehaviour, ISpawn {
     private void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.tag == "Player") {
             // Take health from the player here.
-
+            col.gameObject.GetComponent<PlayerController>().TakeDamage(1);
 
             // Destroy the game object.
             gameObject.SetActive(false);

@@ -5,9 +5,9 @@ using UnityEngine;
 public class swingingAxeTrap : MonoBehaviour {
 
     private Rigidbody2D rb2D;
-    private float leftRotationCap;
-    private float rightRotationCap;
-    private float velThresh;
+    [Range(-1, 1)] [SerializeField] private float leftRotationCap;
+    [Range(-1, 1)] [SerializeField] private float rightRotationCap;
+    [SerializeField] private float velThresh;
 
     private int axeDamage;
 
@@ -25,8 +25,7 @@ public class swingingAxeTrap : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.tag == "Player") {
-            // Player should fling back and take damage here.
-
+            col.gameObject.GetComponent<PlayerController>().TakeDamage(1);
         }
     }
 
