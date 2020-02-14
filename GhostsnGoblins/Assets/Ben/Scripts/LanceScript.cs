@@ -2,37 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LanceScript : MonoBehaviour, ISpawn
+public class LanceScript : MonoBehaviour, IWeapon
 {
 
-    private float m_LanceSpeed;
+    [SerializeField] private GameObject m_Projectile;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_LanceSpeed = 0.1f;
-    }
 
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-
-        
+        this.gameObject.GetComponent<FireProjectile>().SetProjectile(m_Projectile);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += (transform.up * m_LanceSpeed);
-    }
+        
 
-    public void OnSpawn()
-    {
 
     }
 
-    public void OnDeSpawn()
+    // IWeapon
+    public void Action()
     {
+
+
 
     }
 

@@ -2,36 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IKillable, IDamageable, ISpawn
+public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 {
 
     [SerializeField] private int m_PlayerHealth = 2;
     [SerializeField] private int m_ArmourPoints = 3;
 
-    FireProjectile m_FireProjectile;
 
-    public enum CurrentWeapon
-    {
-
-        Lance,
-        Dagger,
-        Torch,
-        Axe,
-        Shield
-
-    }
-
-    [SerializeField] private CurrentWeapon m_CurrentWeapon = CurrentWeapon.Dagger;
-    [SerializeField] private bool m_InvokeWeaponChange = false;
-
-    [SerializeField] private GameObject m_Lance;
-    [SerializeField] private GameObject m_Torch;
+    [SerializeField] private GameObject m_EquipedItem;
 
     // Start is called before the first frame update
     void Start()
     {
-
-        m_FireProjectile = this.gameObject.GetComponent<FireProjectile>();
 
     }
 
@@ -41,11 +23,11 @@ public class PlayerController : MonoBehaviour, IKillable, IDamageable, ISpawn
 
         ManageStats();
 
-        if (m_InvokeWeaponChange)
-            ChangeEquippedWeapon();
+        if (m_EquipedItem == null)
+            m_EquipedItem = GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject;
 
         if (Input.GetAxisRaw("Fire1") > 0)
-            m_FireProjectile.Shoot(transform.position, transform.rotation);
+            m_EquipedItem.GetComponent<IWeapon>().Action();
 
     }
 
@@ -84,50 +66,10 @@ public class PlayerController : MonoBehaviour, IKillable, IDamageable, ISpawn
 
     }
 
-    public void SetWeaponType(CurrentWeapon newType)
+    public void SetEquippedItem(GameObject argsItem)
     {
 
-        m_CurrentWeapon = newType;
-
-    }
-
-    public void InvokeWeaponChange()
-    {
-
-        m_InvokeWeaponChange = true;
-
-    }
-
-    void ChangeEquippedWeapon()
-    {
-
-        switch (m_CurrentWeapon)
-        {
-            case CurrentWeapon.Lance:
-                m_FireProjectile.SetProjectile(m_Lance);
-                break;
-
-            case CurrentWeapon.Dagger:
-                
-                break;
-
-            case CurrentWeapon.Axe:
-
-                break;
-
-            case CurrentWeapon.Shield:
-
-                break;
-
-            case CurrentWeapon.Torch:
-                m_FireProjectile.SetProjectile(m_Torch);
-                break;
-
-            default:
-                break;
-        }
-
-        m_InvokeWeaponChange = false;
+        m_EquipedItem = argsItem;
 
     }
 
@@ -142,7 +84,6 @@ public class PlayerController : MonoBehaviour, IKillable, IDamageable, ISpawn
 
     }
 
-    // IKillable
     public void KillEntity()
     {
 
@@ -154,7 +95,8 @@ public class PlayerController : MonoBehaviour, IKillable, IDamageable, ISpawn
     public void OnSpawn()
     {
 
-
+        m_PlayerHealth = 2;
+        m_ArmourPoints = 3;
 
     }
 

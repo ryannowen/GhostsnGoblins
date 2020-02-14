@@ -5,7 +5,7 @@ using UnityEngine;
 public class SetupObjectPools : MonoBehaviour
 {
 
-    [SerializeField] private GameObject[] m_Pools;
+    [SerializeField] private GameObject[] m_Pools = null;
 
     // Start is called before the first frame update
     void Start()

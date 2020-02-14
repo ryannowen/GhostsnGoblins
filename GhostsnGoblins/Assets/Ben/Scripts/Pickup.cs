@@ -5,6 +5,8 @@ using UnityEngine;
 public class Pickup : MonoBehaviour, ISpawn
 {
 
+
+
     public enum PickupType { 
     
         HealthPickup,
@@ -62,32 +64,27 @@ public class Pickup : MonoBehaviour, ISpawn
                     break;
 
                 case PickupType.Lance:
-                    collision.gameObject.GetComponent<PlayerController>().SetWeaponType(PlayerController.CurrentWeapon.Lance);
-                    collision.gameObject.GetComponent<PlayerController>().InvokeWeaponChange();
+                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject);
                     this.gameObject.SetActive(false);
                     break;
 
                 case PickupType.Dagger:
-                    collision.gameObject.GetComponent<PlayerController>().SetWeaponType(PlayerController.CurrentWeapon.Dagger);
-                    collision.gameObject.GetComponent<PlayerController>().InvokeWeaponChange();
+                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
                     this.gameObject.SetActive(false);
                     break;
 
                 case PickupType.Torch:
-                    collision.gameObject.GetComponent<PlayerController>().SetWeaponType(PlayerController.CurrentWeapon.Torch);
-                    collision.gameObject.GetComponent<PlayerController>().InvokeWeaponChange();
+                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
                     this.gameObject.SetActive(false);
                     break;
 
                 case PickupType.Axe:
-                    collision.gameObject.GetComponent<PlayerController>().SetWeaponType(PlayerController.CurrentWeapon.Axe);
-                    collision.gameObject.GetComponent<PlayerController>().InvokeWeaponChange();
+                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
                     this.gameObject.SetActive(false);
                     break;
 
                 case PickupType.Shield:
-                    collision.gameObject.GetComponent<PlayerController>().SetWeaponType(PlayerController.CurrentWeapon.Shield);
-                    collision.gameObject.GetComponent<PlayerController>().InvokeWeaponChange();
+                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
                     this.gameObject.SetActive(false);
                     break;
 

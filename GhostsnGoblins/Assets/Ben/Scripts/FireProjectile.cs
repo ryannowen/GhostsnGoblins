@@ -19,7 +19,7 @@ public class FireProjectile : MonoBehaviour
 
     }
 
-    public void Shoot(Vector3 argsStartPosition, Quaternion argsRotation) 
+    public void Fire(Vector3 argsStartPosition, Vector3 argsDirection, Quaternion argsRotation) 
     {
 
         GameObject tempProjectile = System_Spawn.instance.GetObjectFromPool(m_Projectile);

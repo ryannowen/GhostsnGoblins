@@ -202,12 +202,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b34b28103213e4eaa33a94602bff6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayerHealth: 1
-  m_ArmourPoints: 0
-  m_CurrentWeapon: 0
-  m_InvokeWeaponChange: 0
-  m_Lance: {fileID: 1444916564148177784, guid: c397d742db2ad394d89ef21a1dfa9dc9, type: 3}
-  m_Torch: {fileID: 2702576361497524296, guid: 51b4618a42736854c9bc203d6f397b45, type: 3}
+  m_PlayerHealth: 2
+  m_ArmourPoints: 3
+  m_EquipedItem: {fileID: 0}
 --- !u!114 &6820200383008357931
 MonoBehaviour:
   m_ObjectHideFlags: 0
