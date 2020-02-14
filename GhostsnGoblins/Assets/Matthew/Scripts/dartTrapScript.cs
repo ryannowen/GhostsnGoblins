@@ -5,7 +5,10 @@ using UnityEngine;
 public class dartTrapScript : MonoBehaviour {
 
     [SerializeField] private GameObject dartObj = null;
-    [SerializeField] private bool canSpawnPart;
+    [SerializeField] private float dartSpeed = 10;
+    [SerializeField] private int dartDamage = 1;
+
+    private bool canSpawnPart;
 
     // Start is called before the first frame update
     void Start() {
@@ -17,6 +20,9 @@ public class dartTrapScript : MonoBehaviour {
         if (col.gameObject.tag == "Player") {
             if (canSpawnPart) {
                 GameObject tmpDart = System_Spawn.instance.GetObjectFromPool(dartObj);
+
+                tmpDart.GetComponent<dartScript>().setDartDamage(dartDamage);
+                tmpDart.GetComponent<dartScript>().setDartSpeed(dartSpeed);
 
                 tmpDart.transform.position = transform.position;
                 tmpDart.transform.rotation = transform.rotation;

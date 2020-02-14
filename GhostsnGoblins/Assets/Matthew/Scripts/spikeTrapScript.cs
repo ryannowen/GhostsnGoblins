@@ -10,10 +10,10 @@ public class spikeTrapScript : MonoBehaviour {
 
 	private bool hasTriggered;
 
-	[SerializeField] private float trapSpeed;
-    [SerializeField] private float trapTriggerDelay;
-    [SerializeField] private float trapResetDelay;
-	[SerializeField] private int spikeTrapDamage;
+	[SerializeField] private float trapSpeed = 12;
+    [SerializeField] private float trapTriggerDelay = 0.5f;
+    [SerializeField] private float trapResetDelay = 2;
+	[SerializeField] private int spikeTrapDamage = 1;
 
     // Start is called before the first frame update
     void Start() {
@@ -22,10 +22,6 @@ public class spikeTrapScript : MonoBehaviour {
 
         originalTrapPosition = transform.position;
         hasTriggered = false;
-		trapSpeed = 12;
-		spikeTrapDamage = 1;
-        trapTriggerDelay = 0.2f;
-        trapResetDelay = 2;
     }
 
     void resizeTrapCollider(BoxCollider2D bCol) {
