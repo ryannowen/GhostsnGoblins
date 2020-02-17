@@ -141,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
         {
             m_Rigidbody.gravityScale = 0f;
             m_Grounded = false;
+
         }
         else
         {
@@ -149,10 +150,23 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void LerpToLadder(Vector3 argsPosition)
+    {
+
+        transform.position = Vector3.Lerp(transform.position, new Vector3(argsPosition.x, transform.position.y, 0), 0.05f);
+
+    }
+
     public void SetClimbingState(bool state)
     {
 
         m_Climbing = state;
+
+    }
+    public bool GetClimbingState()
+    {
+
+        return m_Climbing;
 
     }
 
