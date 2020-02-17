@@ -8,7 +8,6 @@ public class UnicornAI : MonoBehaviour
     public GameObject Enemy;
     public GameObject Player;
     public bool alive = true;
-    public bool angered = false;
 
     private int RNG;
     private float speed = 0.1f;
@@ -20,9 +19,9 @@ public class UnicornAI : MonoBehaviour
     private float JumpTimer;
     private float DashTime;
     private bool FindPlayer = true;
-    private bool Jump;
-    private bool Dash;
-    private bool Shoot;
+    [SerializeField] private bool Jump;
+    [SerializeField] private bool Dash;
+    [SerializeField] private bool Shoot;
     private bool Angered;
 
     // Start is called before the first frame update
@@ -45,7 +44,7 @@ public class UnicornAI : MonoBehaviour
 
         if (!Angered)
         {
-            if (PlayerX + 9 > EnemyX)
+            if (PlayerX + 100 > EnemyX)
             {
                 Angered = true;
             }
@@ -54,7 +53,7 @@ public class UnicornAI : MonoBehaviour
         if (Time.time > RNGtimer)
         {
             RNG = Random.Range(2, 100);
-            RNGtimer += 3;
+            RNGtimer += 1.5f;
             FindPlayer = true;
         }
 
@@ -63,6 +62,7 @@ public class UnicornAI : MonoBehaviour
             if (RNG <= 75 && RNG > 0)
             {
                 Jump = true;
+                JumpTimer = Time.time + 1f;
             }
             else if (RNG <= 95 && RNG > 75)
             {
@@ -71,6 +71,7 @@ public class UnicornAI : MonoBehaviour
             else if (RNG <= 100 && RNG > 95)
             {
                 Dash = true;
+                DashTime = Time.time + 1;
             }
             RNG = 0;
         }
@@ -80,48 +81,64 @@ public class UnicornAI : MonoBehaviour
         {
             if(Jump)
             {
-                JumpTimer = Time.time + 1;
                 if (PlayerX < EnemyX)
                 {
-                    EnemyY += speed;
-                    EnemyX -= speed;
 
-                    if (JumpTimer < Time.time && EnemyY > PlayerY)
+
+                    if (Time.time > JumpTimer - 0.5f && EnemyY > PlayerY)
                     {
-                        EnemyY -= speed*2;
+                        EnemyY -= speed * 2;
+                    }
+                    else if (Time.time < JumpTimer - 0.5f)
+                    {
+                        EnemyY += speed * 2;
+                        EnemyX -= speed;
                     }
                 }
-
-                if (PlayerX > EnemyX)
+                else if (PlayerX > EnemyX)
                 {
-                    EnemyY += speed;
-                    EnemyX += speed;
-
-                    if (JumpTimer < Time.time && EnemyY > PlayerY)
+               
+                    if (Time.time > JumpTimer - 0.5f && EnemyY < PlayerY)
                     {
-                        EnemyY -= speed*2;
+                        EnemyY -= speed * 2;
+                    }
+                    else if (Time.time < JumpTimer - 0.5f)
+                    {
+                        EnemyY += speed * 2;
+                        EnemyX += speed;
                     }
                 }
-                Jump = false;
+                if (Time.time > JumpTimer)
+                {
+                    Jump = false;
+                }
             }
 
             if (Shoot)
             {
-
+                Shoot = false;
             }
 
             if (Dash)
             {
-                DashTime = Time.time + 1;
-                EnemyX -= speed * 2;
+                if (PlayerX < EnemyX)
+                {
+                    EnemyX -= speed * 2;
+                }
+
+                else if (PlayerX > EnemyX)
+                {
+                    EnemyX += speed * 2;
+                }
+
                 if (DashTime < Time.time)
                 {
                     Dash = false;
                 }
             }
         }
-        print(PlayerX);
-        print(EnemyX);
+        print(JumpTimer);
+        Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
     }
     
 }
