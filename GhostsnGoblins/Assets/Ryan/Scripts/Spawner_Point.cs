@@ -11,7 +11,8 @@ public class Spawner_Point : MonoBehaviour
     void Start()
     {
         for (int i = 0; i < objects.GetLength(0); i++)
-            System_Spawn.instance.CreatePool(objects[i].item, objects[i].amount, objects[i].spawnState);
+            if (objects[i].createPool)
+                System_Spawn.instance.CreatePool(objects[i].item, objects[i].amount, objects[i].spawnState);
 
         if (spawnPoints == null)
         {
