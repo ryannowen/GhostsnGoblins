@@ -1,19 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using UnityEngine.UI;
 
 public class score : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Text scoretxt;
+    public int X = 0;
+    public Text highScore;
+
+
     void Start()
     {
-        
+        highScore.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            X += 200;
+            scoretxt.text = X.ToString();
+
+            if (X > PlayerPrefs.GetInt("HighScore", 0))
+            {
+                PlayerPrefs.SetInt("HighScore", X);
+                highScore.text = X.ToString();
+            }
+        }
     }
 }

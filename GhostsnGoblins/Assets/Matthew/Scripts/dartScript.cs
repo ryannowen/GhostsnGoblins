@@ -24,7 +24,11 @@ public class dartScript : MonoBehaviour, ISpawn {
 
     // Update is called once per frame
     void Update() {
-        transform.position += (transform.up * dartSpeed) * Time.deltaTime;
+        
+    }
+
+    void FixedUpdate() {
+        transform.position += (transform.up * dartSpeed) * Time.fixedDeltaTime;
     }
 
     public void OnSpawn() {

@@ -27,7 +27,6 @@ public class Pickup : MonoBehaviour, ISpawn
     {
 
         m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        OnSpawn();
 
     }
 
@@ -41,6 +40,7 @@ public class Pickup : MonoBehaviour, ISpawn
     {
 
         m_PickupType = newType;
+        OnSpawn();
 
     }
 
@@ -50,46 +50,51 @@ public class Pickup : MonoBehaviour, ISpawn
         if (collision.gameObject.CompareTag("Player"))
         {
 
-            switch (m_PickupType)
+            if (collision.gameObject.GetComponent<PlayerController>())
             {
 
-                case PickupType.HealthPickup:
-                    collision.gameObject.GetComponent<PlayerController>().AddHealth(1);
-                    this.gameObject.SetActive(false);
-                    break;
+                switch (m_PickupType)
+                {
 
-                case PickupType.ArmourPickup:
-                    collision.gameObject.GetComponent<PlayerController>().AddArmour(1);
-                    this.gameObject.SetActive(false);
-                    break;
+                    case PickupType.HealthPickup:
+                        collision.gameObject.GetComponent<PlayerController>().AddHealth(1);
+                        this.gameObject.SetActive(false);
+                        break;
 
-                case PickupType.Lance:
-                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject);
-                    this.gameObject.SetActive(false);
-                    break;
+                    case PickupType.ArmourPickup:
+                        collision.gameObject.GetComponent<PlayerController>().AddArmour(1);
+                        this.gameObject.SetActive(false);
+                        break;
 
-                case PickupType.Dagger:
-                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
-                    this.gameObject.SetActive(false);
-                    break;
+                    case PickupType.Lance:
+                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject);
+                        this.gameObject.SetActive(false);
+                        break;
 
-                case PickupType.Torch:
-                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
-                    this.gameObject.SetActive(false);
-                    break;
+                    case PickupType.Dagger:
+                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
+                        this.gameObject.SetActive(false);
+                        break;
 
-                case PickupType.Axe:
-                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
-                    this.gameObject.SetActive(false);
-                    break;
+                    case PickupType.Torch:
+                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
+                        this.gameObject.SetActive(false);
+                        break;
 
-                case PickupType.Shield:
-                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
-                    this.gameObject.SetActive(false);
-                    break;
+                    case PickupType.Axe:
+                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
+                        this.gameObject.SetActive(false);
+                        break;
 
-                default:
-                    break;
+                    case PickupType.Shield:
+                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
+                        this.gameObject.SetActive(false);
+                        break;
+
+                    default:
+                        break;
+
+                }
 
             }
 
