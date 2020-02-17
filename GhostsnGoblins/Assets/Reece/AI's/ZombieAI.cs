@@ -13,6 +13,7 @@ public class ZombieAI : MonoBehaviour
     private float EnemyX;
     private float Deathtimer;
     private bool OneTime = true;
+    public bool Angered = false;
     private bool MoveLeft;
     private bool MoveRight;
     private bool FindPlayer;
@@ -26,7 +27,15 @@ public class ZombieAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (alive)
+        if (!Angered)
+        {
+            if (PlayerX + 5 > EnemyX)
+            {
+                Angered = true;
+            }
+        }
+
+        if (alive && Angered)
         {
             FindPlayer = true;
             if (FindPlayer && OneTime)
