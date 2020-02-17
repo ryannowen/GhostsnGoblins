@@ -15,6 +15,7 @@ public class WoodyPigAI : MonoBehaviour
     private float EnemyY;
     private float Deathtimer;
     private bool OneTime = true;
+    private bool Angered = false;
     private bool MoveLeft;
     private bool MoveRight;
     private bool FindPlayer;
@@ -28,7 +29,15 @@ public class WoodyPigAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (alive)
+        if (!Angered)
+        {
+            if (PlayerX + 5 > EnemyX)
+            {
+                Angered = true;
+            }
+        }  
+
+        if (alive && Angered)
         {
             FindPlayer = true;
             if (FindPlayer && OneTime)

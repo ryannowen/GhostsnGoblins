@@ -13,7 +13,6 @@ public class GreenMonsterAI : MonoBehaviour
     private float PlayerX;
     private float PlayerY;
     private float EnemyX;
-    private bool OneTime = true;
     private bool FindPlayer;
     private bool Shoot;
 
@@ -51,8 +50,7 @@ public class GreenMonsterAI : MonoBehaviour
                     FindPlayer = false;
                 }
             }
-            print(PlayerX);
-            print(PlayerY);
+
         }
     }
 }
