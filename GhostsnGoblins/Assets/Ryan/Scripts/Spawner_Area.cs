@@ -8,6 +8,7 @@ public class Spawner_Area : MonoBehaviour
     [SerializeField] private SpawnObject[] objects = null;
 
     [SerializeField] private bool spawnOnLoad = true;
+    [SerializeField] private bool timedSpawner = false;
     [SerializeField] private float spawnDelaySeconds = 10.0f;
 
     private bool canSpawnObjects = false;
@@ -20,7 +21,7 @@ public class Spawner_Area : MonoBehaviour
 
         for (int i = 0; i < objects.GetLength(0); i++)
             if(objects[i].createPool)
-                System_Spawn.instance.CreatePool(objects[i].item, objects[i].amount, objects[i].spawnState);
+                System_Spawn.instance.CreatePool(objects[i].item, objects[i].poolAmount, objects[i].spawnState);
 
         if (spawnOnLoad)
             SpawnObjects();        
@@ -36,7 +37,7 @@ public class Spawner_Area : MonoBehaviour
     {
         for (int i = 0; i < objects.GetLength(0); i++)
         {
-            for (int j = 0; j < objects[i].amount; j++)
+            for (int j = 0; j < objects[i].spawnAmount; j++)
             {
                 if (Random.Range(1, 100) >= objects[i].spawnChance || objects[i].spawnChance == 100)
                 {
@@ -53,7 +54,8 @@ public class Spawner_Area : MonoBehaviour
             }
         }
 
-        StartCoroutine(SpawnDelay());
+        if(timedSpawner)
+            StartCoroutine(SpawnDelay());
     }
 
     IEnumerator SpawnDelay()
