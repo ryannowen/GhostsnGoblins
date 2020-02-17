@@ -30,8 +30,6 @@ public class fallingPlatformScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
-        // TO DO!
         if (isFalling && doesFade) {
             float alphaCol = sRenderer.color.a;
 
@@ -44,5 +42,6 @@ public class fallingPlatformScript : MonoBehaviour {
         yield return new WaitForSeconds(wTime);
         this.gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
         isFalling = true;
+        this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }
 }
