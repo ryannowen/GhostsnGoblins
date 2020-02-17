@@ -27,7 +27,6 @@ public class Pickup : MonoBehaviour, ISpawn
     {
 
         m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        OnSpawn();
 
     }
 
@@ -41,6 +40,7 @@ public class Pickup : MonoBehaviour, ISpawn
     {
 
         m_PickupType = newType;
+        OnSpawn();
 
     }
 
@@ -50,7 +50,7 @@ public class Pickup : MonoBehaviour, ISpawn
         if (collision.gameObject.CompareTag("Player"))
         {
 
-            switch (m_PickupType)
+            if (collision.gameObject.GetComponent<PlayerController>())
             {
 
                 case PickupType.HealthPickup:
