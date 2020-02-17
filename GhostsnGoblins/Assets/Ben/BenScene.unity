@@ -1044,6 +1044,26 @@ PrefabInstance:
       propertyPath: objects.Array.data[0].ignoreAllActiveCheck
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 728479301884021639, guid: f2e264aef319b72409c5fe7d4a87cce2,
+        type: 3}
+      propertyPath: spawnDelaySeconds
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 728479301884021639, guid: f2e264aef319b72409c5fe7d4a87cce2,
+        type: 3}
+      propertyPath: objects.Array.data[0].spawnAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 728479301884021639, guid: f2e264aef319b72409c5fe7d4a87cce2,
+        type: 3}
+      propertyPath: objects.Array.data[0].poolAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 728479301884021639, guid: f2e264aef319b72409c5fe7d4a87cce2,
+        type: 3}
+      propertyPath: timedSpawner
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7934348026057928016, guid: f2e264aef319b72409c5fe7d4a87cce2,
         type: 3}
       propertyPath: m_Size.x
