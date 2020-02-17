@@ -74,7 +74,7 @@ public class Pickup : MonoBehaviour, ISpawn
                     break;
 
                 case PickupType.Torch:
-                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
+                    collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("TorchWeapon").gameObject);
                     this.gameObject.SetActive(false);
                     break;
 
@@ -113,6 +113,22 @@ public class Pickup : MonoBehaviour, ISpawn
                 break;
 
             case PickupType.Lance:
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                break;
+
+            case PickupType.Dagger:
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                break;
+
+            case PickupType.Torch:
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                break;
+
+            case PickupType.Axe:
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                break;
+
+            case PickupType.Shield:
                 m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
                 break;
 

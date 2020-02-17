@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float m_GravityScale = 4f, m_JumpForce = 7f, m_MovementSpeed = 5f, m_ClimbingSpeed = 3f;
     Vector3 m_DesiredMove = Vector3.zero;
-    public bool m_Grounded = false, m_Jump = false, m_Climbing = false;
+    public bool m_Grounded = false, m_Jump = false, m_Climbing = false, m_Crouched = false, m_LastMovingRight = true;
 
     public LayerMask m_GroundCheckLayerMask;
 
@@ -42,11 +42,25 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxisRaw("Jump") > 0 && m_Grounded)
             m_Rigidbody.velocity = Vector2.Lerp(m_Rigidbody.velocity, new Vector2(m_Rigidbody.velocity.x, m_JumpForce), 1f);
 
+        if (m_Grounded && Input.GetAxisRaw("Vertical") < -0.7)
+        {
+            m_Crouched = true;
+        }
+        else
+        {
+            m_Crouched = false;
+        }
+
+        // If crouched then manage player settings for crouching
+        if (m_Crouched)
+            ManageCrouchingSettings();
+
         // Get the desired movement direction
         m_DesiredMove = GetDesiredMove();
 
-        // Lerp the player velocity to the desired movement direction
-        m_Rigidbody.velocity = Vector3.Lerp(m_Rigidbody.velocity, m_DesiredMove, 0.25f);
+        // If the player is not crouched then Lerp the player velocity to the desired movement direction
+        if (!m_Crouched)
+            m_Rigidbody.velocity = Vector3.Lerp(m_Rigidbody.velocity, m_DesiredMove, 0.25f);
 
     }
 
@@ -117,6 +131,11 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.x *= m_MovementSpeed;
 
+        if (velocity.x > 0)
+            m_LastMovingRight = true;
+        else if (velocity.x < 0)
+            m_LastMovingRight = false;
+
         return velocity;
 
     }
@@ -149,10 +168,29 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    void ManageCrouchingSettings()
+    {
+
+        // Stop the player from moving
+        m_Rigidbody.velocity = Vector3.zero;
+
+        // Disable Second Collider
+
+
+
+    }
+
     public void SetClimbingState(bool state)
     {
 
         m_Climbing = state;
+
+    }
+
+    public bool GetMostRecentDirection()
+    {
+
+        return m_LastMovingRight;
 
     }
 

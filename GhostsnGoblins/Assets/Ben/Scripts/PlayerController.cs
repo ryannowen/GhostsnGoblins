@@ -8,12 +8,14 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     [SerializeField] private int m_PlayerHealth = 2;
     [SerializeField] private int m_ArmourPoints = 3;
 
-
     [SerializeField] private GameObject m_EquipedItem;
+    PlayerMovement m_MovementSystem = null;
 
     // Start is called before the first frame update
     void Start()
     {
+
+        m_MovementSystem = this.gameObject.GetComponent<PlayerMovement>();
 
     }
 
@@ -27,7 +29,16 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
             m_EquipedItem = GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject;
 
         if (Input.GetAxisRaw("Fire1") > 0)
-            m_EquipedItem.GetComponent<IWeapon>().Action();
+        {
+            Vector3 directionToFire = Vector3.zero;
+
+            if (m_MovementSystem.GetMostRecentDirection())
+                directionToFire = Vector3.right;
+            else
+                directionToFire = Vector3.left;
+
+            m_EquipedItem.GetComponent<IWeapon>().Action(transform.position, directionToFire);
+        }
 
     }
 

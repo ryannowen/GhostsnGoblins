@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, ISpawn
 {
 
     [SerializeField] private Rigidbody2D m_Rigidbody;
-    [SerializeField] private Vector2 m_Direction = new Vector2(1,0);
+
+    void Awake()
+    {
+
+        m_Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
+
+    }
 
     // Start is called before the first frame update
     void Start()
     {
 
-        m_Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
-        m_Rigidbody.AddForce(m_Direction, ForceMode2D.Impulse);
+        //m_Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
 
     }
 
@@ -25,10 +30,18 @@ public class Projectile : MonoBehaviour
 
     }
 
-    public void SetDirection(Vector2 argsNewDirection)
+    // ISpawn
+    public void OnSpawn()
     {
 
-        m_Direction = argsNewDirection;
+        m_Rigidbody.velocity = Vector3.zero;
+
+    }
+
+    public void OnDeSpawn()
+    {
+
+
 
     }
 

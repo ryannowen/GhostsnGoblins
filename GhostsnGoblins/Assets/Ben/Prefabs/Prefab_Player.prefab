@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 5589329451821116005}
   - component: {fileID: 2887558127652121619}
   - component: {fileID: 5121646286606030046}
-  - component: {fileID: 6820200383008357931}
   - component: {fileID: 8865627606635392083}
   - component: {fileID: -2131618635434837259}
   m_Layer: 8
@@ -187,6 +186,7 @@ MonoBehaviour:
   m_Grounded: 0
   m_Jump: 0
   m_Climbing: 0
+  m_Crouched: 0
   m_GroundCheckLayerMask:
     serializedVersion: 2
     m_Bits: 55
@@ -205,20 +205,6 @@ MonoBehaviour:
   m_PlayerHealth: 2
   m_ArmourPoints: 3
   m_EquipedItem: {fileID: 0}
---- !u!114 &6820200383008357931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8312007036874528758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d9c358fea7a2f5449dc66124f091a77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Projectile: {fileID: 1444916564148177784, guid: c397d742db2ad394d89ef21a1dfa9dc9,
-    type: 3}
 --- !u!50 &8865627606635392083
 Rigidbody2D:
   serializedVersion: 4

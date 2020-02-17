@@ -5,7 +5,8 @@ using UnityEngine;
 public class FireProjectile : MonoBehaviour
 {
 
-    [SerializeField] private GameObject m_Projectile;
+    private GameObject m_Projectile;
+    [SerializeField] private float m_ProjectileSpeed = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class FireProjectile : MonoBehaviour
 
         tempProjectile.transform.position = argsStartPosition;
         tempProjectile.transform.rotation = argsRotation;
+        tempProjectile.GetComponent<Rigidbody2D>().AddForce(argsDirection * m_ProjectileSpeed, ForceMode2D.Impulse);
 
     }
 
