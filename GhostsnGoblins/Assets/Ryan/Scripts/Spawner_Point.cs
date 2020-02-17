@@ -7,6 +7,13 @@ public class Spawner_Point : MonoBehaviour
     [SerializeField] private SpawnObject[] objects = null;
     [SerializeField] private List<SpawnPoint> spawnPoints = null;
 
+    [SerializeField] private bool spawnOnLoad = true;
+    [SerializeField] private float spawnDelaySeconds = 10.0f;
+
+
+    private bool canSpawnObjects = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,12 +21,24 @@ public class Spawner_Point : MonoBehaviour
             if (objects[i].createPool)
                 System_Spawn.instance.CreatePool(objects[i].item, objects[i].amount, objects[i].spawnState);
 
+        if (spawnOnLoad)
+            SpawnObjects();
+    }
+
+    private void Update()
+    {
+        if (canSpawnObjects)
+            SpawnObjects();
+    }
+
+    void SpawnObjects()
+    {
         if (spawnPoints == null)
         {
             Debug.LogError("Cannot spawn object at point because there are no spawn points");
             return;
         }
-        else if(spawnPoints.Count == 0)
+        else if (spawnPoints.Count == 0)
         {
             Debug.LogError("Cannot spawn object at point because there are no spawn points");
             return;
@@ -39,12 +58,12 @@ public class Spawner_Point : MonoBehaviour
                         int index = Random.Range(0, spawnPoints.Count);
                         spawnPoint = spawnPoints[index];
 
-                        if(spawnPoint.GetCanSpawn())
+                        if (spawnPoint.GetCanSpawn())
                             break;
                         else
                             availableSpawnPoints.RemoveAt(index);
 
-                        if(availableSpawnPoints.Count == 0)
+                        if (availableSpawnPoints.Count == 0)
                         {
                             Debug.LogWarning("cannot spawn object because all spawn points are in use");
                             return;
@@ -63,5 +82,14 @@ public class Spawner_Point : MonoBehaviour
                 }
             }
         }
+
+        StartCoroutine(SpawnDelay());
+    }
+
+    IEnumerator SpawnDelay()
+    {
+        canSpawnObjects = false;
+        yield return new WaitForSeconds(spawnDelaySeconds);
+        canSpawnObjects = true;
     }
 }
