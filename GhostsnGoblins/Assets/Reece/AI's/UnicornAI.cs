@@ -8,7 +8,7 @@ public class UnicornAI : MonoBehaviour
     public GameObject Enemy;
     public GameObject Player;
     public bool alive = true;
-    public bool angered = false;
+    public bool Angered = false;
 
     private int RNG;
     private float speed = 0.1f;
@@ -23,7 +23,6 @@ public class UnicornAI : MonoBehaviour
     private bool Jump;
     private bool Dash;
     private bool Shoot;
-    private bool Angered;
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +35,10 @@ public class UnicornAI : MonoBehaviour
     {
         if (FindPlayer)
         {
-            PlayerX = Player.gameObject.transform.position.x;
-            PlayerY = Player.gameObject.transform.position.y;
-            EnemyX = Enemy.gameObject.transform.position.x;
-            EnemyY = Enemy.gameObject.transform.position.y;
+            PlayerX = Player.transform.position.x;
+            PlayerY = Player.transform.position.y;
+            EnemyX = Enemy.transform.position.x;
+            EnemyY = Enemy.transform.position.y;
             FindPlayer = false;
         }
 
