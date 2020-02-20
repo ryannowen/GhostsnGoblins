@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class fallingPlatformScript : MonoBehaviour {
 
+    [Tooltip("The time of delay before the platform falls when collided (in seconds).")]
     [SerializeField] private float fallDelay = 1;
+
+    [Tooltip("Does the platform fade when it falls and resets?")]
     [SerializeField] private bool doesFade = false;
+
+    [Tooltip("The speed of fading (in seconds).")]
     [SerializeField] private float fadeSpeed = 1;
+
+    [Tooltip("The time of delay before the platform respawns to its original position (in seconds).")]
     [SerializeField] private float respawnDelay = 3;
 
     private SpriteRenderer sRenderer;

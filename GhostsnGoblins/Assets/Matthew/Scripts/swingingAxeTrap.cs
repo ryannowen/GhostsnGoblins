@@ -5,21 +5,22 @@ using UnityEngine;
 public class swingingAxeTrap : MonoBehaviour {
 
     private Rigidbody2D rb2D;
-    [Range(-1, 1)] [SerializeField] private float leftRotationCap;
-    [Range(-1, 1)] [SerializeField] private float rightRotationCap;
-    [SerializeField] private float velThresh;
 
-    [SerializeField] private int axeDamage;
+    [Tooltip("A rotation cap for the left side of the axe, ideal number for this is -0.4.")]
+    [Range(-1, 1)] [SerializeField] private float leftRotationCap = -0.4f;
 
-	// Start is called before the first frame update
-	void Start() {
+    [Tooltip("A rotation cap for the left side of the axe, ideal number for this is 0.4.")]
+    [Range(-1, 1)] [SerializeField] private float rightRotationCap = 0.4f;
+
+    [Tooltip("The velocity threshold of the axe (ideal number is 120).")]
+    [SerializeField] private float velThresh = 120;
+
+    [Tooltip("The amount of damage the axe inflicts to the player.")]
+    [SerializeField] private int axeDamage = 1;
+
+    // Start is called before the first frame update
+    void Start() {
         rb2D = gameObject.GetComponent<Rigidbody2D>();
-
-        leftRotationCap = -0.4f;
-        rightRotationCap = 0.4f;
-        velThresh = 120;
-        axeDamage = 1;
-
         rb2D.angularVelocity = velThresh;
     }
 

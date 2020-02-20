@@ -12,10 +12,19 @@ public class spikeTrapScript : MonoBehaviour {
 
 	private bool hasTriggered;
 
-	[SerializeField] private float trapSpeed = 12;
+    [Tooltip("Sets the speed of the trap.")]
+    [SerializeField] private float trapSpeed = 12;
+
+    [Tooltip("The time of delay the trap is triggered once the collider is hit (in seconds).")]
     [SerializeField] private float trapTriggerDelay = 0.5f;
+
+    [Tooltip("Reset delay, which is the time before the trap resets (for timed it is the delay for it to go up and down) (in seconds).")]
     [SerializeField] private float trapResetDelay = 2;
-	[SerializeField] private int spikeTrapDamage = 1;
+
+    [Tooltip("The amount of damage the spike trap does.")]
+    [SerializeField] private int spikeTrapDamage = 1;
+
+    [Tooltip("Timed - automatically moving. Triggered - Has to be collided with to activate.")]
     [SerializeField] private t_Type trapType = t_Type.triggerable;
 
     // Start is called before the first frame update
@@ -79,6 +88,7 @@ public class spikeTrapScript : MonoBehaviour {
 
 	private IEnumerator resetSpikeCollider(float wTime, BoxCollider2D boxCol) {
 		yield return new WaitForSeconds(wTime);
+
 		hasTriggered = false;
 
         if (trapType == t_Type.triggerable) {

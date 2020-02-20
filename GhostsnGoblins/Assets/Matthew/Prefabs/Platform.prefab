@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 5520133786379409507}
   - component: {fileID: 5520133786379409508}
   - component: {fileID: 5520133786379409504}
+  - component: {fileID: -1358779959878787941}
   m_Layer: 0
-  m_Name: Falling Platform
+  m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +124,7 @@ Rigidbody2D:
   m_Mass: 10000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -141,4 +142,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57850345955576948955968e141964f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallDelay: 0
+  fallDelay: 1.5
+  doesFade: 1
+  fadeSpeed: 5
+  respawnDelay: 3
+--- !u!114 &-1358779959878787941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5520133786379409509}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74d4ce2780890684aa0eede0a1353448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformPoints: []
+  platformType: 2
+  timeToReachPoint: 1
+  moveDelay: 0.2
