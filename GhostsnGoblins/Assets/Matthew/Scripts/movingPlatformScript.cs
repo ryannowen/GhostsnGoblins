@@ -4,196 +4,178 @@ using UnityEngine;
 
 public class movingPlatformScript : MonoBehaviour {
 
-    enum p_Direction { up, down, left, right };
+    enum p_type { loop, reverseLoop, touchOnce, touchReverse };
 
-    enum p_Type { loop, touchReverse, touchOnce };
+    [Tooltip("Collection of points (as a GameObject) that the platform travels. Adjust size depending on how many points. The platform will start at the first point supplied.")]
+    [SerializeField] private GameObject[] platformPoints = { };
 
-    [SerializeField] private float timeToReachDestination = 1;
-    [SerializeField] private int distance = 10;
-    [SerializeField] private float movingDelay = 1;
-    [SerializeField] private p_Direction platformDirection = p_Direction.left;
-    [SerializeField] private p_Type platformMovementType = p_Type.touchOnce;
+    [Tooltip("Loop - Traverses the points repeatedly. Reverse Loop - Traverses the points and reverses repeatedly. Touch Once - Traverses the points once. Touch Reverse - Traverses the points once, then reverses.")]
+    [SerializeField] private p_type platformType = p_type.touchOnce;
+
+    [Tooltip("Time to reach the next listed GameObject in the list (in seconds).")]
+    [SerializeField] private float timeToReachPoint = 1;
+
+    [Tooltip("A delay before the platform moves to the next point (in seconds).")]
+    [SerializeField] private float moveDelay = 0.2f;
 
     private bool canMove;
-    private bool isReversing = false;
+    private bool isReversing;
+    private bool oneTimeReverse;
+    private Vector3 originalPosition;
 
-    //private float interpolateValue = 0.0f;
-
-    private Vector2 startPos;
-    private Vector2 endPos;
+    private int platformCount;
     private Vector3 vel;
+
 
     // Start is called before the first frame update
     void Start() {
-        if (platformMovementType == p_Type.loop) {
-            canMove = true;
+        if (platformPoints.Length == 0) {
+            print("No points found for the platform to traverse, please supply GameObjects as points.");
+            this.enabled = false;
         } else {
+            oneTimeReverse = false;
+            platformCount = 0;
+            transform.position = new Vector3(Mathf.Round(platformPoints[0].transform.position.x), Mathf.Round(platformPoints[0].transform.position.y), 0);
+            isReversing = false;
             canMove = false;
+
+            if (platformType == p_type.loop || platformType == p_type.reverseLoop) {
+                StartCoroutine(enableMoving(0));
+            }
         }
     }
 
     void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.tag == "Player") {
-            col.gameObject.transform.parent = transform;
-
-            if (platformMovementType == p_Type.touchOnce || platformMovementType == p_Type.touchReverse) {
-                StartCoroutine(enableMoving(movingDelay));
+            if (platformType == p_type.touchOnce || platformType == p_type.touchReverse) {
+                StartCoroutine(enableMoving(moveDelay));
             }
+            
+            col.gameObject.transform.parent = transform;
         }
     }
 
     void OnCollisionExit2D(Collision2D col) {
         if (col.gameObject.tag == "Player") {
             col.gameObject.transform.parent = null;
+            oneTimeReverse = false;
         }
     }
 
     void FixedUpdate() {
         if (canMove) {
+            switch (platformType) {
+                case p_type.touchOnce:
+                    if (platformCount == platformPoints.Length) {
+                        platformCount = platformPoints.Length;
+                        canMove = false;
+                        break;
+                    }
 
-            switch (platformMovementType) {
-                case p_Type.loop:
-                    if (!isReversing) {
-                        transform.position = Vector3.SmoothDamp((Vector2)transform.position, endPos, ref vel, timeToReachDestination);
-
-                        switch (platformDirection) {
-                            case p_Direction.up:
-                                if (transform.position.y >= endPos.y) {
-                                    StartCoroutine(reverseMoving(movingDelay));
-                                }
-
-                                break;
-
-                            case p_Direction.down:
-                                if (transform.position.y <= endPos.y) {
-                                    StartCoroutine(reverseMoving(movingDelay));
-                                }
-
-                                break;
-
-                            case p_Direction.left:
-                                if (transform.position.x <= endPos.x) {
-                                    StartCoroutine(reverseMoving(movingDelay));
-                                }
-
-                                break;
-
-                            case p_Direction.right:
-                                if (transform.position.x >= endPos.x) {
-                                    StartCoroutine(reverseMoving(movingDelay));
-                                }
-
-                                break;
-                        }
-
-                    } else if (isReversing) {
-                        transform.position = Vector3.SmoothDamp((Vector2)transform.position, endPos, ref vel, timeToReachDestination);
-
-                        switch (platformDirection) {
-                            case p_Direction.up:
-                                if (transform.position.y >= endPos.y) {
-                                    StartCoroutine(enableMoving(movingDelay));
-                                }
-
-                                break;
-
-                            case p_Direction.down:
-                                if (transform.position.y <= endPos.y) {
-                                    StartCoroutine(enableMoving(movingDelay));
-                                }
-
-                                break;
-
-                            case p_Direction.left:
-                                if (transform.position.x <= endPos.x) {
-                                    StartCoroutine(enableMoving(movingDelay));
-                                }
-
-                                break;
-
-                            case p_Direction.right:
-                                if (transform.position.x >= endPos.x) {
-                                    StartCoroutine(enableMoving(movingDelay));
-                                }
-
-                                break;
-                        }
+                    transform.position = Vector3.SmoothDamp(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint);
+                    
+                    if (Vector3.Distance(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0)) < 0.2f) {
+                        canMove = false;
+                        StartCoroutine(platformOnce(moveDelay));
                     }
 
                     break;
 
-                case p_Type.touchOnce:
-                    transform.position = Vector3.SmoothDamp((Vector2)transform.position, endPos, ref vel, timeToReachDestination);
+                case p_type.touchReverse:
+                    transform.position = Vector3.SmoothDamp(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint);
 
-                    //transform.position = Vector2.Lerp(transform.position, endPos, platformSpeed * Time.fixedDeltaTime);
+                    if (Vector3.Distance(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0)) < 0.2f) {
+                        canMove = false;
+                        StartCoroutine(platformReverse(moveDelay));
+                    }
+                    break;
 
-                    /*if (Vector2.Distance(transform.position, endPos) >= distance / 10) {
-                        Vector2 vec = endPos - (Vector2)transform.position;
-                        vec.Normalize();
-                        transform.position = (Vector2)transform.position + ((vec * platformSpeed) * Time.deltaTime);
-                    } else {
-                        transform.position = Vector2.Lerp(transform.position, endPos, platformSpeed * Time.deltaTime);
-                    }*/
+                case p_type.reverseLoop:
+                    transform.position = Vector3.SmoothDamp(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint);
+
+                    if (Vector3.Distance(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0)) < 0.2f) {
+                        canMove = false;
+                        StartCoroutine(platformReverseLoop(moveDelay));
+                    }
 
                     break;
 
-                case p_Type.touchReverse:
+                case p_type.loop:
+                    transform.position = Vector3.SmoothDamp(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint);
+
+                    if (Vector3.Distance(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0)) < 0.2f) {
+                        canMove = false;
+                        StartCoroutine(platformLoop(moveDelay));
+                    }
 
                     break;
             }
+
         }
     }
 
-    private IEnumerator reverseMoving(float wTime) {
+    private IEnumerator platformOnce(float wTime) {
         yield return new WaitForSeconds(wTime);
 
-        startPos = transform.position;
+        platformCount++;
+        canMove = true;
+    }
 
-        switch (platformDirection) {
-            case p_Direction.up:
-                endPos = transform.TransformPoint((Vector2)(-transform.up * distance));
-                break;
+    private IEnumerator platformReverse(float wTime) {
+        yield return new WaitForSeconds(wTime);
 
-            case p_Direction.down:
-                endPos = transform.TransformPoint((Vector2)(transform.up * distance));
-                break;
-
-            case p_Direction.left:
-                endPos = transform.TransformPoint((Vector2)(transform.right * distance));
-                break;
-
-            case p_Direction.right:
-                endPos = transform.TransformPoint((Vector2)(-transform.right * distance));
-                break;
+        if (platformCount < (platformPoints.Length - 1) && !isReversing && !oneTimeReverse) {
+            platformCount++;
+        } else if (platformCount > 0 && isReversing) {
+            platformCount--;
+            oneTimeReverse = true;
         }
 
-        isReversing = true;
+        if (!isReversing && platformCount == 0) {
+            canMove = false;
+        } else {
+            canMove = true;
+        }
+
+        if (platformCount == (platformPoints.Length - 1)) {
+            isReversing = true;
+        } else if (platformCount == 0) {
+            isReversing = false;
+        }
+    }
+
+    private IEnumerator platformLoop(float wTime) {
+        yield return new WaitForSeconds(wTime);
+        platformCount++;
+
+        if (platformCount == platformPoints.Length) {
+            platformCount = 0;
+        }
+
+        canMove = true;
+    }
+
+    private IEnumerator platformReverseLoop(float wTime) {
+        yield return new WaitForSeconds(wTime);
+
+        if (platformCount < (platformPoints.Length - 1) && !isReversing) {
+            platformCount++;
+        } else if (platformCount > 0 && isReversing) {
+            platformCount--;
+        }
+
+        if (platformCount == (platformPoints.Length - 1)) {
+            isReversing = true;
+        } else if (platformCount == 0) {
+            isReversing = false;
+        }
+
+        canMove = true;
     }
 
     private IEnumerator enableMoving(float wTime) {
         yield return new WaitForSeconds(wTime);
 
-        startPos = transform.position;
-
-        switch(platformDirection) {
-            case p_Direction.up:
-                endPos = transform.TransformPoint((Vector2)(transform.up * distance));
-                break;
-
-            case p_Direction.down:
-                endPos = transform.TransformPoint((Vector2)(-transform.up * distance));
-                break;
-
-            case p_Direction.left:
-                endPos = transform.TransformPoint((Vector2)(-transform.right * distance));
-                break;
-
-            case p_Direction.right:
-                endPos = transform.TransformPoint((Vector2)(transform.right * distance));
-                break;
-        }
-
-        isReversing = false;
         canMove = true;
     }
 }

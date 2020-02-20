@@ -6,10 +6,19 @@ public class dartTrapScript : MonoBehaviour {
 
     enum t_Type { triggerable, timed };
 
+    [Tooltip("The object in which the trap fires (should always be dart).")]
     [SerializeField] private GameObject dartObj = null;
+
+    [Tooltip("The speed of the dart fired.")]
     [SerializeField] private float dartSpeed = 10;
+
+    [Tooltip("The damage in which the dart inflicts to the player.")]
     [SerializeField] private int dartDamage = 1;
+
+    [Tooltip("Triggerable - Trap fired when the player hits the collider. Timed - Fires automatically depending on a given delay.")]
     [SerializeField] private t_Type trapType = t_Type.triggerable;
+
+    [Tooltip("A delay before an object fires again (in seconds).")]
     [SerializeField] private float shootDelay = 2;
 
     private bool canSpawnPart;
