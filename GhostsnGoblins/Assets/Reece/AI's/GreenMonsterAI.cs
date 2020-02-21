@@ -4,27 +4,36 @@ using UnityEngine;
 
 public class GreenMonsterAI : MonoBehaviour
 {
-    public GameObject Enemy;
-    public GameObject Player;
-    public bool alive = true;
-    public bool angered = false;
+    public bool alive = true; 
 
+    private GameObject Enemy;
+    private GameObject Player;
     private float time = 0.5f;
     private float PlayerX;
     private float PlayerY;
     private float EnemyX;
+    private bool angered = false;
     private bool FindPlayer;
     private bool Shoot;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (Player == null)
+            Player = GameObject.FindGameObjectWithTag("Player");
 
+        Enemy = this.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!angered)
+        {
+            PlayerX = Player.gameObject.transform.position.x;
+            PlayerY = Player.gameObject.transform.position.y;
+            EnemyX = Enemy.gameObject.transform.position.x;
+        }
 
         if (alive)
         {
@@ -49,8 +58,12 @@ public class GreenMonsterAI : MonoBehaviour
 
                     FindPlayer = false;
                 }
+                if (Shoot)
+                {
+                    Shoot = false;
+                }
             }
-
+           
         }
     }
 }
