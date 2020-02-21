@@ -5,7 +5,7 @@ using UnityEngine;
 public class FireProjectile : MonoBehaviour
 {
 
-    private GameObject m_Projectile;
+    private GameObject m_Projectile = null;
     [SerializeField] private float m_ProjectileSpeed = 5f;
 
     // Start is called before the first frame update

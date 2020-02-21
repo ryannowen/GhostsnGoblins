@@ -5,7 +5,7 @@ using UnityEngine;
 public class LanceScript : MonoBehaviour, IWeapon
 {
 
-    [SerializeField] private GameObject m_Projectile;
+    [SerializeField] private GameObject m_Projectile = null;
     FireProjectile m_FireProjectile = null;
 
     // Start is called before the first frame update

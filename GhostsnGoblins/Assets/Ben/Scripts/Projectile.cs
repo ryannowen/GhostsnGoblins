@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour, ISpawn
 {
 
-    [SerializeField] private Rigidbody2D m_Rigidbody;
+    [SerializeField] private Rigidbody2D m_Rigidbody = null;
 
     void Awake()
     {
