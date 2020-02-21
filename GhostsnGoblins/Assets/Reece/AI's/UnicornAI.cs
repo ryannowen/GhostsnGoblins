@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class UnicornAI : MonoBehaviour
 {
-
-    public GameObject Enemy;
-    public GameObject Player;
     public bool alive = true;
 
-
+    private GameObject Enemy;
+    private GameObject Player;
     private int RNG;
     private float speed = 0.1f;
     private float RNGtimer = 3;
@@ -20,19 +18,21 @@ public class UnicornAI : MonoBehaviour
     private float JumpTimer;
     private float DashTime;
     private bool FindPlayer = true;
-
-    [SerializeField] private bool Jump;
-    [SerializeField] private bool Dash;
-    [SerializeField] private bool Shoot;
+    private bool Jump;
+    private bool Dash;
+    private bool Shoot;
     private bool Angered;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
+        if (Player == null)
+            Player = GameObject.FindGameObjectWithTag("Player");
 
+        Enemy = this.gameObject;
+    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -47,7 +47,7 @@ public class UnicornAI : MonoBehaviour
 
         if (!Angered)
         {
-            if (PlayerX + 100 > EnemyX)
+            if (PlayerX + 10 > EnemyX)
             {
                 Angered = true;
             }
@@ -62,19 +62,19 @@ public class UnicornAI : MonoBehaviour
 
         if (!Jump && !Shoot && !Dash)
         {
-            if (RNG <= 75 && RNG > 0)
+            if (RNG <= 55 && RNG > 0)
             {
                 Jump = true;
-                JumpTimer = Time.time + 1f;
+                JumpTimer = Time.time + 1;
             }
-            else if (RNG <= 95 && RNG > 75)
+            else if (RNG <= 85 && RNG > 55)
             {
                 Shoot = true;
             }
-            else if (RNG <= 100 && RNG > 95)
+            else if (RNG <= 100 && RNG > 75)
             {
                 Dash = true;
-                DashTime = Time.time + 1;
+                DashTime = Time.time + 0.2f;
             }
             RNG = 0;
         }
@@ -88,7 +88,7 @@ public class UnicornAI : MonoBehaviour
                 {
 
 
-                    if (Time.time > JumpTimer - 0.5f && EnemyY > PlayerY)
+                    if (Time.time > JumpTimer - 0.5f)
                     {
                         EnemyY -= speed * 2;
                     }
@@ -100,8 +100,7 @@ public class UnicornAI : MonoBehaviour
                 }
                 else if (PlayerX > EnemyX)
                 {
-               
-                    if (Time.time > JumpTimer - 0.5f && EnemyY < PlayerY)
+                    if (Time.time > JumpTimer - 0.5f)
                     {
                         EnemyY -= speed * 2;
                     }
@@ -140,7 +139,6 @@ public class UnicornAI : MonoBehaviour
                 }
             }
         }
-        print(JumpTimer);
         Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
     }
     
