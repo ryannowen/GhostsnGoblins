@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour, ISpawn
+public class Projectile : MonoBehaviour, ISpawn, IDamageable
 {
 
     [SerializeField] private Rigidbody2D m_Rigidbody = null;
+    [SerializeField] private int m_Damage = 1;
+    [SerializeField] private LayerMask m_LayerMask;
 
     void Awake()
     {
@@ -30,6 +32,19 @@ public class Projectile : MonoBehaviour, ISpawn
 
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (((1 << collision.gameObject.layer) & m_LayerMask) != 0)
+        {
+            if (collision.gameObject.GetComponent<IDamageable>() != null)
+                collision.gameObject.GetComponent<IDamageable>().TakeDamage(m_Damage);
+
+            KillEntity();
+        }
+
+    }
+
     // ISpawn
     public void OnSpawn()
     {
@@ -42,6 +57,21 @@ public class Projectile : MonoBehaviour, ISpawn
     {
 
 
+
+    }
+
+    // IDamageable
+    public void TakeDamage(int amount)
+    {
+
+        
+
+    }
+
+    public void KillEntity()
+    {
+
+        gameObject.SetActive(false);
 
     }
 

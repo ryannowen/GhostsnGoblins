@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class WoodyPigAI : MonoBehaviour
 {
-    public GameObject Enemy;
-    public GameObject Player;
     public bool alive = true;
 
+    private GameObject Enemy;
+    private GameObject Player;
     private float speed = 0.08f;
     private float PlayerX;
     private float PlayerY;
@@ -15,7 +15,6 @@ public class WoodyPigAI : MonoBehaviour
     private float EnemyY;
     private float Deathtimer;
     private bool OneTime = true;
-    private bool OneTime2 = true;
     private bool Angered = false;
     private bool MoveLeft;
     private bool MoveRight;
@@ -24,25 +23,24 @@ public class WoodyPigAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (Player == null)
+            Player = GameObject.FindGameObjectWithTag("Player");
+
+        Enemy = this.gameObject;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        if (OneTime)
+    { 
+
+        if (!Angered)
         {
             PlayerX = Player.gameObject.transform.position.x;
             PlayerY = Player.gameObject.transform.position.y;
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
-            OneTime = false;
-        }
-
-        if (!Angered)
-        {
             if (PlayerX + 5 > EnemyX)
-            {
+            {  
                 Angered = true;
             }
         }  
@@ -50,7 +48,7 @@ public class WoodyPigAI : MonoBehaviour
         if (alive && Angered)
         {
             FindPlayer = true;
-            if (FindPlayer && OneTime2)
+            if (FindPlayer && OneTime)
             {
                 PlayerX = Player.gameObject.transform.position.x;
                 PlayerY = Player.gameObject.transform.position.y;
@@ -74,7 +72,7 @@ public class WoodyPigAI : MonoBehaviour
                 {
                     speed = speed * 1.5f;
                 }
-                OneTime2 = false;
+                OneTime = false;
             }
 
             //Will move the Zombie to the left if the player is on the left.

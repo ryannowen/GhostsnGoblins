@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class RedArremerAI : MonoBehaviour
 {
-    public GameObject Enemy;
-    public GameObject Player;
     public bool alive = true;
 
+    private GameObject Enemy;
+    private GameObject Player;
     private int RNG;
     private float speed = 0.1f;
     private float RNGtimer = 3;
@@ -33,7 +33,10 @@ public class RedArremerAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (Player == null)
+            Player = GameObject.FindGameObjectWithTag("Player");
 
+        Enemy = this.gameObject;
     }
 
     // Update is called once per frame

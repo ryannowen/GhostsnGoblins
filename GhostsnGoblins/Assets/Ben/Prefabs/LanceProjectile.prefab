@@ -95,6 +95,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Rigidbody: {fileID: 0}
+  m_Damage: 1
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 8247
 --- !u!61 &941576023956072923
 BoxCollider2D:
   m_ObjectHideFlags: 0
