@@ -16,6 +16,14 @@ public class fallingPlatformScript : MonoBehaviour {
     [Tooltip("The time of delay before the platform respawns to its original position (in seconds).")]
     [SerializeField] private float respawnDelay = 3;
 
+    [Tooltip("Should the platform fall?")]
+    [SerializeField] private bool shouldFall = true;
+
+    [Tooltip("Should the platform respawn?")]
+    [SerializeField] private bool shouldRespawn = true;
+
+    [SerializeField] private bool enablePlatform = false;
+
     private SpriteRenderer sRenderer;
 
     private Vector2 originalPosition;
@@ -24,6 +32,16 @@ public class fallingPlatformScript : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        if (!enablePlatform) {
+            print("Hi 1");
+
+            return;
+        }
+        print("Hi 2");
+        if (shouldFall) {
+            this.gameObject.GetComponent<Rigidbody2D>().mass = 300;
+        }
+
         isFalling = false;
         sRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         gravityScale = this.gameObject.GetComponent<Rigidbody2D>().gravityScale;
@@ -33,7 +51,9 @@ public class fallingPlatformScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.tag == "Player") {
-            StartCoroutine(fallingDelay(fallDelay));
+            if (enablePlatform) {
+                StartCoroutine(fallingDelay(fallDelay));
+            }
         }
     }
 
@@ -56,9 +76,16 @@ public class fallingPlatformScript : MonoBehaviour {
         yield return new WaitForSeconds(wTime);
 
         isFalling = true;
-        this.gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
+
+        if (shouldFall) {
+            this.gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
+        }
+        
         this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        StartCoroutine(respawnPlatform(respawnDelay));
+
+        if (shouldRespawn) {
+            StartCoroutine(respawnPlatform(respawnDelay));
+        }        
     }
 
     private IEnumerator respawnPlatform(float wTime) {

@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class RavenAI : MonoBehaviour
 {
-
-    public GameObject Enemy;
-    public GameObject Player;
     public bool alive = true;
-    public bool angered = false;
 
+    private GameObject Enemy;
+    private GameObject Player;
     private float speed = 0.08f;
     private float Heightspeed = 0.04f;
     private float time = 0.2f;
@@ -17,6 +15,7 @@ public class RavenAI : MonoBehaviour
     private float EnemyX;
     private float EnemyY;
     private float Deathtimer;
+    private bool Angered = false;
     private bool FindPlayer;
     private bool OneTime = true;
     private bool MoveLeft;
@@ -26,19 +25,29 @@ public class RavenAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (Player == null)
+            Player = GameObject.FindGameObjectWithTag("Player");
 
+        Enemy = this.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!Angered)
+        {
+            PlayerX = Player.gameObject.transform.position.x;
+            EnemyX = Enemy.gameObject.transform.position.x;
+            EnemyY = Enemy.gameObject.transform.position.y;
+        }
+
         if (alive)
         {
             if (PlayerX + 10 > EnemyX)
             {
-                angered = true;
+                Angered = true;
             }
-            if (angered)
+            if (Angered)
             {
                 FindPlayer = true;
                 if (FindPlayer && OneTime)

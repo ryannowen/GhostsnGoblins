@@ -33,6 +33,7 @@ public class movingPlatformScript : MonoBehaviour {
             print("No points found for the platform to traverse, please supply GameObjects as points.");
             this.enabled = false;
         } else {
+            this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             oneTimeReverse = false;
             platformCount = 0;
             transform.position = new Vector3(Mathf.Round(platformPoints[0].transform.position.x), Mathf.Round(platformPoints[0].transform.position.y), 0);
@@ -57,6 +58,7 @@ public class movingPlatformScript : MonoBehaviour {
 
     void OnCollisionExit2D(Collision2D col) {
         if (col.gameObject.tag == "Player") {
+            print("I get into this for some reason???");
             col.gameObject.transform.parent = null;
             oneTimeReverse = false;
         }
@@ -82,7 +84,7 @@ public class movingPlatformScript : MonoBehaviour {
                     break;
 
                 case p_type.touchReverse:
-                    transform.position = Vector3.SmoothDamp(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint);
+                    transform.position = Vector3.SmoothDamp(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint * Time.fixedDeltaTime);
 
                     if (Vector3.Distance(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0)) < 0.2f) {
                         canMove = false;

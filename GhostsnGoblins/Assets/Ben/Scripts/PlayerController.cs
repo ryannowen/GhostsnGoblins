@@ -37,7 +37,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
             else
                 directionToFire = Vector3.left;
 
-            m_EquipedItem.GetComponent<IWeapon>().Action(transform.position, directionToFire);
+            if (m_EquipedItem.GetComponent<IWeapon>() != null)
+                m_EquipedItem.GetComponent<IWeapon>().Action(transform.position, directionToFire);
         }
 
     }
