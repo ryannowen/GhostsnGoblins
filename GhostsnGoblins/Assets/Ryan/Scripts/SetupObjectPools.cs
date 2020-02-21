@@ -14,7 +14,7 @@ public class SetupObjectPools : MonoBehaviour
         for (int i = 0; i < m_Pools.Length; i++)
         {
 
-            System_Spawn.instance.CreatePool(m_Pools[i], 20, false);
+            System_Spawn.instance.CreatePool(m_Pools[i], 50, false);
 
         }
 

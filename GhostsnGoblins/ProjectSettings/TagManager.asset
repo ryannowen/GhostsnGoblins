@@ -20,8 +20,8 @@ TagManager:
   - Ladder
   - ZoneEffector
   - Pickup
-  - Weapon
-  - 
+  - PlayerProjectile
+  - EnemyProjectile
   - 
   - 
   - 
