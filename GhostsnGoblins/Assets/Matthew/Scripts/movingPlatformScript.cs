@@ -6,6 +6,9 @@ public class movingPlatformScript : MonoBehaviour {
 
     enum p_type { loop, reverseLoop, touchOnce, touchReverse };
 
+    [Tooltip("Does the platform function entirely? If you want the platform to move, make sure this is enabled.")]
+    [SerializeField] private bool enablePlatform = false;
+
     [Tooltip("Collection of points (as a GameObject) that the platform travels. Adjust size depending on how many points. The platform will start at the first point supplied.")]
     [SerializeField] private GameObject[] platformPoints = { };
 
@@ -29,11 +32,19 @@ public class movingPlatformScript : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        if (!enablePlatform) {
+            return;
+        }
+
+        this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        this.gameObject.GetComponent<Rigidbody2D>().mass = 100000;
+
         if (platformPoints.Length == 0) {
             print("No points found for the platform to traverse, please supply GameObjects as points.");
+
+            enablePlatform = false;
             this.enabled = false;
         } else {
-            this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             oneTimeReverse = false;
             platformCount = 0;
             transform.position = new Vector3(Mathf.Round(platformPoints[0].transform.position.x), Mathf.Round(platformPoints[0].transform.position.y), 0);
@@ -41,7 +52,9 @@ public class movingPlatformScript : MonoBehaviour {
             canMove = false;
 
             if (platformType == p_type.loop || platformType == p_type.reverseLoop) {
-                StartCoroutine(enableMoving(0));
+                if (enablePlatform) {
+                    StartCoroutine(enableMoving(0));
+                }
             }
         }
     }
@@ -58,14 +71,13 @@ public class movingPlatformScript : MonoBehaviour {
 
     void OnCollisionExit2D(Collision2D col) {
         if (col.gameObject.tag == "Player") {
-            print("I get into this for some reason???");
             col.gameObject.transform.parent = null;
             oneTimeReverse = false;
         }
     }
 
     void FixedUpdate() {
-        if (canMove) {
+        if (canMove && enablePlatform) {
             switch (platformType) {
                 case p_type.touchOnce:
                     if (platformCount == platformPoints.Length) {
@@ -84,7 +96,7 @@ public class movingPlatformScript : MonoBehaviour {
                     break;
 
                 case p_type.touchReverse:
-                    transform.position = Vector3.SmoothDamp(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint * Time.fixedDeltaTime);
+                    transform.position = Vector3.SmoothDamp(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint);
 
                     if (Vector3.Distance(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0)) < 0.2f) {
                         canMove = false;

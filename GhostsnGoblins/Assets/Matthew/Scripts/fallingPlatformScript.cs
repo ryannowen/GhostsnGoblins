@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class fallingPlatformScript : MonoBehaviour {
 
+    [Tooltip("Does the platform function entirely? If you want the platform to fall, make sure this is enabled.")]
+    [SerializeField] private bool enablePlatform = false;
+
     [Tooltip("The time of delay before the platform falls when collided (in seconds).")]
     [SerializeField] private float fallDelay = 1;
 
@@ -22,8 +25,6 @@ public class fallingPlatformScript : MonoBehaviour {
     [Tooltip("Should the platform respawn?")]
     [SerializeField] private bool shouldRespawn = true;
 
-    [SerializeField] private bool enablePlatform = false;
-
     private SpriteRenderer sRenderer;
 
     private Vector2 originalPosition;
@@ -33,11 +34,9 @@ public class fallingPlatformScript : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         if (!enablePlatform) {
-            print("Hi 1");
-
             return;
         }
-        print("Hi 2");
+
         if (shouldFall) {
             this.gameObject.GetComponent<Rigidbody2D>().mass = 300;
         }
@@ -58,11 +57,11 @@ public class fallingPlatformScript : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         if (isFalling && doesFade) {
             float alphaCol = sRenderer.color.a;
 
-            alphaCol = Mathf.Lerp(alphaCol, 0, Time.deltaTime * fadeSpeed);
+            alphaCol = Mathf.Lerp(alphaCol, 0, Time.fixedDeltaTime * fadeSpeed);
             sRenderer.color = new Color(sRenderer.color.r, sRenderer.color.g, sRenderer.color.b, alphaCol);
         } else if (!isFalling && doesFade) {
             float alphaCol = sRenderer.color.a;
