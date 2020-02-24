@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5520133786379409508}
   - component: {fileID: 5520133786379409504}
   - component: {fileID: -1358779959878787941}
+  - component: {fileID: 7603615053385364835}
   m_Layer: 13
   m_Name: Platform
   m_TagString: Untagged
@@ -121,10 +122,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 300
+  m_Mass: 1000000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2.5
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -149,6 +150,7 @@ MonoBehaviour:
   respawnDelay: 3
   shouldFall: 1
   shouldRespawn: 1
+  gravScale: 2.5
 --- !u!114 &-1358779959878787941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,3 +168,22 @@ MonoBehaviour:
   platformType: 2
   timeToReachPoint: 1
   moveDelay: 0.5
+--- !u!251 &7603615053385364835
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5520133786379409509}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1

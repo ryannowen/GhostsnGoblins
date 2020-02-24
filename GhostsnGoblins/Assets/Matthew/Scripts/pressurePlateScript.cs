@@ -47,10 +47,8 @@ public class pressurePlateScript : MonoBehaviour {
     void FixedUpdate() {
         if (oneTimeBool) {
             if (pressurePlateTriggered) {
-                print("Triggered");
                 transform.position = Vector3.Lerp(transform.position, originalPlatePos - ((Vector2)transform.up * 0.17f), Time.fixedDeltaTime * 10);
             } else {
-                print("Not triggered");
                 transform.position = Vector3.Lerp(transform.position, originalPlatePos + ((Vector2)transform.up * 0.17f), Time.fixedDeltaTime * 10);
             }
         }

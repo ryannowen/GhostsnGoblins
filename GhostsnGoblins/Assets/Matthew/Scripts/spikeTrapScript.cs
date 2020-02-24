@@ -15,9 +15,6 @@ public class spikeTrapScript : MonoBehaviour {
     [Tooltip("Sets the speed of the trap.")]
     [SerializeField] private float trapSpeed = 12;
 
-    [Tooltip("The time of delay the trap is triggered once the collider is hit (in seconds).")]
-    [SerializeField] private float trapTriggerDelay = 0.5f;
-
     [Tooltip("Reset delay, which is the time before the trap resets (for timed it is the delay for it to go up and down) (in seconds).")]
     [SerializeField] private float trapResetDelay = 2;
 

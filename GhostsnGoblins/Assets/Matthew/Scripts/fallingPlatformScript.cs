@@ -25,6 +25,9 @@ public class fallingPlatformScript : MonoBehaviour {
     [Tooltip("Should the platform respawn?")]
     [SerializeField] private bool shouldRespawn = true;
 
+    [Tooltip("The gravity strength of the platform when it falls.")]
+    [SerializeField] private float gravScale = 2.5f;
+
     private SpriteRenderer sRenderer;
 
     private Vector2 originalPosition;
@@ -39,6 +42,7 @@ public class fallingPlatformScript : MonoBehaviour {
 
         if (shouldFall) {
             this.gameObject.GetComponent<Rigidbody2D>().mass = 300;
+            this.gameObject.GetComponent<Rigidbody2D>().gravityScale = gravScale;
         }
 
         isFalling = false;
@@ -91,6 +95,7 @@ public class fallingPlatformScript : MonoBehaviour {
         yield return new WaitForSeconds(wTime);
 
         this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        this.gameObject.GetComponent<Rigidbody2D>().mass = 1000000;
         this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         this.gameObject.transform.position = originalPosition;
         isFalling = false;
