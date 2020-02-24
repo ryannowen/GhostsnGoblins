@@ -5,9 +5,21 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 {
 
+    private enum ArmourType
+    {
+
+        None,
+        Copper,
+        Silver,
+        Gold
+
+    }
+
     [SerializeField] private int m_PlayerHealth = 2;
-    [SerializeField] private int m_ArmourPoints = 3;
+    [SerializeField] private int m_ArmourPoints = 0;
     [SerializeField] private float m_FireRate = 0.5f;
+
+    private ArmourType m_Armour = ArmourType.None;
 
     private bool m_IsInvulnerable = false;
     private float m_InvulnerabilityTimer = 0f;
@@ -42,6 +54,31 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
             m_InvulnerabilityTimer -= Time.deltaTime;
 
         m_IsInvulnerable = (m_InvulnerabilityTimer <= 0f) ? false : true;
+
+        // Armour Weights
+        switch(m_Armour)
+        {
+
+            case ArmourType.None:
+                m_MovementSystem.SetMovementSpeed(5f);
+                break;
+
+            case ArmourType.Copper:
+                m_MovementSystem.SetMovementSpeed(4f);
+                break;
+
+            case ArmourType.Silver:
+                m_MovementSystem.SetMovementSpeed(3f);
+                break;
+
+            case ArmourType.Gold:
+                m_MovementSystem.SetMovementSpeed(2f);
+                break;
+
+            default:
+                break;
+
+        }
 
         ManageStats();
 
@@ -104,10 +141,10 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
     }
 
-    public void AddArmour(int amount)
+    public void SetArmourPoints(int argsAmount)
     {
 
-        m_ArmourPoints += amount;
+        m_ArmourPoints += argsAmount;
 
     }
 
