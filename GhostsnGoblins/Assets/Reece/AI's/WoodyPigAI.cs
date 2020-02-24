@@ -124,6 +124,8 @@ public class WoodyPigAI : MonoBehaviour
 
             Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
         }
+        if (!alive)
+            Enemy.SetActive(false);
     }
 }
 
