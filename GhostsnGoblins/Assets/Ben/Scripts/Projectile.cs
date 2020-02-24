@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
 
     [SerializeField] private Rigidbody2D m_Rigidbody = null;
     [SerializeField] private int m_Damage = 1;
+    [SerializeField] private float m_KnockbackPower = 1f;
     [SerializeField] private LayerMask m_LayerMask;
 
     void Awake()
@@ -39,6 +40,9 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
         {
             if (collision.gameObject.GetComponent<IDamageable>() != null)
                 collision.gameObject.GetComponent<IDamageable>().TakeDamage(m_Damage);
+
+            if (collision.gameObject.GetComponent<ICanTakeKnockback>() != null)
+                collision.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, m_KnockbackPower);
 
             KillEntity();
         }

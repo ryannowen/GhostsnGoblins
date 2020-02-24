@@ -7,8 +7,13 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
     [SerializeField] private int m_PlayerHealth = 2;
     [SerializeField] private int m_ArmourPoints = 3;
+    [SerializeField] private float m_FireRate = 0.5f;
 
-    [SerializeField] private GameObject m_EquipedItem;
+    private bool m_IsInvulnerable = false;
+    private float m_InvulnerabilityTimer = 0f;
+    private float m_TimeSinceLastShot = 0f;
+
+    [SerializeField] private GameObject m_EquippedItem;
     PlayerMovement m_MovementSystem = null;
 
     // Start is called before the first frame update
@@ -23,13 +28,31 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     void Update()
     {
 
+        // remove this later
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            TakeDamage(1);
+            m_MovementSystem.TakeKnockback(new Vector3(0, 0, 0), 20);
+        }
+
+        if (m_TimeSinceLastShot > 0f)
+            m_TimeSinceLastShot -= Time.deltaTime;
+
+        if (m_InvulnerabilityTimer > 0f)
+            m_InvulnerabilityTimer -= Time.deltaTime;
+
+        m_IsInvulnerable = (m_InvulnerabilityTimer <= 0f) ? false : true;
+
         ManageStats();
 
-        if (m_EquipedItem == null)
-            m_EquipedItem = GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject;
+        if (m_EquippedItem == null)
+            m_EquippedItem = GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject;
 
-        if (Input.GetAxisRaw("Fire1") > 0)
+        if (Input.GetAxisRaw("Fire1") > 0 && m_TimeSinceLastShot <= 0 && !m_IsInvulnerable)
         {
+
+            m_MovementSystem.AddToMovementDelayTimer(m_FireRate);
+
             Vector3 directionToFire = Vector3.zero;
 
             if (m_MovementSystem.GetMostRecentDirection())
@@ -37,8 +60,11 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
             else
                 directionToFire = Vector3.left;
 
-            if (m_EquipedItem.GetComponent<IWeapon>() != null)
-                m_EquipedItem.GetComponent<IWeapon>().Action(transform.position, directionToFire);
+            if (m_EquippedItem.GetComponent<IWeapon>() != null)
+                m_EquippedItem.GetComponent<IWeapon>().Action(transform.position, directionToFire);
+
+            m_TimeSinceLastShot = m_FireRate;
+
         }
 
     }
@@ -64,6 +90,13 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
     }
 
+    void AddToInvulnerabilityTimer(float timeToAdd)
+    {
+
+        m_InvulnerabilityTimer += timeToAdd;
+
+    }
+
     public void AddHealth(int amount)
     {
 
@@ -81,7 +114,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     public void SetEquippedItem(GameObject argsItem)
     {
 
-        m_EquipedItem = argsItem;
+        m_EquippedItem = argsItem;
 
     }
 
@@ -89,10 +122,19 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     public void TakeDamage(int amount)
     {
 
-        if (m_ArmourPoints > 0)
-            m_ArmourPoints -= amount;
-        else
-            m_PlayerHealth -= amount;
+        if (!m_IsInvulnerable)
+        {
+
+            if (m_ArmourPoints > 0)
+                m_ArmourPoints -= amount;
+            else
+                m_PlayerHealth -= amount;
+
+            // Set Invulnerability
+            AddToInvulnerabilityTimer(2f);
+            m_MovementSystem.AddToMovementDelayTimer(1.5f);
+
+        }
 
     }
 
