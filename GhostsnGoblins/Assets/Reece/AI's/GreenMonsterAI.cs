@@ -37,6 +37,7 @@ public class GreenMonsterAI : MonoBehaviour
 
         if (alive)
         {
+            Enemy.SetActive(true);
             if (PlayerX + 10 > EnemyX)
             {
                 angered = true;
@@ -65,5 +66,7 @@ public class GreenMonsterAI : MonoBehaviour
             }
            
         }
+        else
+            Enemy.SetActive(false);
     }
 }
