@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class dartTrapScript : MonoBehaviour {
 
-    enum t_Type { triggerable, timed };
+    enum t_Type { triggerable, timed, pressurePlated };
 
     [Tooltip("The object in which the trap fires (should always be dart).")]
     [SerializeField] private GameObject dartObj = null;
@@ -15,7 +15,7 @@ public class dartTrapScript : MonoBehaviour {
     [Tooltip("The damage in which the dart inflicts to the player.")]
     [SerializeField] private int dartDamage = 1;
 
-    [Tooltip("Triggerable - Trap fired when the player hits the collider. Timed - Fires automatically depending on a given delay.")]
+    [Tooltip("Triggerable - Trap fired when the player hits the collider. Timed - Fires automatically depending on a given delay. Pressure plated - Should be the option if intended to be controlled by a pressure plate.")]
     [SerializeField] private t_Type trapType = t_Type.triggerable;
 
     [Tooltip("A delay before an object fires again (in seconds).")]
@@ -25,7 +25,11 @@ public class dartTrapScript : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        if (shootDelay < 0.5f){
+        if (trapType == t_Type.pressurePlated) {
+            this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        }
+
+        if (shootDelay < 0.5f) {
             shootDelay = 0.5f;
         }
 
@@ -74,5 +78,20 @@ public class dartTrapScript : MonoBehaviour {
     private IEnumerator delayDartSpawn(float wTime) {
         yield return new WaitForSeconds(wTime);
         canSpawnPart = true;
+    }
+
+    public void activateDartTrap() {
+        if (canSpawnPart) {
+            GameObject tmpDart = System_Spawn.instance.GetObjectFromPool(dartObj);
+
+            tmpDart.GetComponent<dartScript>().setDartDamage(dartDamage);
+            tmpDart.GetComponent<dartScript>().setDartSpeed(dartSpeed);
+
+            tmpDart.transform.position = transform.position;
+            tmpDart.transform.rotation = transform.rotation;
+
+            canSpawnPart = false;
+            StartCoroutine(delayDartSpawn(shootDelay));
+        }
     }
 }
