@@ -8,11 +8,14 @@ public class WoodyPigAI : MonoBehaviour
 
     private GameObject Enemy;
     private GameObject Player;
-    private float speed = 0.08f;
+    private float speed = 5f;
     private float PlayerX;
     private float PlayerY;
     private float EnemyX;
     private float EnemyY;
+    private Vector2 EnemyPos;
+    private bool setTarget = true;
+    private Vector2 targetPos;
     private float Deathtimer;
     private bool OneTime = true;
     private bool Angered = false;
@@ -20,17 +23,21 @@ public class WoodyPigAI : MonoBehaviour
     private bool MoveRight;
     private bool FindPlayer;
 
+    private Rigidbody2D rb;
+
     // Start is called before the first frame update
     void Start()
     {
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
 
+        rb = this.gameObject.GetComponent<Rigidbody2D>();
+
         Enemy = this.gameObject;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     { 
 
         if (!Angered)
@@ -39,6 +46,7 @@ public class WoodyPigAI : MonoBehaviour
             PlayerY = Player.gameObject.transform.position.y;
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
+            EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
             if (PlayerX + 5 > EnemyX)
             {  
                 Angered = true;
@@ -47,13 +55,16 @@ public class WoodyPigAI : MonoBehaviour
 
         if (alive && Angered)
         {
+            
+            EnemyX = Enemy.gameObject.transform.position.x;
+            EnemyY = Enemy.gameObject.transform.position.y;
+            EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
+            PlayerY = Player.gameObject.transform.position.y;
             FindPlayer = true;
             if (FindPlayer && OneTime)
             {
                 PlayerX = Player.gameObject.transform.position.x;
-                PlayerY = Player.gameObject.transform.position.y;
-                EnemyX = Enemy.gameObject.transform.position.x;
-                EnemyY = Enemy.gameObject.transform.position.y;
+                
                 Deathtimer = Time.time + 30;
 
                 //Finds if the player is on the left.
@@ -78,42 +89,133 @@ public class WoodyPigAI : MonoBehaviour
             //Will move the Zombie to the left if the player is on the left.
             if (MoveLeft)
             {
-                if (EnemyX > PlayerX - 8)
+                if (EnemyPos.x > PlayerX - 8)
                 {
-                    EnemyX -= speed;
+                    print("Moving Left");
+                    Vector3 moveDirection = Vector3.left;
+                    moveDirection.Normalize();
+                    moveDirection.y = 0;
+                    moveDirection.x *= speed;
+
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
                 }
-                else if (EnemyY > PlayerY)
+                else if (EnemyPos.y > PlayerY)
                 {
-                    EnemyY -= 1;
-                    MoveLeft = false;
-                    MoveRight = true;
+                    if(setTarget)
+                    {
+
+                        targetPos = new Vector2(EnemyPos.x, EnemyPos.y - 1);
+                        setTarget = false;
+                    }
+                    Vector2 direction = targetPos - EnemyPos;
+                    direction.Normalize();
+
+                    EnemyPos = EnemyPos + (direction * speed);
+
+                    //Vector3 moveDirection = Vector3.down;
+                    //moveDirection.Normalize();
+                    //moveDirection.y *= speed;
+
+                    //rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
+                    if (Vector2.Distance(EnemyPos, targetPos) < 0.1f)
+                    {
+                        setTarget = true;
+                        MoveLeft = false;
+                        MoveRight = true;
+                    }
                 }
                 else
                 {
-                    EnemyY += 1;
-                    MoveLeft = false;
-                    MoveRight = true;
+                    if (setTarget)
+                    {
+
+                        targetPos = new Vector2(EnemyPos.x, EnemyPos.y + 1);
+                        setTarget = false;
+                    }
+
+                    Vector2 direction = targetPos - EnemyPos;
+                    direction.Normalize();
+
+                    EnemyPos = EnemyPos + (direction * speed);
+
+                    //Vector3 moveDirection = Vector3.up;
+                    //moveDirection.Normalize();
+                    //moveDirection.y *= speed;
+
+                    //rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
+                    if (Vector2.Distance(EnemyPos, targetPos) < 0.1f)
+                    {
+                        setTarget = true;
+                        MoveLeft = false;
+                        MoveRight = true;
+                    }
                 }
 
             }
             //Will move the Zombie to the right if the player is on the right
             else if (MoveRight)
             {
-                if (EnemyX < PlayerX + 8)
+                if (EnemyPos.x < PlayerX + 8)
                 {
-                    EnemyX += speed;
+                    print(EnemyX + "    " + PlayerX + "    " + PlayerX + 8);
+                    Vector3 moveDirection = Vector3.right;
+                    moveDirection.Normalize();
+                    moveDirection.y = 0;
+                    moveDirection.x *= speed;
+
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
                 }
-                else if (EnemyY > PlayerY)
+                else if (EnemyPos.y > PlayerY)
                 {
-                    EnemyY -= 1;
-                    MoveLeft = true;
-                    MoveRight = false;
+                    if (setTarget)
+                    {
+
+                        targetPos = new Vector2(EnemyPos.x, EnemyPos.y - 1);
+                        setTarget = false;
+                    }
+
+                    Vector2 direction = targetPos - EnemyPos;
+                    direction.Normalize();
+
+                    EnemyPos = EnemyPos + (direction * speed);
+
+                    //Vector3 moveDirection = Vector3.down;
+                    //moveDirection.Normalize();
+                    //moveDirection.y *= speed;
+
+                    //rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
+                    if (Vector2.Distance(EnemyPos, targetPos) < 0.1f)
+                    {
+                        setTarget = true;
+                        MoveLeft = true;
+                        MoveRight = false;
+                    }
                 }
                 else
                 {
-                    EnemyY += 1;
-                    MoveLeft = true;
-                    MoveRight = false;
+                    if (setTarget)
+                    {
+
+                        targetPos = new Vector2(EnemyPos.x, EnemyPos.y + 1);
+                        setTarget = false;
+                    }
+
+                    Vector2 direction = targetPos - EnemyPos;
+                    direction.Normalize();
+
+                    EnemyPos = EnemyPos + (direction * speed);
+
+                    //Vector3 moveDirection = Vector3.up;
+                    //moveDirection.Normalize();
+                    //moveDirection.y *= speed;
+
+                    //rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
+                    if (Vector2.Distance(EnemyPos, targetPos) < 0.1f)
+                    {
+                        setTarget = true;
+                        MoveLeft = true;
+                        MoveRight = false;
+                    }
                 }
             }
             //After how long the DeathTimer is the zombie will stop moving.
@@ -122,7 +224,7 @@ public class WoodyPigAI : MonoBehaviour
                 alive = false;
             }
 
-            Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
+            //Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
         }
         if (!alive)
             Enemy.SetActive(false);

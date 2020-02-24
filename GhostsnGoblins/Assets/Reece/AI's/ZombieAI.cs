@@ -8,7 +8,7 @@ public class ZombieAI : MonoBehaviour
 
     private GameObject Enemy;
     private GameObject Player;
-    private float speed = 0.04f;
+    private float speed = 5f;
     private float PlayerX;
     private float EnemyX;
     private float Deathtimer;
@@ -18,17 +18,21 @@ public class ZombieAI : MonoBehaviour
     private bool MoveRight;
     private bool FindPlayer;
 
+    private Rigidbody2D rb;
+
     // Start is called before the first frame update
     void Start()
     {
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
 
+        rb = this.gameObject.GetComponent<Rigidbody2D>();
+
         Enemy = this.gameObject;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!Angered)
         {
@@ -73,19 +77,31 @@ public class ZombieAI : MonoBehaviour
             //Will move the Zombie to the left if the player is on the left.
             if (MoveLeft)
             {
-                EnemyX -= speed;
+                Vector3 moveDirection = Vector3.left;
+                moveDirection.Normalize();
+                moveDirection.y = rb.velocity.y;
+                moveDirection.x *= speed;
+
+                rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                //EnemyX -= speed;
             }
             //Will move the Zombie to the right if the player is on the right
             else if (MoveRight)
             {
-                EnemyX += speed;
+                Vector3 moveDirection = Vector3.right;
+                moveDirection.Normalize();
+                moveDirection.y = rb.velocity.y;
+                moveDirection.x *= speed;
+
+                rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                //EnemyX += speed;
             }
             //After how long the DeathTimer is the zombie will stop moving.
             if (Time.time > Deathtimer)
             {
                 alive = false;
             }
-            Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z);
+            //Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z);
         }
         if (!alive)
             Enemy.SetActive(false);

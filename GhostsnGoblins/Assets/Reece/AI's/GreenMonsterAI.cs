@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GreenMonsterAI : MonoBehaviour
 {
+
+    [SerializeField] private GameObject bullet;
+
     public bool alive = true; 
 
     private GameObject Enemy;
@@ -14,13 +17,18 @@ public class GreenMonsterAI : MonoBehaviour
     private float EnemyX;
     private bool angered = false;
     private bool FindPlayer;
-    private bool Shoot;
+    public bool Shoot;
+
+    private FireProjectile fireProj;
 
     // Start is called before the first frame update
     void Start()
     {
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
+
+        fireProj = this.gameObject.GetComponent<FireProjectile>();
+        fireProj.SetProjectile(bullet);
 
         Enemy = this.gameObject;
     }
@@ -46,7 +54,7 @@ public class GreenMonsterAI : MonoBehaviour
             {
                 if (Time.time > time)
                 {
-                    time += 0.5f;
+                    time += 1.5f;
                     FindPlayer = true;
                     Shoot = true;
                 }
@@ -61,6 +69,9 @@ public class GreenMonsterAI : MonoBehaviour
                 }
                 if (Shoot)
                 {
+                    Vector3 directionToFire = Player.transform.position - transform.position;
+                    directionToFire.Normalize();
+                    fireProj.Fire(transform.position, directionToFire, transform.rotation);
                     Shoot = false;
                 }
             }

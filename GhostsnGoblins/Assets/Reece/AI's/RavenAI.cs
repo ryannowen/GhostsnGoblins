@@ -8,8 +8,8 @@ public class RavenAI : MonoBehaviour
 
     private GameObject Enemy;
     private GameObject Player;
-    private float speed = 0.08f;
-    private float Heightspeed = 0.04f;
+    private float speed = 5f;
+    private float Heightspeed = 2.5f;
     private float time = 0.2f;
     private float PlayerX;
     private float EnemyX;
@@ -21,6 +21,8 @@ public class RavenAI : MonoBehaviour
     private bool MoveLeft;
     private bool MoveRight;
 
+    private Rigidbody2D rb;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,11 +30,13 @@ public class RavenAI : MonoBehaviour
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
 
+        rb = this.gameObject.GetComponent<Rigidbody2D>();
+
         Enemy = this.gameObject;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!Angered)
         {
@@ -69,7 +73,9 @@ public class RavenAI : MonoBehaviour
                 //Will move the Zombie to the left if the player is on the left.
                 if (MoveLeft)
                 {
-                    EnemyX -= speed;
+                    Vector3 moveDirection = Vector3.left + Vector3.up;
+                    moveDirection.Normalize();
+                    moveDirection.x *= speed;
 
                     if (Time.time + 0.5 > time)
                     {
@@ -77,9 +83,13 @@ public class RavenAI : MonoBehaviour
                         Heightspeed = -Heightspeed;
                     }
 
-                    EnemyY += Heightspeed;
+                    moveDirection.y *= Heightspeed;
 
-                    Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
+                    //EnemyY += Heightspeed;
+
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+
+                    //Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
                 }
 
                 //After how long the DeathTimer is the zombie will stop moving.
