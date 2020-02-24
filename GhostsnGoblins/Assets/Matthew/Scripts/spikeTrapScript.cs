@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class spikeTrapScript : MonoBehaviour {
 
-    enum t_Type { triggerable, timed };
+    enum t_Type { triggerable, timed, pressurePlated };
 
 	private Vector2 originalTriggerSize;
 	private Vector2 originalTriggerOffset;
@@ -24,7 +24,7 @@ public class spikeTrapScript : MonoBehaviour {
     [Tooltip("The amount of damage the spike trap does.")]
     [SerializeField] private int spikeTrapDamage = 1;
 
-    [Tooltip("Timed - automatically moving. Triggered - Has to be collided with to activate.")]
+    [Tooltip("Timed - automatically moving. Triggered - Has to be collided with to activate. Pressure plated - Should be the option if intended to be controlled by a pressure plate.")]
     [SerializeField] private t_Type trapType = t_Type.triggerable;
 
     // Start is called before the first frame update
@@ -38,7 +38,15 @@ public class spikeTrapScript : MonoBehaviour {
             hasTriggered = true;
         } else if (trapType == t_Type.triggerable) {
             hasTriggered = false;
+        } else if (trapType == t_Type.pressurePlated) {
+            this.gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(0, 0);
+            this.gameObject.GetComponent<BoxCollider2D>().size = new Vector2(1, 1);
         }
+    }
+
+    public void activateSpikeTrap() {
+        hasTriggered = true;
+        StartCoroutine(resetSpikeCollider(trapResetDelay, this.gameObject.GetComponent<BoxCollider2D>()));
     }
 
     void resizeTrapCollider(BoxCollider2D bCol) {
@@ -55,21 +63,21 @@ public class spikeTrapScript : MonoBehaviour {
         if (col.gameObject.tag == "Player") {
 			if (!hasTriggered) {
                 StartCoroutine(delayTrapActivation(trapResetDelay));		
-			} else {
+			} else { 
 				col.gameObject.GetComponent<IDamageable>().TakeDamage(spikeTrapDamage);
 			}
 		}
     }
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         switch(trapType) {
             case t_Type.timed:
                 if (hasTriggered) {
-                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up, Time.deltaTime * trapSpeed);
+                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up, Time.fixedDeltaTime * trapSpeed);
                     StartCoroutine(resetSpikeCollider(trapResetDelay, this.gameObject.GetComponent<BoxCollider2D>()));
                 } else {
-                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition, Time.deltaTime * trapSpeed);
+                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition, Time.fixedDeltaTime * trapSpeed);
                     StartCoroutine(delayTrapActivation(trapResetDelay));
                 }
                 break;
@@ -78,11 +86,20 @@ public class spikeTrapScript : MonoBehaviour {
 
                 // Ask if hasTriggered is true and if it is, play the required animation.
                 if (hasTriggered) {
-                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up, Time.deltaTime * trapSpeed);
+                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up, Time.fixedDeltaTime * trapSpeed);
                 } else {
-                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition, Time.deltaTime * trapSpeed);
+                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition, Time.fixedDeltaTime * trapSpeed);
                 }
                 break;
+
+            case t_Type.pressurePlated:
+                if (hasTriggered) {
+                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up, Time.fixedDeltaTime * trapSpeed);
+                } else {
+                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition, Time.fixedDeltaTime * trapSpeed);
+                }
+                break;
+
         } 
     }
 
