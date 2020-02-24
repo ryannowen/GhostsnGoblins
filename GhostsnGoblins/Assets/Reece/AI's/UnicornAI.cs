@@ -23,7 +23,6 @@ public class UnicornAI : MonoBehaviour
     private bool Shoot;
     private bool Angered;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -86,29 +85,23 @@ public class UnicornAI : MonoBehaviour
             {
                 if (PlayerX < EnemyX)
                 {
-
-
-                    if (Time.time > JumpTimer - 0.5f)
-                    {
-                        EnemyY -= speed * 2;
-                    }
-                    else if (Time.time < JumpTimer - 0.5f)
+                    if (Time.time < JumpTimer - 0.5f)
                     {
                         EnemyY += speed * 2;
                         EnemyX -= speed;
                     }
+                    else
+                        EnemyY -= speed * 2;
                 }
                 else if (PlayerX > EnemyX)
                 {
-                    if (Time.time > JumpTimer - 0.5f)
-                    {
-                        EnemyY -= speed * 2;
-                    }
-                    else if (Time.time < JumpTimer - 0.5f)
+                    if (Time.time < JumpTimer - 0.5f)
                     {
                         EnemyY += speed * 2;
                         EnemyX += speed;
                     }
+                    else
+                        EnemyY -= speed * 2;
                 }
                 if (Time.time > JumpTimer)
                 {
@@ -139,6 +132,10 @@ public class UnicornAI : MonoBehaviour
                 }
             }
         }
+
+        if (!alive)
+            Enemy.SetActive(false);
+
         Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
     }
     
