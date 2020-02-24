@@ -89,5 +89,7 @@ public class RavenAI : MonoBehaviour
                 }
             }
         }
+        else
+            Enemy.SetActive(false);
     }
 }
