@@ -61,7 +61,10 @@ public class System_Spawn : MonoBehaviour
             GameObject poolObject = objectPool[argGameObject.name].Dequeue().gameObject;
             objectPool[argGameObject.name].Enqueue(poolObject);
             poolObject.SetActive(true);
-            poolObject.GetComponent<ISpawn>().OnSpawn();
+            ISpawn spawnInterface = poolObject.GetComponent<ISpawn>();
+
+            if (null != spawnInterface)
+                spawnInterface.OnSpawn();
    
             return poolObject;
 
