@@ -8,12 +8,16 @@ public class Pickup : MonoBehaviour, ISpawn
     public enum PickupType { 
     
         HealthPickup,
-        ArmourPickup,
+        CopperArmourPickup,
+        SilverArmourPickup,
+        GoldArmourPickup,
         Lance,
         Dagger,
         Torch,
         Axe,
-        Shield
+        Shield,
+        Coin,
+        Key
 
     }
 
@@ -53,14 +57,24 @@ public class Pickup : MonoBehaviour, ISpawn
 
                 switch (m_PickupType)
                 {
-
+                    //remove tihs
                     case PickupType.HealthPickup:
                         collision.gameObject.GetComponent<PlayerController>().AddHealth(1);
                         this.gameObject.SetActive(false);
                         break;
 
-                    case PickupType.ArmourPickup:
-                        collision.gameObject.GetComponent<PlayerController>().AddArmour(1);
+                    case PickupType.CopperArmourPickup:
+                        collision.gameObject.GetComponent<PlayerController>().SetArmourPoints(1);
+                        this.gameObject.SetActive(false);
+                        break;
+
+                    case PickupType.SilverArmourPickup:
+                        collision.gameObject.GetComponent<PlayerController>().SetArmourPoints(2);
+                        this.gameObject.SetActive(false);
+                        break;
+
+                    case PickupType.GoldArmourPickup:
+                        collision.gameObject.GetComponent<PlayerController>().SetArmourPoints(3);
                         this.gameObject.SetActive(false);
                         break;
 
@@ -89,6 +103,16 @@ public class Pickup : MonoBehaviour, ISpawn
                         this.gameObject.SetActive(false);
                         break;
 
+                    case PickupType.Coin:
+
+                        this.gameObject.SetActive(false);
+                        break;
+
+                    case PickupType.Key:
+
+                        this.gameObject.SetActive(false);
+                        break;
+
                     default:
                         break;
 
@@ -111,7 +135,15 @@ public class Pickup : MonoBehaviour, ISpawn
                 m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/HealthPickup") as Sprite;
                 break;
 
-            case PickupType.ArmourPickup:
+            case PickupType.CopperArmourPickup:
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                break;
+
+            case PickupType.SilverArmourPickup:
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                break;
+
+            case PickupType.GoldArmourPickup:
                 m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
                 break;
 
@@ -132,6 +164,14 @@ public class Pickup : MonoBehaviour, ISpawn
                 break;
 
             case PickupType.Shield:
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                break;
+
+            case PickupType.Coin:
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                break;
+
+            case PickupType.Key:
                 m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
                 break;
 

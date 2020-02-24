@@ -29,6 +29,10 @@ public class TorchScript : MonoBehaviour, IWeapon
     public void Action(Vector3 argsStartPosition, Vector3 argsDirection)
     {
 
+        argsDirection += new Vector3(0,0.5f,0);
+
+        argsDirection.Normalize();
+
         m_FireProjectile.Fire(argsStartPosition, argsDirection, transform.rotation);
 
     }
