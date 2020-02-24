@@ -222,6 +222,13 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
 
     }
 
+    public void SetMovementSpeed(float argsNewSpeed)
+    {
+
+        m_MovementSpeed = argsNewSpeed;
+
+    }
+
     public void TakeKnockback(Vector3 argsSenderPosition, float argsKnockbackPower)
     {
 
