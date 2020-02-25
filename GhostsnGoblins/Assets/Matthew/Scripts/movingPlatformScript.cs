@@ -36,8 +36,7 @@ public class movingPlatformScript : MonoBehaviour {
             return;
         }
 
-        this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-        this.gameObject.GetComponent<Rigidbody2D>().mass = 1000000;
+        this.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
         if (platformPoints.Length == 0) {
             print("No points found for the platform to traverse, please supply GameObjects as points.");
