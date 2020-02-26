@@ -15,7 +15,7 @@ public class ZombieAI : MonoBehaviour
     private float EnemyX;
     private float Deathtimer;
     private bool Angered = false;
-    private bool OnGround = false;
+    public bool OnGround = false;
     private bool Jump = false;
     private bool OneTime = true;
     private bool MoveLeft;
@@ -150,7 +150,6 @@ public class ZombieAI : MonoBehaviour
     void CheckGroundedState()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, 0.55f, OnGroundCheckLayerMask);
-        Debug.DrawRay(transform.position, Vector3.down * 0.55f, Color.red);
 
         if (hit)
             OnGround = true;
