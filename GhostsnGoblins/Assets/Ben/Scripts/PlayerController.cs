@@ -83,7 +83,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         ManageStats();
 
         if (m_EquippedItem == null)
-            m_EquippedItem = GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject;
+            m_EquippedItem = new GameObject();
+            //m_EquippedItem = GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject;
 
         if (Input.GetAxisRaw("Fire1") > 0 && m_TimeSinceLastShot <= 0 && !m_IsInvulnerable)
         {

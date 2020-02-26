@@ -53,8 +53,6 @@ public class ZombieAI : MonoBehaviour
             }
         }
 
-       
-
         if (alive && Angered)
         {
             FindPlayer = true;
@@ -88,6 +86,7 @@ public class ZombieAI : MonoBehaviour
             //Will move the Zombie to the left if the player is on the left.
             if (MoveLeft)
             {
+                print("left");
                 Vector3 moveDirection = Vector3.left;
                 moveDirection.Normalize();
                 moveDirection.y = rb.velocity.y;
@@ -100,6 +99,7 @@ public class ZombieAI : MonoBehaviour
             //Will move the Zombie to the right if the player is on the right
             else if (MoveRight)
             {
+                print("right");
                 Vector3 moveDirection = Vector3.right;
                 moveDirection.Normalize();
                 moveDirection.y = rb.velocity.y;
@@ -121,21 +121,21 @@ public class ZombieAI : MonoBehaviour
 
             CheckGroundedState();
 
-
-            if (rb.velocity.sqrMagnitude < 30 && m_Grounded)
+            print(rb.velocity.x);
+            if (Mathf.Abs(rb.velocity.x) < 1f && m_Grounded)
             {
+                print("hi");
                 rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, JumpForce), 1f);
                 m_Grounded = false;
             }
            
-
-
             if (JumpForce == 0)
                 JumpForce = 7f;
 
             //After how long the DeathTimer is the zombie will stop moving.
             if (Time.time > Deathtimer)
             {
+                print("dead");
                 alive = false;
             }
         }
@@ -146,9 +146,9 @@ public class ZombieAI : MonoBehaviour
     {
 
         //RaycastHit2D hit = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z), Vector3.down, (m_PlayerCollider.size.y / 2 + 0.05f) * transform.localScale.x, m_GroundCheckLayerMask);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, 2f, m_GroundCheckLayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, 0.55f, m_GroundCheckLayerMask);
        // Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z), Vector3.down * (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, Color.red);
-        Debug.DrawRay(transform.position, Vector3.down * 2f, Color.red);
+        Debug.DrawRay(transform.position, Vector3.down * 0.55f, Color.red);
 
         if (hit)
             m_Grounded = true;

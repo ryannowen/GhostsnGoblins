@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7734004820503976334}
   - component: {fileID: 4436477335589171273}
   - component: {fileID: 7672087569356274219}
-  m_Layer: 0
-  m_Name: Zombie 1
+  m_Layer: 16
+  m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,6 +95,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alive: 1
+  m_Grounded: 0
+  m_GroundCheckLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!61 &4436477335589171273
 BoxCollider2D:
   m_ObjectHideFlags: 0

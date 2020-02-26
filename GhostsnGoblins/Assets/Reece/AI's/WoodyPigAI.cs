@@ -91,7 +91,7 @@ public class WoodyPigAI : MonoBehaviour
             {
                 if (EnemyPos.x > PlayerX - 8)
                 {
-                    print("Moving Left");
+                    //print("Moving Left");
                     Vector3 moveDirection = Vector3.left;
                     moveDirection.Normalize();
                     moveDirection.y = 0;
@@ -157,7 +157,7 @@ public class WoodyPigAI : MonoBehaviour
             {
                 if (EnemyPos.x < PlayerX + 8)
                 {
-                    print(EnemyX + "    " + PlayerX + "    " + PlayerX + 8);
+                    //print(EnemyX + "    " + PlayerX + "    " + PlayerX + 8);
                     Vector3 moveDirection = Vector3.right;
                     moveDirection.Normalize();
                     moveDirection.y = 0;

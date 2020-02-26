@@ -36,7 +36,6 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
 
     void FixedUpdate()
     {
-
         // Check if the player is grounded
         CheckGroundedState();
 
