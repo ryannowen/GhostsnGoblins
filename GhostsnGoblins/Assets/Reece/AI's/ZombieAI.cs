@@ -12,13 +12,22 @@ public class ZombieAI : MonoBehaviour
     private float PlayerX;
     private float EnemyX;
     private float Deathtimer;
+    private float JumpForce = 7f;
     private bool OneTime = true;
     private bool Angered = false;
     private bool MoveLeft;
     private bool MoveRight;
     private bool FindPlayer;
 
-    private Rigidbody2D rb;
+
+    public bool m_Grounded = false;
+    public LayerMask m_GroundCheckLayerMask;
+
+    Rigidbody2D rb;
+    BoxCollider2D m_PlayerCollider;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,34 +53,36 @@ public class ZombieAI : MonoBehaviour
             }
         }
 
-
+       
 
         if (alive && Angered)
         {
             FindPlayer = true;
-            if (FindPlayer && OneTime)
+            if (FindPlayer)
             {
                 PlayerX = Player.gameObject.transform.position.x;
                 EnemyX = Enemy.gameObject.transform.position.x;
                 Deathtimer = Time.time + 5;
-
-                //Finds if the player is on the left.
-                if (PlayerX < EnemyX)
+                if (OneTime)
                 {
-                    MoveLeft = true;
-                }
+                    //Finds if the player is on the left.
+                    if (PlayerX < EnemyX)
+                    {
+                        MoveLeft = true;
+                    }
 
-                //Finds if the player is on the right.
-                if (PlayerX > EnemyX)
-                {
-                    MoveRight = true;
-                }
+                    //Finds if the player is on the right.
+                    if (PlayerX > EnemyX)
+                    {
+                        MoveRight = true;
+                    }
 
-                if (Random.Range(2, 101) > 70)
-                {
-                    speed = speed * 1.5f;
+                    if (Random.Range(2, 101) > 70)
+                    {
+                        speed = speed * 1.5f;
+                    }
+                    OneTime = false;
                 }
-                OneTime = false;
             }
 
             //Will move the Zombie to the left if the player is on the left.
@@ -85,6 +96,7 @@ public class ZombieAI : MonoBehaviour
                 rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
                 //EnemyX -= speed;
             }
+
             //Will move the Zombie to the right if the player is on the right
             else if (MoveRight)
             {
@@ -96,14 +108,51 @@ public class ZombieAI : MonoBehaviour
                 rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
                 //EnemyX += speed;
             }
+
+
+            if (GetComponent<BoxCollider2D>())
+            {
+                m_PlayerCollider = GetComponent<BoxCollider2D>();
+            }
+            else
+            {
+                m_PlayerCollider = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+            }
+
+            CheckGroundedState();
+
+
+            if (rb.velocity.sqrMagnitude < 30 && m_Grounded)
+            {
+                rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, JumpForce), 1f);
+                m_Grounded = false;
+            }
+           
+
+
+            if (JumpForce == 0)
+                JumpForce = 7f;
+
             //After how long the DeathTimer is the zombie will stop moving.
             if (Time.time > Deathtimer)
             {
                 alive = false;
             }
-            //Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z);
         }
         if (!alive)
             Enemy.SetActive(false);
     }
+    void CheckGroundedState()
+    {
+
+        RaycastHit2D hit = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z), Vector3.down, (m_PlayerCollider.size.y / 2 + 0.05f) * transform.localScale.x, m_GroundCheckLayerMask);
+        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z), Vector3.down * (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, Color.red);
+
+        if (hit)
+            m_Grounded = true;
+        else
+            m_Grounded = false;
+
+    }
 }
+
