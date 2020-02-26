@@ -302,6 +302,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7587484985825546029, guid: b1cc5173de8e21e4685886e002af6e67,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587484985825546028, guid: b1cc5173de8e21e4685886e002af6e67,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587484985825546028, guid: b1cc5173de8e21e4685886e002af6e67,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587484985825546028, guid: b1cc5173de8e21e4685886e002af6e67,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587484985825546028, guid: b1cc5173de8e21e4685886e002af6e67,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8312007036874528758, guid: b1cc5173de8e21e4685886e002af6e67,
         type: 3}
       propertyPath: m_Name
@@ -366,11 +391,6 @@ PrefabInstance:
         type: 3}
       propertyPath: orthographic size
       value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 7587484985825546029, guid: b1cc5173de8e21e4685886e002af6e67,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1cc5173de8e21e4685886e002af6e67, type: 3}

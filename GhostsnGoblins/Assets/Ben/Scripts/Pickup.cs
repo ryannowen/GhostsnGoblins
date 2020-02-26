@@ -6,8 +6,7 @@ public class Pickup : MonoBehaviour, ISpawn
 {
 
     public enum PickupType { 
-    
-        HealthPickup,
+
         CopperArmourPickup,
         SilverArmourPickup,
         GoldArmourPickup,
@@ -21,7 +20,7 @@ public class Pickup : MonoBehaviour, ISpawn
 
     }
 
-    public PickupType m_PickupType = PickupType.HealthPickup;
+    public PickupType m_PickupType = PickupType.CopperArmourPickup;
     SpriteRenderer m_SpriteRenderer;
 
     // Start is called before the first frame update
@@ -57,24 +56,22 @@ public class Pickup : MonoBehaviour, ISpawn
 
                 switch (m_PickupType)
                 {
-                    //remove tihs
-                    case PickupType.HealthPickup:
-                        collision.gameObject.GetComponent<PlayerController>().AddHealth(1);
-                        this.gameObject.SetActive(false);
-                        break;
 
                     case PickupType.CopperArmourPickup:
                         collision.gameObject.GetComponent<PlayerController>().SetArmourPoints(1);
+                        collision.gameObject.GetComponent<PlayerController>().SetArmourType(PlayerController.ArmourType.Copper);
                         this.gameObject.SetActive(false);
                         break;
 
                     case PickupType.SilverArmourPickup:
                         collision.gameObject.GetComponent<PlayerController>().SetArmourPoints(2);
+                        collision.gameObject.GetComponent<PlayerController>().SetArmourType(PlayerController.ArmourType.Silver);
                         this.gameObject.SetActive(false);
                         break;
 
                     case PickupType.GoldArmourPickup:
                         collision.gameObject.GetComponent<PlayerController>().SetArmourPoints(3);
+                        collision.gameObject.GetComponent<PlayerController>().SetArmourType(PlayerController.ArmourType.Gold);
                         this.gameObject.SetActive(false);
                         break;
 
@@ -130,10 +127,6 @@ public class Pickup : MonoBehaviour, ISpawn
 
         switch (m_PickupType)
         {
-
-            case PickupType.HealthPickup:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/HealthPickup") as Sprite;
-                break;
 
             case PickupType.CopperArmourPickup:
                 m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;

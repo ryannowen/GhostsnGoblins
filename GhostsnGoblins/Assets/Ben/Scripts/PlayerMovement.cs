@@ -152,6 +152,7 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
     {
 
         RaycastHit2D hit = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y-0.2f, transform.position.z), Vector3.down, (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, m_GroundCheckLayerMask);
+        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z), Vector3.down * (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, Color.red);
 
         if (hit)
             m_Grounded = true;
@@ -239,6 +240,7 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
             Vector3 knockbackDirection = new Vector3(1, 0.5f, 0).normalized;
 
             // Knockback right
+            m_Rigidbody.velocity = Vector3.zero;
             m_Rigidbody.AddForce(knockbackDirection * argsKnockbackPower, ForceMode2D.Impulse);
 
         }
@@ -249,6 +251,7 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
             Vector3 knockbackDirection = new Vector3(-1, 0.5f, 0).normalized;
 
             // Knockback left
+            m_Rigidbody.velocity = Vector3.zero;
             m_Rigidbody.AddForce(knockbackDirection * argsKnockbackPower, ForceMode2D.Impulse);
 
         }

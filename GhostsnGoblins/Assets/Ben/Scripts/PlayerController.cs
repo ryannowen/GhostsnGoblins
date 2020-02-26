@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 {
 
-    private enum ArmourType
+    public enum ArmourType
     {
 
         None,
@@ -144,7 +144,14 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     public void SetArmourPoints(int argsAmount)
     {
 
-        m_ArmourPoints += argsAmount;
+        m_ArmourPoints = argsAmount;
+
+    }
+
+    public void SetArmourType(ArmourType argsType)
+    {
+
+        m_Armour = argsType;
 
     }
 
