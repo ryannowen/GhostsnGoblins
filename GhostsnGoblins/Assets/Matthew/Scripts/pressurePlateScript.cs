@@ -10,16 +10,21 @@ public class pressurePlateScript : MonoBehaviour {
     [Tooltip("Set the amount of time before the pressure plate can be used again (in seconds).")]
     [SerializeField] private float pressurePlateDelay = 3;
 
+    [Tooltip("Set the speed that the pressure plate moves down.")]
+    [SerializeField] private float pressurePlateSpeed = 10;
+
     private bool oneTimeBool = false;
     private bool pressurePlateTriggered = false;
     private Vector2 originalPlatePos;
+    private float pressurePlateYSize;
 
     // Start is called before the first frame update
     void Start() {
+        pressurePlateYSize = this.gameObject.GetComponent<SpriteRenderer>().size.y;
         originalPlatePos = transform.position;
     }
 
-    void OnCollisionEnter2D(Collision2D col) {
+    void OnTriggerEnter2D(Collider2D col) {
         if (!pressurePlateTriggered) {
             if (col.gameObject.tag == "Player") {
             
@@ -47,9 +52,9 @@ public class pressurePlateScript : MonoBehaviour {
     void FixedUpdate() {
         if (oneTimeBool) {
             if (pressurePlateTriggered) {
-                transform.position = Vector3.Lerp(transform.position, originalPlatePos - ((Vector2)transform.up * 0.17f), Time.fixedDeltaTime * 10);
+                transform.position = Vector3.Lerp(transform.position, originalPlatePos - ((Vector2)transform.up * pressurePlateYSize), Time.fixedDeltaTime * pressurePlateSpeed);
             } else {
-                transform.position = Vector3.Lerp(transform.position, originalPlatePos + ((Vector2)transform.up * 0.17f), Time.fixedDeltaTime * 10);
+                transform.position = Vector3.Lerp(transform.position, originalPlatePos, Time.fixedDeltaTime * pressurePlateSpeed);
             }
         }
     }

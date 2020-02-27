@@ -7,7 +7,7 @@ public class GreenMonsterAI : MonoBehaviour
 
     [SerializeField] private GameObject bullet;
 
-    public bool alive = true; 
+    public bool Alive = true; 
 
     private GameObject Enemy;
     private GameObject Player;
@@ -43,7 +43,7 @@ public class GreenMonsterAI : MonoBehaviour
             EnemyX = Enemy.gameObject.transform.position.x;
         }
 
-        if (alive)
+        if (Alive)
         {
             Enemy.SetActive(true);
             if (PlayerX + 10 > EnemyX)
