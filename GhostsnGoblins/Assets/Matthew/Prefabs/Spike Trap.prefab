@@ -119,9 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f11181c4b8e944387dd55ad64a513f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disableTrigger: 0
   trapSpeed: 12
-  trapTriggerDelay: 0.5
   trapResetDelay: 2
   spikeTrapDamage: 1
   trapType: 0

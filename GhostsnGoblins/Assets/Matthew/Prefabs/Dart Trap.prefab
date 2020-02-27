@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4078416210140479534}
   - component: {fileID: 4078416210140479533}
   - component: {fileID: 4078416210140479520}
+  - component: {fileID: -2654292131334888884}
+  - component: {fileID: -526338892414292151}
   m_Layer: 0
   m_Name: Dart Trap
   m_TagString: DartTrap
@@ -120,3 +122,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dartObj: {fileID: 3075841005207888016, guid: 45423e71ac2ada14abbd2f0ba2d2e089, type: 3}
+  trapType: 0
+  shootDelay: 2
+--- !u!61 &-2654292131334888884
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078416210140479532}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &-526338892414292151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078416210140479532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9c358fea7a2f5449dc66124f091a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ProjectileSpeed: 15

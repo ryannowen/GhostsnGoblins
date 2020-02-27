@@ -41,7 +41,10 @@ public class fallingPlatformScript : MonoBehaviour {
         }
 
         if (shouldFall) {
+            this.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             this.gameObject.GetComponent<Rigidbody2D>().gravityScale = gravScale;
+        } else {
+            this.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         }
 
         isFalling = false;
