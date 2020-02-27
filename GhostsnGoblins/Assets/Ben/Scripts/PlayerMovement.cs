@@ -10,9 +10,10 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
     public bool m_Grounded = false, m_Jump = false, m_Climbing = false, m_Crouched = false, m_LastMovingRight = true, m_CanMove = true;
 
     public LayerMask m_GroundCheckLayerMask;
+    private PlayerController m_PlayerController;
 
     Rigidbody2D m_Rigidbody;
-    BoxCollider2D m_PlayerCollider;
+    CapsuleCollider2D m_PlayerCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -85,14 +86,17 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
 
         // Find box collider and store a reference to it
         // If no box collider is found, create one and store a reference to it
-        if (GetComponent<BoxCollider2D>())
+        if (GetComponent<CapsuleCollider2D>())
         {
-            m_PlayerCollider = GetComponent<BoxCollider2D>();
+            m_PlayerCollider = GetComponent<CapsuleCollider2D>();
         }
         else
         {
-            m_PlayerCollider = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+            m_PlayerCollider = this.gameObject.AddComponent(typeof(CapsuleCollider2D)) as CapsuleCollider2D;
         }
+
+        if (this.gameObject.GetComponent<PlayerController>() != null)
+            m_PlayerController = this.gameObject.GetComponent<PlayerController>();
 
         // Set default variable values if none have been assigned
         if (m_GravityScale == 0)
@@ -150,10 +154,13 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
     void CheckGroundedState()
     {
 
-        RaycastHit2D hit = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y-0.2f, transform.position.z), Vector3.down, (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, m_GroundCheckLayerMask);
-        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z), Vector3.down * (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, Color.red);
+        //RaycastHit2D hit = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y-0.2f, transform.position.z), Vector3.down, (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, m_GroundCheckLayerMask);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(new Vector3(transform.position.x, transform.position.y -0.2f, transform.position.z), 0.3f, Vector3.down, (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, m_GroundCheckLayerMask);
+        //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z), Vector3.down * (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, Color.red);
 
-        if (hit)
+        print(hits.Length);
+
+        if (hits.Length != 0)
             m_Grounded = true;
         else
             m_Grounded = false;
@@ -232,27 +239,31 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
     public void TakeKnockback(Vector3 argsSenderPosition, float argsKnockbackPower)
     {
 
-        if (argsSenderPosition.x < transform.position.x)
+        // If the player is not invulnerable
+        if (!m_PlayerController.GetIsInvulnerable())
         {
+            if (argsSenderPosition.x < transform.position.x)
+            {
 
-            // Get the knockback direction
-            Vector3 knockbackDirection = new Vector3(1, 0.5f, 0).normalized;
+                // Get the knockback direction
+                Vector3 knockbackDirection = new Vector3(1, 0.5f, 0).normalized;
 
-            // Knockback right
-            m_Rigidbody.velocity = Vector3.zero;
-            m_Rigidbody.AddForce(knockbackDirection * argsKnockbackPower, ForceMode2D.Impulse);
+                // Knockback right
+                m_Rigidbody.velocity = Vector3.zero;
+                m_Rigidbody.AddForce(knockbackDirection * argsKnockbackPower, ForceMode2D.Impulse);
 
-        }
-        else
-        {
+            }
+            else
+            {
 
-            // Get the knockback direction
-            Vector3 knockbackDirection = new Vector3(-1, 0.5f, 0).normalized;
+                // Get the knockback direction
+                Vector3 knockbackDirection = new Vector3(-1, 0.5f, 0).normalized;
 
-            // Knockback left
-            m_Rigidbody.velocity = Vector3.zero;
-            m_Rigidbody.AddForce(knockbackDirection * argsKnockbackPower, ForceMode2D.Impulse);
+                // Knockback left
+                m_Rigidbody.velocity = Vector3.zero;
+                m_Rigidbody.AddForce(knockbackDirection * argsKnockbackPower, ForceMode2D.Impulse);
 
+            }
         }
 
     }

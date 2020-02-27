@@ -16,7 +16,8 @@ public class Pickup : MonoBehaviour, ISpawn
         Axe,
         Shield,
         Coin,
-        Key
+        Key,
+        MoneyBag
 
     }
 
@@ -28,6 +29,7 @@ public class Pickup : MonoBehaviour, ISpawn
     {
 
         m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        OnSpawn(); // REMOVE THIS LATER
 
     }
 
@@ -110,6 +112,11 @@ public class Pickup : MonoBehaviour, ISpawn
                         this.gameObject.SetActive(false);
                         break;
 
+                    case PickupType.MoneyBag:
+
+                        this.gameObject.SetActive(false);
+                        break;
+
                     default:
                         break;
 
@@ -161,11 +168,15 @@ public class Pickup : MonoBehaviour, ISpawn
                 break;
 
             case PickupType.Coin:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Coin") as Sprite;
                 break;
 
             case PickupType.Key:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Key") as Sprite;
+                break;
+
+            case PickupType.MoneyBag:
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Money Bag") as Sprite;
                 break;
 
             default:

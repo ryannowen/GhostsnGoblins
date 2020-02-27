@@ -8,6 +8,8 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
     [SerializeField] private Rigidbody2D m_Rigidbody = null;
     [SerializeField] private int m_Damage = 1;
     [SerializeField] private float m_KnockbackPower = 1f;
+    [SerializeField] private bool m_DecayAfterTime = false;
+    [SerializeField] private float m_DecayTime = 3f;
     [SerializeField] private LayerMask m_LayerMask;
 
     void Awake()
@@ -28,8 +30,18 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
     // Update is called once per frame
     void Update()
     {
-        
 
+        // Check if the entity should use the decay timer
+        if (m_DecayAfterTime)
+        {
+            // Decrease the timer
+            m_DecayTime -= Time.deltaTime;
+            // Kill the entity if the timer runs out
+            if (m_DecayTime <= 0f)
+            {
+                KillEntity();
+            }
+        }
 
     }
 
