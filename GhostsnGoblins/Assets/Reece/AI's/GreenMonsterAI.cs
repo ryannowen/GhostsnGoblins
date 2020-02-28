@@ -5,7 +5,7 @@ using UnityEngine;
 public class GreenMonsterAI : MonoBehaviour
 {
 
-    [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject Bullet;
 
     public bool Alive = true; 
 
@@ -26,9 +26,8 @@ public class GreenMonsterAI : MonoBehaviour
     {
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
-
         fireProj = this.gameObject.GetComponent<FireProjectile>();
-        fireProj.SetProjectile(bullet);
+        fireProj.SetProjectile(Bullet);
 
         Enemy = this.gameObject;
     }

@@ -47,7 +47,7 @@ public class RavenAI : MonoBehaviour
 
         if (alive)
         {
-            if (PlayerX + 10 > EnemyX)
+            if (PlayerX + 7 > EnemyX)
             {
                 Angered = true;
             }
@@ -62,7 +62,7 @@ public class RavenAI : MonoBehaviour
                     Deathtimer = Time.time + 7;
 
                     //Finds if the player is on the left.
-                    if (PlayerX + 10 > EnemyX)
+                    if (PlayerX + 7 > EnemyX)
                     {
                         MoveLeft = true;
                     }
