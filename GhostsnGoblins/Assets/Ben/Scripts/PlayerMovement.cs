@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
 {
 
-    [SerializeField] private float m_GravityScale = 4f, m_JumpForce = 7f, m_MovementSpeed = 5f, m_ClimbingSpeed = 3f, m_MovementDelayTimer = 0f;
+    [SerializeField] private float m_GravityScale = 4f, m_JumpForce = 7f, m_MovementSpeed = 5f, m_ClimbingSpeed = 3f, m_MovementDelayTimer = 0f, m_JumpDelay = 0.1f;
+    private float m_JumpTimer = 0f;
     Vector3 m_DesiredMove = Vector3.zero;
     public bool m_Grounded = false, m_Jump = false, m_Climbing = false, m_Crouched = false, m_LastMovingRight = true, m_CanMove = true;
 
@@ -28,6 +29,9 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
     void Update()
     {
 
+        if (m_JumpTimer > 0f)
+            m_JumpTimer -= Time.deltaTime;
+
         if (m_MovementDelayTimer > 0f)
             m_MovementDelayTimer -= Time.deltaTime;
 
@@ -44,8 +48,11 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
         ManageClimbingSettings();
 
         // Check if the player wants to jump
-        if (Input.GetAxisRaw("Jump") > 0 && m_Grounded && m_CanMove)
+        if (Input.GetAxisRaw("Jump") > 0 && m_Grounded && m_CanMove && m_JumpTimer <= 0f)
+        {
+            m_JumpTimer = m_JumpDelay;
             m_Rigidbody.velocity = Vector2.Lerp(m_Rigidbody.velocity, new Vector2(m_Rigidbody.velocity.x, m_JumpForce), 1f);
+        }
 
         if (m_Grounded && Input.GetAxisRaw("Vertical") < -0.7)
         {
@@ -157,8 +164,6 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
         //RaycastHit2D hit = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y-0.2f, transform.position.z), Vector3.down, (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, m_GroundCheckLayerMask);
         RaycastHit2D[] hits = Physics2D.CircleCastAll(new Vector3(transform.position.x, transform.position.y -0.2f, transform.position.z), 0.3f, Vector3.down, (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, m_GroundCheckLayerMask);
         //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z), Vector3.down * (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, Color.red);
-
-        print(hits.Length);
 
         if (hits.Length != 0)
             m_Grounded = true;
