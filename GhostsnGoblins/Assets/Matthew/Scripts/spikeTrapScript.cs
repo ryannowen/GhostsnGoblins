@@ -6,14 +6,21 @@ public class spikeTrapScript : MonoBehaviour {
 
     enum t_Type { triggerable, timed, pressurePlated };
 
-	private Vector2 originalTriggerSize;
-	private Vector2 originalTriggerOffset;
-	private Vector2 originalTrapPosition;
+    private Vector2 originalTrapPosition;
+    private bool hasTriggered;
+    private bool isCurrentlyActive = true;
+    private bool runCoroutine = false;
 
-	private bool hasTriggered;
+    [SerializeField] BoxCollider2D triggerCollider;
 
     [Tooltip("Sets the speed of the trap.")]
     [SerializeField] private float trapSpeed = 12;
+
+    [Tooltip("The amount of time before the trap can be triggered again (only used if the trap type is triggerable).")]
+    [SerializeField] private float trapActivationDelay = 1;
+
+    [Tooltip("The amount of time to wait before the trap activates (in seconds)")]
+    [SerializeField] private float trapTriggerDelay = 0.1f;
 
     [Tooltip("Reset delay, which is the time before the trap resets (for timed it is the delay for it to go up and down) (in seconds).")]
     [SerializeField] private float trapResetDelay = 2;
@@ -26,12 +33,9 @@ public class spikeTrapScript : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        originalTriggerSize = this.gameObject.GetComponent<BoxCollider2D>().size;
-        originalTriggerOffset = this.gameObject.GetComponent<BoxCollider2D>().offset;
         originalTrapPosition = transform.position;
 
         if (trapType == t_Type.timed) {
-            resizeTrapCollider(this.gameObject.GetComponent<BoxCollider2D>());
             hasTriggered = true;
         } else if (trapType == t_Type.triggerable) {
             hasTriggered = false;
@@ -43,36 +47,35 @@ public class spikeTrapScript : MonoBehaviour {
 
     public void activateSpikeTrap() {
         hasTriggered = true;
-        StartCoroutine(resetSpikeCollider(trapResetDelay, this.gameObject.GetComponent<BoxCollider2D>()));
     }
-
-    void resizeTrapCollider(BoxCollider2D bCol) {
-        bCol.size = this.gameObject.GetComponent<SpriteRenderer>().size;
-        bCol.offset = new Vector2(0f, 0f);
-    }
-
-	void resetTrapCollider(BoxCollider2D bCol) {
-		bCol.size = originalTriggerSize;
-		bCol.offset = originalTriggerOffset;
-	}
 
     void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.tag == "Player") {
-			if (!hasTriggered) {
-                StartCoroutine(delayTrapActivation(trapResetDelay));		
-			} else { 
-				col.gameObject.GetComponent<IDamageable>().TakeDamage(spikeTrapDamage);
-			}
-		}
+            if (!hasTriggered) {
+                if (trapType == t_Type.triggerable) {
+                    if (isCurrentlyActive) { 
+                        isCurrentlyActive = false;
+                        triggerCollider.enabled = false;
+                    }
+                }
+                
+                StartCoroutine(delayTrapActivation(trapTriggerDelay));
+            }
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col) {
+        col.gameObject.GetComponent<IDamageable>().TakeDamage(spikeTrapDamage);
+        col.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(col.transform.position, 20);
     }
 
     // Update is called once per frame
     void FixedUpdate() {
-        switch(trapType) {
+        switch (trapType) {
             case t_Type.timed:
                 if (hasTriggered) {
                     transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up, Time.fixedDeltaTime * trapSpeed);
-                    StartCoroutine(resetSpikeCollider(trapResetDelay, this.gameObject.GetComponent<BoxCollider2D>()));
+                    StartCoroutine(resetSpikeTrap(trapResetDelay));
                 } else {
                     transform.position = Vector3.Lerp(transform.position, originalTrapPosition, Time.fixedDeltaTime * trapSpeed);
                     StartCoroutine(delayTrapActivation(trapResetDelay));
@@ -84,40 +87,51 @@ public class spikeTrapScript : MonoBehaviour {
                 // Ask if hasTriggered is true and if it is, play the required animation.
                 if (hasTriggered) {
                     transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up, Time.fixedDeltaTime * trapSpeed);
+                    
+                    if ((Vector2)transform.position == (Vector2)originalTrapPosition + (Vector2)transform.up && !isCurrentlyActive && runCoroutine) {
+                        runCoroutine = false;
+                        StartCoroutine(resetSpikeTrap(trapResetDelay));
+                    }
                 } else {
                     transform.position = Vector3.Lerp(transform.position, originalTrapPosition, Time.fixedDeltaTime * trapSpeed);
+
+                    if ((Vector2)transform.position == (Vector2)originalTrapPosition && !isCurrentlyActive && runCoroutine) {
+                        runCoroutine = false;
+                        StartCoroutine(delayTrapEnabling(trapActivationDelay));
+                    }
                 }
+                
                 break;
 
             case t_Type.pressurePlated:
                 if (hasTriggered) {
                     transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up, Time.fixedDeltaTime * trapSpeed);
+                    StartCoroutine(resetSpikeTrap(trapResetDelay));
                 } else {
                     transform.position = Vector3.Lerp(transform.position, originalTrapPosition, Time.fixedDeltaTime * trapSpeed);
                 }
                 break;
-
-        } 
+        }
     }
 
-	private IEnumerator resetSpikeCollider(float wTime, BoxCollider2D boxCol) {
-		yield return new WaitForSeconds(wTime);
+    private IEnumerator resetSpikeTrap(float wTime) {
+        yield return new WaitForSeconds(wTime);
 
-		hasTriggered = false;
-
-        if (trapType == t_Type.triggerable) {
-            resetTrapCollider(boxCol);
-        }
-	}
+        hasTriggered = false;
+        runCoroutine = true;
+    }
 
     private IEnumerator delayTrapActivation(float wTime) {
         yield return new WaitForSeconds(wTime);
 
         hasTriggered = true;
+        runCoroutine = true;
+    }
 
-        if (trapType == t_Type.triggerable){
-            resizeTrapCollider(this.gameObject.GetComponent<BoxCollider2D>());
-            StartCoroutine(resetSpikeCollider(trapResetDelay, this.gameObject.GetComponent<BoxCollider2D>()));
-        }
+    private IEnumerator delayTrapEnabling(float wTime) {
+        yield return new WaitForSeconds(wTime);
+
+        isCurrentlyActive = true;
+        triggerCollider.enabled = true;
     }
 }
