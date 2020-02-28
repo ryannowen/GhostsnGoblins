@@ -64,6 +64,10 @@ public class fallingPlatformScript : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
+        if (!enablePlatform) {
+            return;
+        }
+
         if (isFalling && doesFade) {
             float alphaCol = sRenderer.color.a;
 
