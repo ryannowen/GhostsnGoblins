@@ -54,13 +54,6 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     void Update()
     {
 
-        // remove this later
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            TakeDamage(1);
-            m_MovementSystem.TakeKnockback(new Vector3(0, 0, 0), 20);
-        }
-
         if (m_TimeSinceLastShot > 0f)
             m_TimeSinceLastShot -= Time.deltaTime;
 
