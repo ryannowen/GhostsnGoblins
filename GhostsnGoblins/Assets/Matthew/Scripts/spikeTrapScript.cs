@@ -11,7 +11,7 @@ public class spikeTrapScript : MonoBehaviour {
     private bool isCurrentlyActive = true;
     private bool runCoroutine = false;
 
-    [SerializeField] BoxCollider2D triggerCollider;
+    [SerializeField] BoxCollider2D triggerCollider = null;
 
     [Tooltip("Sets the speed of the trap.")]
     [SerializeField] private float trapSpeed = 12;
@@ -55,7 +55,11 @@ public class spikeTrapScript : MonoBehaviour {
                 if (trapType == t_Type.triggerable) {
                     if (isCurrentlyActive) { 
                         isCurrentlyActive = false;
-                        triggerCollider.enabled = false;
+
+                        if (triggerCollider != null) {
+                            triggerCollider.enabled = false;
+                        }
+
                     }
                 }
                 
@@ -65,8 +69,15 @@ public class spikeTrapScript : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D col) {
-        col.gameObject.GetComponent<IDamageable>().TakeDamage(spikeTrapDamage);
-        col.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(col.transform.position, 20);
+        if (col.gameObject.tag == "Player") {
+            if (col.gameObject.GetComponent<IDamageable>() != null) {
+                col.gameObject.GetComponent<IDamageable>().TakeDamage(spikeTrapDamage);
+            }
+
+            if (col.gameObject.GetComponent<ICanTakeKnockback>() != null) {
+                col.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(col.transform.position, 20);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -132,6 +143,9 @@ public class spikeTrapScript : MonoBehaviour {
         yield return new WaitForSeconds(wTime);
 
         isCurrentlyActive = true;
-        triggerCollider.enabled = true;
+
+        if (triggerCollider != null) {
+            triggerCollider.enabled = true;
+        }
     }
 }
