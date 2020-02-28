@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner_Point : MonoBehaviour
+public class Spawner_Point : MonoBehaviour, ISpawner
 {
     [SerializeField] private SpawnObject[] objects = null;
     [SerializeField] private List<SpawnPoint> spawnPoints = null;
@@ -24,16 +24,23 @@ public class Spawner_Point : MonoBehaviour
                 System_Spawn.instance.CreatePool(objects[i].item, objects[i].poolAmount, objects[i].spawnState);
 
         if (spawnOnLoad)
-            SpawnObjects();
+            BeginSpawning();
     }
 
     private void Update()
     {
         if (canSpawnObjects)
-            SpawnObjects();
+            BeginSpawning();
     }
 
-    void SpawnObjects()
+    IEnumerator SpawnDelay()
+    {
+        canSpawnObjects = false;
+        yield return new WaitForSeconds(spawnDelaySeconds);
+        canSpawnObjects = true;
+    }
+
+    public void BeginSpawning()
     {
         if (spawnPoints == null)
         {
@@ -92,14 +99,7 @@ public class Spawner_Point : MonoBehaviour
             }
         }
 
-        if(timedSpawner)
+        if (timedSpawner)
             StartCoroutine(SpawnDelay());
-    }
-
-    IEnumerator SpawnDelay()
-    {
-        canSpawnObjects = false;
-        yield return new WaitForSeconds(spawnDelaySeconds);
-        canSpawnObjects = true;
     }
 }
