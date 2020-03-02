@@ -10,11 +10,12 @@ public class Pickup : MonoBehaviour, ISpawn
         CopperArmourPickup,
         SilverArmourPickup,
         GoldArmourPickup,
-        Lance,
-        Dagger,
-        Torch,
-        Axe,
-        Shield,
+        Lance, // Goes straight after thrown but slow
+        Dagger, // Lance but faster
+        Torch, // Thrown upwards, falls untill it hits the ground
+        Axe, // Thrown horizontal fast but falls
+        Shield, // Limited in range, destroys enemy projectiles, can also hit enemies
+        Comb,
         Coin,
         Key,
         MoneyBag
@@ -83,7 +84,7 @@ public class Pickup : MonoBehaviour, ISpawn
                         break;
 
                     case PickupType.Dagger:
-                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
+                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("DaggerWeapon").gameObject);
                         this.gameObject.SetActive(false);
                         break;
 
@@ -93,11 +94,16 @@ public class Pickup : MonoBehaviour, ISpawn
                         break;
 
                     case PickupType.Axe:
-                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
+                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("AxeWeapon").gameObject);
                         this.gameObject.SetActive(false);
                         break;
 
                     case PickupType.Shield:
+                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("ShieldWeapon").gameObject);
+                        this.gameObject.SetActive(false);
+                        break;
+
+                    case PickupType.Comb:
                         collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
                         this.gameObject.SetActive(false);
                         break;
@@ -164,6 +170,10 @@ public class Pickup : MonoBehaviour, ISpawn
                 break;
 
             case PickupType.Shield:
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                break;
+
+            case PickupType.Comb:
                 m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
                 break;
 
