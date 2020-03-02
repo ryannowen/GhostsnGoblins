@@ -11,10 +11,16 @@ public class SpawnTrigger : MonoBehaviour
     [SerializeField] private float activeDelaySeconds = 0.0f;
     [SerializeField] private bool canSpawn = true;
 
+    private WaitForSeconds triggerWait;
+    private WaitForSeconds activateWait;
+
     private void Start()
     {
+        triggerWait = new WaitForSeconds(triggerDelaySeconds);
+        activateWait = new WaitForSeconds(activeDelaySeconds);
+
         if (!canSpawn)
-           StartCoroutine(TriggerDelay(activeDelaySeconds));
+           StartCoroutine(TriggerDelay(activateWait));
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -38,16 +44,16 @@ public class SpawnTrigger : MonoBehaviour
                 return;
             }
 
-            StartCoroutine(TriggerDelay(triggerDelaySeconds));
+            StartCoroutine(TriggerDelay(triggerWait));
 
             spawnInterface.BeginSpawning();
         }
     }
 
-    IEnumerator TriggerDelay(float argDelay)
+    IEnumerator TriggerDelay(WaitForSeconds argDelay)
     {
         canSpawn = false;
-        yield return new WaitForSeconds(argDelay);
+        yield return argDelay;
         canSpawn = true;
     }
 

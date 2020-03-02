@@ -14,9 +14,12 @@ public class Spawner_Area : MonoBehaviour, ISpawner
     private bool canSpawnObjects = false;
     private BoxCollider2D boxCollider;
 
+    private WaitForSeconds spawnWait;
+
     // Start is called before the firsst frame update
     void Start()
     {
+        spawnWait = new WaitForSeconds(spawnDelaySeconds);
         boxCollider = GetComponent<BoxCollider2D>();
 
         for (int i = 0; i < objects.GetLength(0); i++)
@@ -24,7 +27,9 @@ public class Spawner_Area : MonoBehaviour, ISpawner
                 System_Spawn.instance.CreatePool(objects[i].item, objects[i].poolAmount, objects[i].spawnState);
 
         if (spawnOnLoad)
-            BeginSpawning();        
+            BeginSpawning();
+        else
+            StartCoroutine(SpawnDelay());
     }
 
     private void Update()
@@ -36,7 +41,7 @@ public class Spawner_Area : MonoBehaviour, ISpawner
     IEnumerator SpawnDelay()
     {
         canSpawnObjects = false;
-        yield return new WaitForSeconds(spawnDelaySeconds);
+        yield return spawnWait;
         canSpawnObjects = true;
     }
 
