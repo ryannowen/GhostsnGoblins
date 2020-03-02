@@ -7,7 +7,6 @@ public class System_Spawn : MonoBehaviour
     public static System_Spawn instance;
 
     [SerializeField] private int seed = 500;
-
     Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>(); 
 
     private void Awake()
@@ -27,10 +26,9 @@ public class System_Spawn : MonoBehaviour
     public void CreatePool(GameObject argGameObject, int argAmount, bool argActive)
     {
         GameObject newGameObject;
-        GameObject parent;
         if (objectPool.ContainsKey(argGameObject.name))
         {
-            parent = transform.Find(argGameObject.name).gameObject;
+            GameObject parent = transform.Find("P_" + argGameObject.name).gameObject;
 
             for (int i = 0; i < argAmount; i++)
             {
@@ -44,7 +42,8 @@ public class System_Spawn : MonoBehaviour
         {
             Queue<GameObject> newQueue = new Queue<GameObject>();
 
-            parent = Instantiate(new GameObject(argGameObject.name), transform);
+            GameObject parent = new GameObject("P_" + argGameObject.name);
+            parent.transform.parent = transform;
 
             for (int i = 0; i < argAmount; i++)
             {
