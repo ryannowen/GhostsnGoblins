@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add0e1f598e008149938133131809347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 2288533703519710632, guid: c732c094bc0a55341832b86bcd742542, type: 3}
-  alive: 1
+  Bullet: {fileID: 2288533703519710632, guid: c732c094bc0a55341832b86bcd742542, type: 3}
+  Alive: 1
   Shoot: 0
 --- !u!50 &7270328762327780996
 Rigidbody2D:

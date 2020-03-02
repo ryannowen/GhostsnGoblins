@@ -19,6 +19,12 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     [SerializeField] private int m_ArmourPoints = 0;
     [SerializeField] private float m_FireRate = 0.5f;
 
+    // Sprites
+    private Sprite sirArthurNude;
+    private Sprite sirArthurCopper;
+    private Sprite sirArthurSilver;
+    private Sprite sirArthurGold;
+
     private ArmourType m_Armour = ArmourType.None;
 
     private bool m_IsInvulnerable = false;
@@ -27,25 +33,26 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
     [SerializeField] private GameObject m_EquippedItem;
     PlayerMovement m_MovementSystem = null;
+    SpriteRenderer m_SpriteRenderer = null;
 
     // Start is called before the first frame update
     void Start()
     {
 
         m_MovementSystem = this.gameObject.GetComponent<PlayerMovement>();
+        m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+
+        // Load Sprites
+        sirArthurNude = Resources.Load<Sprite>("Sprites/Character/SirArthur_Nude") as Sprite;
+        sirArthurCopper = Resources.Load<Sprite>("Sprites/Character/SirArthur_Copper") as Sprite;
+        sirArthurSilver = Resources.Load<Sprite>("Sprites/Character/SirArthur_Silver") as Sprite;
+        sirArthurGold = Resources.Load<Sprite>("Sprites/Character/SirArthur_Gold") as Sprite;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        // remove this later
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            TakeDamage(1);
-            m_MovementSystem.TakeKnockback(new Vector3(0, 0, 0), 20);
-        }
 
         if (m_TimeSinceLastShot > 0f)
             m_TimeSinceLastShot -= Time.deltaTime;
@@ -61,18 +68,22 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
             case ArmourType.None:
                 m_MovementSystem.SetMovementSpeed(5f);
+                m_SpriteRenderer.sprite = sirArthurNude;
                 break;
 
             case ArmourType.Copper:
                 m_MovementSystem.SetMovementSpeed(4f);
+                m_SpriteRenderer.sprite = sirArthurCopper;
                 break;
 
             case ArmourType.Silver:
                 m_MovementSystem.SetMovementSpeed(3f);
+                m_SpriteRenderer.sprite = sirArthurSilver;
                 break;
 
             case ArmourType.Gold:
                 m_MovementSystem.SetMovementSpeed(2f);
+                m_SpriteRenderer.sprite = sirArthurGold;
                 break;
 
             default:
@@ -119,7 +130,10 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         if (m_ArmourPoints > 3)
             m_ArmourPoints = 3;
         if (m_ArmourPoints <= 0)
+        {
             m_ArmourPoints = 0;
+            m_Armour = ArmourType.None;
+        }
 
         // Check for player death
         if (m_PlayerHealth <= 0)

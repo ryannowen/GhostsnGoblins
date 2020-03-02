@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6489421168637996969}
   - component: {fileID: 6489421168637996974}
   - component: {fileID: 6489421168637996962}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Axe Trap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -23,12 +23,14 @@ public class System_Spawn : MonoBehaviour
     public void CreatePool(GameObject argGameObject, int argAmount, bool argActive)
     {
         GameObject newGameObject;
-
+        GameObject parent;
         if (objectPool.ContainsKey(argGameObject.name))
         {
+            parent = transform.Find(argGameObject.name).gameObject;
+
             for (int i = 0; i < argAmount; i++)
             {
-                newGameObject = Instantiate(argGameObject, transform);
+                newGameObject = Instantiate(argGameObject, parent.transform);
                 objectPool[argGameObject.name].Enqueue(newGameObject);
 
                 newGameObject.SetActive(argActive);
@@ -37,9 +39,12 @@ public class System_Spawn : MonoBehaviour
         else
         {
             Queue<GameObject> newQueue = new Queue<GameObject>();
+
+            parent = Instantiate(new GameObject(argGameObject.name), transform);
+
             for (int i = 0; i < argAmount; i++)
             {
-                newGameObject = Instantiate(argGameObject, transform);
+                newGameObject = Instantiate(argGameObject, parent.transform);
                 newQueue.Enqueue(newGameObject);
 
                 newGameObject.SetActive(argActive);

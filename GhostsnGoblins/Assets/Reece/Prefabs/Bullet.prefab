@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2288533703519710627}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Rigidbody: {fileID: 0}
   m_Damage: 1
   m_KnockbackPower: 30
+  m_DecayAfterTime: 1
+  m_DecayTime: 3
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 58166
