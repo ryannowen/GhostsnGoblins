@@ -8,7 +8,7 @@ public class WoodyPigAI : MonoBehaviour
 
     private GameObject Enemy;
     private GameObject Player;
-    private float speed = 5f;
+    private float speed = 10f;
     private float PlayerX;
     private float PlayerY;
     private float EnemyX;
@@ -22,6 +22,7 @@ public class WoodyPigAI : MonoBehaviour
     private bool MoveLeft;
     private bool MoveRight;
     private bool FindPlayer;
+    bool playerLevelReached = false;
 
     private Rigidbody2D rb;
 
@@ -99,36 +100,38 @@ public class WoodyPigAI : MonoBehaviour
 
                     rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
                 }
-                else if (EnemyPos.y <= PlayerY)
+                else if (EnemyPos.y <= PlayerY && playerLevelReached)
                 {
                     if (setTarget)
                     {
 
-                        targetPos = new Vector2(EnemyPos.x, EnemyPos.y + 1);
+                        targetPos = new Vector2(EnemyPos.x, EnemyPos.y + 5);
                         setTarget = false;
                     }
 
                     Vector2 direction = targetPos - EnemyPos;
                     direction.Normalize();
+                    direction.y *= speed;
 
                     // EnemyPos = EnemyPos + (direction * speed);
 
                     Vector3 moveDirection = Vector3.up;
                     moveDirection.Normalize();
                     moveDirection.y *= speed;
-
-                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
+                    playerLevelReached = true;
+                    rb.velocity = Vector3.Lerp(rb.velocity, direction, 0.1f);
                     if (Vector2.Distance(new Vector2(0, EnemyPos.y), new Vector2(0, targetPos.y)) < 0.1f)
                     {
                         setTarget = true;
                         MoveLeft = false;
                         MoveRight = true;
+                        playerLevelReached = false;
                         print("HEY");
                     }
                     print(targetPos + "    " + EnemyPos + "    ");
                     print("HEY3");
                 }
-                else //if (EnemyPos.y > PlayerY)
+                else if(!playerLevelReached) //if (EnemyPos.y > PlayerY + 2)
                 {
                     if(setTarget)
                     {
@@ -143,17 +146,16 @@ public class WoodyPigAI : MonoBehaviour
                     Vector3 moveDirection = Vector3.down;
                     moveDirection.Normalize();
                     moveDirection.y *= speed;
-
+                    
                     rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
                     if (Vector2.Distance(new Vector2(0, EnemyPos.y), new Vector2(0, targetPos.y)) < 0.1f)
                     {
                         setTarget = true;
                         MoveLeft = false;
                         MoveRight = true;
+                   
                     }
                 }
-                print("HEY2");
-
             }
             //Will move the Zombie to the right if the player is on the right
             else if (MoveRight)
@@ -167,7 +169,7 @@ public class WoodyPigAI : MonoBehaviour
 
                     rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
                 }
-                else if (EnemyPos.y <= PlayerY)
+                else if (EnemyPos.y <= PlayerY && playerLevelReached)
                 {
                     if (setTarget)
                     {
@@ -178,22 +180,25 @@ public class WoodyPigAI : MonoBehaviour
 
                     Vector2 direction = targetPos - EnemyPos;
                     direction.Normalize();
+                    direction.y *= speed;
 
                     // EnemyPos = EnemyPos + (direction * speed);
 
                     Vector3 moveDirection = Vector3.up;
                     moveDirection.Normalize();
                     moveDirection.y *= speed;
-
-                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
+                    moveDirection.y *= speed;
+                    playerLevelReached = true;
+                    rb.velocity = Vector3.Lerp(rb.velocity, direction, 0.1f);
                     if (Vector2.Distance(new Vector2(0, EnemyPos.y), new Vector2(0, targetPos.y)) < 0.1f)
                     {
                         setTarget = true;
                         MoveLeft = true;
                         MoveRight = false;
+                        playerLevelReached = false;
                     }
                 }
-                else //if (EnemyPos.y > PlayerY)
+                else if (!playerLevelReached) // if (EnemyPos.y > PlayerY + 2)
                 {
                     if (setTarget)
                     {
@@ -210,13 +215,14 @@ public class WoodyPigAI : MonoBehaviour
                     Vector3 moveDirection = Vector3.down;
                     moveDirection.Normalize();
                     moveDirection.y *= speed;
-
+                   
                     rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
                     if (Vector2.Distance(new Vector2(0, EnemyPos.y), new Vector2(0, targetPos.y)) < 0.1f) //line
                     {
                         setTarget = true;
                         MoveLeft = true;
                         MoveRight = false;
+                    
                     }
                    
                 }

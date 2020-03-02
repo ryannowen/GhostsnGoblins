@@ -434,6 +434,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GreenMonster (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8211447592868946982, guid: 50ade6f9b21bf8945969c79270b09397,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8211447592868946979, guid: 50ade6f9b21bf8945969c79270b09397,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -801,12 +806,12 @@ PrefabInstance:
     - target: {fileID: 1504599778298092004, guid: dc1bd983f5e69c748b668c14fb2a7c42,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.64
+      value: -7.57
       objectReference: {fileID: 0}
     - target: {fileID: 1504599778298092004, guid: dc1bd983f5e69c748b668c14fb2a7c42,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.64
+      value: 1.81
       objectReference: {fileID: 0}
     - target: {fileID: 1504599778298092004, guid: dc1bd983f5e69c748b668c14fb2a7c42,
         type: 3}
