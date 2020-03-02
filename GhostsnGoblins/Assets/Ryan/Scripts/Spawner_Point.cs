@@ -12,6 +12,7 @@ public class Spawner_Point : MonoBehaviour, ISpawner
     [SerializeField] private bool timedSpawner = false;
     [SerializeField] private float spawnDelaySeconds = 10.0f;
 
+    private WaitForSeconds spawnWait;
 
     private bool canSpawnObjects = false;
 
@@ -19,12 +20,16 @@ public class Spawner_Point : MonoBehaviour, ISpawner
     // Start is called before the first frame update
     void Start()
     {
+        spawnWait = new WaitForSeconds(spawnDelaySeconds);
+
         for (int i = 0; i < objects.GetLength(0); i++)
             if (objects[i].createPool)
                 System_Spawn.instance.CreatePool(objects[i].item, objects[i].poolAmount, objects[i].spawnState);
 
         if (spawnOnLoad)
             BeginSpawning();
+        else
+            StartCoroutine(SpawnDelay());
     }
 
     private void Update()
@@ -36,7 +41,7 @@ public class Spawner_Point : MonoBehaviour, ISpawner
     IEnumerator SpawnDelay()
     {
         canSpawnObjects = false;
-        yield return new WaitForSeconds(spawnDelaySeconds);
+        yield return spawnWait;
         canSpawnObjects = true;
     }
 
@@ -53,6 +58,8 @@ public class Spawner_Point : MonoBehaviour, ISpawner
             return;
         }
 
+        bool failedToSpawn = false;
+
         for (int i = 0; i < objects.GetLength(0); i++)
         {
             for (int j = 0; j < objects[i].spawnAmount; j++)
@@ -61,7 +68,7 @@ public class Spawner_Point : MonoBehaviour, ISpawner
 
                 if (spawnChance >= objects[i].spawnChance || objects[i].spawnChance == 100)
                 {
-                    List<SpawnPoint> availableSpawnPoints = spawnPoints;
+                    List<SpawnPoint> availableSpawnPoints = new List<SpawnPoint>(spawnPoints);
                     SpawnPoint spawnPoint;
 
                     while (true)
@@ -82,21 +89,32 @@ public class Spawner_Point : MonoBehaviour, ISpawner
                         if (availableSpawnPoints.Count == 0)
                         {
                             Debug.LogWarning("cannot spawn object because all spawn points are in use");
-                            return;
+                            failedToSpawn = true;
+                            break;
                         }
                     }
+
+                    if (failedToSpawn)
+                        break;
 
                     GameObject spawnedObject = System_Spawn.instance.GetObjectFromPool(objects[i].item, objects[i].ignoreAllActiveCheck);
                     if (gameObject == null)
                     {
                         Debug.LogError("Cannot spawn object, spawn system returned null");
-                        return;
+                        failedToSpawn = true;
+                        break;
                     }
 
                     spawnPoint.SetSpawnedObject(gameObject);
                     spawnedObject.transform.position = spawnPoint.transform.position;
                 }
+
+                if (failedToSpawn)
+                    break;
             }
+
+            if (failedToSpawn)
+                break;
         }
 
         if (timedSpawner)

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 194171492407741848}
   - component: {fileID: 2627606803976218866}
   - component: {fileID: 9004003329691018009}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prefab_SpawnTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawners: []
   triggerDelaySeconds: 5
-  activeDelay: 0
+  activeDelaySeconds: 0
+  canSpawn: 1
 --- !u!61 &9004003329691018009
 BoxCollider2D:
   m_ObjectHideFlags: 0
