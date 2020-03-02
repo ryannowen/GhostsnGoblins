@@ -29,7 +29,6 @@ public class movingPlatformScript : MonoBehaviour {
     private int platformCount;
     private Vector3 vel;
 
-
     // Start is called before the first frame update
     void Start() {
         if (!enablePlatform) {
