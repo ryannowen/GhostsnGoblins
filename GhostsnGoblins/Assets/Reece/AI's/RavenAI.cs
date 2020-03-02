@@ -12,6 +12,7 @@ public class RavenAI : MonoBehaviour
     private float Heightspeed = 2.5f;
     private float time = 0.2f;
     private float PlayerX;
+    private float PlayerY;
     private float EnemyX;
     private float EnemyY;
     private float Deathtimer;
@@ -41,13 +42,14 @@ public class RavenAI : MonoBehaviour
         if (!Angered)
         {
             PlayerX = Player.gameObject.transform.position.x;
+            PlayerY = Player.gameObject.transform.position.y;
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
         }
 
         if (alive)
         {
-            if (PlayerX + 7 > EnemyX)
+            if (PlayerX + 7 > EnemyX && PlayerX -7 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
             }
@@ -62,10 +64,12 @@ public class RavenAI : MonoBehaviour
                     Deathtimer = Time.time + 7;
 
                     //Finds if the player is on the left.
-                    if (PlayerX + 7 > EnemyX)
+                    if (PlayerX < EnemyX)
                     {
                         MoveLeft = true;
                     }
+                    else if (PlayerX > EnemyX)
+                        MoveRight = true;
                     OneTime = false;
                 }
 
@@ -85,11 +89,23 @@ public class RavenAI : MonoBehaviour
 
                     moveDirection.y *= Heightspeed;
 
-                    //EnemyY += Heightspeed;
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                }
+                if (MoveRight)
+                {
+                    Vector3 moveDirection = Vector3.right + Vector3.up;
+                    moveDirection.Normalize();
+                    moveDirection.x *= speed;
+
+                    if (Time.time + 0.5 > time)
+                    {
+                        time += 0.5f;
+                        Heightspeed = -Heightspeed;
+                    }
+
+                    moveDirection.y *= Heightspeed;
 
                     rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
-
-                    //Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
                 }
 
                 //After how long the DeathTimer is the zombie will stop moving.

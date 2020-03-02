@@ -46,7 +46,7 @@ public class UnicornAI : MonoBehaviour
 
         if (!Angered)
         {
-            if (PlayerX + 10 > EnemyX)
+            if (PlayerX + 10 > EnemyX && PlayerX - 10 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
             }
