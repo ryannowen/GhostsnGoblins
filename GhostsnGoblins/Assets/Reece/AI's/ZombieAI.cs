@@ -12,7 +12,9 @@ public class ZombieAI : MonoBehaviour
     private float Speed = 5f;
     private float JumpForce = 7;
     private float PlayerX;
+    private float PlayerY;
     private float EnemyX;
+    private float EnemyY;
     private float Deathtimer;
     private bool Angered = false;
     public bool OnGround = false;
@@ -54,8 +56,10 @@ public class ZombieAI : MonoBehaviour
         if (!Angered)
         {
             PlayerX = Player.gameObject.transform.position.x;
+            PlayerY = Player.gameObject.transform.position.y;
             EnemyX = Enemy.gameObject.transform.position.x;
-            if (PlayerX + 8 > EnemyX && PlayerX - 8 < EnemyX)
+            EnemyY = Enemy.gameObject.transform.position.y;
+            if (PlayerX + 8 > EnemyX && PlayerX - 8 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
             }  
