@@ -15,6 +15,7 @@ public class GreenMonsterAI : MonoBehaviour
     private float PlayerX;
     private float PlayerY;
     private float EnemyX;
+    private float EnemyY;
     private bool angered = false;
     private bool FindPlayer;
     public bool Shoot;
@@ -40,12 +41,13 @@ public class GreenMonsterAI : MonoBehaviour
             PlayerX = Player.gameObject.transform.position.x;
             PlayerY = Player.gameObject.transform.position.y;
             EnemyX = Enemy.gameObject.transform.position.x;
+            EnemyY = Enemy.gameObject.transform.position.y;
         }
 
         if (Alive)
         {
             Enemy.SetActive(true);
-            if (PlayerX + 10 > EnemyX)
+            if (PlayerX + 10 > EnemyX && PlayerX + 10 > EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 angered = true;
             }
