@@ -6,12 +6,16 @@ public class System_Spawn : MonoBehaviour
 {
     public static System_Spawn instance;
 
+    [SerializeField] private int seed = 500;
+
     Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>(); 
 
     private void Awake()
     {
         if (instance == null && instance != this)
         {
+            Random.InitState(seed);
+
             instance = this;
 
             DontDestroyOnLoad(this);
