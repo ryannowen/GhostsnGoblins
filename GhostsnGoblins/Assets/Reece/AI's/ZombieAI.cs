@@ -80,7 +80,7 @@ public class ZombieAI : MonoBehaviour
                 if (OneTime)
                 {
                     //Sets the Deathtimer of the zombie 5 seconds after it spawns.
-                    Deathtimer = Time.time + 5;
+                    Deathtimer = Time.time + 15;
 
                     //Finds if the player is on the left.
                     if (PlayerX < EnemyX)
