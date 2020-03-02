@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
     [SerializeField] private float m_KnockbackPower = 1f;
     [SerializeField] private bool m_DecayAfterTime = false;
     [SerializeField] private float m_DecayTime = 3f;
-    [SerializeField] private LayerMask m_LayerMask;
+    [SerializeField] private LayerMask m_LayerMask = new LayerMask();
 
     void Awake()
     {

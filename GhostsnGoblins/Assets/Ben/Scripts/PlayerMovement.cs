@@ -158,8 +158,6 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
         RaycastHit2D[] hits = Physics2D.CircleCastAll(new Vector3(transform.position.x, transform.position.y -0.2f, transform.position.z), 0.3f, Vector3.down, (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, m_GroundCheckLayerMask);
         //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z), Vector3.down * (m_PlayerCollider.size.y / 2 + 0.02f) * transform.localScale.x, Color.red);
 
-        print(hits.Length);
-
         if (hits.Length != 0)
             m_Grounded = true;
         else
