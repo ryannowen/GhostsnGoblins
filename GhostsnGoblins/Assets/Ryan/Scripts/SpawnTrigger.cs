@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SpawnTrigger : MonoBehaviour
 {
-    [SerializeField] private GameObject[] spawners;
+    [SerializeField] private GameObject[] spawners = null;
     [SerializeField] private float triggerDelaySeconds = 5.0f;
     [SerializeField] private float activeDelaySeconds = 0.0f;
     [SerializeField] private bool canSpawn = true;
