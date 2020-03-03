@@ -43,5 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 600f415171208d749b35094e2d3efdc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitForSpawnedInactive: 1
-  spawnDelaySeconds: 1
+  m_waitForSpawnedInactive: 1
+  m_spawnDelaySeconds: 1
+  m_checkPlayerDistance: 0
+  m_playerMaxDistance: 10
+  m_playerPrefab: {fileID: 7587484985825546003, guid: b1cc5173de8e21e4685886e002af6e67,
+    type: 3}

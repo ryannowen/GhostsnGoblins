@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SetupObjectPools : MonoBehaviour
 {
-
     //Create a custom struct and apply [Serializable] attribute to it
     [System.Serializable]
     public struct ObjectPool
     {
+        public string m_InspectorName;
         public GameObject m_Object;
         public int m_Amount;
     }
@@ -19,18 +19,10 @@ public class SetupObjectPools : MonoBehaviour
     void Start()
     {
 
-        for (int i = 0; i < m_Pools.Length; i++)
+        foreach (ObjectPool objectPool in m_Pools)
         {
-
-            System_Spawn.instance.CreatePool(m_Pools[i].m_Object, m_Pools[i].m_Amount, false);
-
+            System_Spawn.instance.CreatePool(objectPool.m_Object, objectPool.m_Amount);
         }
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

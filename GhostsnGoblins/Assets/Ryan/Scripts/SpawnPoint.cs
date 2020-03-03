@@ -4,54 +4,56 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    [SerializeField] bool waitForSpawnedInactive = true;
-    [SerializeField] bool checkPlayerDistance = false;
-    [SerializeField] float spawnDelaySeconds = 1.0f;
-    [SerializeField] float playerMaxDistance = 10;
+    [SerializeField] private bool m_waitForSpawnedInactive = true;
+    [SerializeField] private float m_spawnDelaySeconds = 1.0f;
+    [Space]
+    [SerializeField] private bool m_checkPlayerDistance = false;
+    [SerializeField] private float m_playerMaxDistance = 10;
+    [SerializeField] private GameObject m_playerPrefab = null;
 
-    private GameObject spawnedObject = null;
-    private WaitForSeconds spawnWait;
+    private GameObject m_spawnedObject = null;
+    private WaitForSeconds m_spawnWait;
 
-    private GameObject player;
+    private GameObject m_player;
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        spawnWait = new WaitForSeconds(spawnDelaySeconds);
+        m_player = System_Spawn.instance.GetObjectFromPool(m_playerPrefab, true);
+        m_spawnWait = new WaitForSeconds(m_spawnDelaySeconds);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (spawnedObject == null)
+        if (null == m_spawnedObject)
             return;
 
-        if (waitForSpawnedInactive)
+        if (m_waitForSpawnedInactive)
         {
-            if (!spawnedObject.activeSelf)
+            if (!m_spawnedObject.activeSelf)
                 spawnDelay();
         }
     }
 
     private IEnumerator spawnDelay()
     {
-        yield return spawnWait;
-        spawnedObject = null;
+        yield return m_spawnWait;
+        m_spawnedObject = null;
     }
 
     public bool GetCanSpawn()
     {
-        if (checkPlayerDistance)
-            if (null == player)
+        if (m_checkPlayerDistance)
+            if (null == m_player)
                 Debug.LogError("Player is null, cannot check distance");
             else
-                return (Vector2.Distance(player.transform.position, transform.position) <= playerMaxDistance) && (spawnedObject == null || !waitForSpawnedInactive);
+                return (Vector2.Distance(m_player.transform.position, transform.position) <= m_playerMaxDistance) && (null == m_spawnedObject || !m_waitForSpawnedInactive);
 
-        return (spawnedObject == null || !waitForSpawnedInactive);
+        return (null == m_spawnedObject || !m_waitForSpawnedInactive);
     }
 
     public void SetSpawnedObject(GameObject argNewObject)
     {
-        spawnedObject = argNewObject;
+        m_spawnedObject = argNewObject;
     }
 }

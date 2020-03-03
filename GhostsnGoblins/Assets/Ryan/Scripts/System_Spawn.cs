@@ -6,14 +6,15 @@ public class System_Spawn : MonoBehaviour
 {
     public static System_Spawn instance;
 
-    [SerializeField] private int seed = 500;
-    Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>(); 
+    [SerializeField] private int m_seed = 500;
+
+    private Dictionary<string, Queue<GameObject>> m_objectPool = new Dictionary<string, Queue<GameObject>>(); 
 
     private void Awake()
     {
-        if (instance == null && instance != this)
+        if (null == instance && this != instance)
         {
-            Random.InitState(seed);
+            Random.InitState(m_seed);
 
             instance = this;
 
@@ -23,63 +24,59 @@ public class System_Spawn : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void CreatePool(GameObject argGameObject, int argAmount, bool argActive)
+    public void CreatePool(GameObject argGameObject, int argAmount)
     {
-        GameObject newGameObject;
-        if (objectPool.ContainsKey(argGameObject.name))
+        GameObject parent;
+        Queue<GameObject> queue;
+
+        if (m_objectPool.ContainsKey(argGameObject.name))
         {
-            GameObject parent = transform.Find("P_" + argGameObject.name).gameObject;
-
-            for (int i = 0; i < argAmount; i++)
-            {
-                newGameObject = Instantiate(argGameObject, parent.transform);
-                objectPool[argGameObject.name].Enqueue(newGameObject);
-
-                newGameObject.SetActive(argActive);
-            }
+            parent = transform.Find("P_" + argGameObject.name).gameObject;
+            queue = m_objectPool[argGameObject.name];
         }
         else
         {
             Queue<GameObject> newQueue = new Queue<GameObject>();
+            m_objectPool.Add(argGameObject.name, newQueue);
+            queue = newQueue;
 
-            GameObject parent = new GameObject("P_" + argGameObject.name);
+            parent = new GameObject("P_" + argGameObject.name);
             parent.transform.parent = transform;
+        }
 
-            for (int i = 0; i < argAmount; i++)
-            {
-                newGameObject = Instantiate(argGameObject, parent.transform);
-                newQueue.Enqueue(newGameObject);
+        for (int i = 0; i < argAmount; i++)
+        {
+            GameObject newGameObject = Instantiate(argGameObject, parent.transform);
+            newGameObject.SetActive(false);
 
-                newGameObject.SetActive(argActive);
-            }
-
-            objectPool.Add(argGameObject.name, newQueue);
+            queue.Enqueue(newGameObject);
         }
     }
 
     public GameObject GetObjectFromPool(GameObject argGameObject, bool argIgnoreAllActiveCheck = false)
     {
-        if(objectPool.ContainsKey(argGameObject.name))
+        if(m_objectPool.ContainsKey(argGameObject.name))
         {
-            if (objectPool[argGameObject.name].Peek().activeSelf && !argIgnoreAllActiveCheck)
+            if (m_objectPool[argGameObject.name].Peek().activeSelf && !argIgnoreAllActiveCheck)
             {
-                Debug.LogWarning("All objects in queue are active");
+                Debug.LogWarning("All objects in queue are active, given key=" + argGameObject.name);
             }
 
-            GameObject poolObject = objectPool[argGameObject.name].Dequeue().gameObject;
-            objectPool[argGameObject.name].Enqueue(poolObject);
+            GameObject poolObject = m_objectPool[argGameObject.name].Dequeue().gameObject;
+            m_objectPool[argGameObject.name].Enqueue(poolObject);
+
             poolObject.SetActive(true);
+
             ISpawn spawnInterface = poolObject.GetComponent<ISpawn>();
 
             if (null != spawnInterface)
                 spawnInterface.OnSpawn();
    
             return poolObject;
-
         }
         else
         {
-            Debug.LogError("Cannot get object from pool because key is invalid");
+            Debug.LogError("Cannot get object from pool because key is invalid, given key=" + argGameObject.name);
             return null;
         }
     }

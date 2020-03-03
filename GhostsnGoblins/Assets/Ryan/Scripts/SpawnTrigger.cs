@@ -6,29 +6,31 @@ using UnityEngine;
 
 public class SpawnTrigger : MonoBehaviour
 {
-    [SerializeField] private GameObject[] spawners = null;
-    [SerializeField] private float triggerDelaySeconds = 5.0f;
-    [SerializeField] private float activeDelaySeconds = 0.0f;
-    [SerializeField] private bool canSpawn = true;
+    [SerializeField] private bool m_canSpawn = true;
+    [SerializeField] private bool m_singleUse = true;
+    [SerializeField] private float m_triggerDelaySeconds = 5.0f;
+    [SerializeField] private float m_activeDelaySeconds = 0.0f;
+    [Space]
+    [SerializeField] private GameObject[] m_spawners = null;
 
-    private WaitForSeconds triggerWait;
-    private WaitForSeconds activateWait;
+    private WaitForSeconds m_triggerWait;
+    private WaitForSeconds m_activateWait;
 
     private void Start()
     {
-        triggerWait = new WaitForSeconds(triggerDelaySeconds);
-        activateWait = new WaitForSeconds(activeDelaySeconds);
+        m_triggerWait = new WaitForSeconds(m_triggerDelaySeconds);
+        m_activateWait = new WaitForSeconds(m_activeDelaySeconds);
 
-        if (!canSpawn)
-           StartCoroutine(TriggerDelay(activateWait));
+        if (!m_canSpawn)
+           StartCoroutine(TriggerDelay(m_activateWait));
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player") || !canSpawn)
+        if (!other.CompareTag("Player") || !m_canSpawn)
             return;
 
-        foreach (GameObject spawner in spawners)
+        foreach (GameObject spawner in m_spawners)
         {
             if (null == spawner)
             {
@@ -44,7 +46,10 @@ public class SpawnTrigger : MonoBehaviour
                 return;
             }
 
-            StartCoroutine(TriggerDelay(triggerWait));
+            if(m_singleUse)
+                m_canSpawn = false;
+            else
+                StartCoroutine(TriggerDelay(m_triggerWait));
 
             spawnInterface.BeginSpawning();
         }
@@ -52,9 +57,9 @@ public class SpawnTrigger : MonoBehaviour
 
     IEnumerator TriggerDelay(WaitForSeconds argDelay)
     {
-        canSpawn = false;
+        m_canSpawn = false;
         yield return argDelay;
-        canSpawn = true;
+        m_canSpawn = true;
     }
 
 }
