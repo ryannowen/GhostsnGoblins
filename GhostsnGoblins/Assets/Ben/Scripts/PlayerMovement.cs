@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
 {
 
+    private static int playerCount = 1;
+    [SerializeField] private int m_ID = 0;
     [SerializeField] private float m_GravityScale = 4f, m_JumpForce = 7f, m_MovementSpeed = 5f, m_ClimbingSpeed = 3f, m_MovementDelayTimer = 0f, m_JumpDelay = 0.1f;
     private float m_JumpTimer = 0f;
     Vector3 m_DesiredMove = Vector3.zero;
@@ -19,6 +21,9 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
     // Start is called before the first frame update
     void Start()
     {
+
+        m_ID = playerCount;
+        playerCount++;
 
         // Checks for any missing components / assigns default values
         Setup();
@@ -48,13 +53,13 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
         ManageClimbingSettings();
 
         // Check if the player wants to jump
-        if (Input.GetAxisRaw("Jump") > 0 && m_Grounded && m_CanMove && m_JumpTimer <= 0f)
+        if (Input.GetAxisRaw("Jump_P" + m_ID) > 0 && m_Grounded && m_CanMove && m_JumpTimer <= 0f)
         {
             m_JumpTimer = m_JumpDelay;
             m_Rigidbody.velocity = Vector2.Lerp(m_Rigidbody.velocity, new Vector2(m_Rigidbody.velocity.x, m_JumpForce), 1f);
         }
 
-        if (m_Grounded && Input.GetAxisRaw("Vertical") < -0.7)
+        if (m_Grounded && Input.GetAxisRaw("Vertical_P" + m_ID) < -0.7)
         {
             m_Crouched = true;
         }
@@ -130,11 +135,11 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
     {
 
         Vector3 velocity = Vector3.zero;
-        velocity.x += Input.GetAxisRaw("Horizontal");
+        velocity.x += Input.GetAxisRaw("Horizontal_P" + m_ID);
 
         if (m_Climbing)
         {
-            velocity.y += Input.GetAxisRaw("Vertical");
+            velocity.y += Input.GetAxisRaw("Vertical_P" + m_ID);
         }
 
         velocity.Normalize();
