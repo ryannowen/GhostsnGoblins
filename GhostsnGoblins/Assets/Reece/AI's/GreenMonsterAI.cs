@@ -5,12 +5,12 @@ using UnityEngine;
 public class GreenMonsterAI : MonoBehaviour
 {
 
-    [SerializeField] private GameObject Bullet;
+    [SerializeField] private GameObject Bullet = null;
 
     public bool Alive = true; 
 
-    private GameObject Enemy;
-    private GameObject Player;
+    private GameObject Enemy = null;
+    private GameObject Player = null;
     private float time = 0.5f;
     private float PlayerX;
     private float PlayerY;
@@ -27,8 +27,14 @@ public class GreenMonsterAI : MonoBehaviour
     {
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
+
+        if (Bullet == null)
+            Bullet = (GameObject)Resources.Load("Prefabs/Bullet") as GameObject;
+
         fireProj = this.gameObject.GetComponent<FireProjectile>();
         fireProj.SetProjectile(Bullet);
+
+
 
         Enemy = this.gameObject;
     }
