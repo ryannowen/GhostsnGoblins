@@ -55,7 +55,7 @@ public class WoodyPigAI : MonoBehaviour
 
         if (Time.time > ShootTime)
         {
-            ShootTime += 2;
+            ShootTime += 3;
             Shoot = true;
         }
 

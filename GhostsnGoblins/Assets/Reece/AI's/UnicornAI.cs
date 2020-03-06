@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnicornAI : MonoBehaviour
 {
+    [SerializeField] private GameObject Bullet = null;
     public bool alive = true;
 
     private GameObject Enemy;
@@ -23,11 +24,19 @@ public class UnicornAI : MonoBehaviour
     private bool Shoot;
     private bool Angered;
 
+    private FireProjectile fireProj;
+
     // Start is called before the first frame update
     void Start()
     {
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
+
+        if (Bullet == null)
+            Bullet = (GameObject)Resources.Load("Prefabs/Bullet") as GameObject;
+
+        fireProj = this.gameObject.GetComponent<FireProjectile>();
+        fireProj.SetProjectile(Bullet);
 
         Enemy = this.gameObject;
     }
@@ -111,6 +120,7 @@ public class UnicornAI : MonoBehaviour
 
             if (Shoot)
             {
+                fireProj.Fire(transform.position, Vector3.left, transform.rotation);
                 Shoot = false;
             }
 
