@@ -45,6 +45,7 @@ public class tempFallingPlatformScript : MonoBehaviour {
         if (shouldFall) {
             rb2D.bodyType = RigidbodyType2D.Dynamic;
             rb2D.gravityScale = gravScale;
+            rb2D.mass = 200;
         } else {
             rb2D.bodyType = RigidbodyType2D.Static;
         }

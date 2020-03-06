@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class mainPlatformScript : MonoBehaviour {
 
-    [SerializeField] GameObject childCol = null;
+    [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject stored in the platform!")]
+    [SerializeField] BoxCollider2D childCol;
+
+    [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject stored in the platform!")]
     [SerializeField] private float solidTime = 0f;
+
+    [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject stored in the platform!")]
     [SerializeField] private float timer = 0f;
 
     // Start is called before the first frame update
     void Start() {
         if (childCol == null) {
-            childCol = gameObject.transform.GetChild(0).gameObject;
+            childCol = gameObject.transform.GetChild(0).gameObject.GetComponent<BoxCollider2D>();
         }
     }
 
@@ -22,9 +27,9 @@ public class mainPlatformScript : MonoBehaviour {
         }
             
         if (timer <= 0f) {
-            childCol.SetActive(true);
+            childCol.enabled = true;
         } else {
-            childCol.SetActive(false);
+            childCol.enabled = false;
         }   
     }
 

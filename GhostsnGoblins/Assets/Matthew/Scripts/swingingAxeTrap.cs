@@ -31,7 +31,7 @@ public class swingingAxeTrap : MonoBehaviour {
             }
             
             if (col.gameObject.GetComponent<ICanTakeKnockback>() != null) {
-                col.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(col.transform.position, 30);
+                col.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
             }
         }
     }
