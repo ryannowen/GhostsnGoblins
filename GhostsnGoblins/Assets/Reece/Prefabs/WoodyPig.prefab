@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 1504599778298092005}
   - component: {fileID: 4807346768990233121}
   - component: {fileID: -5841537111950569123}
-  m_Layer: 0
+  - component: {fileID: 442016998}
+  m_Layer: 16
   m_Name: WoodyPig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7f46bf6826abeb48b890d1bb87d1d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Bullet: {fileID: 0}
   alive: 1
 --- !u!61 &4807346768990233121
 BoxCollider2D:
@@ -142,3 +144,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &442016998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504599778298092010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9c358fea7a2f5449dc66124f091a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ProjectileSpeed: 7

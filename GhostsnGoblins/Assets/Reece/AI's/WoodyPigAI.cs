@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class WoodyPigAI : MonoBehaviour
 {
+
+    [SerializeField] private GameObject Bullet = null;
     public bool alive = true;
 
-    private GameObject Enemy;
-    private GameObject Player;
+    private GameObject Enemy = null;
+    private GameObject Player = null;
     private float speed = 5f;
     private float PlayerX;
     private float PlayerY;
@@ -22,9 +24,12 @@ public class WoodyPigAI : MonoBehaviour
     private bool MoveLeft;
     private bool MoveRight;
     private bool FindPlayer;
-    bool playerLevelReached = false;
+    private bool playerLevelReached = false;
+    private bool Shoot;
+    private int ShootTime = 3;
 
     private Rigidbody2D rb;
+    private FireProjectile fireProj;
 
     // Start is called before the first frame update
     void Start()
@@ -32,14 +37,29 @@ public class WoodyPigAI : MonoBehaviour
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
 
+        if (Bullet == null)
+            Bullet = (GameObject)Resources.Load("Prefabs/Bullet") as GameObject;
+
+        fireProj = this.gameObject.GetComponent<FireProjectile>();
+        fireProj.SetProjectile(Bullet);
+
         rb = this.gameObject.GetComponent<Rigidbody2D>();
+
 
         Enemy = this.gameObject;
     }
 
     // Update is called once per frame
     void FixedUpdate()
-    { 
+    {
+
+        if (Time.time > ShootTime)
+        {
+            ShootTime += 2;
+            Shoot = true;
+        }
+
+        print(ShootTime);
 
         if (!Angered)
         {
@@ -85,6 +105,17 @@ public class WoodyPigAI : MonoBehaviour
                     speed = speed * 1.5f;
                 }
                 OneTime = false;
+            }
+
+           
+            if (Shoot)
+            {
+                fireProj.Fire(transform.position, Vector3.down, transform.rotation);
+                if (MoveLeft)
+                     fireProj.Fire(transform.position, Vector3.left, transform.rotation);
+                else
+                    fireProj.Fire(transform.position, Vector3.right, transform.rotation);
+                Shoot = false;
             }
 
             //Will move the Zombie to the left if the player is on the left.

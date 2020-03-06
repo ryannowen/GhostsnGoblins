@@ -15,9 +15,13 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
     }
 
+    private static int playerCount = 1;
+    [SerializeField] private int m_ID = 0;
+
     [SerializeField] private int m_PlayerHealth = 2;
     [SerializeField] private int m_ArmourPoints = 0;
     [SerializeField] private float m_FireRate = 0.5f;
+    [SerializeField] private bool m_HasKey = false;
 
     // Sprites
     private Sprite sirArthurNude;
@@ -38,6 +42,9 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     // Start is called before the first frame update
     void Start()
     {
+
+        m_ID = playerCount;
+        playerCount++;
 
         m_MovementSystem = this.gameObject.GetComponent<PlayerMovement>();
         m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
@@ -96,7 +103,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         if (m_EquippedItem == null)
             m_EquippedItem = GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject;
 
-        if (Input.GetAxisRaw("Fire1") > 0 && m_TimeSinceLastShot <= 0 && !m_IsInvulnerable)
+        if (Input.GetAxisRaw("Fire1_P" + m_ID) > 0 && m_TimeSinceLastShot <= 0 && !m_IsInvulnerable)
         {
 
             m_MovementSystem.AddToMovementDelayTimer(m_FireRate);

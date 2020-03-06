@@ -321,19 +321,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Pools:
-  - m_Object: {fileID: 941576023956072921, guid: 542d0fcf77afb2d40891899e526d4f25,
+  - m_InspectorName: 
+    m_Object: {fileID: 941576023956072921, guid: 542d0fcf77afb2d40891899e526d4f25,
       type: 3}
     m_Amount: 20
-  - m_Object: {fileID: 6033140465015285520, guid: 2d67291d9052b52418ec09a27a574d04,
+  - m_InspectorName: 
+    m_Object: {fileID: 6033140465015285520, guid: 2d67291d9052b52418ec09a27a574d04,
       type: 3}
     m_Amount: 20
-  - m_Object: {fileID: 2447005794682650670, guid: 0ecbebc2c89b15f49a0132661f9d9601,
+  - m_InspectorName: 
+    m_Object: {fileID: 2447005794682650670, guid: 0ecbebc2c89b15f49a0132661f9d9601,
       type: 3}
     m_Amount: 20
-  - m_Object: {fileID: 5398193262887971773, guid: 55dac7275ff1aef4ca87892f4f6d25d6,
+  - m_InspectorName: 
+    m_Object: {fileID: 5398193262887971773, guid: 55dac7275ff1aef4ca87892f4f6d25d6,
       type: 3}
     m_Amount: 20
-  - m_Object: {fileID: 404115625410511368, guid: 1e089bc94f6b9d84cb99966155920d8f,
+  - m_InspectorName: 
+    m_Object: {fileID: 404115625410511368, guid: 1e089bc94f6b9d84cb99966155920d8f,
       type: 3}
     m_Amount: 20
 --- !u!1 &1261134506
@@ -620,6 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e62bc1e71d322c242b533fdfed5fedb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ID: 1
   m_GravityScale: 4
   m_JumpForce: 14
   m_MovementSpeed: 5
@@ -647,6 +653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b34b28103213e4eaa33a94602bff6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ID: 1
   m_PlayerHealth: 2
   m_ArmourPoints: 3
   m_FireRate: 0.5
