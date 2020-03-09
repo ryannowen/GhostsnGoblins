@@ -145,7 +145,7 @@ public class ZombieAI : MonoBehaviour
         }
 
         if (HP <= 0)
-            alive = false;
+            Alive = false;
 
         //If zombie is killed will deactivate itself
         if (!Alive)
