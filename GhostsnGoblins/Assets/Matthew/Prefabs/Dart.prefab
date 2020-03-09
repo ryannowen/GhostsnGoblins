@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Rigidbody: {fileID: -9189037848141003153}
   m_Damage: 1
   m_KnockbackPower: 20
-  m_DecayAfterTime: 0
+  m_DecayAfterTime: 1
   m_DecayTime: 3
   m_LayerMask:
     serializedVersion: 2
