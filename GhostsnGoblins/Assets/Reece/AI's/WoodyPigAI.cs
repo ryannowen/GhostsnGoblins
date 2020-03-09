@@ -10,6 +10,7 @@ public class WoodyPigAI : MonoBehaviour
 
     private GameObject Enemy = null;
     private GameObject Player = null;
+    private int HP = 1;
     private float speed = 5f;
     private float PlayerX;
     private float PlayerY;
@@ -272,6 +273,10 @@ public class WoodyPigAI : MonoBehaviour
                 alive = false;
             }
         }
+
+        if (HP <= 0)
+            alive = false;
+
         if (!alive)
             Enemy.SetActive(false);
     }

@@ -9,6 +9,7 @@ public class RedArremerAI : MonoBehaviour
     private GameObject Enemy;
     private GameObject Player;
     private int RNG;
+    private int HP = 10;
     private float speed = 0.1f;
     private float RNGtimer = 3;
     private float PlayerX;
@@ -222,6 +223,9 @@ public class RedArremerAI : MonoBehaviour
             }
             Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
         }
+
+        if (HP <= 0)
+            alive = false;
 
         if (!alive)
             Enemy.SetActive(false);
