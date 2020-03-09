@@ -2,27 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
- 
-
 public class SpawnTrigger : MonoBehaviour
 {
     [SerializeField] private bool m_canSpawn = true;
     [SerializeField] private bool m_singleUse = true;
-    [SerializeField] private float m_triggerDelaySeconds = 5.0f;
-    [SerializeField] private float m_activeDelaySeconds = 0.0f;
+    [SerializeField] private Vector2 m_triggerDelaySeconds = new Vector2(5.0f, 5.0f);
+    [SerializeField] private Vector2 m_activeDelaySeconds = new Vector2(0.0f, 0.0f);
     [Space]
     [SerializeField] private GameObject[] m_spawners = null;
 
-    private WaitForSeconds m_triggerWait;
-    private WaitForSeconds m_activateWait;
-
     private void Start()
     {
-        m_triggerWait = new WaitForSeconds(m_triggerDelaySeconds);
-        m_activateWait = new WaitForSeconds(m_activeDelaySeconds);
-
         if (!m_canSpawn)
-           StartCoroutine(TriggerDelay(m_activateWait));
+           StartCoroutine(TriggerDelay(m_activeDelaySeconds));
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -49,14 +41,15 @@ public class SpawnTrigger : MonoBehaviour
             if(m_singleUse)
                 m_canSpawn = false;
             else
-                StartCoroutine(TriggerDelay(m_triggerWait));
+                StartCoroutine(TriggerDelay(m_triggerDelaySeconds));
 
             spawnInterface.BeginSpawning();
         }
     }
 
-    IEnumerator TriggerDelay(WaitForSeconds argDelay)
+    IEnumerator TriggerDelay(Vector2 argDelay)
     {
+        WaitForSeconds m_wait = new WaitForSeconds(Random.Range(argDelay.x, argDelay.y));
         m_canSpawn = false;
         yield return argDelay;
         m_canSpawn = true;
