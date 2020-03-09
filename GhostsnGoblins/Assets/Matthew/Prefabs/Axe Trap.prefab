@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79cc8da22b0233c44b3a9a6b15e4c724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftRotationCap: 0
-  rightRotationCap: 0
-  velThresh: 0
-  axeDamage: 0
+  leftRotationCap: -0.4
+  rightRotationCap: 0.4
+  velThresh: 120
+  axeDamage: 1
