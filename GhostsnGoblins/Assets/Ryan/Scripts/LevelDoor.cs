@@ -11,13 +11,13 @@ public class LevelDoor : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            //if (collision.GetComponent<PlayerController>().hasKey)
-            //{
-            //    if(m_customSceneName == "") // Next Scene
-            //        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            //    else // Custom Scene
-            //        SceneManager.LoadScene(m_customSceneName);
-            //}
+            if (collision.GetComponent<PlayerController>().HasKey())
+            {
+                if (m_customSceneName == "") // Next Scene
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                else // Custom Scene
+                    SceneManager.LoadScene(m_customSceneName);
+            }
         }
     }
 }

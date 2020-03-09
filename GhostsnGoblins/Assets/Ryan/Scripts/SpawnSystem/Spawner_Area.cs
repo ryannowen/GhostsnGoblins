@@ -7,18 +7,16 @@ public class Spawner_Area : MonoBehaviour, ISpawner
 {
     [SerializeField] private bool m_spawnOnLoad = true;
     [SerializeField] private bool m_timedSpawner = false;
-    [SerializeField] private float m_spawnDelaySeconds = 10.0f;
+    [SerializeField] private Vector2 m_spawnDelaySeconds = new Vector2(10.0f, 10.0f);
     [Space]
     [SerializeField] private SpawnObject[] m_objects = null;
 
     private bool m_canSpawnObjects = false;
     private BoxCollider2D m_boxCollider;
-    private WaitForSeconds m_spawnWait;
 
     // Start is called before the firsst frame update
     void Start()
     {
-        m_spawnWait = new WaitForSeconds(m_spawnDelaySeconds);
         m_boxCollider = GetComponent<BoxCollider2D>();
 
         if (m_spawnOnLoad)
@@ -36,7 +34,7 @@ public class Spawner_Area : MonoBehaviour, ISpawner
     IEnumerator SpawnDelay()
     {
         m_canSpawnObjects = false;
-        yield return m_spawnWait;
+        yield return new WaitForSeconds(Random.Range(m_spawnDelaySeconds.x, m_spawnDelaySeconds.y));
         m_canSpawnObjects = true;
     }
 

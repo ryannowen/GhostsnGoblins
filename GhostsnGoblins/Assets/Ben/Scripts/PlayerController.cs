@@ -196,6 +196,11 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         m_HasKey = argsValue;
     }
 
+    public bool HasKey()
+    {
+        return m_HasKey;
+    }
+
     // IDamageable
     public void TakeDamage(int amount)
     {

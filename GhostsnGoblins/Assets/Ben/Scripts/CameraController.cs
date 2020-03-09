@@ -25,6 +25,7 @@ public class CameraController : MonoBehaviour
         }
 
         if (GameObject.Find("Player2") != null)
+
         {
             player2 = GameObject.Find("Player2");
         }
@@ -34,7 +35,10 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateCameraPosition();
+        if (player1 != null && player2 != null)
+            UpdateCameraPosition();
+        else
+            transform.position = new Vector3(player1.transform.position.x, player1.transform.position.y, transform.position.z);
     }
 
     void UpdateCameraPosition()
@@ -42,9 +46,17 @@ public class CameraController : MonoBehaviour
 
         Vector3 directionToSecondPlayer = player2.transform.position - player1.transform.position;
         float distanceOffsetFromPlayerOne = directionToSecondPlayer.magnitude / 2;
-        Vector3 newPosition = player1.transform.position + directionToSecondPlayer.normalized * distanceOffsetFromPlayerOne;
+        if (distanceOffsetFromPlayerOne <= 10)
+        {
+            Vector3 newPosition = player1.transform.position + directionToSecondPlayer.normalized * distanceOffsetFromPlayerOne;
 
-        transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+            transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+        } else
+        {
+            Vector3 newPosition = player1.transform.position + directionToSecondPlayer.normalized * 10;
+
+            transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+        }
 
         if (directionToSecondPlayer.magnitude >= 10f && directionToSecondPlayer.magnitude <= 20f)
         {
