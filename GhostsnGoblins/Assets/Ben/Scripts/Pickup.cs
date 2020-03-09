@@ -109,17 +109,17 @@ public class Pickup : MonoBehaviour, ISpawn
                         break;
 
                     case PickupType.Coin:
-
+                        Singleton_Game.m_instance.AddScore(10);
                         this.gameObject.SetActive(false);
                         break;
 
                     case PickupType.Key:
-
+                        collision.gameObject.GetComponent<PlayerController>().SetHasKey(true);
                         this.gameObject.SetActive(false);
                         break;
 
                     case PickupType.MoneyBag:
-
+                        Singleton_Game.m_instance.AddScore(10);
                         this.gameObject.SetActive(false);
                         break;
 
@@ -154,27 +154,27 @@ public class Pickup : MonoBehaviour, ISpawn
                 break;
 
             case PickupType.Lance:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Lance") as Sprite;
                 break;
 
             case PickupType.Dagger:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Dagger") as Sprite;
                 break;
 
             case PickupType.Torch:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Torch") as Sprite;
                 break;
 
             case PickupType.Axe:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Axe") as Sprite;
                 break;
 
             case PickupType.Shield:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Shield") as Sprite;
                 break;
 
             case PickupType.Comb:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Comb") as Sprite;
                 break;
 
             case PickupType.Coin:

@@ -46,6 +46,9 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         m_ID = playerCount;
         playerCount++;
 
+        // Name the player
+        this.gameObject.name = "Player" + m_ID;
+
         m_MovementSystem = this.gameObject.GetComponent<PlayerMovement>();
         m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
 
@@ -186,6 +189,11 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     public bool GetIsInvulnerable()
     {
         return m_IsInvulnerable;
+    }
+
+    public void SetHasKey(bool argsValue)
+    {
+        m_HasKey = argsValue;
     }
 
     // IDamageable
