@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7361603982049297921}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -47,5 +47,5 @@ MonoBehaviour:
   m_spawnDelaySeconds: 1
   m_checkPlayerDistance: 0
   m_playerMaxDistance: 10
-  m_playerPrefab: {fileID: 7587484985825546003, guid: b1cc5173de8e21e4685886e002af6e67,
+  m_playerPrefab: {fileID: 8607762150274011244, guid: b1cc5173de8e21e4685886e002af6e67,
     type: 3}
