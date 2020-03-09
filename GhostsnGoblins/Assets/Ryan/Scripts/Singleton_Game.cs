@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-struct layerColObject
+public class layerColObject
 {
     public int obj1;
     public int obj2;
@@ -16,7 +16,7 @@ public class Singleton_Game : MonoBehaviour
 
     [SerializeField] private int m_score;
     [SerializeField] private int[] m_highScores = new int[3];
-    [SerializeField] layerColObject[] layerColAry;
+    [SerializeField] layerColObject[] layerColAry = null;
 
     private void Awake()
     {
