@@ -8,6 +8,7 @@ public class RavenAI : MonoBehaviour
 
     private GameObject Enemy;
     private GameObject Player;
+    private int HP = 1;
     private float speed = 5f;
     private float Heightspeed = 2.5f;
     private float time = 0.2f;
@@ -46,6 +47,9 @@ public class RavenAI : MonoBehaviour
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
         }
+
+        if (HP <= 0)
+            alive = false;
 
         if (alive)
         {

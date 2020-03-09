@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//all, HP
 public class UnicornAI : MonoBehaviour
 {
     [SerializeField] private GameObject Bullet = null;
@@ -10,7 +10,8 @@ public class UnicornAI : MonoBehaviour
     private GameObject Enemy;
     private GameObject Player;
     private int RNG;
-    private float speed = 0.1f;
+    private int HP = 10;
+    private float speed = 5f;
     private float RNGtimer = 3;
     private float PlayerX;
     private float PlayerY;
@@ -25,10 +26,14 @@ public class UnicornAI : MonoBehaviour
     private bool Angered;
 
     private FireProjectile fireProj;
+    Rigidbody2D rb;
+    BoxCollider2D PlayerCollide;
 
     // Start is called before the first frame update
     void Start()
     {
+        rb = this.gameObject.GetComponent<Rigidbody2D>();
+
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
 
@@ -40,7 +45,18 @@ public class UnicornAI : MonoBehaviour
 
         Enemy = this.gameObject;
     }
-    
+
+    Vector3 GetDesiredMove()
+    {
+        Vector3 v = Vector3.zero;
+        if (PlayerX < EnemyX)
+            v += Vector3.left;
+        else
+            v += Vector3.right;
+        v.Normalize();
+        return v;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -63,23 +79,25 @@ public class UnicornAI : MonoBehaviour
 
         if (Time.time > RNGtimer)
         {
-            RNG = Random.Range(2, 100);
-            RNGtimer += 1.5f;
             FindPlayer = true;
+            RNG = Random.Range(2, 100);
+            RNGtimer += 1.5f; 
         }
+
+     
 
         if (!Jump && !Shoot && !Dash)
         {
-            if (RNG <= 55 && RNG > 0)
+            if (RNG <= 49 && RNG > 0)
             {
                 Jump = true;
                 JumpTimer = Time.time + 1;
             }
-            else if (RNG <= 85 && RNG > 55)
+            else if (RNG <= 50 && RNG > 49)
             {
                 Shoot = true;
             }
-            else if (RNG <= 100 && RNG > 75)
+            else if (RNG <= 100 && RNG > 50)
             {
                 Dash = true;
                 DashTime = Time.time + 0.2f;
@@ -87,6 +105,7 @@ public class UnicornAI : MonoBehaviour
             RNG = 0;
         }
 
+        GetDesiredMove();
 
         if (Angered && alive)
         {
@@ -94,23 +113,33 @@ public class UnicornAI : MonoBehaviour
             {
                 if (PlayerX < EnemyX)
                 {
-                    if (Time.time < JumpTimer - 0.5f)
+                    if (Time.time < JumpTimer - 0.8f)
                     {
-                        EnemyY += speed * 2;
-                        EnemyX -= speed;
+                        //EnemyY += speed * 2;
+                        //EnemyX -= speed;
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
+
+                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                        rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, 14), 1f);
                     }
-                    else
-                        EnemyY -= speed * 2;
                 }
                 else if (PlayerX > EnemyX)
                 {
-                    if (Time.time < JumpTimer - 0.5f)
+                    if (Time.time < JumpTimer - 0.8f)
                     {
-                        EnemyY += speed * 2;
-                        EnemyX += speed;
+                        //EnemyY += speed * 2;
+                       //EnemyX += speed;
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
+
+                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                        rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, 14), 1f);
                     }
-                    else
-                        EnemyY -= speed * 2;
                 }
                 if (Time.time > JumpTimer)
                 {
@@ -128,12 +157,22 @@ public class UnicornAI : MonoBehaviour
             {
                 if (PlayerX < EnemyX)
                 {
-                    EnemyX -= speed * 2;
+                    Vector3 moveDirection = GetDesiredMove();
+                    moveDirection.Normalize();
+                    moveDirection.y = rb.velocity.y;
+                    moveDirection.x *= speed;
+
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
                 }
 
                 else if (PlayerX > EnemyX)
                 {
-                    EnemyX += speed * 2;
+                    Vector3 moveDirection = GetDesiredMove();
+                    moveDirection.Normalize();
+                    moveDirection.y = rb.velocity.y;
+                    moveDirection.x *= speed;
+
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
                 }
 
                 if (DashTime < Time.time)
@@ -143,10 +182,13 @@ public class UnicornAI : MonoBehaviour
             }
         }
 
+        if (HP <= 0)
+            alive = false;
+
         if (!alive)
             Enemy.SetActive(false);
 
-        Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
+        //Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
     }
     
 }
