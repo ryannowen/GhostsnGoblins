@@ -25,6 +25,17 @@ public class Pickup : MonoBehaviour, ISpawn
     public PickupType m_PickupType = PickupType.CopperArmourPickup;
     SpriteRenderer m_SpriteRenderer;
 
+    [System.Serializable] struct PickupSprite {
+
+        public string name;
+        public PickupType type;
+        public Sprite spr;
+
+    }
+
+    // Sprites
+    [SerializeField] PickupSprite[] m_Sprites;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,87 +59,77 @@ public class Pickup : MonoBehaviour, ISpawn
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
 
         if (collision.gameObject.CompareTag("Player"))
         {
 
-            if (collision.gameObject.GetComponent<PlayerController>())
+            PlayerController playerC = collision.gameObject.GetComponent<PlayerController>();
+
+            switch (m_PickupType)
             {
 
-                switch (m_PickupType)
-                {
+                case PickupType.CopperArmourPickup:
+                    if (playerC.Interacting())
+                    {
+                        playerC.SetArmourPoints(1);
+                        playerC.SetArmourType(PlayerController.ArmourType.Copper);
+                    }
+                    break;
 
-                    case PickupType.CopperArmourPickup:
-                        collision.gameObject.GetComponent<PlayerController>().SetArmourPoints(1);
-                        collision.gameObject.GetComponent<PlayerController>().SetArmourType(PlayerController.ArmourType.Copper);
-                        this.gameObject.SetActive(false);
-                        break;
+                case PickupType.SilverArmourPickup:
+                    playerC.SetArmourPoints(2);
+                    playerC.SetArmourType(PlayerController.ArmourType.Silver);
+                    break;
 
-                    case PickupType.SilverArmourPickup:
-                        collision.gameObject.GetComponent<PlayerController>().SetArmourPoints(2);
-                        collision.gameObject.GetComponent<PlayerController>().SetArmourType(PlayerController.ArmourType.Silver);
-                        this.gameObject.SetActive(false);
-                        break;
+                case PickupType.GoldArmourPickup:
+                    playerC.SetArmourPoints(3);
+                    playerC.SetArmourType(PlayerController.ArmourType.Gold);
+                    break;
 
-                    case PickupType.GoldArmourPickup:
-                        collision.gameObject.GetComponent<PlayerController>().SetArmourPoints(3);
-                        collision.gameObject.GetComponent<PlayerController>().SetArmourType(PlayerController.ArmourType.Gold);
-                        this.gameObject.SetActive(false);
-                        break;
+                case PickupType.Lance:
+                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject);
+                    break;
 
-                    case PickupType.Lance:
-                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject);
-                        this.gameObject.SetActive(false);
-                        break;
+                case PickupType.Dagger:
+                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("DaggerWeapon").gameObject);
+                    break;
 
-                    case PickupType.Dagger:
-                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("DaggerWeapon").gameObject);
-                        this.gameObject.SetActive(false);
-                        break;
+                case PickupType.Torch:
+                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("TorchWeapon").gameObject);
+                    break;
 
-                    case PickupType.Torch:
-                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("TorchWeapon").gameObject);
-                        this.gameObject.SetActive(false);
-                        break;
+                case PickupType.Axe:
+                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("AxeWeapon").gameObject);
+                    break;
 
-                    case PickupType.Axe:
-                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("AxeWeapon").gameObject);
-                        this.gameObject.SetActive(false);
-                        break;
+                case PickupType.Shield:
+                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("ShieldWeapon").gameObject);
+                    break;
 
-                    case PickupType.Shield:
-                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("ShieldWeapon").gameObject);
-                        this.gameObject.SetActive(false);
-                        break;
+                case PickupType.Comb:
+                    playerC.SetEquippedItem(new GameObject());
+                    break;
 
-                    case PickupType.Comb:
-                        collision.gameObject.GetComponent<PlayerController>().SetEquippedItem(new GameObject());
-                        this.gameObject.SetActive(false);
-                        break;
+                case PickupType.Coin:
+                    Singleton_Game.m_instance.AddScore(10);
+                    break;
 
-                    case PickupType.Coin:
-                        Singleton_Game.m_instance.AddScore(10);
-                        this.gameObject.SetActive(false);
-                        break;
+                case PickupType.Key:
+                    playerC.SetHasKey(true);
+                    break;
 
-                    case PickupType.Key:
-                        collision.gameObject.GetComponent<PlayerController>().SetHasKey(true);
-                        this.gameObject.SetActive(false);
-                        break;
+                case PickupType.MoneyBag:
+                    Singleton_Game.m_instance.AddScore(10);
+                    break;
 
-                    case PickupType.MoneyBag:
-                        Singleton_Game.m_instance.AddScore(10);
-                        this.gameObject.SetActive(false);
-                        break;
-
-                    default:
-                        break;
-
-                }
+                default:
+                    break;
 
             }
+
+            this.gameObject.SetActive(false);
 
         }
 
@@ -138,59 +139,11 @@ public class Pickup : MonoBehaviour, ISpawn
     public void OnSpawn()
     {
 
-        switch (m_PickupType)
+        foreach (PickupSprite p in m_Sprites)
         {
 
-            case PickupType.CopperArmourPickup:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
-                break;
-
-            case PickupType.SilverArmourPickup:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
-                break;
-
-            case PickupType.GoldArmourPickup:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/ArmourPickup") as Sprite;
-                break;
-
-            case PickupType.Lance:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Lance") as Sprite;
-                break;
-
-            case PickupType.Dagger:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Dagger") as Sprite;
-                break;
-
-            case PickupType.Torch:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Torch") as Sprite;
-                break;
-
-            case PickupType.Axe:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Axe") as Sprite;
-                break;
-
-            case PickupType.Shield:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Shield") as Sprite;
-                break;
-
-            case PickupType.Comb:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Comb") as Sprite;
-                break;
-
-            case PickupType.Coin:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Coin") as Sprite;
-                break;
-
-            case PickupType.Key:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Key") as Sprite;
-                break;
-
-            case PickupType.MoneyBag:
-                m_SpriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Pickups/Money Bag") as Sprite;
-                break;
-
-            default:
-                break;
+            if (m_PickupType == p.type)
+                m_SpriteRenderer.sprite = p.spr;
 
         }
 

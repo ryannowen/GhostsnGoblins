@@ -9,6 +9,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] private GameObject player2 = null;
     Camera m_CameraComponent = null;
 
+    [SerializeField] private int minSize = 5;
+    [SerializeField] private int maxSize = 10;
+    [SerializeField] private int maxTetherDistanceFromPlayerOne = 10;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,29 +50,29 @@ public class CameraController : MonoBehaviour
 
         Vector3 directionToSecondPlayer = player2.transform.position - player1.transform.position;
         float distanceOffsetFromPlayerOne = directionToSecondPlayer.magnitude / 2;
-        if (distanceOffsetFromPlayerOne <= 10)
+        if (distanceOffsetFromPlayerOne <= maxTetherDistanceFromPlayerOne)
         {
             Vector3 newPosition = player1.transform.position + directionToSecondPlayer.normalized * distanceOffsetFromPlayerOne;
 
             transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
         } else
         {
-            Vector3 newPosition = player1.transform.position + directionToSecondPlayer.normalized * 10;
+            Vector3 newPosition = player1.transform.position + directionToSecondPlayer.normalized * maxTetherDistanceFromPlayerOne;
 
             transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
         }
 
-        if (directionToSecondPlayer.magnitude >= 10f && directionToSecondPlayer.magnitude <= 20f)
+        if (directionToSecondPlayer.magnitude >= minSize*2 && directionToSecondPlayer.magnitude <= maxSize*2)
         {
             m_CameraComponent.orthographicSize = directionToSecondPlayer.magnitude / 2;
         }
-        else if (directionToSecondPlayer.magnitude <= 10f)
+        else if (directionToSecondPlayer.magnitude <= minSize*2)
         {
-            m_CameraComponent.orthographicSize = 5f;
+            m_CameraComponent.orthographicSize = minSize;
         }
-        else if (directionToSecondPlayer.magnitude <= 20f)
+        else if (directionToSecondPlayer.magnitude <= maxSize*2)
         {
-            m_CameraComponent.orthographicSize = 10f;
+            m_CameraComponent.orthographicSize = maxSize;
         }
 
     }

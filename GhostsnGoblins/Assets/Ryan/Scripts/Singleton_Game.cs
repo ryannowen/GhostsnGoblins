@@ -7,7 +7,7 @@ struct layerColObject
 {
     public int obj1;
     public int obj2;
-    public bool canCollide;
+    public bool ignoreLayerCollision;
 }
 
 public class Singleton_Game : MonoBehaviour
@@ -60,7 +60,7 @@ public class Singleton_Game : MonoBehaviour
     {
         foreach (layerColObject lObj in layerColAry)
         {
-            Physics2D.IgnoreLayerCollision(lObj.obj1, lObj.obj2, lObj.canCollide);
+            Physics2D.IgnoreLayerCollision(lObj.obj1, lObj.obj2, lObj.ignoreLayerCollision);
         }
     }
 

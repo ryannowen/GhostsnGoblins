@@ -201,6 +201,14 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         return m_HasKey;
     }
 
+    public bool Interacting()
+    {
+        if (Input.GetAxisRaw("Fire3_P" + m_ID) > 0)
+            return true;
+        else
+            return false;
+    }
+
     // IDamageable
     public void TakeDamage(int amount)
     {
