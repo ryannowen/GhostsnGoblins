@@ -119,4 +119,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e9ce04bccdf5344834f9b1a60271e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PickupType: 4
+  m_PickupType: 8
+  m_Sprites:
+  - name: Copper Armour
+    type: 0
+    spr: {fileID: 21300000, guid: ca2597037a26e2b4481c43d6759d2770, type: 3}
+  - name: Silver Armour
+    type: 1
+    spr: {fileID: 21300000, guid: ca2597037a26e2b4481c43d6759d2770, type: 3}
+  - name: Gold Armour
+    type: 2
+    spr: {fileID: 21300000, guid: ca2597037a26e2b4481c43d6759d2770, type: 3}
+  - name: Lance
+    type: 3
+    spr: {fileID: 21300000, guid: 71b01805b6b520b42b6c962be6f8d4d0, type: 3}
+  - name: Dagger
+    type: 4
+    spr: {fileID: 21300000, guid: 618c54262a72e6841ad5036f21d54129, type: 3}
+  - name: Torch
+    type: 5
+    spr: {fileID: 21300000, guid: 6e1b12b735f5ba14cbf4cab66fa12205, type: 3}
+  - name: Axe
+    type: 6
+    spr: {fileID: 21300000, guid: d37c0dfd9e22cfd4d812e4fa1827b3f6, type: 3}
+  - name: Shield
+    type: 7
+    spr: {fileID: 21300000, guid: db23fd11ff7a45c4cb5f05667f86b042, type: 3}
+  - name: Comb
+    type: 8
+    spr: {fileID: 21300000, guid: 8b3d0526b659523438c439777b3ff47c, type: 3}
+  - name: Coin
+    type: 9
+    spr: {fileID: 21300000, guid: c66db3d88f48ab8429aa098983434baf, type: 3}
+  - name: Key
+    type: 10
+    spr: {fileID: 21300000, guid: f9d204fca0086b14d840d1a612f1046a, type: 3}
+  - name: MoneyBag
+    type: 11
+    spr: {fileID: 21300000, guid: bbe9db7308273a9429162780c84c7b78, type: 3}
