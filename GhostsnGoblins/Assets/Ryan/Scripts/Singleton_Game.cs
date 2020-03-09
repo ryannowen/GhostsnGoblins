@@ -2,12 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+struct layerColObject
+{
+    public int obj1;
+    public int obj2;
+    public bool canCollide;
+}
+
 public class Singleton_Game : MonoBehaviour
 {
     public static Singleton_Game m_instance;
 
     [SerializeField] private int m_score;
     [SerializeField] private int[] m_highScores = new int[3];
+    [SerializeField] layerColObject[] layerColAry;
+
     private void Awake()
     {
         if (null == m_instance && this != m_instance)
@@ -18,11 +28,12 @@ public class Singleton_Game : MonoBehaviour
         }
         else
             Destroy(gameObject);
+
+        setLayerCollisions();
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         LoadGame();
     }
 
@@ -42,6 +53,14 @@ public class Singleton_Game : MonoBehaviour
                 PlayerPrefs.SetInt("m_highScores_" + i, m_score);
                 break;
             }
+        }
+    }
+
+    private void setLayerCollisions()
+    {
+        foreach (layerColObject lObj in layerColAry)
+        {
+            Physics2D.IgnoreLayerCollision(lObj.obj1, lObj.obj2, lObj.canCollide);
         }
     }
 
