@@ -11,6 +11,7 @@ public class GreenMonsterAI : MonoBehaviour
 
     private GameObject Enemy = null;
     private GameObject Player = null;
+    private int HP = 1;
     private float time = 0.5f;
     private float PlayerX;
     private float PlayerY;
@@ -49,6 +50,9 @@ public class GreenMonsterAI : MonoBehaviour
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
         }
+
+        if (HP <= 0)
+            Alive = false;
 
         if (Alive)
         {

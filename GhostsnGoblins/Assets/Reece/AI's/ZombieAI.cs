@@ -9,6 +9,7 @@ public class ZombieAI : MonoBehaviour
 
     private GameObject Enemy;
     private GameObject Player;
+    private int HP = 1;
     private float Speed = 5f;
     private float JumpForce = 7;
     private float PlayerX;
@@ -122,7 +123,7 @@ public class ZombieAI : MonoBehaviour
                 moveDirection.x *= Speed;
 
                 rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
-            }
+            } 
 
             CheckGroundedState();
             CheckSideState();
@@ -142,6 +143,9 @@ public class ZombieAI : MonoBehaviour
                 Alive = false;
             }
         }
+
+        if (HP <= 0)
+            alive = false;
 
         //If zombie is killed will deactivate itself
         if (!Alive)
