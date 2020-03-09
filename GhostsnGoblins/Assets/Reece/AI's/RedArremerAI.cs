@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedArremerAI : MonoBehaviour
+public class RedArremerAI : MonoBehaviour, IDamageable
 {
     public bool alive = true;
 
@@ -225,10 +225,23 @@ public class RedArremerAI : MonoBehaviour
         }
 
         if (HP <= 0)
-            alive = false;
+            KillEntity();
 
         if (!alive)
             Enemy.SetActive(false);
     }
 
+    public void TakeDamage(int amount)
+    {
+
+        HP -= amount;
+
+    }
+
+    public void KillEntity()
+    {
+
+        alive = false;
+
+    }
 }

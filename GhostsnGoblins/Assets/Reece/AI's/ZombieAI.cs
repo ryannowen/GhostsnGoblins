@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieAI : MonoBehaviour
+public class ZombieAI : MonoBehaviour, IDamageable
 {
     public bool Alive = true;
     public LayerMask OnGroundCheckLayerMask;
@@ -145,7 +145,7 @@ public class ZombieAI : MonoBehaviour
         }
 
         if (HP <= 0)
-            Alive = false;
+            KillEntity();
 
         //If zombie is killed will deactivate itself
         if (!Alive)
@@ -175,6 +175,20 @@ public class ZombieAI : MonoBehaviour
             Jump = true;
         else
             Jump = false;
+
+    }
+
+    public void TakeDamage(int amount)
+    {
+
+        HP -= amount;
+
+    }
+
+    public void KillEntity()
+    {
+
+        Alive = false;
 
     }
 }

@@ -52,7 +52,7 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
         {
             if (collision.gameObject.GetComponent<IDamageable>() != null)
                 collision.gameObject.GetComponent<IDamageable>().TakeDamage(m_Damage);
-
+            Debug.Log("Collision");
             if (collision.gameObject.GetComponent<ICanTakeKnockback>() != null)
                 collision.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, m_KnockbackPower);
 

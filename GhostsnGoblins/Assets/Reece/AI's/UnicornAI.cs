@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 //all, HP
-public class UnicornAI : MonoBehaviour
+public class UnicornAI : MonoBehaviour, IDamageable
 {
     [SerializeField] private GameObject Bullet = null;
     public bool alive = true;
@@ -43,7 +43,7 @@ public class UnicornAI : MonoBehaviour
         fireProj = this.gameObject.GetComponent<FireProjectile>();
         fireProj.SetProjectile(Bullet);
 
-        Enemy = this.gameObject;
+        Enemy = gameObject;
     }
 
     Vector3 GetDesiredMove()
@@ -183,12 +183,25 @@ public class UnicornAI : MonoBehaviour
         }
 
         if (HP <= 0)
-            alive = false;
+            KillEntity();
 
         if (!alive)
             Enemy.SetActive(false);
 
         //Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
     }
-    
+
+    public void TakeDamage(int amount)
+    {
+
+        HP -= amount;
+
+    }
+
+    public void KillEntity()
+    {
+
+        alive = false;
+
+    }
 }

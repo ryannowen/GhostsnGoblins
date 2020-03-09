@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GreenMonsterAI : MonoBehaviour
+public class GreenMonsterAI : MonoBehaviour, IDamageable
 {
 
     [SerializeField] private GameObject Bullet = null;
@@ -52,7 +52,7 @@ public class GreenMonsterAI : MonoBehaviour
         }
 
         if (HP <= 0)
-            Alive = false;
+            KillEntity();
 
         if (Alive)
         {
@@ -90,5 +90,19 @@ public class GreenMonsterAI : MonoBehaviour
         }
         else
             Enemy.SetActive(false);
+    }
+
+    public void TakeDamage(int amount)
+    {
+
+        HP -= amount;
+
+    }
+
+    public void KillEntity()
+    {
+
+        Alive = false;
+
     }
 }

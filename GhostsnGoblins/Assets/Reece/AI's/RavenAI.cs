@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RavenAI : MonoBehaviour
+public class RavenAI : MonoBehaviour, IDamageable
 {
     public bool alive = true;
 
@@ -49,7 +49,7 @@ public class RavenAI : MonoBehaviour
         }
 
         if (HP <= 0)
-            alive = false;
+            KillEntity();
 
         if (alive)
         {
@@ -121,5 +121,18 @@ public class RavenAI : MonoBehaviour
         }
         else
             Enemy.SetActive(false);
+    }
+    public void TakeDamage(int amount)
+    {
+
+        HP -= amount;
+
+    }
+
+    public void KillEntity()
+    {
+
+        alive = false;
+
     }
 }

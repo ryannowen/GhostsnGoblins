@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WoodyPigAI : MonoBehaviour
+public class WoodyPigAI : MonoBehaviour, IDamageable
 {
 
     [SerializeField] private GameObject Bullet = null;
@@ -275,10 +275,24 @@ public class WoodyPigAI : MonoBehaviour
         }
 
         if (HP <= 0)
-            alive = false;
+            KillEntity();
 
         if (!alive)
             Enemy.SetActive(false);
+    }
+
+    public void TakeDamage(int amount)
+    {
+
+        HP -= amount;
+
+    }
+
+    public void KillEntity()
+    {
+
+        alive = false;
+
     }
 }
 
