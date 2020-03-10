@@ -5,36 +5,42 @@ using UnityEngine.UI;
 
 public class itemShop : MonoBehaviour
 {
+    [SerializeField] private GameObject m_peasantText = null;
+    [SerializeField] private GameObject m_purchaseText = null;
 
-    public int cost;
-    public int pointNum;
-    public GameObject moneyText;
-    private float timeWhenDisapear;
-    private float timeToAppear = 5f;
+    private float m_disappearDelaySeconds = 2.0f;
 
-    void Start()
+    private WaitForSeconds m_fadeDelay = null;
+
+    private void Start()
     {
-        pointNum = PlayerPrefs.GetInt("Points");
-    }
-    public void buyItem()
-    {
-        if (pointNum >= cost)
-        {
-            pointNum -= cost;
-        }
-        else
-        {
-            moneyText.SetActive(true);
-            timeWhenDisapear = Time.time + timeToAppear;
-        }
-
+        m_fadeDelay = new WaitForSeconds(m_disappearDelaySeconds);
     }
 
-    private void Update()
+    public void buyItem(GameObject argItem)
     {
-        if (moneyText.activeSelf == true && (Time.time >= timeWhenDisapear))
+        int currentScore = Singleton_Game.m_instance.GetScore();
+        Item itemData = argItem.GetComponent<Item>();
+        int itemCost = itemData.GetCost();
+
+        if (currentScore - itemCost >= 0)
         {
-            moneyText.SetActive(false);
+            m_purchaseText.SetActive(true);
+            m_peasantText.SetActive(false);
+            Singleton_Game.m_instance.AddScore(-itemCost);
         }
+        else if (!m_peasantText.activeSelf)
+        {
+            m_peasantText.SetActive(true);
+            m_purchaseText.SetActive(false);
+            StartCoroutine(FadeSwitch());
+        }
+    }
+
+    private IEnumerator FadeSwitch()
+    {
+        yield return m_fadeDelay;
+        m_peasantText.SetActive(false);
+
     }
 }
