@@ -14,6 +14,7 @@ public class Singleton_Game : MonoBehaviour
 {
     public static Singleton_Game m_instance;
 
+    [SerializeField] private int m_playerLives;
     [SerializeField] private int m_score;
     [SerializeField] private int[] m_highScores = new int[3];
     [SerializeField] layerColObject[] layerColAry = null;
@@ -75,6 +76,21 @@ public class Singleton_Game : MonoBehaviour
             return 0;
 
         return m_highScores[argHighScore];
+    }
+
+    public int GetPlayerLives()
+    {
+        return m_playerLives;
+    }
+
+    public void SetPlayerLives(int argPlayerLives)
+    {
+        m_playerLives = argPlayerLives;
+    }
+
+    public void AddPlayerLives(int argPlayerLives)
+    {
+        m_playerLives += argPlayerLives;
     }
 
     public void LoadGame()
