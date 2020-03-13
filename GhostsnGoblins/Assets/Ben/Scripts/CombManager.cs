@@ -22,7 +22,7 @@ public class CombManager : MonoBehaviour, IWeapon
     }
 
     // IWeapon
-    public void Action(Vector3 argsStartPosition, Vector3 argsDirection)
+    public void Action(GameObject objectFiring, Vector3 argsStartPosition, Vector3 argsDirection)
     {
 
         // Find the target position
@@ -33,7 +33,7 @@ public class CombManager : MonoBehaviour, IWeapon
 
         tempProjectile.transform.position = argsStartPosition;
         tempProjectile.transform.rotation = transform.rotation;
-        tempProjectile.GetComponent<CombProjectile>().SetPathInfo(transform.parent.parent.gameObject, targetPos, m_ProjectileSpeed);
+        tempProjectile.GetComponent<CombProjectile>().SetPathInfo(objectFiring, targetPos, m_ProjectileSpeed);
 
     }
 

@@ -23,6 +23,7 @@ public class FireProjectile : MonoBehaviour
     public void Fire(Vector3 argsStartPosition, Vector3 argsDirection, Quaternion argsRotation) 
     {
 
+        print("hi");
         GameObject tempProjectile = System_Spawn.instance.GetObjectFromPool(m_Projectile);
 
         tempProjectile.transform.position = argsStartPosition;

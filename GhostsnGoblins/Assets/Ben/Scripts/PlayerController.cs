@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     private float m_InvulnerabilityTimer = 0f;
     private float m_TimeSinceLastShot = 0f;
 
-    [SerializeField] private GameObject m_EquippedItem;
+    [SerializeField] private GameObject m_EquippedItem = null;
     PlayerMovement m_MovementSystem = null;
     SpriteRenderer m_SpriteRenderer = null;
 
@@ -103,9 +103,6 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
         ManageStats();
 
-        if (m_EquippedItem == null)
-            m_EquippedItem = GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject;
-
         if (Input.GetAxisRaw("Fire1_P" + m_ID) > 0 && m_TimeSinceLastShot <= 0 && !m_IsInvulnerable)
         {
 
@@ -118,8 +115,9 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
             else
                 directionToFire = Vector3.left;
 
-            if (m_EquippedItem.GetComponent<IWeapon>() != null)
-                m_EquippedItem.GetComponent<IWeapon>().Action(transform.position, directionToFire);
+            if (m_EquippedItem != null)
+                if (m_EquippedItem.GetComponent<IWeapon>() != null)
+                    m_EquippedItem.GetComponent<IWeapon>().Action(this.gameObject, transform.position, directionToFire);
 
             m_TimeSinceLastShot = m_FireRate;
 
@@ -199,6 +197,11 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     public bool HasKey()
     {
         return m_HasKey;
+    }
+
+    public int GetID()
+    {
+        return m_ID;
     }
 
     public bool Interacting()

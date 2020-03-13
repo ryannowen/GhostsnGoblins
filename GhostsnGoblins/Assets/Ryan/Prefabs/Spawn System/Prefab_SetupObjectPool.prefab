@@ -43,4 +43,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267a43b8639c86f47a92b493f575490b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Pools: []
+  m_Pools:
+  - m_InspectorName: Player
+    m_Object: {fileID: 8607762150274011244, guid: b1cc5173de8e21e4685886e002af6e67,
+      type: 3}
+    m_Amount: 2
+  - m_InspectorName: Camera
+    m_Object: {fileID: 2045863726979690021, guid: 2a1cc1b119c983d48a1529de43570471,
+      type: 3}
+    m_Amount: 1
+  - m_InspectorName: Lance Projectile
+    m_Object: {fileID: 941576023956072921, guid: 542d0fcf77afb2d40891899e526d4f25,
+      type: 3}
+    m_Amount: 20
+  - m_InspectorName: Dagger Projectile
+    m_Object: {fileID: 5398193262887971773, guid: 55dac7275ff1aef4ca87892f4f6d25d6,
+      type: 3}
+    m_Amount: 20
+  - m_InspectorName: Torch Projectile
+    m_Object: {fileID: 6033140465015285520, guid: 2d67291d9052b52418ec09a27a574d04,
+      type: 3}
+    m_Amount: 20
+  - m_InspectorName: Axe Projectile
+    m_Object: {fileID: 404115625410511368, guid: 1e089bc94f6b9d84cb99966155920d8f,
+      type: 3}
+    m_Amount: 20
+  - m_InspectorName: Shield Projectile
+    m_Object: {fileID: 2447005794682650670, guid: 0ecbebc2c89b15f49a0132661f9d9601,
+      type: 3}
+    m_Amount: 20
+  - m_InspectorName: Comb Projectile
+    m_Object: {fileID: 6794210619803571887, guid: a813c825c9ef99a439442a5a66a57c21,
+      type: 3}
+    m_Amount: 20
