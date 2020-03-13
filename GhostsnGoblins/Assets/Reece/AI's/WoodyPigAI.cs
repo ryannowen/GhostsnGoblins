@@ -11,7 +11,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
     private GameObject Enemy = null;
     private GameObject Player = null;
     private int HP = 1;
-    private float speed = 5f;
+    private float speed = 3f;
     private float PlayerX;
     private float PlayerY;
     private float EnemyX;
@@ -60,15 +60,12 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
             Shoot = true;
         }
 
-        print(ShootTime);
-
         if (!Angered)
         {
             PlayerX = Player.gameObject.transform.position.x;
             PlayerY = Player.gameObject.transform.position.y;
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
-            EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
             if (PlayerX + 5 > EnemyX && PlayerX - 5 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {  
                 Angered = true;
