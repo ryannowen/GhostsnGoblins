@@ -16,6 +16,7 @@ public class dartTrapScript : MonoBehaviour {
     [SerializeField] private float shootDelay = 2;
 
     private bool canSpawnPart;
+
     private FireProjectile fProjectile;
 
     // Start is called before the first frame update
@@ -61,6 +62,8 @@ public class dartTrapScript : MonoBehaviour {
 
     public void activateDartTrap() {
         if (canSpawnPart) {
+            Singleton_Sound.m_instance.gameObject.GetComponent<AudioClip>();
+
             fProjectile.Fire(transform.position, transform.up, transform.rotation);
             canSpawnPart = false;
             StartCoroutine(delayDartSpawn(shootDelay));
