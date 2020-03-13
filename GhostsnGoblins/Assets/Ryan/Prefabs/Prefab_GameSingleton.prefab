@@ -44,3 +44,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_score: 0
+  m_highScores: 000000000000000000000000
+  layerColAry:
+  - obj1: 0
+    obj2: 13
+    ignoreLayerCollision: 1
+  - obj1: 1
+    obj2: 13
+    ignoreLayerCollision: 1
+  - obj1: 2
+    obj2: 13
+    ignoreLayerCollision: 0
+  - obj1: 4
+    obj2: 13
+    ignoreLayerCollision: 1
+  - obj1: 5
+    obj2: 13
+    ignoreLayerCollision: 1
+  - obj1: 8
+    obj2: 13
+    ignoreLayerCollision: 0
+  - obj1: 12
+    obj2: 8
+    ignoreLayerCollision: 1
+  - obj1: 9
+    obj2: 13
+    ignoreLayerCollision: 1
+  - obj1: 10
+    obj2: 13
+    ignoreLayerCollision: 1
+  - obj1: 10
+    obj2: 10
+    ignoreLayerCollision: 1
+  - obj1: 11
+    obj2: 13
+    ignoreLayerCollision: 1
+  - obj1: 12
+    obj2: 13
+    ignoreLayerCollision: 1
+  - obj1: 13
+    obj2: 13
+    ignoreLayerCollision: 1
+  - obj1: 13
+    obj2: 14
+    ignoreLayerCollision: 1
+  - obj1: 13
+    obj2: 15
+    ignoreLayerCollision: 1
+  - obj1: 13
+    obj2: 16
+    ignoreLayerCollision: 1
+  - obj1: 13
+    obj2: 17
+    ignoreLayerCollision: 1
