@@ -7,7 +7,7 @@ using TMPro;
 public class HUD : MonoBehaviour
 {
     [System.Serializable]
-    class HealthbarColours
+    class Healthbar
     {
         public string inspectorName = "";
         public Color healthbarColour = new Color();
@@ -20,9 +20,11 @@ public class HUD : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_scoreText = null;
     [SerializeField] private TextMeshProUGUI m_highScoreText = null;
 
-    [SerializeField] private GameObject[] m_healthBars = null;
+    [SerializeField] private GameObject[] m_healthBarsGameObjects = null;
+    [SerializeField] private Image[] m_healthbarImages = null;
+    [SerializeField] private Sprite[] m_armourSprites = null;
 
-    [SerializeField] private HealthbarColours[] healthbarColours = null;
+    [SerializeField] private Healthbar[] m_healthbars = null;
 
     void Start()
     {
@@ -38,24 +40,24 @@ public class HUD : MonoBehaviour
 
     public void SetArmourValue(int argPlayerID, int argHealth)
     {
-        if(argPlayerID > m_healthBars.Length)
+        if(argPlayerID > m_healthBarsGameObjects.Length)
         {
             Debug.LogError("Cannot update HUD healthbar health because given PlayerID is too large");
             return;
         }
 
-        if(null != m_healthBars[argPlayerID])
+        if(null != m_healthBarsGameObjects[argPlayerID])
         {
             Debug.LogWarning("HUD player health bar was null, cannot set armour value");
             return;
         }
 
-        m_healthBars[argPlayerID].GetComponent<Slider>().minValue = argHealth;
+        m_healthBarsGameObjects[argPlayerID].GetComponent<Slider>().minValue = argHealth;
     }
 
     public void SetArmourType(int argPlayerID, PlayerController.ArmourType argArmourType)
     {
-        if (argPlayerID > m_healthBars.Length)
+        if (argPlayerID > m_healthBarsGameObjects.Length)
         {
             Debug.LogError("Cannot update HUD healthbar health because given PlayerID is too large");
             return;
@@ -64,15 +66,30 @@ public class HUD : MonoBehaviour
         if (PlayerController.ArmourType.None == argArmourType)
             return;
 
-        if (null != m_healthBars[argPlayerID])
+        if (null != m_healthBarsGameObjects[argPlayerID])
         {
             Debug.LogWarning("HUD player health bar was null, cannot set armour type");
             return;
         }
 
-        m_healthBars[argPlayerID].GetComponent<Slider>().maxValue = (int)argArmourType;
+        m_healthBarsGameObjects[argPlayerID].GetComponent<Slider>().maxValue = (int)argArmourType;
+        Image healthBarFill = m_healthBarsGameObjects[argPlayerID].transform.Find("fill").GetComponent<Image>();
 
-        Image healthBarFill = m_healthBars[argPlayerID].transform.Find("fill").GetComponent<Image>();
-        healthBarFill.color = healthbarColours[(int)argArmourType].healthbarColour;
+        if(null != healthBarFill)
+            healthBarFill.color = m_healthbars[(int)argArmourType].healthbarColour;
+
+        if ((int)argArmourType > m_armourSprites.Length)
+        {
+            Debug.LogWarning("Cannot change armour image because not enough armour sprites are given");
+            return;
+        }
+
+        if((int)argArmourType > m_healthbarImages.Length)
+        {
+            Debug.LogWarning("Cannot change armour image because not enough healthbar images are given");
+            return;
+        }
+
+        m_healthbarImages[argPlayerID].sprite = m_armourSprites[(int)argArmourType];
     }
 }

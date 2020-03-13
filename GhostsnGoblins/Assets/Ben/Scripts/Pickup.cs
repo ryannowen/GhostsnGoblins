@@ -39,12 +39,38 @@ public class Pickup : MonoBehaviour, ISpawn
     // Sprites
     [SerializeField] PickupSprite[] m_Sprites = null;
 
+    [System.Serializable]
+    class PickupObject
+    {
+
+        public string name = "";
+        public PickupType type = PickupType.Lance;
+        public GameObject obj = null;
+
+    }
+
+    // Objects
+    [SerializeField] PickupObject[] m_Objects = null;
+
     // Start is called before the first frame update
     void Start()
     {
 
         m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        Setup();
         OnSpawn(); // REMOVE THIS LATER
+
+    }
+
+    void Setup()
+    {
+
+        foreach(PickupObject o in m_Objects)
+        {
+
+            o.obj = System_Spawn.instance.GetObjectFromPool(o.obj);
+
+        }
 
     }
 
@@ -101,27 +127,12 @@ public class Pickup : MonoBehaviour, ISpawn
                     break;
 
                 case PickupType.Lance:
-                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("LanceWeapon").gameObject);
-                    break;
-
                 case PickupType.Dagger:
-                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("DaggerWeapon").gameObject);
-                    break;
-
                 case PickupType.Torch:
-                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("TorchWeapon").gameObject);
-                    break;
-
                 case PickupType.Axe:
-                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("AxeWeapon").gameObject);
-                    break;
-
                 case PickupType.Shield:
-                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("ShieldWeapon").gameObject);
-                    break;
-
                 case PickupType.Comb:
-                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("CombWeapon").gameObject);
+                    playerC.SetEquippedItem(FindObjectToEquip());
                     break;
 
                 case PickupType.Coin:
@@ -158,6 +169,21 @@ public class Pickup : MonoBehaviour, ISpawn
                 m_SpriteRenderer.sprite = p.spr;
 
         }
+
+    }
+
+    GameObject FindObjectToEquip()
+    {
+
+        foreach (PickupObject o in m_Objects)
+        {
+
+            if (m_PickupType == o.type)
+                return o.obj;
+
+        }
+
+        return null;
 
     }
 

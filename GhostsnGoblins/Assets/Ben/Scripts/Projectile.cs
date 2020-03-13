@@ -13,10 +13,13 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
     [SerializeField] private float m_DecayTime = 3f;
     [SerializeField] private LayerMask m_LayerMask = new LayerMask();
 
+    private float m_StoredDecayTime = 0f;
+
     void Awake()
     {
 
         m_Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
+        m_StoredDecayTime = m_DecayTime;
 
     }
 
@@ -67,6 +70,7 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
     {
 
         m_Rigidbody.velocity = Vector3.zero;
+        m_DecayTime = m_StoredDecayTime;
 
     }
 
