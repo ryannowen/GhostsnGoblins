@@ -22,7 +22,7 @@ public class HUD : MonoBehaviour
 
     [SerializeField] private GameObject[] m_healthBars = null;
 
-    [SerializeField] private HealthbarColours[] healthbarColours;
+    [SerializeField] private HealthbarColours[] healthbarColours = null;
 
     void Start()
     {
@@ -36,11 +36,17 @@ public class HUD : MonoBehaviour
             m_scoreText.text = "Score: " + Singleton_Game.m_instance.GetScore();
     }
 
-    public void SetHealth(int argPlayerID, int argHealth)
+    public void SetArmourValue(int argPlayerID, int argHealth)
     {
         if(argPlayerID > m_healthBars.Length)
         {
             Debug.LogError("Cannot update HUD healthbar health because given PlayerID is too large");
+            return;
+        }
+
+        if(null != m_healthBars[argPlayerID])
+        {
+            Debug.LogWarning("HUD player health bar was null, cannot set armour value");
             return;
         }
 
@@ -58,10 +64,15 @@ public class HUD : MonoBehaviour
         if (PlayerController.ArmourType.None == argArmourType)
             return;
 
+        if (null != m_healthBars[argPlayerID])
+        {
+            Debug.LogWarning("HUD player health bar was null, cannot set armour type");
+            return;
+        }
+
         m_healthBars[argPlayerID].GetComponent<Slider>().maxValue = (int)argArmourType;
 
         Image healthBarFill = m_healthBars[argPlayerID].transform.Find("fill").GetComponent<Image>();
         healthBarFill.color = healthbarColours[(int)argArmourType].healthbarColour;
-
     }
 }
