@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
     [SerializeField] private int m_Damage = 1;
     [SerializeField] private float m_KnockbackPower = 1f;
     [SerializeField] private bool m_DecayAfterTime = false;
+    [SerializeField] private bool m_DestroyedOnCollision = true;
     [SerializeField] private float m_DecayTime = 3f;
     [SerializeField] private LayerMask m_LayerMask = new LayerMask();
 
@@ -52,11 +53,11 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
         {
             if (collision.gameObject.GetComponent<IDamageable>() != null)
                 collision.gameObject.GetComponent<IDamageable>().TakeDamage(m_Damage);
-            Debug.Log("Collision");
             if (collision.gameObject.GetComponent<ICanTakeKnockback>() != null)
                 collision.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, m_KnockbackPower);
 
-            KillEntity();
+            if (m_DestroyedOnCollision)
+                KillEntity();
         }
 
     }

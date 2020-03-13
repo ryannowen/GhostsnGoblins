@@ -24,17 +24,20 @@ public class Pickup : MonoBehaviour, ISpawn
 
     public PickupType m_PickupType = PickupType.CopperArmourPickup;
     SpriteRenderer m_SpriteRenderer;
+    [SerializeField] private bool m_NeedsInteraction = false;
 
-    [System.Serializable] struct PickupSprite {
+    [System.Serializable]
+    class PickupSprite
+    {
 
-        public string name;
-        public PickupType type;
-        public Sprite spr;
+        public string name = "";
+        public PickupType type = PickupType.CopperArmourPickup;
+        public Sprite spr = null;
 
     }
 
     // Sprites
-    [SerializeField] PickupSprite[] m_Sprites;
+    [SerializeField] PickupSprite[] m_Sprites = null;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +58,7 @@ public class Pickup : MonoBehaviour, ISpawn
     {
 
         m_PickupType = newType;
-        OnSpawn();
+        ChangeObjectSprite();
 
     }
 
@@ -75,17 +78,26 @@ public class Pickup : MonoBehaviour, ISpawn
                     {
                         playerC.SetArmourPoints(1);
                         playerC.SetArmourType(PlayerController.ArmourType.Copper);
+                        this.gameObject.SetActive(false);
                     }
                     break;
 
                 case PickupType.SilverArmourPickup:
-                    playerC.SetArmourPoints(2);
-                    playerC.SetArmourType(PlayerController.ArmourType.Silver);
+                    if (playerC.Interacting())
+                    {
+                        playerC.SetArmourPoints(2);
+                        playerC.SetArmourType(PlayerController.ArmourType.Silver);
+                        this.gameObject.SetActive(false);
+                    }
                     break;
 
                 case PickupType.GoldArmourPickup:
-                    playerC.SetArmourPoints(3);
-                    playerC.SetArmourType(PlayerController.ArmourType.Gold);
+                    if (playerC.Interacting())
+                    {
+                        playerC.SetArmourPoints(3);
+                        playerC.SetArmourType(PlayerController.ArmourType.Gold);
+                        this.gameObject.SetActive(false);
+                    }
                     break;
 
                 case PickupType.Lance:
@@ -109,7 +121,7 @@ public class Pickup : MonoBehaviour, ISpawn
                     break;
 
                 case PickupType.Comb:
-                    playerC.SetEquippedItem(new GameObject());
+                    playerC.SetEquippedItem(GameObject.Find("Pre Loaded").transform.Find("CombWeapon").gameObject);
                     break;
 
                 case PickupType.Coin:
@@ -129,14 +141,14 @@ public class Pickup : MonoBehaviour, ISpawn
 
             }
 
-            this.gameObject.SetActive(false);
+            if(!m_NeedsInteraction)
+                this.gameObject.SetActive(false);
 
         }
 
     }
 
-    // ISpawn
-    public void OnSpawn()
+    void ChangeObjectSprite()
     {
 
         foreach (PickupSprite p in m_Sprites)
@@ -146,6 +158,14 @@ public class Pickup : MonoBehaviour, ISpawn
                 m_SpriteRenderer.sprite = p.spr;
 
         }
+
+    }
+
+    // ISpawn
+    public void OnSpawn()
+    {
+
+        ChangeObjectSprite();
 
     }
 
