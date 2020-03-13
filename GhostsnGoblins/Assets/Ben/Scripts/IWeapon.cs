@@ -5,6 +5,6 @@ using UnityEngine;
 public interface IWeapon
 {
 
-    void Action(Vector3 argsStartPosition, Vector3 argsDirection);
+    void Action(GameObject objectFiring, Vector3 argsStartPosition, Vector3 argsDirection);
 
 }

@@ -26,7 +26,7 @@ public class WeaponManager : MonoBehaviour, IWeapon
     }
 
     // IWeapon
-    public void Action(Vector3 argsStartPosition, Vector3 argsDirection)
+    public void Action(GameObject objectFiring, Vector3 argsStartPosition, Vector3 argsDirection)
     {
 
         argsDirection += shootingDirectionModification;
