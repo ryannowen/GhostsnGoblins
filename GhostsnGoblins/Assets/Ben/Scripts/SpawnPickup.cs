@@ -10,7 +10,7 @@ public class SpawnPickup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CreatePickup();
+     
     }
 
     // Update is called once per frame
