@@ -25,9 +25,12 @@ public class FireProjectile : MonoBehaviour
 
         GameObject tempProjectile = System_Spawn.instance.GetObjectFromPool(m_Projectile);
 
-        tempProjectile.transform.position = argsStartPosition;
-        tempProjectile.transform.rotation = argsRotation;
-        tempProjectile.GetComponent<Rigidbody2D>().AddForce(argsDirection * m_ProjectileSpeed, ForceMode2D.Impulse);
+        if (tempProjectile != null)
+        {
+            tempProjectile.transform.position = argsStartPosition;
+            tempProjectile.transform.rotation = argsRotation;
+            tempProjectile.GetComponent<Rigidbody2D>().AddForce(argsDirection * m_ProjectileSpeed, ForceMode2D.Impulse);
+        }
 
     }
 
