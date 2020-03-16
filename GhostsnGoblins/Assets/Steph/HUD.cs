@@ -19,6 +19,7 @@ public class HUD : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI m_scoreText = null;
     [SerializeField] private TextMeshProUGUI m_highScoreText = null;
+    [SerializeField] private timer m_timer = null;
 
     [SerializeField] private GameObject[] m_healthBarsGameObjects = null;
     [SerializeField] private Image[] m_healthbarImages = null;
@@ -109,5 +110,10 @@ public class HUD : MonoBehaviour
             return;
         }
         m_healthbarImages[argPlayerID].gameObject.SetActive(argActiveState);
+    }
+
+    public void SetTimerActiveState(bool argActiveState)
+    {
+        m_timer.timerActive = argActiveState;
     }
 }
