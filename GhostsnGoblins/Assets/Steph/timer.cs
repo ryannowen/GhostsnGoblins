@@ -6,34 +6,37 @@ using UnityEngine.SceneManagement;
 
 
 public class timer : MonoBehaviour
+
 {
     public Text timeTxt;
-    public int duration = 10;
-    public float remainingTime;
-    public bool timerActive = false;
-    public void Start()
+    public float duration = 10;
+    public int remainingTime;
+    public bool isCountingDown = false;
+
+    public void Begin()
     {
-        remainingTime = duration;
+
+        if (!isCountingDown)
+        {
+            isCountingDown = true;
+            remainingTime = (int)duration;
+            Invoke("_tick", 1f);
+        }
     }
 
     private void Update()
     {
-        if (!timerActive)
-            return;
-
         Scene currentScene = SceneManager.GetActiveScene();
         string sceneName = currentScene.name;
 
-        remainingTime -= Time.deltaTime;
-        timeTxt.text = ((int)remainingTime).ToString();
-
+        duration -= Time.deltaTime;
+        remainingTime = (int)duration;
+        timeTxt.text = remainingTime.ToString();
         if (remainingTime < 0)
-        {
             if (sceneName == "death")
             {
                 timeTxt.text = ("0");
                 SceneManager.LoadScene(0);
-                timerActive = false;
             }
             else
             {
@@ -41,6 +44,6 @@ public class timer : MonoBehaviour
                 timeTxt.text = ("0");
                 SceneManager.LoadScene(1);
             }
-        }
+
     }
 }
