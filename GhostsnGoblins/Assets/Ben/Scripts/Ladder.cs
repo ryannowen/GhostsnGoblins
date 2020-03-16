@@ -28,8 +28,7 @@ public class Ladder : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-
-            if (Mathf.Abs(Input.GetAxisRaw("Vertical") + collision.gameObject.GetComponent<PlayerController>().GetID()) > 0.9f && !collision.gameObject.GetComponent<PlayerMovement>().GetClimbingState())
+            if (Mathf.Abs(Input.GetAxisRaw("Vertical_P" + collision.gameObject.GetComponent<PlayerController>().GetID())) > 0.9f && !collision.gameObject.GetComponent<PlayerMovement>().GetClimbingState())
             {
                 collision.gameObject.GetComponent<PlayerMovement>().SetClimbingState(true);
             }

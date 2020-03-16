@@ -13,7 +13,7 @@ public class KillBox : MonoBehaviour
         {
             if (collision.CompareTag("Player") && !m_instantKillPlayer)
             {
-                damageable.TakeDamage(-1);
+                damageable.TakeDamage(1);
                 Singleton_Game.m_instance.MoveToCheckPoint(collision.gameObject);
             }
             else

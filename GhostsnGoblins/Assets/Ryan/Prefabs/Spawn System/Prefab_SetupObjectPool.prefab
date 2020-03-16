@@ -52,6 +52,30 @@ MonoBehaviour:
     m_Object: {fileID: 2045863726979690021, guid: 2a1cc1b119c983d48a1529de43570471,
       type: 3}
     m_Amount: 1
+  - m_InspectorName: LanceWeapon
+    m_Object: {fileID: 2184593732081151199, guid: c1dfcd5a8835389468a68d0c1ce8fb91,
+      type: 3}
+    m_Amount: 1
+  - m_InspectorName: DaggerWeapon
+    m_Object: {fileID: 2476796797623981099, guid: bc426bf1329cb1e4db12313337c11c35,
+      type: 3}
+    m_Amount: 1
+  - m_InspectorName: TorchWeapon
+    m_Object: {fileID: 3127533158545038734, guid: 45cfea4b670343a47ac82dfbb518bb3a,
+      type: 3}
+    m_Amount: 1
+  - m_InspectorName: AxeWeapon
+    m_Object: {fileID: 4977625943202022156, guid: 6dd93da9118474d43935987ff0620c6b,
+      type: 3}
+    m_Amount: 1
+  - m_InspectorName: ShieldWeapon
+    m_Object: {fileID: 5046551668258086296, guid: d242f41a5c46e82479390875d61595b0,
+      type: 3}
+    m_Amount: 1
+  - m_InspectorName: CombWeapon
+    m_Object: {fileID: 806048072815751598, guid: 2e3ac5ad3df17e8459b8714f9815c3c4,
+      type: 3}
+    m_Amount: 1
   - m_InspectorName: Lance Projectile
     m_Object: {fileID: 941576023956072921, guid: 542d0fcf77afb2d40891899e526d4f25,
       type: 3}
