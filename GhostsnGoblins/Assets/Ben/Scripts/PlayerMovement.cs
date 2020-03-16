@@ -184,7 +184,7 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
         if (m_Climbing)
         {
             m_Rigidbody.gravityScale = 0f;
-            m_Grounded = false;
+            //m_Grounded = false;
 
         }
         else

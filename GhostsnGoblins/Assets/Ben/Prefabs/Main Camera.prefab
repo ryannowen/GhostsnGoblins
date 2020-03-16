@@ -100,4 +100,4 @@ MonoBehaviour:
   player2: {fileID: 0}
   minSize: 5
   maxSize: 10
-  maxTetherDistanceFromPlayerOne: 10
+  maxTetherDistanceFromPlayerOne: 7

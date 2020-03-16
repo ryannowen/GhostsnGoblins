@@ -237,6 +237,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
         // Add functionality to kill the player
         print("Player Died");
+        this.gameObject.SetActive(false);
 
     }
 
