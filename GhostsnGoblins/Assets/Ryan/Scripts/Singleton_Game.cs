@@ -14,10 +14,11 @@ public class Singleton_Game : MonoBehaviour
 {
     public static Singleton_Game m_instance;
 
-    [SerializeField] private int m_playerLives;
-    [SerializeField] private int m_score;
+    [SerializeField] private int m_playerLives = 3;
+    [SerializeField] private int m_score = 0;
     [SerializeField] private int[] m_highScores = new int[3];
     [SerializeField] layerColObject[] layerColAry = null;
+    [SerializeField] private Vector2 m_lastCheckPoint = new Vector2(0, 0);
 
     private void Awake()
     {
@@ -91,6 +92,21 @@ public class Singleton_Game : MonoBehaviour
     public void AddPlayerLives(int argPlayerLives)
     {
         m_playerLives += argPlayerLives;
+
+        if (m_playerLives <= 0)
+        {
+            Debug.Log("RAN OUT OF LIVES");
+        }
+    }
+
+    public void SetCheckPoint(Vector2 argCheckPointLocation)
+    {
+        m_lastCheckPoint = argCheckPointLocation;
+    }
+
+    public void MoveToCheckPoint(GameObject argPlayer)
+    {
+        argPlayer.transform.position = m_lastCheckPoint;
     }
 
     public void LoadGame()

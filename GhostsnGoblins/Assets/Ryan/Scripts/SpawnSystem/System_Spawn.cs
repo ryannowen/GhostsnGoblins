@@ -17,8 +17,6 @@ public class System_Spawn : MonoBehaviour
             Random.InitState(m_seed);
 
             instance = this;
-
-            DontDestroyOnLoad(this);
         }
         else
             Destroy(gameObject);
