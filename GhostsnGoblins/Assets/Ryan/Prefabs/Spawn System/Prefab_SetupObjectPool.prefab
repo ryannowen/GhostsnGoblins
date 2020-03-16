@@ -100,3 +100,15 @@ MonoBehaviour:
     m_Object: {fileID: 6794210619803571887, guid: a813c825c9ef99a439442a5a66a57c21,
       type: 3}
     m_Amount: 20
+  - m_InspectorName: Bullet
+    m_Object: {fileID: 2288533703519710632, guid: 77620011d7e14634aabfb85386de7996,
+      type: 3}
+    m_Amount: 20
+  - m_InspectorName: Dart
+    m_Object: {fileID: 3075841005207888016, guid: 45423e71ac2ada14abbd2f0ba2d2e089,
+      type: 3}
+    m_Amount: 20
+  - m_InspectorName: Pickups
+    m_Object: {fileID: 2812206897624619931, guid: 44ee7d8eb5d9d1c47bfebad210615eb9,
+      type: 3}
+    m_Amount: 20

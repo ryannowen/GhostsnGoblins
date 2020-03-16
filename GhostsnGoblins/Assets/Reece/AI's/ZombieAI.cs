@@ -7,6 +7,7 @@ public class ZombieAI : MonoBehaviour, IDamageable
     public bool Alive = true;
     public LayerMask OnGroundCheckLayerMask;
 
+    SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
     private int HP = 1;
@@ -34,9 +35,12 @@ public class ZombieAI : MonoBehaviour, IDamageable
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
 
+        m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
+
         rb = this.gameObject.GetComponent<Rigidbody2D>();
 
         Enemy = this.gameObject;
+        
     }
 
    Vector3 GetDesiredMove()
@@ -189,6 +193,7 @@ public class ZombieAI : MonoBehaviour, IDamageable
     {
 
         Alive = false;
+        m_SpawnPickup.CreatePickup();
 
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7978360158786293804}
   - component: {fileID: 7978360158786293807}
   - component: {fileID: 7978360158786293805}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: KillBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,3 +70,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea7861b9ee698048873be18f420f929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_instantKillPlayer: 0

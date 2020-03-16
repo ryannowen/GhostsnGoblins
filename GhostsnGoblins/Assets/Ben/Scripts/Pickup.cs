@@ -58,7 +58,6 @@ public class Pickup : MonoBehaviour, ISpawn
 
         m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         Setup();
-        OnSpawn(); // REMOVE THIS LATER
 
     }
 
@@ -191,6 +190,8 @@ public class Pickup : MonoBehaviour, ISpawn
     public void OnSpawn()
     {
 
+        if (m_SpriteRenderer == null)
+            m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         ChangeObjectSprite();
 
     }
