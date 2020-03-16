@@ -6,7 +6,9 @@ public class Singleton_Sound : MonoBehaviour
 {
     public static Singleton_Sound m_instance;
 
-    [SerializeField] private Dictionary<string, AudioClip> m_audioClips = null;
+    [SerializeField] private Dictionary<string, AudioClip> m_audioClips = new Dictionary<string, AudioClip>();
+
+    [SerializeField] private GameObject audioSourcePrefab = null;
 
     void Awake()
     {
@@ -34,5 +36,12 @@ public class Singleton_Sound : MonoBehaviour
         }
 
         return m_audioClips[argAudioName];
+    }
+
+    public void PlayAudioClip(string argAudioName)
+    {
+        AudioSource audioSource = System_Spawn.instance.GetObjectFromPool(audioSourcePrefab, false).GetComponent<AudioSource>();
+        audioSource.clip = GetAudioClip(argAudioName);
+        audioSource.Play();
     }
 }

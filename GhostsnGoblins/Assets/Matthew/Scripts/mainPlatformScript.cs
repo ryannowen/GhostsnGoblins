@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class mainPlatformScript : MonoBehaviour {
 
-    [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject stored in the platform!")]
+    [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject in the platform!")]
     [SerializeField] BoxCollider2D childCol;
 
-    [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject stored in the platform!")]
+    [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject in the platform!")]
     [SerializeField] private float solidTime = 0f;
 
-    [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject stored in the platform!")]
+    [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject in the platform!")]
     [SerializeField] private float timer = 0f;
 
     // Start is called before the first frame update

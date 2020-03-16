@@ -15,8 +15,7 @@ public class dartTrapScript : MonoBehaviour {
     [Tooltip("A delay before an object fires again (in seconds).")]
     [SerializeField] private float shootDelay = 2;
 
-    private bool canSpawnPart;
-
+    private bool canSpawnPart; 
     private FireProjectile fProjectile;
 
     // Start is called before the first frame update
@@ -29,16 +28,14 @@ public class dartTrapScript : MonoBehaviour {
         }
 
         canSpawnPart = true;
+
+        Singleton_Sound.m_instance.CreateAudioClip("DartFire", Resources.Load("Sounds/DartFire") as AudioClip);
     }
 
     void OnTriggerStay2D(Collider2D col) {
         if (col.gameObject.tag == "Player") {
             if (trapType == t_Type.triggerable) {
-                if (canSpawnPart) {
-                    fProjectile.Fire(transform.position, transform.up, transform.rotation);
-                    canSpawnPart = false;
-                    StartCoroutine(delayDartSpawn(shootDelay));
-                }
+                activateDartTrap();
             }
         }
     }
@@ -46,11 +43,7 @@ public class dartTrapScript : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (trapType == t_Type.timed) {
-            if (canSpawnPart) {
-                fProjectile.Fire(transform.position, transform.up, transform.rotation);
-                canSpawnPart = false;
-                StartCoroutine(delayDartSpawn(shootDelay));
-            }
+            activateDartTrap();
         }
     }
 
@@ -62,7 +55,7 @@ public class dartTrapScript : MonoBehaviour {
 
     public void activateDartTrap() {
         if (canSpawnPart) {
-            Singleton_Sound.m_instance.gameObject.GetComponent<AudioClip>();
+            Singleton_Sound.m_instance.PlayAudioClip("DartFire");
 
             fProjectile.Fire(transform.position, transform.up, transform.rotation);
             canSpawnPart = false;

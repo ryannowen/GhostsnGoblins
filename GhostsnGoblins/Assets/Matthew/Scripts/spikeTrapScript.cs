@@ -59,7 +59,6 @@ public class spikeTrapScript : MonoBehaviour {
                         if (triggerCollider != null) {
                             triggerCollider.enabled = false;
                         }
-
                     }
                 }
                 
