@@ -103,7 +103,7 @@ MonoBehaviour:
   m_DecayTime: 5
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 8247
+    m_Bits: 73783
 --- !u!114 &31430325449392555
 MonoBehaviour:
   m_ObjectHideFlags: 0
