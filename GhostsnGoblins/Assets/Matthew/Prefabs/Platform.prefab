@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enablePlatform: 1
-  fallDelay: 1
+  fallDelay: 3
   doesFade: 1
   fadeSpeed: 5
   respawnDelay: 3
