@@ -38,6 +38,8 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
 
 
         Enemy = this.gameObject;
+
+        Singleton_Sound.m_instance.CreateAudioClip(Resources.Load("Sounds/EnemyShoot") as AudioClip, false);
     }
 
     // Update is called once per frame
@@ -96,7 +98,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
     {
 
         HP -= amount;
-
+        Singleton_Sound.m_instance.PlayAudioClip("TakeDamage");
     }
 
     public void KillEntity()

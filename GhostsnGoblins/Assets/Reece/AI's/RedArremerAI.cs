@@ -235,7 +235,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable
     {
 
         HP -= amount;
-
+        Singleton_Sound.m_instance.PlayAudioClip("TakeDamage");
     }
 
     public void KillEntity()

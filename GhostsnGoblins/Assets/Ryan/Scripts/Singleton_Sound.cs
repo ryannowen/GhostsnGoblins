@@ -10,31 +10,33 @@ public class Singleton_Sound : MonoBehaviour
 
     [SerializeField] private GameObject audioSourcePrefab = null;
 
+    [SerializeField] private AudioClip[] createdSounds = null;
+
     void Awake()
     {
         if (null == m_instance && this != m_instance)
             m_instance = this;
     }
 
-    public void CreateAudioClip(string argAudioName, AudioClip argAudioClip)
+    void Start() {
+        foreach (AudioClip aClip in createdSounds) {
+            Singleton_Sound.m_instance.CreateAudioClip(aClip, false);
+        }
+    }
+
+    public void CreateAudioClip(AudioClip argAudioClip, bool shouldShowWarnings)
     {
-        if(m_audioClips.ContainsKey(argAudioName))
+        if(m_audioClips.ContainsKey(argAudioClip.name))
         {
-            Debug.LogWarning("Cannot add audioclip due to one already existing with same name");
+            if (shouldShowWarnings)
+            {
+                Debug.LogWarning("Cannot add audioclip due to one already existing with same name");
+            }
+            
             return;
         }
 
-        m_audioClips.Add(argAudioName, argAudioClip);
-    }
-
-    public bool DoesAudioClipExist(string argAudioName)
-    {
-        if (m_audioClips.ContainsKey(argAudioName))
-        {
-            return true;
-        }
-
-        return false;
+        m_audioClips.Add(argAudioClip.name, argAudioClip);
     }
 
     public AudioClip GetAudioClip(string argAudioName)
