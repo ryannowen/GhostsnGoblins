@@ -33,16 +33,16 @@ public class timer : MonoBehaviour
         remainingTime = (int)duration;
         timeTxt.text = remainingTime.ToString();
         if (remainingTime < 0)
-            if (sceneName == "game")
-            {
-                Debug.Log("You dead");
-                timeTxt.text = ("0");
-                SceneManager.LoadScene(2);
-            }
-            else
+            if (sceneName == "death")
             {
                 timeTxt.text = ("0");
                 SceneManager.LoadScene(0);
+            }
+            else
+            {
+                Debug.Log("You dead");
+                timeTxt.text = ("0");
+                SceneManager.LoadScene(1);
             }
 
     }
