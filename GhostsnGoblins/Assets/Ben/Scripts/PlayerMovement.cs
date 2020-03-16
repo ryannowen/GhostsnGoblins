@@ -208,7 +208,7 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
     public void LerpToLadder(Vector3 argsPosition)
     {
 
-        transform.position = Vector3.Lerp(transform.position, new Vector3(argsPosition.x, transform.position.y, 0), 0.05f);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(argsPosition.x + 0.5f, transform.position.y, 0), 0.05f);
 
     }
 

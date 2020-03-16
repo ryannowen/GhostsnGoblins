@@ -8,7 +8,8 @@ public class System_Spawn : MonoBehaviour
 
     [SerializeField] private int m_seed = 500;
 
-    private Dictionary<string, Queue<GameObject>> m_objectPool = new Dictionary<string, Queue<GameObject>>(); 
+    private Dictionary<string, Queue<GameObject>> m_objectPool = new Dictionary<string, Queue<GameObject>>();
+    private GameObject objectPoolContainer = null;
 
     private void Awake()
     {
@@ -17,6 +18,8 @@ public class System_Spawn : MonoBehaviour
             Random.InitState(m_seed);
 
             instance = this;
+            objectPoolContainer = new GameObject("System_Spawn_ObjectPool");
+            objectPoolContainer.transform.parent = transform;
         }
         else
             Destroy(gameObject);
@@ -29,7 +32,7 @@ public class System_Spawn : MonoBehaviour
 
         if (m_objectPool.ContainsKey(argGameObject.name))
         {
-            parent = transform.Find("P_" + argGameObject.name).gameObject;
+            parent = objectPoolContainer.transform.Find("P_" + argGameObject.name).gameObject;
             queue = m_objectPool[argGameObject.name];
         }
         else
@@ -39,7 +42,7 @@ public class System_Spawn : MonoBehaviour
             queue = newQueue;
 
             parent = new GameObject("P_" + argGameObject.name);
-            parent.transform.parent = transform;
+            parent.transform.parent = objectPoolContainer.transform;
         }
 
         for (int i = 0; i < argAmount; i++)

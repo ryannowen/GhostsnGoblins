@@ -92,4 +92,22 @@ public class HUD : MonoBehaviour
 
         m_healthbarImages[argPlayerID].sprite = m_armourSprites[(int)argArmourType];
     }
+
+    public void SetPlayerHUDActive(int argPlayerID, bool argActiveState)
+    {
+        if (argPlayerID > m_healthBarsGameObjects.Length)
+        {
+            Debug.LogWarning("Cannot set active state of player HUD because the player ID excedes the number of healthbar gameobjects");
+            return;
+        }
+        m_healthBarsGameObjects[argPlayerID].SetActive(argActiveState);
+
+
+        if (argPlayerID > m_healthbarImages.Length)
+        {
+            Debug.LogWarning("Cannot set active state of player HUD because the player ID excedes the number of healthbar images");
+            return;
+        }
+        m_healthbarImages[argPlayerID].gameObject.SetActive(argActiveState);
+    }
 }

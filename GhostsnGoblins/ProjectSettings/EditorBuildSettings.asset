@@ -8,4 +8,19 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Steph/Scenes/MenuScene.unity
+    guid: 40c17b365833dac47891b0e52b401ee3
+  - enabled: 1
+    path: Assets/Kurt/Scenes/Level1_heaven.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Kurt/Scenes/Level2_mortal_world.unity
+    guid: 71c8116370f1e0a47b4ab141f61297b9
+  - enabled: 1
+    path: Assets/Kurt/Scenes/Level3_layers1_and_2_of_Hell.unity
+    guid: 5298fc48b05e5dd429cbc9cada441e2d
+  - enabled: 1
+    path: Assets/Kurt/Scenes/Level4_layer3of_hell.unity
+    guid: 88042dc2dacfe45438f47760b51c0b5e
   m_configObjects: {}

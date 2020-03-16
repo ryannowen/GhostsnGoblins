@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class KillBox : MonoBehaviour
 {
+    [SerializeField] bool m_instantKillPlayer = false;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
         if (null != damageable)
         {
-            if (collision.CompareTag("Player"))
+            if (collision.CompareTag("Player") && !m_instantKillPlayer)
             {
-                Singleton_Game.m_instance.AddPlayerLives(-1);
+                damageable.TakeDamage(-1);
                 Singleton_Game.m_instance.MoveToCheckPoint(collision.gameObject);
             }
             else

@@ -14,6 +14,7 @@ public class Singleton_Game : MonoBehaviour
 {
     public static Singleton_Game m_instance;
 
+    [SerializeField] private GameObject m_HUDPrefab = null;
     [SerializeField] private int m_playerLives = 3;
     [SerializeField] private int m_score = 0;
     [SerializeField] private int[] m_highScores = new int[3];
@@ -107,6 +108,11 @@ public class Singleton_Game : MonoBehaviour
     public void MoveToCheckPoint(GameObject argPlayer)
     {
         argPlayer.transform.position = m_lastCheckPoint;
+    }
+
+    public GameObject GetHUD()
+    {
+        return m_HUDPrefab;
     }
 
     public void LoadGame()
