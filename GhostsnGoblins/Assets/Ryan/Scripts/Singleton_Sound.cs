@@ -27,6 +27,16 @@ public class Singleton_Sound : MonoBehaviour
         m_audioClips.Add(argAudioName, argAudioClip);
     }
 
+    public bool DoesAudioClipExist(string argAudioName)
+    {
+        if (m_audioClips.ContainsKey(argAudioName))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public AudioClip GetAudioClip(string argAudioName)
     {
         if(!m_audioClips.ContainsKey(argAudioName))

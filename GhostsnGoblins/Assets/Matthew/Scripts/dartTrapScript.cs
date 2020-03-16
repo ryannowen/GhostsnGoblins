@@ -29,7 +29,9 @@ public class dartTrapScript : MonoBehaviour {
 
         canSpawnPart = true;
 
-        Singleton_Sound.m_instance.CreateAudioClip("DartFire", Resources.Load("Sounds/DartFire") as AudioClip);
+        if (!Singleton_Sound.m_instance.DoesAudioClipExist("DartFire")) {
+            Singleton_Sound.m_instance.CreateAudioClip("DartFire", Resources.Load("Sounds/DartFire") as AudioClip);
+        }
     }
 
     void OnTriggerStay2D(Collider2D col) {
