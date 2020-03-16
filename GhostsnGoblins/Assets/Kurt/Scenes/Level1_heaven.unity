@@ -47220,6 +47220,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1514714847445746912, guid: f29af2c741852514f96b875069153acc,
+        type: 3}
+      propertyPath: duration
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1514714847445746912, guid: f29af2c741852514f96b875069153acc,
+        type: 3}
+      propertyPath: isCountingDown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7859540660009150459, guid: f29af2c741852514f96b875069153acc,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -48334,7 +48344,7 @@ PrefabInstance:
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
@@ -48419,7 +48429,7 @@ PrefabInstance:
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.data[5].m_InspectorName
-      value: Unicorn - Boss
+      value: Unicorn (Boss)
       objectReference: {fileID: 0}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
