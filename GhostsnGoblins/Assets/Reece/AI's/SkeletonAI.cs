@@ -2,8 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieAI : MonoBehaviour, IDamageable
+
+
+
+public class SkeletonAI : MonoBehaviour
 {
+
+    public Sprite Head;
+    public Sprite Body;
+
+    private SpriteRenderer SpriteRender;
+
+
     public bool Alive = true;
     public LayerMask OnGroundCheckLayerMask;
 
@@ -20,18 +30,20 @@ public class ZombieAI : MonoBehaviour, IDamageable
     private float Deathtimer;
     private bool Angered = false;
     public bool OnGround = false;
-    private bool Jump = false;
     private bool OneTime = true;
     private bool MoveLeft;
     private bool MoveRight;
     private bool FindPlayer;
-  
+
     Rigidbody2D rb;
-    BoxCollider2D PlayerCollide;
 
     // Start is called before the first frame update
     void Start()
     {
+        SpriteRender = GetComponent<SpriteRenderer>();
+        if (SpriteRender.sprite == null)
+            SpriteRender.sprite = Head;
+
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
 
@@ -40,10 +52,9 @@ public class ZombieAI : MonoBehaviour, IDamageable
         rb = this.gameObject.GetComponent<Rigidbody2D>();
 
         Enemy = this.gameObject;
-        
     }
 
-   Vector3 GetDesiredMove()
+    Vector3 GetDesiredMove()
     {
         Vector3 v = Vector3.zero;
         if (MoveLeft)
@@ -57,7 +68,6 @@ public class ZombieAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Will find if the player is within a certain range of the zombie.
         if (!Angered)
         {
             PlayerX = Player.gameObject.transform.position.x;
@@ -67,14 +77,14 @@ public class ZombieAI : MonoBehaviour, IDamageable
             if (PlayerX + 8 > EnemyX && PlayerX - 8 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
-            }  
+            }
         }
-
         GetDesiredMove();
 
         //If the Zombie is alive and within a certain range it will attack the player
         if (Alive && Angered)
         {
+            ChangeSprite();
             FindPlayer = true;
             if (FindPlayer)
             {
@@ -99,10 +109,6 @@ public class ZombieAI : MonoBehaviour, IDamageable
                         MoveRight = true;
                     }
 
-                    if (Random.Range(2, 101) > 70)
-                    {
-                        Speed = Speed * 1.5f;
-                    }
                     OneTime = false;
                 }
             }
@@ -127,17 +133,17 @@ public class ZombieAI : MonoBehaviour, IDamageable
                 moveDirection.x *= Speed;
 
                 rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
-            } 
+            }
 
             CheckGroundedState();
-            CheckSideState();
+
 
             //Allows for the Zombie to be able to jump
-            if (Mathf.Abs(rb.velocity.x) < 8f && OnGround && Jump)
+            if (Mathf.Abs(rb.velocity.x) < 8f && OnGround)
             {
                 rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, JumpForce), 1f);
             }
-           
+
             if (JumpForce == 0)
                 JumpForce = 7;
 
@@ -156,9 +162,7 @@ public class ZombieAI : MonoBehaviour, IDamageable
             Enemy.SetActive(false);
     }
 
- 
 
-//Checks to see if the ground is undearneath the zombie
     void CheckGroundedState()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, 1f, OnGroundCheckLayerMask);
@@ -170,31 +174,28 @@ public class ZombieAI : MonoBehaviour, IDamageable
     }
 
     //Checks to see if there is a wall withing a certain distance of the Zombie in which it will know to jump or not
-    void CheckSideState()
-    {
-        RaycastHit2D Left = Physics2D.Raycast(transform.position, Vector3.left, (transform.localScale.x / 2 + 2f), OnGroundCheckLayerMask);
-        RaycastHit2D Right = Physics2D.Raycast(transform.position, Vector3.right, (transform.localScale.x / 2 + 2f), OnGroundCheckLayerMask);
 
-        if (Left || Right)
-            Jump = true;
-        else
-            Jump = false;
-
-    }
 
     public void TakeDamage(int amount)
-    {
+{
 
-        HP -= amount;
+    HP -= amount;
 
-    }
-
-    public void KillEntity()
-    {
-
-        Alive = false;
-        m_SpawnPickup.CreatePickup();
-
-    }
 }
 
+public void KillEntity()
+{
+
+    Alive = false;
+    m_SpawnPickup.CreatePickup();
+
+}
+
+void ChangeSprite()
+    {
+        if (SpriteRender.sprite == Head)
+        {
+            SpriteRender.sprite = Body;
+        }
+    }
+}

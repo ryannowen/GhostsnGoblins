@@ -64,28 +64,13 @@ public class DragonAI : MonoBehaviour, IDamageable
         if (Time.time > RNGTimer)
         {
             RNG = Random.Range(2, 100);
-            RNGTimer += 3;
+            RNGTimer += 2;
         }
 
-        if (RNG > 0)
-        {
-            MoveTime = Time.time + 2;
-            if (RNG <= 25 && RNG > 0)
-                MoveLeft = true;
+        //print(MoveTime);
+        //print(Time.time);
+        print(RNG);
 
-            else if (RNG <= 50 && RNG > 25)
-                MoveLeft = true;
-
-            else if (RNG <= 75 && RNG > 50)
-                FlyUp = true;
-
-            else if (RNG <= 100 && RNG > 75)
-                FlyDown = true;
-            RNG = 0;
-        }
-
-        print(MoveTime);
-        print(Time.time);
         if (!Angered)
         {
             PlayerX = Player.gameObject.transform.position.x;
@@ -104,7 +89,32 @@ public class DragonAI : MonoBehaviour, IDamageable
                 EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
                 PlayerPos = new Vector2(Player.gameObject.transform.position.x, Player.gameObject.transform.position.y);
 
-                if (Shoot)
+            if (RNG > 0)
+            {
+                MoveTime = Time.time + 1;
+                if (RNG <= 25 && RNG > 0)
+                    MoveLeft = true;
+
+                else if (RNG <= 50 && RNG > 25)
+                    MoveLeft = true;
+
+                else if (RNG <= 75 && RNG > 50)
+                    FlyUp = true;
+
+                else if (RNG <= 100 && RNG > 75)
+                    FlyDown = true;
+                RNG = 0;
+            }
+
+            if (MoveTime < Time.time)
+            {
+                MoveLeft = false;
+                MoveRight = false;
+                FlyUp = false;
+                FlyDown = false;
+            }
+
+            if (Shoot)
                 {
                     if (MoveLeft)
                         fireProj.Fire(transform.position, Vector3.left, transform.rotation);
@@ -116,39 +126,44 @@ public class DragonAI : MonoBehaviour, IDamageable
                 //Will move the Zombie to the left if the player is on the left.
                 if (MoveLeft)
                 {
-                    if (MoveTime > Time.time)
-                    {
                         Vector3 moveDirection = Vector3.left;
                         moveDirection.Normalize();
                         moveDirection.y = 0;
                         moveDirection.x *= speed;
 
                         rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
-                        print("Hey");
-                    }
-                    else if (MoveTime < Time.time)
-                    {
-                        MoveLeft = false;
-                        print("hi");
-                    }
+                        print("Hey");   
                 }
 
                 //Will move the Zombie to the right if the player is on the right
                 else if (MoveRight)
                 {
-                    if (MoveTime > Time.time)
-                    {
                         Vector3 moveDirection = Vector3.right;
                         moveDirection.Normalize();
                         moveDirection.y = 0;
                         moveDirection.x *= speed;
 
                         rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
-                    }
-                    else
-                        MoveRight = false;
                 }
+
+            else if (FlyUp)
+            {
+                    Vector3 moveDirection = Vector3.up;
+                    moveDirection.Normalize();
+                    moveDirection.y *= speed;
+
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
             }
+
+            else if (FlyDown)
+            {
+                    Vector3 moveDirection = Vector3.down;
+                    moveDirection.Normalize();
+                    moveDirection.y *= speed;
+
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
+            }
+        }
         
 
         if (HP <= 0)
