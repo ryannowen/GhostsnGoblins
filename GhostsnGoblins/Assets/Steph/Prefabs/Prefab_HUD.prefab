@@ -1102,7 +1102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeTxt: {fileID: 1514714847445746943}
-  duration: 10
+  duration: 180
   remainingTime: 0
   isCountingDown: 0
 --- !u!1 &1514714847654125423
@@ -1219,19 +1219,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7ee18665fdef4eb5091a11de6d8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_gameUI: {fileID: 1514714846335603040}
+  m_shopUI: {fileID: 1514714845954552953}
   m_scoreText: {fileID: 1514714846290882909}
   m_highScoreText: {fileID: 1514714846122476960}
+  m_HUDTimer: {fileID: 0}
   m_healthBarsGameObjects:
   - {fileID: 1514714847279733563}
   - {fileID: 7859540659245579008}
-  m_healthbarImages:
-  - {fileID: 7859540660588882789}
-  - {fileID: 7859540660392049270}
-  m_armourSprites:
-  - {fileID: 21300000, guid: 3bde4309fc79b454d9487ad644d8c33f, type: 3}
-  - {fileID: 21300000, guid: b3d9c72e597613641ab6930d9efe6f60, type: 3}
-  - {fileID: 21300000, guid: 052be88a7545e1f4bbcebef905be5101, type: 3}
-  - {fileID: 21300000, guid: 775020bf1ad83984d862d720c1d8d512, type: 3}
   m_healthbars:
   - inspectorName: Nude
     healthbarColour: {r: 1, g: 0.81568635, b: 0.63529414, a: 0}
@@ -1241,6 +1236,14 @@ MonoBehaviour:
     healthbarColour: {r: 0.69803923, g: 0.69803923, b: 0.7176471, a: 0}
   - inspectorName: Gold
     healthbarColour: {r: 1, g: 0.8117648, b: 0.2509804, a: 0}
+  m_healthbarImages:
+  - {fileID: 7859540660588882789}
+  - {fileID: 7859540660392049270}
+  m_armourSprites:
+  - {fileID: 21300000, guid: 3bde4309fc79b454d9487ad644d8c33f, type: 3}
+  - {fileID: 21300000, guid: b3d9c72e597613641ab6930d9efe6f60, type: 3}
+  - {fileID: 21300000, guid: 052be88a7545e1f4bbcebef905be5101, type: 3}
+  - {fileID: 21300000, guid: 775020bf1ad83984d862d720c1d8d512, type: 3}
 --- !u!114 &1514714847654125417
 MonoBehaviour:
   m_ObjectHideFlags: 0

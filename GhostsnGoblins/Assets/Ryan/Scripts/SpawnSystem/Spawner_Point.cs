@@ -18,8 +18,6 @@ public class Spawner_Point : MonoBehaviour, ISpawner
     // Start is called before the first frame update
     void Start()
     {
-        
-
         if (m_spawnOnLoad)
             BeginSpawning();
         else if(m_timedSpawner)

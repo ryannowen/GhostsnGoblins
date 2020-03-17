@@ -9,6 +9,7 @@ public class System_Spawn : MonoBehaviour
     [SerializeField] private int m_seed = 500;
 
     private Dictionary<string, Queue<GameObject>> m_objectPool = new Dictionary<string, Queue<GameObject>>();
+    private List<int> m_setupObjectPoolIDs = new List<int>();
     private GameObject objectPoolContainer = null;
 
     private void Awake()
@@ -56,6 +57,12 @@ public class System_Spawn : MonoBehaviour
 
     public GameObject GetObjectFromPool(GameObject argGameObject, bool argIgnoreAllActiveCheck = false)
     {
+        if (null == argGameObject)
+        {
+            Debug.LogError("Cannot Get object from pool because given object is null");
+            return null;
+        }
+
         if(m_objectPool.ContainsKey(argGameObject.name))
         {
             if (m_objectPool[argGameObject.name].Peek().activeSelf && !argIgnoreAllActiveCheck)
@@ -80,5 +87,14 @@ public class System_Spawn : MonoBehaviour
             Debug.LogError("Cannot get object from pool because key is invalid, given key=" + argGameObject.name);
             return null;
         }
+    }
+
+    public bool RegisterSetupObjectPool(int argSetupPoolID)
+    {
+        if (m_setupObjectPoolIDs.Contains(argSetupPoolID))
+            return false;
+
+        m_setupObjectPoolIDs.Add(argSetupPoolID);
+        return true;
     }
 }

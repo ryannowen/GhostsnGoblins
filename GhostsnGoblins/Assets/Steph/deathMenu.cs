@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class deathMenu : MonoBehaviour
 {
+    private void Start()
+    {
+        Singleton_Sound.m_instance.PlayAudioClip("GameOver");
+    }
+
     public void continueGame()
     {
         SceneManager.LoadScene(2);

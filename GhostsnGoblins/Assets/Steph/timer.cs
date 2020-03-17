@@ -4,46 +4,48 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
 public class timer : MonoBehaviour
-
 {
     public Text timeTxt;
-    public float duration = 10;
-    public int remainingTime;
+    public int duration = 10;
+    public float remainingTime;
     public bool isCountingDown = false;
 
-    public void Begin()
+    private void Start()
     {
-
-        if (!isCountingDown)
-        {
-            isCountingDown = true;
-            remainingTime = (int)duration;
-            Invoke("_tick", 1f);
-        }
+        remainingTime = duration;
     }
 
     private void Update()
     {
+        if (!isCountingDown)
+            return;
+
         Scene currentScene = SceneManager.GetActiveScene();
         string sceneName = currentScene.name;
 
-        duration -= Time.deltaTime;
-        remainingTime = (int)duration;
-        timeTxt.text = remainingTime.ToString();
+        remainingTime -= Time.deltaTime;
+        timeTxt.text = ((int)remainingTime).ToString();
         if (remainingTime < 0)
-            if (sceneName == "death")
+        {
+            timeTxt.text = ("0");
+
+            if (sceneName == "death") // Loads Main Menu
             {
-                timeTxt.text = ("0");
                 SceneManager.LoadScene(0);
             }
-            else
+            else // Loads Death Scene
             {
-                Debug.Log("You dead");
-                timeTxt.text = ("0");
                 SceneManager.LoadScene(1);
             }
 
+            isCountingDown = false;
+        }
+    }
+
+    public void ResetTimer()
+    {
+        remainingTime = duration;
+        isCountingDown = true;
     }
 }

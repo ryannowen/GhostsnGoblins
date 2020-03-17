@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class HUD : MonoBehaviour
@@ -12,19 +13,23 @@ public class HUD : MonoBehaviour
         public string inspectorName = "";
         public Color healthbarColour = new Color();
     }
-    
+
     // Copper healthBar.fill.color = new Color(239,15,30,255); 
     // Silver healthBar.fill.color = new Color(192,192,192,255); 
     // Gold healthBar.fill.color = new Color(255,215,0,255); 
 
+    [SerializeField] private GameObject m_gameUI = null;
+    [SerializeField] private GameObject m_shopUI = null;
+    [Space]
     [SerializeField] private TextMeshProUGUI m_scoreText = null;
     [SerializeField] private TextMeshProUGUI m_highScoreText = null;
-
+    [SerializeField] private timer m_HUDTimer = null;
+    [Space]
     [SerializeField] private GameObject[] m_healthBarsGameObjects = null;
+    [SerializeField] private Healthbar[] m_healthbars = null;
     [SerializeField] private Image[] m_healthbarImages = null;
     [SerializeField] private Sprite[] m_armourSprites = null;
 
-    [SerializeField] private Healthbar[] m_healthbars = null;
 
     void Start()
     {
@@ -36,6 +41,16 @@ public class HUD : MonoBehaviour
     {
         if(null != m_scoreText)
             m_scoreText.text = "Score: " + Singleton_Game.m_instance.GetScore();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void SetArmourValue(int argPlayerID, int argHealth)
@@ -109,5 +124,24 @@ public class HUD : MonoBehaviour
             return;
         }
         m_healthbarImages[argPlayerID].gameObject.SetActive(argActiveState);
+    }
+
+    public void ToggleUI()
+    {
+        if (null != m_gameUI)
+            m_gameUI.SetActive(!m_gameUI.activeSelf);
+
+        if (null != m_shopUI)
+            m_shopUI.SetActive(!m_shopUI.activeSelf);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Enables timer if not on death scene or Main Menu
+        m_HUDTimer.enabled = (1 != scene.buildIndex && 0 != scene.buildIndex);
+
+        if (m_HUDTimer.enabled)
+            m_HUDTimer.ResetTimer();
+
     }
 }
