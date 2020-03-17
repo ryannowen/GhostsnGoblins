@@ -11,14 +11,20 @@ public class SpawnTrigger : MonoBehaviour
         eToggleSpawner
     }
 
+    [System.Serializable]
+    class Spawner
+    {
+        public ETriggerType m_triggerType = ETriggerType.eActivateSpawner;
+        public GameObject m_spawner = null;
+    }
 
-    [SerializeField] private ETriggerType m_triggerType = ETriggerType.eActivateSpawner;
+     
     [SerializeField] private bool m_canTrigger = true;
     [SerializeField] private bool m_singleUse = true;
     [SerializeField] private Vector2 m_triggerDelaySeconds = new Vector2(5.0f, 5.0f);
     [SerializeField] private Vector2 m_activeDelaySeconds = new Vector2(0.0f, 0.0f);
     [Space]
-    [SerializeField] private GameObject[] m_spawners = null;
+    [SerializeField] private Spawner[] m_spawners = null;
 
     private void Start()
     {
@@ -31,36 +37,36 @@ public class SpawnTrigger : MonoBehaviour
         if (!other.CompareTag("Player") || !m_canTrigger)
             return;
 
-        foreach (GameObject spawner in m_spawners)
+        foreach (Spawner spawner in m_spawners)
         {
             if (null == spawner)
             {
-                Debug.LogError("Spawner: " + spawner.name + " has is null");
+                Debug.LogError("Spawner: " + spawner.m_spawner.name + " is null");
                 return;
             }
 
-            ISpawner spawnInterface = spawner.GetComponent<ISpawner>();
+            ISpawner spawnInterface = spawner.m_spawner.GetComponent<ISpawner>();
 
             if(null == spawnInterface)
             {
-                Debug.LogWarning("Spawner: " + spawner.name + " has no spawn interface");
+                Debug.LogWarning("Spawner: " + spawner.m_spawner.name + " has no spawn interface");
                 return;
             }
 
-            switch (m_triggerType)
+            switch (spawner.m_triggerType)
             {
                 case ETriggerType.eActivateSpawner:
                     TriggerSpawner(spawnInterface);
                     break;
 
                 case ETriggerType.eDeactivateSpawner:
-                    spawner.SetActive(false);
+                    spawner.m_spawner.SetActive(false);
                     break;
 
                 case ETriggerType.eToggleSpawner:
-                    spawner.SetActive(!spawner.activeSelf);
+                    spawner.m_spawner.SetActive(!spawner.m_spawner.activeSelf);
 
-                    if(spawner.activeSelf)
+                    if(spawner.m_spawner.activeSelf)
                         TriggerSpawner(spawnInterface);
                     break;
 

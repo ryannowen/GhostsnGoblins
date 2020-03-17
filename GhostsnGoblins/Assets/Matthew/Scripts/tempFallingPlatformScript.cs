@@ -101,7 +101,6 @@ public class tempFallingPlatformScript : MonoBehaviour {
     }
 
     private IEnumerator respawnPlatform(float wTime) {
-        print(wTime);
         yield return new WaitForSeconds(wTime);
 
         rb2D.gravityScale = 0;

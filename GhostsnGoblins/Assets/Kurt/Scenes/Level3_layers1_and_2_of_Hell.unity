@@ -290,7 +290,7 @@ PrefabInstance:
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.data[3].m_Amount
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
