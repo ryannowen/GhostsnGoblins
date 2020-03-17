@@ -28,6 +28,7 @@ public class DragonAI : MonoBehaviour, IDamageable
     private int ShootTime = 3;
     private int RNG;
     private float RNGTimer;
+    private bool OneTime = true;
 
     private Rigidbody2D rb;
     private FireProjectile fireProj;
@@ -53,21 +54,13 @@ public class DragonAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        if (Time.time > ShootTime)
-        {
-            ShootTime += 3;
-            Shoot = true;
-        }
+    
 
         if (Time.time > RNGTimer)
         {
             RNG = Random.Range(2, 100);
-            RNGTimer += 2;
+            RNGTimer += 0.3f;
         }
-
-        //print(MoveTime);
-        //print(Time.time);
-        print(RNG);
 
         if (!Angered)
         {
@@ -87,16 +80,37 @@ public class DragonAI : MonoBehaviour, IDamageable
                 EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
                 PlayerPos = new Vector2(Player.gameObject.transform.position.x, Player.gameObject.transform.position.y);
 
+            if (OneTime)
+            {
+                EnemyX = Enemy.gameObject.transform.position.x;
+                EnemyY = Enemy.gameObject.transform.position.y;
+                PlayerX = Player.gameObject.transform.position.x;
+
+                //Finds if the player is on the left.
+                if (PlayerX < EnemyX)
+                {
+                    MoveLeft = true;
+                }
+
+                //Finds if the player is on the right.
+                if (PlayerX > EnemyX)
+                {
+                    MoveRight = true;
+                }
+
+                OneTime = false;
+            }
+
+            if (Time.time > ShootTime)
+            {
+                ShootTime += 3;
+                Shoot = true;
+            }
+
             if (RNG > 0)
             {
-                MoveTime = Time.time + 1;
-                if (RNG <= 25 && RNG > 0)
-                    MoveLeft = true;
-
-                else if (RNG <= 50 && RNG > 25)
-                    MoveLeft = true;
-
-                else if (RNG <= 75 && RNG > 50)
+                MoveTime = Time.time + 0.2f;
+                if (RNG <= 75 && RNG > 50)
                     FlyUp = true;
 
                 else if (RNG <= 100 && RNG > 75)
@@ -106,61 +120,85 @@ public class DragonAI : MonoBehaviour, IDamageable
 
             if (MoveTime < Time.time)
             {
-                MoveLeft = false;
-                MoveRight = false;
                 FlyUp = false;
                 FlyDown = false;
             }
 
-            if (Shoot)
+            if (EnemyPos.y < PlayerPos.y + 0.5)
+            {
+                FlyDown = false;
+                FlyUp = true;
+            }
+            else if (EnemyPos.y > PlayerPos.y + 5)
+            {
+                FlyUp = false;
+                FlyDown = true;
+            }
+
+                if (Shoot)
                 {
-                    if (EnemyPos.x > PlayerPos.x)
-                        fireProj.Fire(transform.position, Vector3.left, transform.rotation);
-                    else
-                        fireProj.Fire(transform.position, Vector3.right, transform.rotation);
+                   // if (EnemyPos.x > PlayerPos.x)
+                   //    fireProj.Fire(transform.position, Vector3.left, transform.rotation);
+                   // else
+                   //     fireProj.Fire(transform.position, Vector3.right, transform.rotation);
                     Shoot = false;
                 }
                  
                 //Will move the Zombie to the left if the player is on the left.
                 if (MoveLeft)
                 {
-                        Vector3 moveDirection = Vector3.left;
-                        moveDirection.Normalize();
-                        moveDirection.y = 0;
-                        moveDirection.x *= speed;
+                if (EnemyPos.x > PlayerPos.x - 8)
+                {
+                    Vector3 moveDirection = Vector3.left;
+                    moveDirection.Normalize();
+                    moveDirection.y = 0;
+                    moveDirection.x *= speed;
 
-                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
-                        print("Hey");   
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                }
+                else
+                {
+                    MoveLeft = false;
+                    MoveRight = true;
+                }
                 }
 
                 //Will move the Zombie to the right if the player is on the right
                 else if (MoveRight)
                 {
-                        Vector3 moveDirection = Vector3.right;
-                        moveDirection.Normalize();
-                        moveDirection.y = 0;
-                        moveDirection.x *= speed;
+                if (EnemyPos.x < PlayerPos.x + 8)
+                {
+                    Vector3 moveDirection = Vector3.right;
+                    moveDirection.Normalize();
+                    moveDirection.y = 0;
+                    moveDirection.x *= speed;
 
-                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
                 }
+                else
+                {
+                    MoveLeft = true;
+                    MoveRight = false;
+                }
+            }
 
-            else if (FlyUp)
-            {
+                if (FlyUp)
+                {
                     Vector3 moveDirection = Vector3.up;
                     moveDirection.Normalize();
                     moveDirection.y *= speed;
 
-                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
-            }
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.3f);
+                }
 
-            else if (FlyDown)
-            {
+                else if (FlyDown)
+                {
                     Vector3 moveDirection = Vector3.down;
                     moveDirection.Normalize();
                     moveDirection.y *= speed;
 
-                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.1f);
-            }
+                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.3f);
+                }
         }
         
 

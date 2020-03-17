@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5848739722893746578}
   - component: {fileID: 5848739722893746581}
   m_Layer: 0
-  m_Name: Dragon 1
+  m_Name: Dragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1234029da16230544ba294f49c502caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bullet: {fileID: 0}
+  Bullet: {fileID: 2288533703519710632, guid: 77620011d7e14634aabfb85386de7996, type: 3}
   alive: 1
 --- !u!61 &5848739722893746579
 BoxCollider2D:

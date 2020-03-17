@@ -1306,7 +1306,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &2054403391
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1407,15 +1407,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dragon
       objectReference: {fileID: 0}
-    - target: {fileID: 5848739722893746580, guid: 5064c3ff7416a6f4c89fd3eca63034aa,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5848739722893746590, guid: 5064c3ff7416a6f4c89fd3eca63034aa,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.7683954
+      value: 7.3
       objectReference: {fileID: 0}
     - target: {fileID: 5848739722893746590, guid: 5064c3ff7416a6f4c89fd3eca63034aa,
         type: 3}
@@ -1644,6 +1639,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SkeletonSkull
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031925705788515724, guid: 3fe0431668ebba546ad04d3cddddb4c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9031925705788515729, guid: 3fe0431668ebba546ad04d3cddddb4c1,
         type: 3}
