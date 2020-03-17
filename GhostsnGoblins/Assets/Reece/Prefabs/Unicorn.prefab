@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9190372235437073890}
   - component: {fileID: -429317876885971880}
   - component: {fileID: 6472890716358965699}
+  - component: {fileID: 441962034}
   m_Layer: 0
   m_Name: Unicorn
   m_TagString: Untagged
@@ -94,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4faedcc1202c0e242807ae9959510fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bullet: {fileID: 0}
+  Bullet: {fileID: 2288533703519710632, guid: 77620011d7e14634aabfb85386de7996, type: 3}
   alive: 1
 --- !u!61 &-429317876885971880
 BoxCollider2D:
@@ -137,9 +138,22 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 4
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!114 &441962034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9190372235437073891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9c358fea7a2f5449dc66124f091a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ProjectileSpeed: 5

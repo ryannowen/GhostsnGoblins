@@ -120,25 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &441962028 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9190372235437073891, guid: 6fbfa91d70574b0408108de0e30f74e4,
-    type: 3}
-  m_PrefabInstance: {fileID: 6761674384580778022}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &441962034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 441962028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d9c358fea7a2f5449dc66124f091a77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ProjectileSpeed: 5
 --- !u!1 &449630631
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,7 +962,7 @@ PrefabInstance:
     - target: {fileID: 9190372235437073891, guid: 6fbfa91d70574b0408108de0e30f74e4,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9190372235437073888, guid: 6fbfa91d70574b0408108de0e30f74e4,
         type: 3}
@@ -1407,6 +1388,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dragon
       objectReference: {fileID: 0}
+    - target: {fileID: 5848739722893746580, guid: 5064c3ff7416a6f4c89fd3eca63034aa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5848739722893746590, guid: 5064c3ff7416a6f4c89fd3eca63034aa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1535,22 +1521,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9190372235437073890, guid: 6fbfa91d70574b0408108de0e30f74e4,
-        type: 3}
-      propertyPath: Bullet
-      value: 
-      objectReference: {fileID: 2288533703519710632, guid: 77620011d7e14634aabfb85386de7996,
-        type: 3}
-    - target: {fileID: 6472890716358965699, guid: 6fbfa91d70574b0408108de0e30f74e4,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6472890716358965699, guid: 6fbfa91d70574b0408108de0e30f74e4,
-        type: 3}
-      propertyPath: m_GravityScale
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fbfa91d70574b0408108de0e30f74e4, type: 3}

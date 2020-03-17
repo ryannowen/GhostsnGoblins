@@ -12,7 +12,7 @@ public class UnicornAI : MonoBehaviour, IDamageable
     private int RNG;
     private int HP = 10;
     private float speed = 5f;
-    private float RNGtimer = 3;
+    private float RNGtimer;
     private float PlayerX;
     private float PlayerY;
     private float EnemyX;
@@ -43,7 +43,7 @@ public class UnicornAI : MonoBehaviour, IDamageable
         fireProj = this.gameObject.GetComponent<FireProjectile>();
         fireProj.SetProjectile(Bullet);
 
-        Enemy = gameObject;
+        Enemy = this.gameObject;
     }
 
     Vector3 GetDesiredMove()
