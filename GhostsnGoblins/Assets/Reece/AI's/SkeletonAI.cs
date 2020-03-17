@@ -10,7 +10,6 @@ public class SkeletonAI : MonoBehaviour
 
     public Sprite Head;
     public Sprite Body;
-
     private SpriteRenderer SpriteRender;
 
 
@@ -172,8 +171,6 @@ public class SkeletonAI : MonoBehaviour
         else
             OnGround = false;
     }
-
-    //Checks to see if there is a wall withing a certain distance of the Zombie in which it will know to jump or not
 
 
     public void TakeDamage(int amount)

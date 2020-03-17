@@ -18,8 +18,6 @@ public class DragonAI : MonoBehaviour, IDamageable
     private float EnemyY;
     private Vector2 EnemyPos;
     private Vector2 PlayerPos;
-    private bool setTarget = true;
-    private Vector2 targetPos;
     private bool Angered = false;
     private bool MoveLeft;
     private bool MoveRight;
@@ -116,7 +114,7 @@ public class DragonAI : MonoBehaviour, IDamageable
 
             if (Shoot)
                 {
-                    if (MoveLeft)
+                    if (EnemyPos.x > PlayerPos.x)
                         fireProj.Fire(transform.position, Vector3.left, transform.rotation);
                     else
                         fireProj.Fire(transform.position, Vector3.right, transform.rotation);
