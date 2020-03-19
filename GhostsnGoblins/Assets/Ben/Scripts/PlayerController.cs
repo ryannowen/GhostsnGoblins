@@ -123,6 +123,9 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
         }
 
+        Singleton_Game.m_instance.GetHUD().GetComponent<HUD>().SetArmourType(m_ID - 1, m_Armour);
+        Singleton_Game.m_instance.GetHUD().GetComponent<HUD>().SetArmourValue(m_ID - 1, m_ArmourPoints);
+
     }
 
     void ManageStats()

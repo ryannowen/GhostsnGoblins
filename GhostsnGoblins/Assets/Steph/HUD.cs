@@ -66,8 +66,8 @@ public class HUD : MonoBehaviour
             Debug.LogWarning("HUD player health bar was null, cannot set armour value");
             return;
         }
-
-        m_healthBarsGameObjects[argPlayerID].GetComponent<Slider>().minValue = argHealth;
+        
+        m_healthBarsGameObjects[argPlayerID].GetComponent<Slider>().value = argHealth;
     }
 
     public void SetArmourType(int argPlayerID, PlayerController.ArmourType argArmourType)
