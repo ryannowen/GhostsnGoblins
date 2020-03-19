@@ -95,34 +95,26 @@ public class Pickup : MonoBehaviour, ISpawn
 
             PlayerController playerC = collision.gameObject.GetComponent<PlayerController>();
 
+            if (m_NeedsInteraction)
+                if (!playerC.Interacting())
+                    return;
+
             switch (m_PickupType)
             {
 
                 case PickupType.CopperArmourPickup:
-                    if (playerC.Interacting())
-                    {
                         playerC.SetArmourPoints(1);
                         playerC.SetArmourType(PlayerController.ArmourType.Copper);
-                        this.gameObject.SetActive(false);
-                    }
                     break;
 
                 case PickupType.SilverArmourPickup:
-                    if (playerC.Interacting())
-                    {
                         playerC.SetArmourPoints(2);
                         playerC.SetArmourType(PlayerController.ArmourType.Silver);
-                        this.gameObject.SetActive(false);
-                    }
                     break;
 
                 case PickupType.GoldArmourPickup:
-                    if (playerC.Interacting())
-                    {
                         playerC.SetArmourPoints(3);
                         playerC.SetArmourType(PlayerController.ArmourType.Gold);
-                        this.gameObject.SetActive(false);
-                    }
                     break;
 
                 case PickupType.Lance:
@@ -151,8 +143,7 @@ public class Pickup : MonoBehaviour, ISpawn
 
             }
 
-            if(!m_NeedsInteraction)
-                this.gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
 
         }
 
