@@ -2,17 +2,180 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SatanAI : MonoBehaviour
+public class SatanAI : MonoBehaviour, IDamageable
 {
+    public bool alive = true;
+
+    private GameObject Enemy;
+    private GameObject Player;
+    private int RNG;
+    private int HP = 10;
+    private float speed = 0.1f;
+    private float RNGtimer = 3;
+    private float PlayerX;
+    private float PlayerY;
+    private float EnemyX;
+    private float EnemyY;
+    private float DistanceX;
+    private float DistanceY;
+    private bool FindPlayer = true;
+    private bool Swoop;
+    private bool Angered;
+    private bool AntiSwoopLeft;
+    private bool AntiSwoopRight;
+
+    //private float Deathtimer = 100f;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (Player == null)
+            Player = GameObject.FindGameObjectWithTag("Player");
+
+        Enemy = this.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-}
+        if (FindPlayer)
+        {
+            PlayerX = Player.gameObject.transform.position.x;
+            PlayerY = Player.gameObject.transform.position.y;
+            EnemyX = Enemy.gameObject.transform.position.x;
+            EnemyY = Enemy.gameObject.transform.position.y;
+            DistanceY = EnemyY - PlayerY;
+            DistanceX = EnemyX - PlayerX;
+            FindPlayer = false;
+        }
+
+        if (!Angered)
+        {
+            FindPlayer = true;
+            if (PlayerX + 5 > EnemyX && PlayerX - 5 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+            {
+                Angered = true;
+            }
+        }
+
+        if (Time.time > RNGtimer)
+        {
+            RNG = Random.Range(2, 100);
+            RNGtimer += 3;
+            FindPlayer = true;
+        }
+
+        if (!Swoop && !AntiSwoopLeft && !AntiSwoopRight)
+        {
+
+            if (RNG > 50)
+            {
+                Swoop = true;
+            }
+            RNG = 0;
+        }
+
+        if (Angered && alive)
+        {
+
+            if (Swoop)
+            {
+                if (PlayerX < EnemyX && PlayerY < EnemyY)
+                {
+                    EnemyX -= DistanceX / 40;
+                    EnemyY -= DistanceY / 40;
+                    if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
+                    {
+                        AntiSwoopLeft = true;
+                        Swoop = false;
+                    }
+                }
+                if (PlayerX > EnemyX && PlayerY < EnemyY)
+                {
+                    EnemyX -= DistanceX / 40;
+                    EnemyY -= DistanceY / 40;
+                    if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
+                    {
+                        AntiSwoopRight = true;
+                        Swoop = false;
+                    }
+                }
+            }
+
+
+            if (AntiSwoopLeft)
+            {
+                if (PlayerX - 8 < EnemyX)
+                {
+                    EnemyX -= speed * 4;
+                }
+                else
+                {
+                    AntiSwoopLeft = false;
+                }
+                if (PlayerY + 4 > EnemyY)
+                {
+                    EnemyY += speed * 2;
+                }
+                else
+                {
+                    AntiSwoopLeft = false;
+                }
+            }
+
+
+            if (AntiSwoopRight)
+            {
+                if (PlayerX + 8 > EnemyX)
+                {
+                    EnemyX += speed * 4;
+                }
+                else
+                {
+                    AntiSwoopRight = false;
+                }
+                if (PlayerY + 4 > EnemyY)
+                {
+                    EnemyY += speed * 2;
+                }
+                else
+                {
+                    AntiSwoopRight = false;
+                }
+            }
+
+           /* if (EnemyX > PlayerX + 8.1f)
+            {
+                EnemyX -= speed * 5;
+                // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
+            }
+            else if (EnemyX < PlayerX - 8.1f)
+            {
+                EnemyX += speed * 5;
+                // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
+            }*/
+            Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
+        }
+
+            if (HP <= 0)
+                KillEntity();
+
+            if (!alive)
+                Enemy.SetActive(false);
+        }
+    
+
+        public void TakeDamage(int amount)
+        {
+
+            HP -= amount;
+            Singleton_Sound.m_instance.PlayAudioClip("TakeDamage");
+        }
+
+        public void KillEntity()
+        {
+
+            alive = false;
+
+        }
+    } 

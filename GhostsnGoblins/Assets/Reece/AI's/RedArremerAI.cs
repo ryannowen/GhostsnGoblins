@@ -56,6 +56,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable
 
         if (!Angered)
         {
+            FindPlayer = true;
             if (PlayerX + 5 > EnemyX && PlayerX - 5 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
