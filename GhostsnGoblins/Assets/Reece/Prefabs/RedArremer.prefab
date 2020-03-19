@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 694580479443325815}
   - component: {fileID: -2215872771440502241}
   - component: {fileID: 1753528968091497423}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: RedArremer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

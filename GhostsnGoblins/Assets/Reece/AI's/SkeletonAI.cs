@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 
-public class SkeletonAI : MonoBehaviour
+public class SkeletonAI : MonoBehaviour, IDamageable
 {
 
     public Sprite Head;
@@ -140,8 +140,13 @@ public class SkeletonAI : MonoBehaviour
             //Allows for the Zombie to be able to jump
             if (Mathf.Abs(rb.velocity.x) < 8f && OnGround)
             {
+                if (Random.Range(1, 100) > 70)
+                    JumpForce = 10;
+                else
+                    JumpForce = 7;
                 rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, JumpForce), 1f);
             }
+
 
             if (JumpForce == 0)
                 JumpForce = 7;
@@ -167,9 +172,13 @@ public class SkeletonAI : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, 1f, OnGroundCheckLayerMask);
 
         if (hit)
+        {
             OnGround = true;
+        }
         else
+        {
             OnGround = false;
+        }
     }
 
 

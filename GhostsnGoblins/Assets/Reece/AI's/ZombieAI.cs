@@ -27,7 +27,6 @@ public class ZombieAI : MonoBehaviour, IDamageable
     private bool FindPlayer;
   
     Rigidbody2D rb;
-    BoxCollider2D PlayerCollide;
 
     // Start is called before the first frame update
     void Start()
@@ -99,7 +98,7 @@ public class ZombieAI : MonoBehaviour, IDamageable
                         MoveRight = true;
                     }
 
-                    if (Random.Range(2, 101) > 70)
+                    if (Random.Range(1, 100) > 70)
                     {
                         Speed = Speed * 1.5f;
                     }

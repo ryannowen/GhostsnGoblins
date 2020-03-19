@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//all, HP
+
 public class UnicornAI : MonoBehaviour, IDamageable
 {
     [SerializeField] private GameObject Bullet = null;
@@ -27,7 +27,6 @@ public class UnicornAI : MonoBehaviour, IDamageable
 
     private FireProjectile fireProj;
     Rigidbody2D rb;
-    BoxCollider2D PlayerCollide;
 
     // Start is called before the first frame update
     void Start()

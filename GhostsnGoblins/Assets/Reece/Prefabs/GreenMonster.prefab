@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7270328762327780996}
   - component: {fileID: 8575362848567915111}
   - component: {fileID: 4229584751247303398}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: GreenMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}

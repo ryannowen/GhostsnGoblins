@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -429317876885971880}
   - component: {fileID: 6472890716358965699}
   - component: {fileID: 441962034}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Unicorn
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5848739722893746579}
   - component: {fileID: 5848739722893746578}
   - component: {fileID: 5848739722893746581}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Dragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
