@@ -67,7 +67,7 @@ public class Pickup : MonoBehaviour, ISpawn
         foreach(PickupObject o in m_Objects)
         {
 
-            o.obj = System_Spawn.instance.GetObjectFromPool(o.obj);
+            o.obj = System_Spawn.instance.GetObjectFromPool(o.obj, true);
 
         }
 
