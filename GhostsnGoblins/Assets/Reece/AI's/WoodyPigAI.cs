@@ -8,6 +8,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
     [SerializeField] private GameObject Bullet = null;
     public bool alive = true;
 
+    SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy = null;
     private GameObject Player = null;
     private int HP = 1;
@@ -40,6 +41,8 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
 
         if (Bullet == null)
             Bullet = (GameObject)Resources.Load("Prefabs/Bullet") as GameObject;
+
+        m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
         fireProj = this.gameObject.GetComponent<FireProjectile>();
         fireProj.SetProjectile(Bullet);
@@ -289,7 +292,24 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
     {
 
         alive = false;
+        m_SpawnPickup.CreatePickup();
 
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.layer == 18)
+        {
+            if (col.transform.parent.gameObject.GetComponent<IDamageable>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<IDamageable>().TakeDamage(1);
+            }
+
+            if (col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
+            }
+        }
     }
 }
 

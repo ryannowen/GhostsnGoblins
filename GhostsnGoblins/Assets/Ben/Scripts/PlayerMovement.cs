@@ -55,6 +55,13 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
         // Check if the player wants to jump
         if (Input.GetAxisRaw("Jump_P" + m_ID) > 0 && m_Grounded && m_CanMove && m_JumpTimer <= 0f)
         {
+            // Play random jump sound
+            int r = Random.Range(0, 2);
+            if (r == 0)
+                Singleton_Sound.m_instance.PlayAudioClip("Jump1");
+            else
+                Singleton_Sound.m_instance.PlayAudioClip("Jump2");
+
             m_JumpTimer = m_JumpDelay;
             m_Rigidbody.velocity = Vector2.Lerp(m_Rigidbody.velocity, new Vector2(m_Rigidbody.velocity.x, m_JumpForce), 1f);
         }

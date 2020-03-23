@@ -61,7 +61,7 @@ public class HUD : MonoBehaviour
             return;
         }
 
-        if(null != m_healthBarsGameObjects[argPlayerID])
+        if(null == m_healthBarsGameObjects[argPlayerID])
         {
             Debug.LogWarning("HUD player health bar was null, cannot set armour value");
             return;

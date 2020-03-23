@@ -31,6 +31,8 @@ public class CombManager : MonoBehaviour, IWeapon
 
         GameObject tempProjectile = System_Spawn.instance.GetObjectFromPool(m_Projectile);
 
+        Singleton_Sound.m_instance.PlayAudioClip("Comberang");
+
         tempProjectile.transform.position = argsStartPosition;
         tempProjectile.transform.rotation = transform.rotation;
         tempProjectile.GetComponent<CombProjectile>().SetPathInfo(objectFiring, targetPos, m_ProjectileSpeed);

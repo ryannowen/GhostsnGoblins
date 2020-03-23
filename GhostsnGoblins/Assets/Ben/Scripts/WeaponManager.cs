@@ -29,6 +29,8 @@ public class WeaponManager : MonoBehaviour, IWeapon
     public void Action(GameObject objectFiring, Vector3 argsStartPosition, Vector3 argsDirection)
     {
 
+        Singleton_Sound.m_instance.PlayAudioClip("Throw");
+
         argsDirection += shootingDirectionModification;
 
         argsDirection.Normalize();

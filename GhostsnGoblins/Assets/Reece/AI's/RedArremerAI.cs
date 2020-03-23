@@ -6,6 +6,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable
 {
     public bool alive = true;
 
+    SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
     private int RNG;
@@ -36,6 +37,8 @@ public class RedArremerAI : MonoBehaviour, IDamageable
     {
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
+
+        m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
         Enemy = this.gameObject;
     }
@@ -236,13 +239,31 @@ public class RedArremerAI : MonoBehaviour, IDamageable
     {
 
         HP -= amount;
-        Singleton_Sound.m_instance.PlayAudioClip("TakeDamage");
+        Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
     }
 
     public void KillEntity()
     {
 
         alive = false;
+        m_SpawnPickup.CreatePickup();
 
     }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.layer == 18)
+        {
+            if (col.transform.parent.gameObject.GetComponent<IDamageable>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<IDamageable>().TakeDamage(1);
+            }
+
+            if (col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
+            }
+        }
+    }
+
 }

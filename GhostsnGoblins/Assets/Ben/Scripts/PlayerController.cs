@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     private float m_InvulnerabilityTimer = 0f;
     private float m_TimeSinceLastShot = 0f;
 
+    [SerializeField] private GameObject m_StartingWeapon = null;
     [SerializeField] private GameObject m_EquippedItem = null;
     PlayerMovement m_MovementSystem = null;
     SpriteRenderer m_SpriteRenderer = null;
@@ -57,6 +58,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         sirArthurCopper = Resources.Load<Sprite>("Sprites/Character/SirArthur_Copper") as Sprite;
         sirArthurSilver = Resources.Load<Sprite>("Sprites/Character/SirArthur_Silver") as Sprite;
         sirArthurGold = Resources.Load<Sprite>("Sprites/Character/SirArthur_Gold") as Sprite;
+
+        m_EquippedItem = System_Spawn.instance.GetObjectFromPool(m_StartingWeapon, true);
 
     }
 
@@ -82,17 +85,17 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
                 break;
 
             case ArmourType.Copper:
-                m_MovementSystem.SetMovementSpeed(4f);
+                m_MovementSystem.SetMovementSpeed(4.5f);
                 m_SpriteRenderer.sprite = sirArthurCopper;
                 break;
 
             case ArmourType.Silver:
-                m_MovementSystem.SetMovementSpeed(3f);
+                m_MovementSystem.SetMovementSpeed(4f);
                 m_SpriteRenderer.sprite = sirArthurSilver;
                 break;
 
             case ArmourType.Gold:
-                m_MovementSystem.SetMovementSpeed(2f);
+                m_MovementSystem.SetMovementSpeed(3.5f);
                 m_SpriteRenderer.sprite = sirArthurGold;
                 break;
 
@@ -226,6 +229,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
                 m_ArmourPoints -= amount;
             else
                 m_PlayerHealth -= amount;
+
+            Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
 
             // Set Invulnerability
             AddToInvulnerabilityTimer(2f);

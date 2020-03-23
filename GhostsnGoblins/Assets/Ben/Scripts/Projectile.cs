@@ -68,10 +68,8 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
     // ISpawn
     public void OnSpawn()
     {
-
         m_Rigidbody.velocity = Vector3.zero;
         m_DecayTime = m_StoredDecayTime;
-
     }
 
     public void OnDeSpawn()

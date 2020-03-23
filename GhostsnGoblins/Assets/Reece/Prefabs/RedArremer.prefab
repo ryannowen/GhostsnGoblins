@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 694580479443325815}
   - component: {fileID: -2215872771440502241}
   - component: {fileID: 1753528968091497423}
+  - component: {fileID: 5991247036509434453}
   m_Layer: 16
   m_Name: RedArremer
   m_TagString: Untagged
@@ -142,3 +143,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5991247036509434453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694580479443325814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c98f655eea8dd5408b36a0c92a3ec39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Pickup: {fileID: 2812206897624619931, guid: 44ee7d8eb5d9d1c47bfebad210615eb9,
+    type: 3}
