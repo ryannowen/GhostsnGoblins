@@ -124,13 +124,13 @@ MonoBehaviour:
   m_Sprites:
   - name: Copper Armour
     type: 0
-    spr: {fileID: 21300000, guid: ca2597037a26e2b4481c43d6759d2770, type: 3}
+    spr: {fileID: 21300000, guid: 719534722b8e77f4895c353f7f55acf3, type: 3}
   - name: Silver Armour
     type: 1
-    spr: {fileID: 21300000, guid: ca2597037a26e2b4481c43d6759d2770, type: 3}
+    spr: {fileID: 21300000, guid: d806a2ea7d1d62f45ba572b673639211, type: 3}
   - name: Gold Armour
     type: 2
-    spr: {fileID: 21300000, guid: ca2597037a26e2b4481c43d6759d2770, type: 3}
+    spr: {fileID: 21300000, guid: b2eed9d1aef18624aa52ac7d5f23674c, type: 3}
   - name: Lance
     type: 3
     spr: {fileID: 21300000, guid: 71b01805b6b520b42b6c962be6f8d4d0, type: 3}
