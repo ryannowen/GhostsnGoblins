@@ -59,7 +59,7 @@ public class tempFallingPlatformScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.tag == "Player") {
-            if (enablePlatform) {
+            if (enablePlatform && !isFalling) {
                 StartCoroutine(fallingDelay(fallDelay));
             }
         }
@@ -88,6 +88,7 @@ public class tempFallingPlatformScript : MonoBehaviour {
         yield return new WaitForSeconds(wTime);
 
         isFalling = true;
+        this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
         if (shouldFall) {
             rb2D.gravityScale = gravityScale;
@@ -96,17 +97,15 @@ public class tempFallingPlatformScript : MonoBehaviour {
         if (shouldRespawn) {
             StartCoroutine(respawnPlatform(respawnDelay));
         }
-
-        this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }
 
     private IEnumerator respawnPlatform(float wTime) {
         yield return new WaitForSeconds(wTime);
 
-        rb2D.gravityScale = 0;
         rb2D.velocity = Vector3.zero;
+        rb2D.gravityScale = 0;
         transform.parent.position = originalPosition;
-        isFalling = false;
         this.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        isFalling = false;
     }
 }

@@ -105,6 +105,9 @@ MonoBehaviour:
   - obj1: 8
     obj2: 8
     ignoreLayerCollision: 1
+  - obj1: 13
+    obj2: 18
+    ignoreLayerCollision: 1
   m_lastCheckPoint: {x: 0, y: 0}
 --- !u!114 &7194745594129441944
 MonoBehaviour:
