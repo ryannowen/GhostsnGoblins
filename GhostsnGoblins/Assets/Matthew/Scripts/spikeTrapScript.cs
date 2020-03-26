@@ -10,6 +10,7 @@ public class spikeTrapScript : MonoBehaviour {
     private bool hasTriggered;
     private bool isCurrentlyActive = true;
     private bool runCoroutine = false;
+    private bool canPlaySound = true;
 
     [SerializeField] BoxCollider2D triggerCollider = null;
 
@@ -84,9 +85,15 @@ public class spikeTrapScript : MonoBehaviour {
         switch (trapType) {
             case t_Type.timed:
                 if (hasTriggered) {
+                    if (canPlaySound) {
+                        Singleton_Sound.m_instance.PlayAudioClip("Spike", 0.25f);
+                        canPlaySound = false;
+                    }
+
                     transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up, Time.fixedDeltaTime * trapSpeed);
                     StartCoroutine(resetSpikeTrap(trapResetDelay));
                 } else {
+
                     transform.position = Vector3.Lerp(transform.position, originalTrapPosition, Time.fixedDeltaTime * trapSpeed);
                     StartCoroutine(delayTrapActivation(trapResetDelay));
                 }
@@ -96,6 +103,11 @@ public class spikeTrapScript : MonoBehaviour {
 
                 // Ask if hasTriggered is true and if it is, play the required animation.
                 if (hasTriggered) {
+                    if (canPlaySound) {
+                        Singleton_Sound.m_instance.PlayAudioClip("Spike", 0.25f);
+                        canPlaySound = false;
+                    }
+
                     transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up, Time.fixedDeltaTime * trapSpeed);
                     
                     if ((Vector2)transform.position == (Vector2)originalTrapPosition + (Vector2)transform.up && !isCurrentlyActive && runCoroutine) {
@@ -103,6 +115,7 @@ public class spikeTrapScript : MonoBehaviour {
                         StartCoroutine(resetSpikeTrap(trapResetDelay));
                     }
                 } else {
+
                     transform.position = Vector3.Lerp(transform.position, originalTrapPosition, Time.fixedDeltaTime * trapSpeed);
 
                     if ((Vector2)transform.position == (Vector2)originalTrapPosition && !isCurrentlyActive && runCoroutine) {
@@ -115,6 +128,11 @@ public class spikeTrapScript : MonoBehaviour {
 
             case t_Type.pressurePlated:
                 if (hasTriggered) {
+                    if (canPlaySound) {
+                        Singleton_Sound.m_instance.PlayAudioClip("Spike", 0.25f);
+                        canPlaySound = false;
+                    }
+
                     transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up, Time.fixedDeltaTime * trapSpeed);
                     StartCoroutine(resetSpikeTrap(trapResetDelay));
                 } else {
@@ -128,6 +146,7 @@ public class spikeTrapScript : MonoBehaviour {
         yield return new WaitForSeconds(wTime);
 
         hasTriggered = false;
+        canPlaySound = true;
         runCoroutine = true;
     }
 
@@ -135,6 +154,7 @@ public class spikeTrapScript : MonoBehaviour {
         yield return new WaitForSeconds(wTime);
 
         hasTriggered = true;
+        canPlaySound = true;
         runCoroutine = true;
     }
 
