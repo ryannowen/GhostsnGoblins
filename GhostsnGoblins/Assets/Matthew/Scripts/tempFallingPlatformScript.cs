@@ -42,6 +42,7 @@ public class tempFallingPlatformScript : MonoBehaviour {
         }
 
         rb2D = transform.parent.gameObject.GetComponent<Rigidbody2D>();
+
         if (shouldFall) {
             rb2D.bodyType = RigidbodyType2D.Dynamic;
             rb2D.gravityScale = gravScale;
@@ -88,8 +89,7 @@ public class tempFallingPlatformScript : MonoBehaviour {
         yield return new WaitForSeconds(wTime);
 
         isFalling = true;
-        this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-
+        transform.parent.gameObject.GetComponent<mainPlatformScript>().setTimer(99999999);
         if (shouldFall) {
             rb2D.gravityScale = gravityScale;
         }
@@ -105,7 +105,7 @@ public class tempFallingPlatformScript : MonoBehaviour {
         rb2D.velocity = Vector3.zero;
         rb2D.gravityScale = 0;
         transform.parent.position = originalPosition;
-        this.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        transform.parent.gameObject.GetComponent<mainPlatformScript>().setTimer(0);
         isFalling = false;
     }
 }

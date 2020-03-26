@@ -126,7 +126,7 @@ public class RavenAI : MonoBehaviour, IDamageable
     {
 
         HP -= amount;
-
+        Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
     }
 
     public void KillEntity()

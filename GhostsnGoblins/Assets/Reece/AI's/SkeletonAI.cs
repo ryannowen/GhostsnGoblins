@@ -183,11 +183,11 @@ public class SkeletonAI : MonoBehaviour, IDamageable
 
 
     public void TakeDamage(int amount)
-{
+    {
 
-    HP -= amount;
-
-}
+        HP -= amount;
+        Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
+    }
 
 public void KillEntity()
 {

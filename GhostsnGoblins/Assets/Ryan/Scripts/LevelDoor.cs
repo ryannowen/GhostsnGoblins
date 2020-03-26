@@ -13,6 +13,8 @@ public class LevelDoor : MonoBehaviour
         {
             if (collision.GetComponent<PlayerController>().HasKey())
             {
+                Singleton_Sound.m_instance.PlayAudioClip("LevelFinished");
+
                 if (m_customSceneName == "") // Next Scene
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 else // Custom Scene

@@ -96,7 +96,7 @@ public class TowerAI : MonoBehaviour, IDamageable
     {
 
         HP -= amount;
-        Singleton_Sound.m_instance.PlayAudioClip("TakeDamage");
+        Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
     }
 
     public void KillEntity()

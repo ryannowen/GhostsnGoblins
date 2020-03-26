@@ -24,8 +24,8 @@ public class mainPlatformScript : MonoBehaviour {
     void FixedUpdate() {
         if (timer >= 0f) {
             timer -= Time.deltaTime;
-        }
-            
+        } 
+        
         if (timer <= 0f) {
             childCol.enabled = true;
         } else {
@@ -34,14 +34,34 @@ public class mainPlatformScript : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
-        timer = solidTime;
+        if (timer > solidTime) {
+            return;
+        } else {
+            timer = solidTime;
+        }
     }
 
     void OnTriggerStay2D(Collider2D collision) {
-        timer = solidTime;
+        if (timer > solidTime) {
+            return;
+        } else {
+            timer = solidTime;
+        }
     }
 
     void OnTriggerExit2D(Collider2D collision) {
-        timer = solidTime;
+        if (timer > solidTime) {
+            return;
+        } else {
+            timer = solidTime;
+        }
+    }
+
+    public void setTimer(float timeValue) {
+        timer = timeValue;
+    }
+
+    public float getTimer() {
+        return timer;
     }
 }
