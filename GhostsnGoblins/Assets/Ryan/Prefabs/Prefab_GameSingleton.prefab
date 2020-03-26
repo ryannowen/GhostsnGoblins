@@ -108,6 +108,36 @@ MonoBehaviour:
   - obj1: 13
     obj2: 18
     ignoreLayerCollision: 1
+  - obj1: 19
+    obj2: 18
+    ignoreLayerCollision: 1
+  - obj1: 19
+    obj2: 17
+    ignoreLayerCollision: 1
+  - obj1: 19
+    obj2: 16
+    ignoreLayerCollision: 1
+  - obj1: 19
+    obj2: 15
+    ignoreLayerCollision: 1
+  - obj1: 19
+    obj2: 14
+    ignoreLayerCollision: 1
+  - obj1: 19
+    obj2: 12
+    ignoreLayerCollision: 1
+  - obj1: 19
+    obj2: 11
+    ignoreLayerCollision: 1
+  - obj1: 19
+    obj2: 10
+    ignoreLayerCollision: 1
+  - obj1: 19
+    obj2: 9
+    ignoreLayerCollision: 1
+  - obj1: 19
+    obj2: 8
+    ignoreLayerCollision: 1
   m_lastCheckPoint: {x: 0, y: 0}
 --- !u!114 &7194745594129441944
 MonoBehaviour:
@@ -271,11 +301,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1514714847654125416, guid: f29af2c741852514f96b875069153acc,
-        type: 3}
-      propertyPath: m_HUDTimer
-      value: 
-      objectReference: {fileID: 1143225690143933732}
     - target: {fileID: 1514714846335603071, guid: f29af2c741852514f96b875069153acc,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -300,15 +325,3 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1934529779141362116}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1143225690143933732 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1514714847445746912, guid: f29af2c741852514f96b875069153acc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1934529779141362116}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51ddd20b87411d7448e5d6288a7ad5f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
