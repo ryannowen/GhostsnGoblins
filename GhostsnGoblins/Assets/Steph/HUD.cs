@@ -30,12 +30,12 @@ public class HUD : MonoBehaviour
     [SerializeField] private Image[] m_healthbarImages = null;
     [SerializeField] private Sprite[] m_armourSprites = null;
 
-    [SerializeField] private int[] m_maxArmours = null;
+    [SerializeField] private int[] m_currentArmours = null;
     [SerializeField] private float[] m_healthbarTargets = null;
 
     void Start()
     {
-        m_maxArmours = new int[m_healthBarsGameObjects.Length];
+        m_currentArmours = new int[m_healthBarsGameObjects.Length];
         m_healthbarTargets = new float[m_healthBarsGameObjects.Length];
 
         if (null != m_highScoreText)
@@ -52,6 +52,13 @@ public class HUD : MonoBehaviour
 
         if(null != m_scoreText)
             m_scoreText.text = "Score: " + Singleton_Game.m_instance.GetScore();
+
+
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            Singleton_Game.m_instance.InsertMoney(20);
+            Debug.Log("Down");
+        }
 
     }
 
@@ -79,10 +86,10 @@ public class HUD : MonoBehaviour
             return;
         }
 
-        if (argArmourValue == m_maxArmours[argPlayerID])
+        if (argArmourValue == m_currentArmours[argPlayerID])
             m_healthbarTargets[argPlayerID] = 3;
         else
-            m_healthbarTargets[argPlayerID] = 3.0f / m_maxArmours[argPlayerID] * argArmourValue;
+            m_healthbarTargets[argPlayerID] = 3.0f / m_currentArmours[argPlayerID] * argArmourValue;
     }
 
     public void SetArmourType(int argPlayerID, PlayerController.ArmourType argArmourType)
@@ -99,10 +106,7 @@ public class HUD : MonoBehaviour
             return;
         }
 
-        if (PlayerController.ArmourType.None == argArmourType)
-            m_maxArmours[argPlayerID] = 3;
-        else
-            m_maxArmours[argPlayerID] = (int)argArmourType;
+        m_currentArmours[argPlayerID] = (PlayerController.ArmourType.None == argArmourType) ? 3 : (int)argArmourType;
 
         Image healthBarFill = m_healthBarsGameObjects[argPlayerID]/*.transform.Find("barMask").*/.transform.Find("colourFill").GetComponent<Image>();
 
@@ -143,6 +147,24 @@ public class HUD : MonoBehaviour
 
         if (null != m_shopUI)
             m_shopUI.SetActive(!m_shopUI.activeSelf);
+    }
+
+    public void ShowHUD()
+    {
+        if (null != m_gameUI)
+            m_gameUI.SetActive(true);
+
+        if (null != m_shopUI)
+            m_shopUI.SetActive(false);
+    }
+
+    public void ShowItemShop()
+    {
+        if (null != m_gameUI)
+            m_gameUI.SetActive(false);
+
+        if (null != m_shopUI)
+            m_shopUI.SetActive(true);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

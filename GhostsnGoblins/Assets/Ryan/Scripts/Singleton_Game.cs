@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class layerColObject
@@ -17,10 +18,15 @@ public class Singleton_Game : MonoBehaviour
     [SerializeField] private GameObject m_HUDPrefab = null;
     [SerializeField] private int m_playerLives = 3;
     [SerializeField] private int m_score = 0;
+    [SerializeField] private int m_insertedMoney = 0;
+    [SerializeField] private bool m_canStartGame = false;
+    [SerializeField] private bool m_spawnedPlayer2 = false;
+
     [SerializeField] private int[] m_highScores = new int[3];
     [SerializeField] layerColObject[] layerColAry = null;
     [SerializeField] private Vector2 m_lastCheckPoint = new Vector2(0, 0);
 
+    [SerializeField] private Spawner_Point pointSpawner = null;
     private void Awake()
     {
         if (null == m_instance && this != m_instance)
@@ -80,6 +86,25 @@ public class Singleton_Game : MonoBehaviour
         return m_highScores[argHighScore];
     }
 
+    public void InsertMoney(int argMoney)
+    {
+        m_insertedMoney += argMoney;
+
+        if(0 == SceneManager.GetActiveScene().buildIndex) // is mainmennu
+        {
+            if(60 <= m_insertedMoney) // Start game button
+                m_canStartGame = true;
+        }
+        else
+        {
+            if (!m_spawnedPlayer2 && 120 <= m_insertedMoney) // Spawn Player 2
+            {
+                pointSpawner.BeginSpawning();
+                m_spawnedPlayer2 = true;
+            }
+        }
+    }
+
     public int GetPlayerLives()
     {
         return m_playerLives;
@@ -113,6 +138,20 @@ public class Singleton_Game : MonoBehaviour
     public GameObject GetHUD()
     {
         return m_HUDPrefab;
+    }
+
+    public bool GetCanStartGame()
+    {
+        return m_canStartGame;
+    }
+
+    public void ResetGame()
+    {
+        m_score = 0;
+        m_playerLives = 0;
+        m_insertedMoney = 0;
+        m_canStartGame = false;
+        m_spawnedPlayer2 = false;
     }
 
     public void LoadGame()

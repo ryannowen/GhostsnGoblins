@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267a43b8639c86f47a92b493f575490b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_setupPoolID: 0
   m_Pools:
   - m_InspectorName: Player
     m_Object: {fileID: 8607762150274011244, guid: b1cc5173de8e21e4685886e002af6e67,
@@ -116,3 +117,51 @@ MonoBehaviour:
     m_Object: {fileID: 1325273796964493441, guid: b8f504ffb973e274ba0a988754329dbf,
       type: 3}
     m_Amount: 30
+  - m_InspectorName: Pickup Armour Copper
+    m_Object: {fileID: 998513154692721631, guid: ebdff1188c03dcf4a8613c1450e7abea,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Armour Silver
+    m_Object: {fileID: 7442735438330741987, guid: 3ea5773efa89555479f4d14f00a648f6,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Armour Gold
+    m_Object: {fileID: 2800220768220481563, guid: dcd72915440cede4293d15e665f145bf,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Weapon Comb
+    m_Object: {fileID: 7769598207520070414, guid: 778f65e899b0cef4bab4b62a78ce0efd,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Weapon Lance
+    m_Object: {fileID: 8406426653310770471, guid: cce151c47b18b144f9d4e1e75293d55a,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Weapon Dagger
+    m_Object: {fileID: 744260173173092363, guid: e522b600951d27f469da7c1ae31b98c4,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Weapon Torch
+    m_Object: {fileID: 6065614150375753046, guid: 891d69ecd9eef2443990987ef3d41cf4,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Weapon Axe
+    m_Object: {fileID: 5133152901897007921, guid: 2474092732977c143b9039667e5a99a3,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Weapon Shield
+    m_Object: {fileID: 4177950289320297944, guid: cc3070d9cc0cb094197bc1168c21339d,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Score Coin
+    m_Object: {fileID: 7554210138942769373, guid: af24cefca03bf6a45bf74206d7c56831,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Score MoneyBag
+    m_Object: {fileID: 4846370628155702032, guid: 8304161e2946df34d9eb85adb28c9ac4,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Key
+    m_Object: {fileID: 1334296600702675361, guid: 528e2f6c61daaf64996eb38c4f306ae6,
+      type: 3}
+    m_Amount: 10

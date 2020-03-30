@@ -10,7 +10,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable
     private GameObject Enemy;
     private GameObject Player;
     private int RNG;
-    private int HP = 10;
+    private int HP = 2;
     private float speed = 0.1f;
     private float RNGtimer = 3;
     private float PlayerX;

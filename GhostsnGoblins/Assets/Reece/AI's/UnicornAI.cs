@@ -10,7 +10,7 @@ public class UnicornAI : MonoBehaviour, IDamageable
     private GameObject Enemy;
     private GameObject Player;
     private int RNG;
-    private int HP = 10;
+    private int HP = 4;
     private float speed = 5f;
     private float RNGtimer;
     private float PlayerX;

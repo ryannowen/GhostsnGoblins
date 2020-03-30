@@ -50,7 +50,6 @@ public class System_Spawn : MonoBehaviour
         {
             GameObject newGameObject = Instantiate(argGameObject, parent.transform);
             newGameObject.SetActive(false);
-
             queue.Enqueue(newGameObject);
         }
     }

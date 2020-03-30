@@ -54,10 +54,10 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
 
         // Load Sprites
-        sirArthurNude = Resources.Load<Sprite>("Sprites/Character/SirArthur_Nude") as Sprite;
-        sirArthurCopper = Resources.Load<Sprite>("Sprites/Character/SirArthur_Copper") as Sprite;
-        sirArthurSilver = Resources.Load<Sprite>("Sprites/Character/SirArthur_Silver") as Sprite;
-        sirArthurGold = Resources.Load<Sprite>("Sprites/Character/SirArthur_Gold") as Sprite;
+        sirArthurNude = Resources.Load<Sprite>("Sprites/Characters/SirArthur_Nude") as Sprite;
+        sirArthurCopper = Resources.Load<Sprite>("Sprites/Characters/SirArthur_Copper") as Sprite;
+        sirArthurSilver = Resources.Load<Sprite>("Sprites/Characters/SirArthur_Silver") as Sprite;
+        sirArthurGold = Resources.Load<Sprite>("Sprites/Characters/SirArthur_Gold") as Sprite;
 
         m_EquippedItem = System_Spawn.instance.GetObjectFromPool(m_StartingWeapon, true);
 
@@ -80,22 +80,22 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         {
 
             case ArmourType.None:
-                m_MovementSystem.SetMovementSpeed(5f);
+                m_MovementSystem.SetMovementSpeed(5.5f);
                 m_SpriteRenderer.sprite = sirArthurNude;
                 break;
 
             case ArmourType.Copper:
-                m_MovementSystem.SetMovementSpeed(4.5f);
+                m_MovementSystem.SetMovementSpeed(5f);
                 m_SpriteRenderer.sprite = sirArthurCopper;
                 break;
 
             case ArmourType.Silver:
-                m_MovementSystem.SetMovementSpeed(4f);
+                m_MovementSystem.SetMovementSpeed(4.5f);
                 m_SpriteRenderer.sprite = sirArthurSilver;
                 break;
 
             case ArmourType.Gold:
-                m_MovementSystem.SetMovementSpeed(3.5f);
+                m_MovementSystem.SetMovementSpeed(4f);
                 m_SpriteRenderer.sprite = sirArthurGold;
                 break;
 
@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         }
 
         Singleton_Game.m_instance.GetHUD().GetComponent<HUD>().SetArmourType(m_ID - 1, m_Armour);
-        Singleton_Game.m_instance.GetHUD().GetComponent<HUD>().SetArmourValue(m_ID - 1, m_ArmourPoints);
+        Singleton_Game.m_instance.GetHUD().GetComponent<HUD>().SetArmourValue(m_ID - 1, m_ArmourPoints == 0 ? m_PlayerHealth : m_ArmourPoints);
 
     }
 
@@ -257,10 +257,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     // ISpawn
     public void OnSpawn()
     {
-
         m_PlayerHealth = 2;
-        m_ArmourPoints = 3;
-
     }
 
     public void OnDeSpawn()
