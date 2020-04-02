@@ -22,7 +22,7 @@ public class Singleton_Game : MonoBehaviour
     [SerializeField] private bool m_canStartGame = false;
     [SerializeField] private bool m_spawnedPlayer2 = false;
 
-    [SerializeField] private int[] m_highScores = new int[3];
+    [SerializeField] private int[] m_highScores = null;
     [SerializeField] layerColObject[] layerColAry = null;
     [SerializeField] private Vector2 m_lastCheckPoint = new Vector2(0, 0);
 
