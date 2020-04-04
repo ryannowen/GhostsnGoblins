@@ -91456,26 +91456,31 @@ PrefabInstance:
     - target: {fileID: 1143225689338163063, guid: a93fcb5d34abc7f4fac112a9d0493695,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1143225689338163063, guid: a93fcb5d34abc7f4fac112a9d0493695,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8631823799227475519, guid: a93fcb5d34abc7f4fac112a9d0493695,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8631823799227475519, guid: a93fcb5d34abc7f4fac112a9d0493695,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1143225690213965483, guid: a93fcb5d34abc7f4fac112a9d0493695,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143225690213965487, guid: a93fcb5d34abc7f4fac112a9d0493695,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

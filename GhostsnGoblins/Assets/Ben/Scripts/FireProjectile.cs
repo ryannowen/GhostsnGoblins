@@ -24,6 +24,12 @@ public class FireProjectile : MonoBehaviour
     {
 
         GameObject tempProjectile = System_Spawn.instance.GetObjectFromPool(m_Projectile);
+        tempProjectile.GetComponent<SpriteRenderer>().flipX = false;
+
+        if (argsDirection.x > 0)
+            tempProjectile.GetComponent<SpriteRenderer>().flipX = false;
+        else
+            tempProjectile.GetComponent<SpriteRenderer>().flipX = true;
 
         if (tempProjectile != null)
         {

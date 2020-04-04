@@ -17,11 +17,11 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
 
     Rigidbody2D m_Rigidbody;
     CapsuleCollider2D m_PlayerCollider;
-
+    SpriteRenderer m_spriteRenderer;
     // Start is called before the first frame update
     void Start()
     {
-
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_ID = playerCount;
         playerCount++;
 
@@ -159,10 +159,15 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
         velocity.x *= m_MovementSpeed;
 
         if (velocity.x > 0)
+        {
+            m_spriteRenderer.flipX = false;
             m_LastMovingRight = true;
+        }
         else if (velocity.x < 0)
+        {
+            m_spriteRenderer.flipX = true;
             m_LastMovingRight = false;
-
+        }
         if (m_CanMove)
             return velocity;
         else

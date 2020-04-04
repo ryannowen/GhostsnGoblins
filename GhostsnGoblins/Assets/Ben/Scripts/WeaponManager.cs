@@ -30,7 +30,7 @@ public class WeaponManager : MonoBehaviour, IWeapon
     {
 
         Singleton_Sound.m_instance.PlayAudioClip("Throw");
-
+        
         argsDirection += shootingDirectionModification;
 
         argsDirection.Normalize();
