@@ -144,40 +144,40 @@ public class SatanAI : MonoBehaviour, IDamageable
                 }
             }
 
-           /* if (EnemyX > PlayerX + 8.1f)
-            {
-                EnemyX -= speed * 5;
-                // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
-            }
-            else if (EnemyX < PlayerX - 8.1f)
-            {
-                EnemyX += speed * 5;
-                // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
-            }*/
+            /* if (EnemyX > PlayerX + 8.1f)
+             {
+                 EnemyX -= speed * 5;
+                 // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
+             }
+             else if (EnemyX < PlayerX - 8.1f)
+             {
+                 EnemyX += speed * 5;
+                 // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
+             }*/
             Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
         }
 
-            if (HP <= 0)
-                KillEntity();
+        if (HP <= 0)
+            KillEntity();
 
-            if (!alive)
-                Enemy.SetActive(false);
-        }
-    
+        if (!alive)
+            Enemy.SetActive(false);
+    }
 
-        public void TakeDamage(int amount)
-        {
 
-            HP -= amount;
-            Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
-        }
+    public void TakeDamage(int amount)
+    {
 
-        public void KillEntity()
-        {
+        HP -= amount;
+        Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
+    }
 
-            alive = false;
+    public void KillEntity()
+    {
 
-        }
+        alive = false;
+
+    }
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -194,4 +194,4 @@ public class SatanAI : MonoBehaviour, IDamageable
             }
         }
     }
-} 
+}

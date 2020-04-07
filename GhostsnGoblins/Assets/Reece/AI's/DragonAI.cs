@@ -54,7 +54,7 @@ public class DragonAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-    
+
 
         if (Time.time > RNGTimer)
         {
@@ -75,10 +75,10 @@ public class DragonAI : MonoBehaviour, IDamageable
         }
 
 
-            if (alive && Angered)
-            {
-                EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
-                PlayerPos = new Vector2(Player.gameObject.transform.position.x, Player.gameObject.transform.position.y);
+        if (alive && Angered)
+        {
+            EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
+            PlayerPos = new Vector2(Player.gameObject.transform.position.x, Player.gameObject.transform.position.y);
 
             if (OneTime)
             {
@@ -135,18 +135,18 @@ public class DragonAI : MonoBehaviour, IDamageable
                 FlyDown = true;
             }
 
-                if (Shoot)
-                {
-                   // if (EnemyPos.x > PlayerPos.x)
-                   //    fireProj.Fire(transform.position, Vector3.left, transform.rotation);
-                   // else
-                   //     fireProj.Fire(transform.position, Vector3.right, transform.rotation);
-                    Shoot = false;
-                }
-                 
-                //Will move the Zombie to the left if the player is on the left.
-                if (MoveLeft)
-                {
+            if (Shoot)
+            {
+                // if (EnemyPos.x > PlayerPos.x)
+                //    fireProj.Fire(transform.position, Vector3.left, transform.rotation);
+                // else
+                //     fireProj.Fire(transform.position, Vector3.right, transform.rotation);
+                Shoot = false;
+            }
+
+            //Will move the Zombie to the left if the player is on the left.
+            if (MoveLeft)
+            {
                 if (EnemyPos.x > PlayerPos.x - 8)
                 {
                     Vector3 moveDirection = Vector3.left;
@@ -161,11 +161,11 @@ public class DragonAI : MonoBehaviour, IDamageable
                     MoveLeft = false;
                     MoveRight = true;
                 }
-                }
+            }
 
-                //Will move the Zombie to the right if the player is on the right
-                else if (MoveRight)
-                {
+            //Will move the Zombie to the right if the player is on the right
+            else if (MoveRight)
+            {
                 if (EnemyPos.x < PlayerPos.x + 8)
                 {
                     Vector3 moveDirection = Vector3.right;
@@ -182,25 +182,25 @@ public class DragonAI : MonoBehaviour, IDamageable
                 }
             }
 
-                if (FlyUp)
-                {
-                    Vector3 moveDirection = Vector3.up;
-                    moveDirection.Normalize();
-                    moveDirection.y *= speed;
+            if (FlyUp)
+            {
+                Vector3 moveDirection = Vector3.up;
+                moveDirection.Normalize();
+                moveDirection.y *= speed;
 
-                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.3f);
-                }
+                rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.3f);
+            }
 
-                else if (FlyDown)
-                {
-                    Vector3 moveDirection = Vector3.down;
-                    moveDirection.Normalize();
-                    moveDirection.y *= speed;
+            else if (FlyDown)
+            {
+                Vector3 moveDirection = Vector3.down;
+                moveDirection.Normalize();
+                moveDirection.y *= speed;
 
-                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.3f);
-                }
+                rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 0.3f);
+            }
         }
-        
+
 
         if (HP <= 0)
             KillEntity();

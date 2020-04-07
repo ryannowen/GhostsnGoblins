@@ -25,7 +25,7 @@ public class ZombieAI : MonoBehaviour, IDamageable
     private bool MoveLeft;
     private bool MoveRight;
     private bool FindPlayer;
-  
+
     Rigidbody2D rb;
 
     // Start is called before the first frame update
@@ -39,10 +39,10 @@ public class ZombieAI : MonoBehaviour, IDamageable
         rb = this.gameObject.GetComponent<Rigidbody2D>();
 
         Enemy = this.gameObject;
-        
+
     }
 
-   Vector3 GetDesiredMove()
+    Vector3 GetDesiredMove()
     {
         Vector3 v = Vector3.zero;
         if (MoveLeft)
@@ -66,7 +66,7 @@ public class ZombieAI : MonoBehaviour, IDamageable
             if (PlayerX + 8 > EnemyX && PlayerX - 8 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
-            }  
+            }
         }
 
         GetDesiredMove();
@@ -126,7 +126,7 @@ public class ZombieAI : MonoBehaviour, IDamageable
                 moveDirection.x *= Speed;
 
                 rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
-            } 
+            }
 
             CheckGroundedState();
             CheckSideState();
@@ -136,7 +136,7 @@ public class ZombieAI : MonoBehaviour, IDamageable
             {
                 rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, JumpForce), 1f);
             }
-           
+
             if (JumpForce == 0)
                 JumpForce = 7;
 
@@ -155,9 +155,9 @@ public class ZombieAI : MonoBehaviour, IDamageable
             Enemy.SetActive(false);
     }
 
- 
 
-//Checks to see if the ground is undearneath the zombie
+
+    //Checks to see if the ground is undearneath the zombie
     void CheckGroundedState()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, 1f, OnGroundCheckLayerMask);
@@ -210,6 +210,16 @@ public class ZombieAI : MonoBehaviour, IDamageable
                 col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
             }
         }
+    }
+
+    public void OnSpawn()
+    {
+        Angered = false;
+        OnGround = false;
+        Jump = false;
+        OneTime = true;
+        HP = 1;
+        Alive = false;
     }
 }
 

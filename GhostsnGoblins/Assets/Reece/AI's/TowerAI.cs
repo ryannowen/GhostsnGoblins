@@ -80,9 +80,9 @@ public class TowerAI : MonoBehaviour, IDamageable
                 }
                 if (Shoot)
                 {
-                  if (PlayerX < EnemyX)
+                    if (PlayerX < EnemyX)
                         fireProj.Fire(transform.position, Vector3.left, transform.rotation);
-                  else
+                    else
                         fireProj.Fire(transform.position, Vector3.right, transform.rotation);
                 }
             }

@@ -7,7 +7,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
 
     [SerializeField] private GameObject Bullet = null;
 
-    public bool Alive = true; 
+    public bool Alive = true;
 
     private GameObject Enemy = null;
     private GameObject Player = null;
@@ -88,7 +88,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
                     Shoot = false;
                 }
             }
-           
+
         }
         else
             Enemy.SetActive(false);
