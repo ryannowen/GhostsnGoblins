@@ -46,7 +46,7 @@ public class Spawner_Area : MonoBehaviour, ISpawner
             {
                 if (Random.Range(1, 100) >= spawnObject.spawnChance || spawnObject.spawnChance == 100)
                 {
-                    GameObject spawnedObject = System_Spawn.instance.GetObjectFromPool(spawnObject.item, spawnObject.ignoreAllActiveCheck);
+                    GameObject spawnedObject = System_Spawn.instance.GetObjectFromPool(spawnObject.item, spawnObject.ignoreAllActiveCheck, true, spawnObject.shouldPeek);
                     if (null == spawnedObject)
                     {
                         Debug.LogError("Cannot spawn object, spawn system returned null");

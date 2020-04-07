@@ -50,6 +50,7 @@ public class Spawner_Point : MonoBehaviour, ISpawner
             return;
         }
 
+
         bool failedToSpawn = false;
 
         foreach (SpawnObject spawnObject in m_objects)
@@ -89,7 +90,7 @@ public class Spawner_Point : MonoBehaviour, ISpawner
                     if (failedToSpawn)
                         break;
 
-                    GameObject spawnedObject = System_Spawn.instance.GetObjectFromPool(spawnObject.item, spawnObject.ignoreAllActiveCheck);
+                    GameObject spawnedObject = System_Spawn.instance.GetObjectFromPool(spawnObject.item, spawnObject.ignoreAllActiveCheck, true, spawnObject.shouldPeek);
                     if (null == gameObject)
                     {
                         Debug.LogError("Cannot spawn object, spawn system returned null");

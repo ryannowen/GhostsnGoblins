@@ -22,18 +22,8 @@ public class CameraController : MonoBehaviour
         // Set position (Potentially remove later)
         transform.position = new Vector3(transform.position.x, transform.position.y, -10);
 
-        // Find player 1
-        if (GameObject.Find("Player1") != null)
-        {
-            player1 = GameObject.Find("Player1");
-        }
-
-        // Find player 2
-        if (GameObject.Find("Player2") != null)
-
-        {
-            player2 = GameObject.Find("Player2");
-        }
+        player1 = Singleton_Game.m_instance.GetPlayer(0);
+        player2 = Singleton_Game.m_instance.GetPlayer(1);
 
     }
 

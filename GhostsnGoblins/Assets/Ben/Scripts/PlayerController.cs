@@ -40,16 +40,21 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     PlayerMovement m_MovementSystem = null;
     SpriteRenderer m_SpriteRenderer = null;
 
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    void Awake()
+    {
         m_ID = playerCount;
         playerCount++;
 
         // Name the player
         this.gameObject.name = "Player" + m_ID;
 
+        Singleton_Game.m_instance.RegisterPlayer(m_ID, gameObject);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         m_MovementSystem = this.gameObject.GetComponent<PlayerMovement>();
         m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
 
@@ -59,7 +64,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         sirArthurSilver = Resources.Load<Sprite>("Sprites/Characters/SirArthur_Silver") as Sprite;
         sirArthurGold = Resources.Load<Sprite>("Sprites/Characters/SirArthur_Gold") as Sprite;
 
-        m_EquippedItem = System_Spawn.instance.GetObjectFromPool(m_StartingWeapon, true);
+        m_EquippedItem = System_Spawn.instance.GetObjectFromPool(m_StartingWeapon, true, true);
 
     }
 
@@ -169,6 +174,11 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
     }
 
+    public int GetHealth()
+    {
+        return m_PlayerHealth;
+    }
+
     public void SetArmourPoints(int argsAmount)
     {
 
@@ -188,6 +198,11 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
         m_EquippedItem = argsItem;
 
+    }
+
+    public GameObject GetEquippedItem()
+    {
+        return m_EquippedItem;
     }
     
     public bool GetIsInvulnerable()
@@ -252,6 +267,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         // Deactivate player
         this.gameObject.SetActive(false);
 
+        // Checks if both players are dead, respawns them at checkpoint if they are
+        Singleton_Game.m_instance.CheckPlayersAlive();
     }
 
     // ISpawn

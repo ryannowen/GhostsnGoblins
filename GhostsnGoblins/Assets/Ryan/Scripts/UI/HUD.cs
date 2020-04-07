@@ -20,11 +20,15 @@ public class HUD : MonoBehaviour
 
     [SerializeField] private GameObject m_gameUI = null;
     [SerializeField] private GameObject m_shopUI = null;
+
     [Space]
+
     [SerializeField] private TextMeshProUGUI m_scoreText = null;
     [SerializeField] private TextMeshProUGUI m_highScoreText = null;
     [SerializeField] private timer m_HUDTimer = null;
+
     [Space]
+
     [SerializeField] private GameObject[] m_healthBarsGameObjects = null;
     [SerializeField] private Healthbar[] m_healthbars = null;
     [SerializeField] private Image[] m_healthbarImages = null;
@@ -33,18 +37,26 @@ public class HUD : MonoBehaviour
     [SerializeField] private int[] m_currentArmours = null;
     [SerializeField] private float[] m_healthbarTargets = null;
 
+    private GameObject m_player1 = null;
+    private GameObject m_player2 = null;
+
+    private float previousInsertMoney = 0.0f;
     void Start()
     {
         m_currentArmours = new int[m_healthBarsGameObjects.Length];
         m_healthbarTargets = new float[m_healthBarsGameObjects.Length];
 
-        if (null != m_highScoreText)
-            m_highScoreText.text = "High Score: " + Singleton_Game.m_instance.GetHighScore(0);
+        m_player1 = Singleton_Game.m_instance.GetPlayer(0);
+        m_player2 = Singleton_Game.m_instance.GetPlayer(1);
     }
 
     void Update()
     {
-        for(int i = 0; i < m_healthbarTargets.Length; i++)
+        SetPlayerHUDActive(0, (null == m_player1) ? false : m_player1.activeSelf);
+        SetPlayerHUDActive(1, (null == m_player2) ? false : m_player2.activeSelf);
+
+
+        for (int i = 0; i < m_healthbarTargets.Length; i++)
         {
             Slider slider = m_healthBarsGameObjects[i].GetComponent<Slider>();
             slider.value = Mathf.Lerp(slider.value, m_healthbarTargets[i], 0.1f);
@@ -53,13 +65,13 @@ public class HUD : MonoBehaviour
         if(null != m_scoreText)
             m_scoreText.text = "Score: " + Singleton_Game.m_instance.GetScore();
 
+        if (null != m_highScoreText)
+            m_highScoreText.text = "High Score: " + Singleton_Game.m_instance.GetHighScore(0);
 
-        if(Input.GetKeyDown(KeyCode.L))
-        {
+        if (previousInsertMoney != Input.GetAxisRaw("Fire3_P1") && Input.GetAxisRaw("Fire3_P1") > 0)
             Singleton_Game.m_instance.InsertMoney(20);
-            Debug.Log("Down");
-        }
 
+        previousInsertMoney = Input.GetAxisRaw("Fire3_P1");
     }
 
     private void OnEnable()
@@ -174,6 +186,5 @@ public class HUD : MonoBehaviour
 
         if (m_HUDTimer.enabled)
             m_HUDTimer.ResetTimer();
-
     }
 }

@@ -10,10 +10,22 @@ public class CheckPoint : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            if (m_useCustomLocation) // custom location
-                Singleton_Game.m_instance.SetCheckPoint(m_customLocation);
-            else // checkpoint position
-                Singleton_Game.m_instance.SetCheckPoint(transform.position);
+            Singleton_Game.m_instance.SetCheckPoint(m_useCustomLocation ? m_customLocation : (Vector2)transform.position);
+
+            if (1 == other.GetComponent<PlayerController>().GetID()) // is player 1
+            {
+                if (!Singleton_Game.m_instance.GetPlayer(1).activeSelf) // is player 2 not active
+                {
+                    Singleton_Game.m_instance.ReSpawnPlayerAtCheckpoint(1);
+                }
+            }
+            else
+            {
+                if (!Singleton_Game.m_instance.GetPlayer(0).activeSelf) // is player 1 not active
+                {
+                    Singleton_Game.m_instance.ReSpawnPlayerAtCheckpoint(0);
+                }
+            }
         }
     }
 }
