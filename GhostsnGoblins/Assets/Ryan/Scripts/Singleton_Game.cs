@@ -168,7 +168,10 @@ public class Singleton_Game : MonoBehaviour
             player1.SetActive(true);
             player1.transform.position = m_lastCheckPoint;
             player1.GetComponent<PlayerController>().OnSpawn();
+        }
 
+        if(m_spawnedPlayer2 && !player2.activeSelf && !player1.activeSelf)
+        { 
             player2.SetActive(true);
             player2.transform.position = m_lastCheckPoint;
             player2.GetComponent<PlayerController>().OnSpawn();

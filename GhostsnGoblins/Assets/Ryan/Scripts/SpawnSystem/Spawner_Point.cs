@@ -57,6 +57,8 @@ public class Spawner_Point : MonoBehaviour, ISpawner
         {
             for (int i = 0; i < spawnObject.spawnAmount; i++)
             {
+                ActivateSpawnReactors(ESpawnReactorType.eOnBeginSpawning, spawnObject);
+
                 int spawnChance = Random.Range(1, 100);
 
                 if (spawnChance >= spawnObject.spawnChance || spawnObject.spawnChance == 100)
@@ -98,9 +100,13 @@ public class Spawner_Point : MonoBehaviour, ISpawner
                         break;
                     }
 
+                    ActivateSpawnReactors(ESpawnReactorType.eOnEndSpawning, spawnObject, spawnedObject);
+
                     spawnPoint.SetSpawnedObject(gameObject);
                     spawnedObject.transform.position = spawnPoint.transform.position;
                 }
+
+                ActivateSpawnReactors(ESpawnReactorType.eOnEndSpawning, spawnObject);
             }
 
             if (failedToSpawn)
@@ -108,6 +114,50 @@ public class Spawner_Point : MonoBehaviour, ISpawner
         }
 
         if (m_timedSpawner)
-            StartCoroutine(SpawnDelay());
+            StartCoroutine(SpawnDelay());        
+    }
+
+    private void ActivateSpawnReactors(ESpawnReactorType argReactorType, SpawnObject argSpawnObjectData, GameObject argSpawnedObject = null)
+    {
+        switch (argReactorType)
+        {
+            case ESpawnReactorType.eOnBeginSpawning:
+                foreach (GameObject reactorObject in argSpawnObjectData.spawnReactors)
+                {
+                    ISpawnReactor reactor = reactorObject.GetComponent<ISpawnReactor>();
+
+                    if (null != reactor)
+                    {
+                        reactor.ReactorOnBeginSpawning();
+                    }
+                }
+
+                break;
+            case ESpawnReactorType.eOnSpawn:
+                foreach (GameObject reactorObject in argSpawnObjectData.spawnReactors)
+                {
+                    ISpawnReactor reactor = reactorObject.GetComponent<ISpawnReactor>();
+
+                    if (null != reactor && null != argSpawnedObject)
+                    {
+                        reactor.ReactorOnSpawn(argSpawnedObject);
+                    }
+                }
+                break;
+            case ESpawnReactorType.eOnEndSpawning:
+                foreach (GameObject reactorObject in argSpawnObjectData.spawnReactors)
+                {
+                    ISpawnReactor reactor = reactorObject.GetComponent<ISpawnReactor>();
+
+                    if (null != reactor)
+                    {
+                        reactor.ReactorOnEndSpawning();
+                    }
+                }
+                break;
+            default:
+                Debug.LogError("Cannot activate spawner area reactor because case does not exist, case=" + argReactorType);
+                break;
+        }
     }
 }
