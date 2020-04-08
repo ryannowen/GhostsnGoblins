@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedArremerAI : MonoBehaviour, IDamageable
+public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
 {
-    public bool alive = true;
+    public bool Alive = true;
 
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
@@ -104,7 +104,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable
             RNG = 0;
         }
 
-        if (Angered && alive)
+        if (Angered && Alive)
         {
             //Will move the Zombie to the left if the player is on the left.
             if (MoveLeft && !InAir)
@@ -231,7 +231,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable
         if (HP <= 0)
             KillEntity();
 
-        if (!alive)
+        if (!Alive)
             Enemy.SetActive(false);
     }
 
@@ -244,10 +244,10 @@ public class RedArremerAI : MonoBehaviour, IDamageable
 
     public void KillEntity()
     {
-
-        alive = false;
+        Angered = true;
+        Alive = false;
         m_SpawnPickup.CreatePickup();
-
+        Singleton_Game.m_instance.AddScore(1000, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -266,4 +266,15 @@ public class RedArremerAI : MonoBehaviour, IDamageable
         }
     }
 
+    public void OnSpawn()
+    {
+        HP = 2;
+        Alive = true;
+        Angered = false;
+        FindPlayer = true;
+    }
+
+    public void OnDeSpawn()
+    {
+    }
 }

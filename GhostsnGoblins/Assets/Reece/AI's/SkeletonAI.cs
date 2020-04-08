@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 
-public class SkeletonAI : MonoBehaviour, IDamageable
+public class SkeletonAI : MonoBehaviour, IDamageable, ISpawn
 {
 
     public Sprite Head;
@@ -193,9 +193,10 @@ public void KillEntity()
 {
 
     Alive = false;
-    m_SpawnPickup.CreatePickup();
+        m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(100, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
 
-}
+    }
 
 void ChangeSprite()
     {
@@ -219,5 +220,17 @@ void ChangeSprite()
                 col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
             }
         }
+    }
+
+    public void OnSpawn()
+    {
+        HP = 1;
+        Alive = true;
+        Angered = false;
+        OneTime = true;
+    }
+
+    public void OnDeSpawn()
+    {
     }
 }

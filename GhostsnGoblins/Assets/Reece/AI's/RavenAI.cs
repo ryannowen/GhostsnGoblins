@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RavenAI : MonoBehaviour, IDamageable
+public class RavenAI : MonoBehaviour, IDamageable, ISpawn
 {
-    public bool alive = true;
+    public bool Alive = true;
 
+    SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
     private int HP = 1;
@@ -34,6 +35,8 @@ public class RavenAI : MonoBehaviour, IDamageable
 
         rb = this.gameObject.GetComponent<Rigidbody2D>();
 
+        m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
+
         Enemy = this.gameObject;
     }
 
@@ -51,7 +54,7 @@ public class RavenAI : MonoBehaviour, IDamageable
         if (HP <= 0)
             KillEntity();
 
-        if (alive)
+        if (Alive)
         {
             if (PlayerX + 7 > EnemyX && PlayerX -7 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
@@ -115,7 +118,7 @@ public class RavenAI : MonoBehaviour, IDamageable
                 //After how long the DeathTimer is the zombie will stop moving.
                 if (Time.time > Deathtimer)
                 {
-                    alive = false;
+                    Alive = false;
                 }
             }
         }
@@ -131,8 +134,35 @@ public class RavenAI : MonoBehaviour, IDamageable
 
     public void KillEntity()
     {
+        m_SpawnPickup.CreatePickup();
+        Alive = false;
+        Singleton_Game.m_instance.AddScore(100, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
+    }
 
-        alive = false;
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.layer == 18)
+        {
+            if (col.transform.parent.gameObject.GetComponent<IDamageable>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<IDamageable>().TakeDamage(1);
+            }
 
+            if (col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
+            }
+        }
+    }
+    public void OnSpawn()
+    {
+        HP = 1;
+        Alive = true;
+        Angered = false;
+        OneTime = true;
+    }
+
+    public void OnDeSpawn()
+    {
     }
 }

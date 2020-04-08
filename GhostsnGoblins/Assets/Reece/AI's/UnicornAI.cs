@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnicornAI : MonoBehaviour, IDamageable
+public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
 {
     [SerializeField] private GameObject Bullet = null;
-    public bool alive = true;
+    public bool Alive = true;
 
+    SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
     private int RNG;
@@ -41,6 +42,8 @@ public class UnicornAI : MonoBehaviour, IDamageable
 
         fireProj = this.gameObject.GetComponent<FireProjectile>();
         fireProj.SetProjectile(Bullet);
+
+        m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
         Enemy = this.gameObject;
     }
@@ -106,7 +109,7 @@ public class UnicornAI : MonoBehaviour, IDamageable
 
         GetDesiredMove();
 
-        if (Angered && alive)
+        if (Angered && Alive)
         {
             if (Jump)
             {
@@ -184,7 +187,7 @@ public class UnicornAI : MonoBehaviour, IDamageable
         if (HP <= 0)
             KillEntity();
 
-        if (!alive)
+        if (!Alive)
             Enemy.SetActive(false);
 
         //Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
@@ -192,7 +195,7 @@ public class UnicornAI : MonoBehaviour, IDamageable
 
     public void TakeDamage(int amount)
     {
-
+        Angered = true;
         HP -= amount;
         Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
     }
@@ -200,8 +203,9 @@ public class UnicornAI : MonoBehaviour, IDamageable
     public void KillEntity()
     {
 
-        alive = false;
-
+        Alive = false;
+        m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(2000, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -218,5 +222,17 @@ public class UnicornAI : MonoBehaviour, IDamageable
                 col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
             }
         }
+    }
+
+    public void OnSpawn()
+    {
+        HP = 4;
+        Alive = true;
+        Angered = false;
+        FindPlayer = true;
+    }
+
+    public void OnDeSpawn()
+    {
     }
 }

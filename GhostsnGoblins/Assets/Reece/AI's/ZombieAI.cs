@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieAI : MonoBehaviour, IDamageable
+public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
 {
     public bool Alive = true;
     public LayerMask OnGroundCheckLayerMask;
@@ -192,9 +192,11 @@ public class ZombieAI : MonoBehaviour, IDamageable
     {
 
         Alive = false;
+        
         // gives a 50% chance to drop a pickup
         if (Random.Range(0,2) == 0)
             m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(200, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
 
     }
 
@@ -213,5 +215,17 @@ public class ZombieAI : MonoBehaviour, IDamageable
             }
         }
     }
+    public void OnSpawn()
+    {
+        HP = 1;
+        Alive = true;
+        Angered = false;
+        OneTime = true;
+    }
+
+    public void OnDeSpawn()
+    {
+    }
+
 }
 
