@@ -360,6 +360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 106458552}
+  - component: {fileID: 106458553}
   m_Layer: 5
   m_Name: mainMenu
   m_TagString: Untagged
@@ -387,9 +388,22 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11, y: -0.0000076294}
+  m_AnchoredPosition: {x: -11, y: -0}
   m_SizeDelta: {x: 528.6, y: 489.6}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &106458553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106458551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c533fe8e0604a3441b511fdbcc0c0a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playText: {fileID: 321332566}
 --- !u!1 &124619896
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,7 +735,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 5.8}
-  m_SizeDelta: {x: 216.8, y: 73.1}
+  m_SizeDelta: {x: 500, y: 73.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &321332566
 MonoBehaviour:
@@ -743,7 +757,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: PLAY
+  m_text: "INSERT \xA31!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -812,10 +826,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: -1.0524292, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 321332566}
-    characterCount: 4
+    characterCount: 10
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -1748,7 +1762,6 @@ GameObject:
   - component: {fileID: 799960227}
   - component: {fileID: 799960230}
   - component: {fileID: 799960229}
-  - component: {fileID: 799960231}
   - component: {fileID: 799960228}
   m_Layer: 5
   m_Name: btnPlay
@@ -1775,7 +1788,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.0000066161, y: 186}
-  m_SizeDelta: {x: 230.5, y: 84.7}
+  m_SizeDelta: {x: 500, y: 84.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &799960228
 MonoBehaviour:
@@ -1820,7 +1833,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 799960231}
+      - m_Target: {fileID: 106458553}
         m_MethodName: playGame
         m_Mode: 1
         m_Arguments:
@@ -1870,18 +1883,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799960226}
   m_CullTransparentMesh: 0
---- !u!114 &799960231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 799960226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c533fe8e0604a3441b511fdbcc0c0a60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &826164162
 GameObject:
   m_ObjectHideFlags: 0
@@ -2371,6 +2372,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1143225689940086971, guid: a93fcb5d34abc7f4fac112a9d0493695,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -11.099976
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143225689940086971, guid: a93fcb5d34abc7f4fac112a9d0493695,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -12.100006
+      objectReference: {fileID: 0}
     - target: {fileID: 1143225690213965487, guid: a93fcb5d34abc7f4fac112a9d0493695,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -2390,16 +2401,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1143225689940086971, guid: a93fcb5d34abc7f4fac112a9d0493695,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -11.099976
-      objectReference: {fileID: 0}
-    - target: {fileID: 1143225689940086971, guid: a93fcb5d34abc7f4fac112a9d0493695,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -12.100006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a93fcb5d34abc7f4fac112a9d0493695, type: 3}
@@ -2610,7 +2611,6 @@ GameObject:
   - component: {fileID: 1242559856}
   - component: {fileID: 1242559859}
   - component: {fileID: 1242559858}
-  - component: {fileID: 1242559860}
   - component: {fileID: 1242559857}
   m_Layer: 5
   m_Name: btnQuit
@@ -2682,7 +2682,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1242559860}
+      - m_Target: {fileID: 106458553}
         m_MethodName: quitGame
         m_Mode: 1
         m_Arguments:
@@ -2732,18 +2732,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1242559855}
   m_CullTransparentMesh: 0
---- !u!114 &1242559860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1242559855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c533fe8e0604a3441b511fdbcc0c0a60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1271322793
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,9 +16,16 @@ public class KillBox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.name.Contains("Pickup") || collision.gameObject.name.Contains("Projectile"))
+        {
+            collision.gameObject.SetActive(false);
+        }
+
         IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
         if (null != damageable)
         {
+
+
             if (collision.CompareTag("Player"))
             {
                 if (m_killboxType == EKillboxType.eKillEnemies) // Not able to hurt player

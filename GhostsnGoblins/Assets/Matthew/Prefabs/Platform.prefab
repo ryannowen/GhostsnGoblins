@@ -71,14 +71,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6524b377c116a4e888c93151cf3408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enablePlatform: 1
-  fallDelay: 3
   doesFade: 1
-  fadeSpeed: 5
-  respawnDelay: 3
+  fadeSpeed: 10
   shouldFall: 1
-  shouldRespawn: 1
-  gravScale: 2.5
+  fallDelay: 3
+  doesRespawn: 1
+  respawnDelay: 3
 --- !u!114 &2433192219583352757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,11 +89,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf0daffcdecdbf44b8b031411ba0a109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enablePlatform: 0
-  platformPoints: []
-  platformType: 0
-  timeToReachPoint: 1
-  moveDelay: 0.2
+  positionArray: []
+  pType: 1
+  platformMoveDelay: 1
+  platformDestinationTime: 1
 --- !u!1 &4743059151727243077
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +200,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0513563, y: 0.23744431}
+  m_Size: {x: 1, y: 0.23744431}
   m_EdgeRadius: 0
 --- !u!50 &4743059151727243076
 Rigidbody2D:
@@ -220,7 +217,7 @@ Rigidbody2D:
   m_Mass: 1000000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

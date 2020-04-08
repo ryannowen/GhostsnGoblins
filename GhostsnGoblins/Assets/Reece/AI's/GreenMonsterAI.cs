@@ -7,7 +7,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
 
     [SerializeField] private GameObject Bullet = null;
 
-    public bool Alive = true; 
+    public bool Alive = true;
 
     private GameObject Enemy = null;
     private GameObject Player = null;
@@ -88,7 +88,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
                     Shoot = false;
                 }
             }
-           
+
         }
         else
             Enemy.SetActive(false);
@@ -106,5 +106,21 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
 
         Alive = false;
 
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.layer == 18)
+        {
+            if (col.transform.parent.gameObject.GetComponent<IDamageable>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<IDamageable>().TakeDamage(1);
+            }
+
+            if (col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
+            }
+        }
     }
 }

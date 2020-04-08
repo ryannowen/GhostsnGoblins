@@ -70,10 +70,10 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
             if (PlayerX + 5 > EnemyX && PlayerX - 5 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
-            {  
+            {
                 Angered = true;
             }
-        }  
+        }
 
         if (alive && Angered)
         {
@@ -108,12 +108,12 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
                 OneTime = false;
             }
 
-           
+
             if (Shoot)
             {
                 fireProj.Fire(transform.position, Vector3.down, transform.rotation);
                 if (MoveLeft)
-                     fireProj.Fire(transform.position, Vector3.left, transform.rotation);
+                    fireProj.Fire(transform.position, Vector3.left, transform.rotation);
                 else
                     fireProj.Fire(transform.position, Vector3.right, transform.rotation);
                 Shoot = false;
@@ -188,8 +188,8 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
                             playerLevelReached = false;
                     }
                 }
-               
-                
+
+
             }
 
             //Will move the Zombie to the right if the player is on the right
@@ -230,7 +230,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
                         MoveRight = false;
                         if (EnemyPos.y <= PlayerY + 0.5)
                         {
-                            playerLevelReached = true;  
+                            playerLevelReached = true;
                         }
                     }
 

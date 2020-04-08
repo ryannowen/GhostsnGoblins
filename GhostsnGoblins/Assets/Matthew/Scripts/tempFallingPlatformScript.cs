@@ -4,108 +4,148 @@ using UnityEngine;
 
 public class tempFallingPlatformScript : MonoBehaviour {
 
-    [Tooltip("Does the platform function entirely? If you want the platform to fall, make sure this is enabled.")]
-    [SerializeField] private bool enablePlatform = false;
+	[Tooltip("Should the platform fade when falling?")]
+	[SerializeField] private bool doesFade = false;
 
-    [Tooltip("The time of delay before the platform falls when collided (in seconds).")]
-    [SerializeField] private float fallDelay = 1;
+	[Tooltip("The speed of fading (opaque to transparent) in seconds.")]
+	[SerializeField] private float fadeSpeed = 2;
 
-    [Tooltip("Does the platform fade when it falls and resets?")]
-    [SerializeField] private bool doesFade = false;
+	[Tooltip("Should the platform fall?")]
+	[SerializeField] private bool shouldFall = true;
 
-    [Tooltip("The speed of fading (in seconds).")]
-    [SerializeField] private float fadeSpeed = 1;
+	[Tooltip("The delay before falling is applied to the platform in seconds.")]
+	[SerializeField] private float fallDelay = 2;
 
-    [Tooltip("The time of delay before the platform respawns to its original position (in seconds).")]
-    [SerializeField] private float respawnDelay = 3;
+	[Tooltip("Should the platform respawn once fallen?")]
+	[SerializeField] private bool doesRespawn = true;
 
-    [Tooltip("Should the platform fall?")]
-    [SerializeField] private bool shouldFall = true;
+	[Tooltip("The delay before the platform reappears (in seconds).")]
+	[SerializeField] private float respawnDelay = 3;
 
-    [Tooltip("Should the platform respawn?")]
-    [SerializeField] private bool shouldRespawn = true;
+	private mainPlatformScript platformScript = null;
+	private tempMovingPlatformScript movingPlatformScript = null;
 
-    [Tooltip("The gravity strength of the platform when it falls.")]
-    [SerializeField] private float gravScale = 2.5f;
+	private Transform platformTransform = null;
+	private Rigidbody2D platformRb2D = null;
+	private SpriteRenderer spriteRend = null;
 
-    private SpriteRenderer sRenderer;
-    private Rigidbody2D rb2D;
+	private Vector3 initialPosition;
+	private bool isFalling = false;
 
-    private Vector2 originalPosition;
-    private bool isFalling;
-    private float gravityScale;
+	private void Awake() {
+		movingPlatformScript = gameObject.GetComponent<tempMovingPlatformScript>();
+		if (movingPlatformScript == null) {
+			print("Couldn't find the moving platform script on the child collider. Please attach one!");
+			return;
+		}
 
-    // Start is called before the first frame update
-    void Start() {
-        if (!enablePlatform) {
-            return;
-        }
+		platformScript = transform.parent.gameObject.GetComponent<mainPlatformScript>();
+		if (platformScript == null) {
+			print("Couldn't find the platform script on the child collider's parent. Please attach one!");
+			movingPlatformScript.enabled = false;
+			return;
+		}
 
-        rb2D = transform.parent.gameObject.GetComponent<Rigidbody2D>();
+		platformTransform = transform.parent;
+		if (platformTransform == null) {
+			print("Couldn't find a parent transform for the platform to function with!");
+			movingPlatformScript.enabled = false;
+			return;
+		}
 
-        if (shouldFall) {
-            rb2D.bodyType = RigidbodyType2D.Dynamic;
-            rb2D.gravityScale = gravScale;
-            rb2D.mass = 200;
-        } else {
-            rb2D.bodyType = RigidbodyType2D.Static;
-        }
+		platformRb2D = platformTransform.gameObject.GetComponent<Rigidbody2D>();
+		if (platformRb2D == null) {
+			print("Couldn't find a rigidbody2d attached to the parent platform. Please attach one.");
+			return;
+		}
 
-        isFalling = false;
-        sRenderer = transform.parent.gameObject.GetComponent<SpriteRenderer>();
-        gravityScale = rb2D.gravityScale;
-        rb2D.gravityScale = 0;
-        originalPosition = transform.parent.position;
-    }
+		spriteRend = platformTransform.gameObject.GetComponent<SpriteRenderer>();
+		if (spriteRend == null) {
+			print("Couldn't find a sprite renderer attached to the parent platform. Please attach one.");
+			return;
+		}
 
-    private void OnCollisionEnter2D(Collision2D col) {
-        if (col.gameObject.tag == "Player") {
-            if (enablePlatform && !isFalling) {
-                StartCoroutine(fallingDelay(fallDelay));
+		initialPosition = new Vector3(transform.position.x, transform.position.y, 0);
+	}
+
+	private void OnCollisionEnter2D(Collision2D col) {
+        if (enabled)
+        {
+            if (col.gameObject.CompareTag("Player"))
+            {
+                col.gameObject.transform.parent = platformTransform;
+                StartCoroutine(makePlatformFall());
             }
         }
-    }
+	}
 
-    // Update is called once per frame
-    void FixedUpdate() {
-        if (!enablePlatform) {
-            return;
+	private void OnCollisionExit2D(Collision2D col) {
+        if (enabled)
+        {
+            if (col.gameObject.CompareTag("Player"))
+            {
+                col.gameObject.transform.parent = null;
+            }
         }
+	}
 
-        if (isFalling && doesFade) {
-            float alphaCol = sRenderer.color.a;
+	private void FixedUpdate() {
+		float alphaCol = spriteRend.color.a;
 
-            alphaCol = Mathf.Lerp(alphaCol, 0, Time.fixedDeltaTime * fadeSpeed);
-            sRenderer.color = new Color(sRenderer.color.r, sRenderer.color.g, sRenderer.color.b, alphaCol);
-        } else if (!isFalling && doesFade) {
-            float alphaCol = sRenderer.color.a;
+		if (isFalling && doesFade) {
+			alphaCol = Mathf.Lerp(alphaCol, 0, Time.fixedDeltaTime * fadeSpeed);
+			spriteRend.color = new Color(spriteRend.color.r, spriteRend.color.g, spriteRend.color.b, alphaCol);
+		} else if (!isFalling && doesFade) {
+			alphaCol = Mathf.Lerp(alphaCol, 1, Time.fixedDeltaTime * fadeSpeed);
+			spriteRend.color = new Color(spriteRend.color.r, spriteRend.color.g, spriteRend.color.b, alphaCol);
+		}
+	}
 
-            alphaCol = Mathf.Lerp(alphaCol, 1, Time.fixedDeltaTime * fadeSpeed);
-            sRenderer.color = new Color(sRenderer.color.r, sRenderer.color.g, sRenderer.color.b, alphaCol);
-        }
-    }
+	private IEnumerator makePlatformFall() {
+		yield return new WaitForSeconds(fallDelay);
 
-    private IEnumerator fallingDelay(float wTime) {
-        yield return new WaitForSeconds(wTime);
+        if (!movingPlatformScript.getFallingMode()) {
+			isFalling = true;
+			movingPlatformScript.setFallingMode(true);
+			platformScript.setTimer(99999999);
+			platformScript.toggleTriggerCollider(false);
 
-        isFalling = true;
-        transform.parent.gameObject.GetComponent<mainPlatformScript>().setTimer(99999999);
-        if (shouldFall) {
-            rb2D.gravityScale = gravityScale;
-        }
+			if (shouldFall) {
+				platformRb2D.bodyType = RigidbodyType2D.Dynamic;
+			}
 
-        if (shouldRespawn) {
-            StartCoroutine(respawnPlatform(respawnDelay));
-        }
-    }
+			if (doesRespawn) {
+				StartCoroutine(respawnPlatform());
+			}
+		}
+	}
 
-    private IEnumerator respawnPlatform(float wTime) {
-        yield return new WaitForSeconds(wTime);
+	private IEnumerator respawnPlatform() {
+		yield return new WaitForSeconds(respawnDelay);
 
-        rb2D.velocity = Vector3.zero;
-        rb2D.gravityScale = 0;
-        transform.parent.position = originalPosition;
-        transform.parent.gameObject.GetComponent<mainPlatformScript>().setTimer(0);
-        isFalling = false;
-    }
+		if (movingPlatformScript.getFallingMode()) {
+			platformRb2D.velocity = Vector3.zero;
+			platformRb2D.bodyType = RigidbodyType2D.Kinematic;
+
+			if (movingPlatformScript.enabled == true) {
+				movingPlatformScript.setPlatformNumDefault();
+			} else {
+				platformTransform.position = initialPosition;
+			}
+			
+			isFalling = false;
+			movingPlatformScript.setFallingMode(false);
+
+			StartCoroutine(enablePlatform());
+		}
+	}
+
+	private IEnumerator enablePlatform() {
+		while (spriteRend.color.a <= 0.99f) {
+			yield return null;
+		}
+
+		platformScript.toggleTriggerCollider(true);
+		platformScript.setTimer(0);
+	}
 }

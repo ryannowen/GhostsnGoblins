@@ -80,10 +80,10 @@ public class UnicornAI : MonoBehaviour, IDamageable
         {
             FindPlayer = true;
             RNG = Random.Range(2, 100);
-            RNGtimer += 1.5f; 
+            RNGtimer += 1.5f;
         }
 
-     
+
 
         if (!Jump && !Shoot && !Dash)
         {
@@ -108,7 +108,7 @@ public class UnicornAI : MonoBehaviour, IDamageable
 
         if (Angered && alive)
         {
-            if(Jump)
+            if (Jump)
             {
                 if (PlayerX < EnemyX)
                 {
@@ -130,7 +130,7 @@ public class UnicornAI : MonoBehaviour, IDamageable
                     if (Time.time < JumpTimer - 0.8f)
                     {
                         //EnemyY += speed * 2;
-                       //EnemyX += speed;
+                        //EnemyX += speed;
                         Vector3 moveDirection = GetDesiredMove();
                         moveDirection.Normalize();
                         moveDirection.y = rb.velocity.y;
@@ -202,5 +202,21 @@ public class UnicornAI : MonoBehaviour, IDamageable
 
         alive = false;
 
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.layer == 18)
+        {
+            if (col.transform.parent.gameObject.GetComponent<IDamageable>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<IDamageable>().TakeDamage(1);
+            }
+
+            if (col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
+            }
+        }
     }
 }

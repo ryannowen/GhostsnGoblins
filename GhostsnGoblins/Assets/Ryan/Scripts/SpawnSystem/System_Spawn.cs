@@ -49,12 +49,13 @@ public class System_Spawn : MonoBehaviour
         for (int i = 0; i < argAmount; i++)
         {
             GameObject newGameObject = Instantiate(argGameObject, parent.transform);
+            newGameObject.name = "PL_" + newGameObject.name;
             newGameObject.SetActive(false);
             queue.Enqueue(newGameObject);
         }
     }
 
-    public GameObject GetObjectFromPool(GameObject argGameObject, bool argIgnoreAllActiveCheck = false)
+    public GameObject GetObjectFromPool(GameObject argGameObject, bool argIgnoreAllActiveCheck = false, bool argActivateGameObject = true, bool argShouldPeek = false)
     {
         if (null == argGameObject)
         {
@@ -69,10 +70,18 @@ public class System_Spawn : MonoBehaviour
                 Debug.LogWarning("All objects in queue are active, given key=" + argGameObject.name);
             }
 
-            GameObject poolObject = m_objectPool[argGameObject.name].Dequeue().gameObject;
-            m_objectPool[argGameObject.name].Enqueue(poolObject);
+            GameObject poolObject;
+            if (argShouldPeek)
+            {
+                poolObject = m_objectPool[argGameObject.name].Peek().gameObject;
+            }
+            else
+            {
+                poolObject = m_objectPool[argGameObject.name].Dequeue().gameObject;
+                m_objectPool[argGameObject.name].Enqueue(poolObject);                
+            }
 
-            poolObject.SetActive(true);
+            poolObject.SetActive(argActivateGameObject);
 
             ISpawn spawnInterface = poolObject.GetComponent<ISpawn>();
 
@@ -95,5 +104,23 @@ public class System_Spawn : MonoBehaviour
 
         m_setupObjectPoolIDs.Add(argSetupPoolID);
         return true;
+    }
+    public void DisableAllSpawns()
+    {
+        DisableChildren(objectPoolContainer.transform);
+
+        Singleton_Game.m_instance.GetPlayer(0).SetActive(false);
+        Singleton_Game.m_instance.GetPlayer(1).SetActive(false);
+    }
+
+    private void DisableChildren(Transform argParentTransform)
+    {
+        foreach(Transform childTransform in argParentTransform)
+        {
+            if(childTransform.gameObject.name.Contains("PL_"))
+                childTransform.gameObject.SetActive(false);
+
+            DisableChildren(childTransform);
+        }
     }
 }

@@ -71,19 +71,19 @@ public class RedArremerAI : MonoBehaviour, IDamageable
             RNG = Random.Range(2, 100);
             RNGtimer += 3;
             FindPlayer = true;
-        } 
+        }
 
-        if (!InAir && !MoveLeft && !MoveRight && !FlyUp && !FlyDown) 
+        if (!InAir && !MoveLeft && !MoveRight && !FlyUp && !FlyDown)
         {
             if (RNG <= 25 && RNG > 0)
             {
                 MoveLeft = true;
             }
-           else if (RNG <= 50 && RNG >25 )
+            else if (RNG <= 50 && RNG > 25)
             {
                 MoveRight = true;
             }
-           else if (RNG <= 100 && RNG>50)
+            else if (RNG <= 100 && RNG > 50)
             {
                 FlyUp = true;
             }
@@ -93,7 +93,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable
 
         else if (InAir && !FlyUp && !FlyDown && !Swoop && !AntiSwoopLeft && !AntiSwoopRight)
         {
-            if (RNG <=70 && RNG > 30)
+            if (RNG <= 70 && RNG > 30)
             {
                 FlyDown = true;
             }
@@ -123,7 +123,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable
                 {
                     EnemyX += speed;
                 }
-                else 
+                else
                     MoveRight = false;
             }
 
@@ -154,15 +154,15 @@ public class RedArremerAI : MonoBehaviour, IDamageable
             {
                 if (PlayerX < EnemyX && PlayerY < EnemyY)
                 {
-                    EnemyX -= DistanceX/40;
-                    EnemyY -= DistanceY/40;
+                    EnemyX -= DistanceX / 40;
+                    EnemyY -= DistanceY / 40;
                     if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
                     {
                         AntiSwoopLeft = true;
                         Swoop = false;
                     }
                 }
-              if (PlayerX > EnemyX && PlayerY < EnemyY)
+                if (PlayerX > EnemyX && PlayerY < EnemyY)
                 {
                     EnemyX -= DistanceX / 40;
                     EnemyY -= DistanceY / 40;
@@ -200,7 +200,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable
             {
                 if (PlayerX + 8 > EnemyX)
                 {
-                    EnemyX += speed * 4; 
+                    EnemyX += speed * 4;
                 }
                 else
                 {
@@ -217,7 +217,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable
             }
             if (EnemyX > PlayerX + 8.1f)
             {
-                EnemyX -= speed*5;
+                EnemyX -= speed * 5;
                 // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
             }
             else if (EnemyX < PlayerX - 8.1f)

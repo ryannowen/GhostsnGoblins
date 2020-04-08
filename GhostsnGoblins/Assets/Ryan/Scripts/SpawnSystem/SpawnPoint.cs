@@ -9,7 +9,6 @@ public class SpawnPoint : MonoBehaviour
     [Space]
     [SerializeField] private bool m_checkPlayerDistance = false;
     [SerializeField] private float m_playerMaxDistance = 10;
-    [SerializeField] private GameObject m_playerPrefab = null;
     [Space]
     [SerializeField] private bool m_canSpawnOnScreen = true;
     private bool m_isOnScreen = false;
@@ -17,11 +16,15 @@ public class SpawnPoint : MonoBehaviour
     private GameObject m_spawnedObject = null;
     private WaitForSeconds m_spawnWait;
 
-    private GameObject m_player;
+    private GameObject m_player1;
+    private GameObject m_player2;
+
 
     private void Start()
     {
-        m_player = System_Spawn.instance.GetObjectFromPool(m_playerPrefab, true);
+        m_player1 = Singleton_Game.m_instance.GetPlayer(0);
+        m_player2 = Singleton_Game.m_instance.GetPlayer(1);
+
         m_spawnWait = new WaitForSeconds(m_spawnDelaySeconds);
     }
 
@@ -50,10 +53,20 @@ public class SpawnPoint : MonoBehaviour
 
         if (m_checkPlayerDistance)
         {
-            if (null == m_player)
+            if (null == m_player1)
                 Debug.LogError("Player is null, cannot check distance");
             else
-                inPlayerRange = Vector2.Distance(m_player.transform.position, transform.position) <= m_playerMaxDistance;
+            {
+                float distance = Vector2.Distance(m_player1.transform.position, transform.position);
+
+                float player2Distance = 0;
+                if (null != m_player2)
+                    player2Distance = Vector2.Distance(m_player2.transform.position, transform.position);
+
+                distance = (distance >= player2Distance) ? player2Distance : distance;
+
+                inPlayerRange = distance <= m_playerMaxDistance;
+            }
         }
 
         return (m_canSpawnOnScreen ? true : m_isOnScreen) && (null == m_spawnedObject || !m_waitForSpawnedInactive) && inPlayerRange;
