@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8566729708145164304}
   - component: {fileID: 8566729708145164307}
   - component: {fileID: 8566729708145164308}
+  - component: {fileID: -4164755308741840506}
   m_Layer: 16
   m_Name: Tower
   m_TagString: Untagged
@@ -158,3 +159,17 @@ MonoBehaviour:
   Bullet: {fileID: 2288533703519710632, guid: 77620011d7e14634aabfb85386de7996, type: 3}
   Alive: 1
   Shoot: 0
+--- !u!114 &-4164755308741840506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8566729708145164306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c98f655eea8dd5408b36a0c92a3ec39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Pickup: {fileID: 2812206897624619931, guid: 44ee7d8eb5d9d1c47bfebad210615eb9,
+    type: 3}

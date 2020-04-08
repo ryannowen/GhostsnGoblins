@@ -220,7 +220,7 @@ public class DragonAI : MonoBehaviour, IDamageable
 
     public void KillEntity()
     {
-
+        Angered = true;
         alive = false;
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(2000, EnemyPos);

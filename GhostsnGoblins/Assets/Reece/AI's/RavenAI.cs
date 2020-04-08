@@ -134,9 +134,24 @@ public class RavenAI : MonoBehaviour, IDamageable
 
     public void KillEntity()
     {
-
-        alive = false;
         m_SpawnPickup.CreatePickup();
+        alive = false;
         Singleton_Game.m_instance.AddScore(100, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.layer == 18)
+        {
+            if (col.transform.parent.gameObject.GetComponent<IDamageable>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<IDamageable>().TakeDamage(1);
+            }
+
+            if (col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>() != null)
+            {
+                col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1745494925527610863}
   - component: {fileID: 9133371381008278196}
   - component: {fileID: 6097680794892791118}
+  - component: {fileID: 1350219323466524589}
   m_Layer: 16
   m_Name: Satan
   m_TagString: Untagged
@@ -142,3 +143,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1350219323466524589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3111163907792383847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c98f655eea8dd5408b36a0c92a3ec39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Pickup: {fileID: 2812206897624619931, guid: 44ee7d8eb5d9d1c47bfebad210615eb9,
+    type: 3}

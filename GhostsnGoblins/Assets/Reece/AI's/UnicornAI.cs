@@ -195,7 +195,7 @@ public class UnicornAI : MonoBehaviour, IDamageable
 
     public void TakeDamage(int amount)
     {
-
+        Angered = true;
         HP -= amount;
         Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
     }
