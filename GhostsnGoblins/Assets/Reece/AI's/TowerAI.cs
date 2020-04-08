@@ -7,6 +7,7 @@ public class TowerAI : MonoBehaviour, IDamageable
 
     [SerializeField] private GameObject Bullet = null;
 
+    SpawnPickup m_SpawnPickup = null;
     public bool Alive = true;
     private GameObject Enemy = null;
     private GameObject Player = null;
@@ -34,7 +35,7 @@ public class TowerAI : MonoBehaviour, IDamageable
         fireProj = this.gameObject.GetComponent<FireProjectile>();
         fireProj.SetProjectile(Bullet);
 
-
+        m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
         Enemy = this.gameObject;
 
@@ -103,6 +104,8 @@ public class TowerAI : MonoBehaviour, IDamageable
     {
 
         Alive = false;
+        m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(100);
 
     }
 

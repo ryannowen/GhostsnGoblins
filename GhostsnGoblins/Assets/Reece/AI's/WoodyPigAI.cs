@@ -293,6 +293,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
 
         alive = false;
         m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(100);
 
     }
 

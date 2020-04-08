@@ -8,6 +8,7 @@ public class DragonAI : MonoBehaviour, IDamageable
     [SerializeField] private GameObject Bullet = null;
     public bool alive = true;
 
+    SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy = null;
     private GameObject Player = null;
     private int HP = 10;
@@ -47,6 +48,7 @@ public class DragonAI : MonoBehaviour, IDamageable
 
         rb = this.gameObject.GetComponent<Rigidbody2D>();
 
+        m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
         Enemy = this.gameObject;
     }
@@ -220,7 +222,8 @@ public class DragonAI : MonoBehaviour, IDamageable
     {
 
         alive = false;
-
+        m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(2000);
     }
 
     void OnTriggerEnter2D(Collider2D col)

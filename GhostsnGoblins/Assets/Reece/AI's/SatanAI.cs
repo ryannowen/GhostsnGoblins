@@ -6,6 +6,7 @@ public class SatanAI : MonoBehaviour, IDamageable
 {
     public bool alive = true;
 
+    SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
     private int RNG;
@@ -31,6 +32,8 @@ public class SatanAI : MonoBehaviour, IDamageable
     {
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
+
+        m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
         Enemy = this.gameObject;
     }
@@ -176,7 +179,8 @@ public class SatanAI : MonoBehaviour, IDamageable
     {
 
         alive = false;
-
+        m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(3000);
     }
 
     void OnTriggerEnter2D(Collider2D col)

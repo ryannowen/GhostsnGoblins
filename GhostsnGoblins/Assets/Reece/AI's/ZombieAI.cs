@@ -193,6 +193,7 @@ public class ZombieAI : MonoBehaviour, IDamageable
 
         Alive = false;
         m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(200);
 
     }
 

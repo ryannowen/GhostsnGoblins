@@ -9,6 +9,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
 
     public bool Alive = true;
 
+    SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy = null;
     private GameObject Player = null;
     private int HP = 1;
@@ -35,7 +36,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
         fireProj = this.gameObject.GetComponent<FireProjectile>();
         fireProj.SetProjectile(Bullet);
 
-
+        m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
         Enemy = this.gameObject;
 
@@ -105,6 +106,8 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
     {
 
         Alive = false;
+        m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(100);
 
     }
 

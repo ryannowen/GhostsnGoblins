@@ -247,7 +247,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable
 
         alive = false;
         m_SpawnPickup.CreatePickup();
-
+        Singleton_Game.m_instance.AddScore(1000);
     }
 
     void OnTriggerEnter2D(Collider2D col)

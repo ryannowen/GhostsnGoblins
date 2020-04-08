@@ -6,6 +6,7 @@ public class RavenAI : MonoBehaviour, IDamageable
 {
     public bool alive = true;
 
+    SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
     private int HP = 1;
@@ -33,6 +34,8 @@ public class RavenAI : MonoBehaviour, IDamageable
             Player = GameObject.FindGameObjectWithTag("Player");
 
         rb = this.gameObject.GetComponent<Rigidbody2D>();
+
+        m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
         Enemy = this.gameObject;
     }
@@ -133,6 +136,7 @@ public class RavenAI : MonoBehaviour, IDamageable
     {
 
         alive = false;
-
+        m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(100);
     }
 }

@@ -7,6 +7,7 @@ public class UnicornAI : MonoBehaviour, IDamageable
     [SerializeField] private GameObject Bullet = null;
     public bool alive = true;
 
+    SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
     private int RNG;
@@ -41,6 +42,8 @@ public class UnicornAI : MonoBehaviour, IDamageable
 
         fireProj = this.gameObject.GetComponent<FireProjectile>();
         fireProj.SetProjectile(Bullet);
+
+        m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
         Enemy = this.gameObject;
     }
@@ -201,7 +204,8 @@ public class UnicornAI : MonoBehaviour, IDamageable
     {
 
         alive = false;
-
+        m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(2000);
     }
 
     void OnTriggerEnter2D(Collider2D col)

@@ -193,9 +193,10 @@ public void KillEntity()
 {
 
     Alive = false;
-    m_SpawnPickup.CreatePickup();
+        m_SpawnPickup.CreatePickup();
+        Singleton_Game.m_instance.AddScore(100);
 
-}
+    }
 
 void ChangeSprite()
     {
