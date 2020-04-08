@@ -13,8 +13,17 @@ public class mainPlatformScript : MonoBehaviour {
     [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject in the platform!")]
     [SerializeField] private float timer = 0f;
 
+    private BoxCollider2D triggerCollider;
+
     // Start is called before the first frame update
     void Start() {
+        triggerCollider = gameObject.GetComponent<BoxCollider2D>();
+        if (triggerCollider == null) {
+            print("Couldn't find a collider attached to the main platform. Please attach one!");
+            Destroy(gameObject);
+            return;
+        }
+
         if (childCol == null) {
             childCol = gameObject.transform.GetChild(0).gameObject.GetComponent<BoxCollider2D>();
         }
@@ -33,7 +42,7 @@ public class mainPlatformScript : MonoBehaviour {
         }   
     }
 
-    void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D col) {
         if (timer > solidTime) {
             return;
         } else {
@@ -41,7 +50,7 @@ public class mainPlatformScript : MonoBehaviour {
         }
     }
 
-    void OnTriggerStay2D(Collider2D collision) {
+    private void OnTriggerStay2D(Collider2D col) {
         if (timer > solidTime) {
             return;
         } else {
@@ -49,7 +58,7 @@ public class mainPlatformScript : MonoBehaviour {
         }
     }
 
-    void OnTriggerExit2D(Collider2D collision) {
+    private void OnTriggerExit2D(Collider2D col) {
         if (timer > solidTime) {
             return;
         } else {
@@ -63,5 +72,11 @@ public class mainPlatformScript : MonoBehaviour {
 
     public float getTimer() {
         return timer;
+    }
+
+    public void toggleTriggerCollider(bool triggerColBool) {
+        if (triggerCollider != null) {
+            triggerCollider.enabled = triggerColBool;
+        }
     }
 }

@@ -4,196 +4,213 @@ using UnityEngine;
 
 public class tempMovingPlatformScript : MonoBehaviour {
 
-    enum p_type { loop, reverseLoop, touchOnce, touchReverse };
+	public enum platformType { looping, triggered }
 
-    [Tooltip("Does the platform function entirely? If you want the platform to move, make sure this is enabled.")]
-    [SerializeField] private bool enablePlatform = false;
+	[Tooltip("Place empty GameObjects in here, the platform will move to the GameObjects' position. Insert each GameObject in the order you wish the platform to traverse.")]
+	[SerializeField] private GameObject[] positionArray = null;
 
-    [Tooltip("Collection of points (as a GameObject) that the platform travels. Adjust size depending on how many points. The platform will start at the first point supplied.")]
-    [SerializeField] private GameObject[] platformPoints = { };
+	[Tooltip("Platform type, looping or triggered.")]
+	[SerializeField] platformType pType = platformType.looping;
 
-    [Tooltip("Loop - Traverses the points repeatedly. Reverse Loop - Traverses the points and reverses repeatedly. Touch Once - Traverses the points once. Touch Reverse - Traverses the points once, then reverses.")]
-    [SerializeField] private p_type platformType = p_type.touchOnce;
+	[Tooltip("The amount of time it takes to move a platform to a point in the position array.")]
+	[SerializeField] private float platformMoveDelay = 1;
 
-    [Tooltip("Time to reach the next listed GameObject in the list (in seconds).")]
-    [SerializeField] private float timeToReachPoint = 1;
+	[Tooltip("Time (in seconds) it takes for the platform to move to a certain position.")]
+	[SerializeField] private float platformDestinationTime = 3;
 
-    [Tooltip("A delay before the platform moves to the next point (in seconds).")]
-    [SerializeField] private float moveDelay = 0.2f;
+	private Transform platformTransform = null;
+	private Vector3 vel;
 
-    private bool canMove;
-    private bool isReversing;
-    private bool oneTimeReverse;
-    private Vector3 originalPosition;
+	private int startPNum = 0;
+	private int currentPNum = -1;
+	private int endPNum = 0;
 
-    private int platformCount;
-    private Vector3 vel;
+	private bool fallingMode = false;
+	private bool hasTriggered = false;
+	private bool currentlyMoving = false;
+	private bool switchMovementDir = false;
+	private bool initialTriggerMovement = true;
 
-    private Transform platformTransform;
+	private void Start() {
+		platformMoveDelay = Mathf.Abs(platformMoveDelay);
+		platformDestinationTime = Mathf.Abs(platformDestinationTime);
 
-    // Start is called before the first frame update
-    void Start() {
-        if (!enablePlatform) {
-            return;
-        }
+		if (positionArray == null) {
+			print("No GameObject found in the position array, please populate the array.");
+			gameObject.GetComponent<tempMovingPlatformScript>().enabled = false;
+			return;
+		}
 
-        if (transform.parent != null) {
-            platformTransform = transform.parent;
-        }
+		if (positionArray.Length > 0) {
+			foreach (GameObject posObj in positionArray) {
+				posObj.transform.position = new Vector3(posObj.transform.position.x, posObj.transform.position.y, 0);
+			}
+		}
 
-        platformTransform.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+		platformTransform = transform.parent;
+		if (platformTransform == null) {
+			print("Couldn't find a parent transform for the platform to function with!");
+			gameObject.GetComponent<tempMovingPlatformScript>().enabled = false;
+			return;
+		}
 
-        if (platformPoints.Length == 0) {
-            print("No points found for the platform to traverse, please supply GameObjects as points.");
+		platformTransform.position = positionArray[startPNum].transform.position;
+		endPNum = (positionArray.Length - 1);
 
-            enablePlatform = false;
-            this.enabled = false;
-        } else {
-            oneTimeReverse = false;
-            platformCount = 0;
-            platformTransform.position = new Vector3(Mathf.Round(platformPoints[0].transform.position.x), Mathf.Round(platformPoints[0].transform.position.y), 0);
-            isReversing = false;
-            canMove = false;
+		if (pType == platformType.looping) {
+			StartCoroutine(moveP());
+		}
+	}
 
-            if (platformType == p_type.loop || platformType == p_type.reverseLoop) {
-                if (enablePlatform) {
-                    StartCoroutine(enableMoving(0));
-                }
-            }
-        }
-    }
+	private void OnCollisionEnter2D(Collision2D col) {
+		if (col.gameObject.CompareTag("Player")) {
+			if (!fallingMode) {
+				col.gameObject.transform.parent = platformTransform;
+			}
 
-    void OnCollisionEnter2D(Collision2D col) {
-        if (col.gameObject.tag == "Player") {
-            if (platformType == p_type.touchOnce || platformType == p_type.touchReverse) {
-                StartCoroutine(enableMoving(moveDelay));
-            }
+			if (pType == platformType.triggered) {
+				if (!hasTriggered && !fallingMode) {
+					currentPNum++;
+					hasTriggered = true;
+					StartCoroutine(moveP());
+				}
+			}
+		}
+	}
 
-            col.gameObject.transform.parent = platformTransform;
-        }
-    }
+	private void OnCollisionExit2D(Collision2D col) {
+		if (col.gameObject.CompareTag("Player")) {
+			col.gameObject.transform.parent = null;
+		}
+	}
 
-    void OnCollisionExit2D(Collision2D col) {
-        if (col.gameObject.tag == "Player") {
-            col.gameObject.transform.parent = null;
-            oneTimeReverse = false;
-        }
-    }
+	private void FixedUpdate() {
+		switch (pType) {
+			case platformType.looping:
+				if (!fallingMode) {
+					if (currentlyMoving) {
+						if (!checkPState(platformTransform.position)) {
+							platformTransform.position = Vector3.SmoothDamp(platformTransform.position, positionArray[currentPNum].transform.position, ref vel, platformDestinationTime);
+						} else {
+							currentlyMoving = false;
+							StartCoroutine(moveP());
+						}
+					} else {
+						return;
+					}
+				} else {
+					return;
+				}
 
-    void FixedUpdate() {
-        if (canMove && enablePlatform) {
-            switch (platformType) {
-                case p_type.touchOnce:
-                    if (platformCount == platformPoints.Length) {
-                        platformCount = platformPoints.Length;
-                        canMove = false;
-                        break;
-                    }
+				break;
 
-                    platformTransform.position = Vector3.SmoothDamp(platformTransform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint);
+			case platformType.triggered:
+				if (!fallingMode) {
+					if (hasTriggered) {
+						if (currentlyMoving) {
+							if (!checkPState(platformTransform.position)) {
+								platformTransform.position = Vector3.SmoothDamp(platformTransform.position, positionArray[currentPNum].transform.position, ref vel, platformDestinationTime);
+							} else {
+								currentlyMoving = false;
+								StartCoroutine(moveP());
+							}
+						} else {
+							return;
+						}
+					} else {
+						return;
+					}
+				} else {
+					return;
+				}
 
-                    if (Vector3.Distance(platformTransform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0)) < 0.2f) {
-                        canMove = false;
-                        StartCoroutine(platformOnce(moveDelay));
-                    }
+				break;
+			default:
+				return;
+		}
+	}
 
-                    break;
+	public bool getFallingMode() {
+		return fallingMode;
+	}
 
-                case p_type.touchReverse:
-                    platformTransform.position = Vector3.SmoothDamp(platformTransform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint);
+	public void setFallingMode(bool fallingBool) {
+		fallingMode = fallingBool;
+	}
 
-                    if (Vector3.Distance(transform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0)) < 0.2f) {
-                        canMove = false;
-                        StartCoroutine(platformReverse(moveDelay));
-                    }
+	public void setPlatformNumDefault() {
+		currentPNum = 0;
+		platformTransform.position = positionArray[startPNum].transform.position;
+	}
 
-                    break;
+	public platformType getPlatformType() {
+		return pType;
+	}
 
-                case p_type.reverseLoop:
-                    platformTransform.position = Vector3.SmoothDamp(platformTransform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint);
+	private bool checkPState(Vector3 platformPos) {
+		if (Vector3.Distance(platformPos, positionArray[currentPNum].transform.position) <= 0.05f) {
+			return true;
+		}
 
-                    if (Vector3.Distance(platformTransform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0)) < 0.2f) {
-                        canMove = false;
-                        StartCoroutine(platformReverseLoop(moveDelay));
-                    }
+		return false;
+	}
 
-                    break;
+	private IEnumerator moveP() {
+		yield return new WaitForSeconds(platformMoveDelay);
 
-                case p_type.loop:
-                    platformTransform.position = Vector3.SmoothDamp(platformTransform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0), ref vel, timeToReachPoint);
+		if (!fallingMode) {
+			switch (pType) {
+				case platformType.looping:
+					if (currentPNum <= startPNum) {
+						currentPNum = startPNum;
+						switchMovementDir = false;
+					}
 
-                    if (Vector3.Distance(platformTransform.position, new Vector3(platformPoints[platformCount].transform.position.x, platformPoints[platformCount].transform.position.y, 0)) < 0.2f) {
-                        canMove = false;
-                        StartCoroutine(platformLoop(moveDelay));
-                    }
+					if (currentPNum >= endPNum) {
+						currentPNum = endPNum;
+						switchMovementDir = true;
+					}
 
-                    break;
-            }
-        }
-    }
+					if (!switchMovementDir) {
+						currentPNum++;
+					} else {
+						currentPNum--;
+					}
 
-    private IEnumerator platformOnce(float wTime) {
-        yield return new WaitForSeconds(wTime);
+					currentlyMoving = true;
+					break;
 
-        platformCount++;
-        canMove = true;
-    }
+				case platformType.triggered:
+					if (currentPNum <= startPNum && initialTriggerMovement) {
+						currentPNum = startPNum;
+						switchMovementDir = false;
+						initialTriggerMovement = false;
+					} else if (currentPNum <= startPNum && !initialTriggerMovement) {
+						currentPNum = -1;
+						switchMovementDir = false;
+						initialTriggerMovement = true;
+						hasTriggered = false;
+						currentlyMoving = false;
+						break;
+					}
 
-    private IEnumerator platformReverse(float wTime) {
-        yield return new WaitForSeconds(wTime);
+					if (currentPNum >= endPNum) {
+						currentPNum = endPNum;
+						switchMovementDir = true;
+					}
 
-        if (platformCount < (platformPoints.Length - 1) && !isReversing && !oneTimeReverse) {
-            platformCount++;
-        } else if (platformCount > 0 && isReversing) {
-            platformCount--;
-            oneTimeReverse = true;
-        }
+					if (!switchMovementDir) {
+						currentPNum++;
+					} else {
+						currentPNum--;
+					}
 
-        if (!isReversing && platformCount == 0) {
-            canMove = false;
-        } else {
-            canMove = true;
-        }
+					currentlyMoving = true;
+					break;
 
-        if (platformCount == (platformPoints.Length - 1)) {
-            isReversing = true;
-        } else if (platformCount == 0) {
-            isReversing = false;
-        }
-    }
-
-    private IEnumerator platformLoop(float wTime) {
-        yield return new WaitForSeconds(wTime);
-        platformCount++;
-
-        if (platformCount == platformPoints.Length) {
-            platformCount = 0;
-        }
-
-        canMove = true;
-    }
-
-    private IEnumerator platformReverseLoop(float wTime) {
-        yield return new WaitForSeconds(wTime);
-
-        if (platformCount < (platformPoints.Length - 1) && !isReversing) {
-            platformCount++;
-        } else if (platformCount > 0 && isReversing) {
-            platformCount--;
-        }
-
-        if (platformCount == (platformPoints.Length - 1)) {
-            isReversing = true;
-        } else if (platformCount == 0) {
-            isReversing = false;
-        }
-
-        canMove = true;
-    }
-
-    private IEnumerator enableMoving(float wTime) {
-        yield return new WaitForSeconds(wTime);
-
-        canMove = true;
-    }
+				default:
+					break;
+			}
+		}
+	}
 }
