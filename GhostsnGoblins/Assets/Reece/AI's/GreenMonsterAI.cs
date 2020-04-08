@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GreenMonsterAI : MonoBehaviour, IDamageable
+public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
 {
 
     [SerializeField] private GameObject Bullet = null;
@@ -18,7 +18,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
     private float PlayerY;
     private float EnemyX;
     private float EnemyY;
-    private bool angered = false;
+    private bool Angered = false;
     private bool FindPlayer;
     public bool Shoot;
 
@@ -46,7 +46,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        if (!angered)
+        if (!Angered)
         {
             PlayerX = Player.gameObject.transform.position.x;
             PlayerY = Player.gameObject.transform.position.y;
@@ -62,9 +62,9 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
             Enemy.SetActive(true);
             if (PlayerX + 10 > EnemyX && PlayerX + 10 > EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
-                angered = true;
+                Angered = true;
             }
-            if (angered)
+            if (Angered)
             {
                 if (Time.time > time)
                 {
@@ -125,5 +125,15 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable
                 col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
             }
         }
+    }
+    public void OnSpawn()
+    {
+        HP = 1;
+        Alive = true;
+        Angered = false;
+    }
+
+    public void OnDeSpawn()
+    {
     }
 }

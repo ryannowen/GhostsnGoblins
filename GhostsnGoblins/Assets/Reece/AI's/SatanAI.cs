@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SatanAI : MonoBehaviour, IDamageable
+public class SatanAI : MonoBehaviour, IDamageable, ISpawn
 {
-    public bool alive = true;
+    public bool Alive = true;
 
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
@@ -78,7 +78,7 @@ public class SatanAI : MonoBehaviour, IDamageable
             RNG = 0;
         }
 
-        if (Angered && alive)
+        if (Angered && Alive)
         {
 
             if (Swoop)
@@ -163,7 +163,7 @@ public class SatanAI : MonoBehaviour, IDamageable
         if (HP <= 0)
             KillEntity();
 
-        if (!alive)
+        if (!Alive)
             Enemy.SetActive(false);
     }
 
@@ -178,7 +178,7 @@ public class SatanAI : MonoBehaviour, IDamageable
     public void KillEntity()
     {
 
-        alive = false;
+        Alive = false;
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(3000, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
     }
@@ -197,5 +197,17 @@ public class SatanAI : MonoBehaviour, IDamageable
                 col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
             }
         }
+    }
+
+    public void OnSpawn()
+    {
+        HP = 10;
+        Alive = true;
+        Angered = false;
+        FindPlayer = true;
+    }
+
+    public void OnDeSpawn()
+    {
     }
 }

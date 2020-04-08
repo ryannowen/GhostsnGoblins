@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieAI : MonoBehaviour, IDamageable
+public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
 {
     public bool Alive = true;
     public LayerMask OnGroundCheckLayerMask;
@@ -212,5 +212,17 @@ public class ZombieAI : MonoBehaviour, IDamageable
             }
         }
     }
+    public void OnSpawn()
+    {
+        HP = 1;
+        Alive = true;
+        Angered = false;
+        OneTime = true;
+    }
+
+    public void OnDeSpawn()
+    {
+    }
+
 }
 

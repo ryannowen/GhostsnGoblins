@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WoodyPigAI : MonoBehaviour, IDamageable
+public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
 {
 
     [SerializeField] private GameObject Bullet = null;
-    public bool alive = true;
+    public bool Alive = true;
 
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy = null;
@@ -75,7 +75,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
             }
         }
 
-        if (alive && Angered)
+        if (Alive && Angered)
         {
             EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
             PlayerY = Player.gameObject.transform.position.y;
@@ -270,14 +270,14 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
             //After how long the DeathTimer is the zombie will stop moving.
             if (Time.time > Deathtimer)
             {
-                alive = false;
+                Alive = false;
             }
         }
 
         if (HP <= 0)
             KillEntity();
 
-        if (!alive)
+        if (!Alive)
             Enemy.SetActive(false);
     }
 
@@ -291,7 +291,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
     public void KillEntity()
     {
 
-        alive = false;
+        Alive = false;
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(100, EnemyPos);
 
@@ -311,6 +311,19 @@ public class WoodyPigAI : MonoBehaviour, IDamageable
                 col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
             }
         }
+    }
+    public void OnSpawn()
+    {
+        HP = 1;
+        Alive = true;
+        Angered = false;
+        OneTime = true;
+        setTarget = true;
+        playerLevelReached = false;
+    }
+
+    public void OnDeSpawn()
+    {
     }
 }
 

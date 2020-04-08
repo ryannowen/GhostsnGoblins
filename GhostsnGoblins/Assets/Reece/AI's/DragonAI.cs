@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragonAI : MonoBehaviour, IDamageable
+public class DragonAI : MonoBehaviour, IDamageable, ISpawn
 {
 
     [SerializeField] private GameObject Bullet = null;
-    public bool alive = true;
+    public bool Alive = true;
 
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy = null;
@@ -77,7 +77,7 @@ public class DragonAI : MonoBehaviour, IDamageable
         }
 
 
-        if (alive && Angered)
+        if (Alive && Angered)
         {
             EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
             PlayerPos = new Vector2(Player.gameObject.transform.position.x, Player.gameObject.transform.position.y);
@@ -207,7 +207,7 @@ public class DragonAI : MonoBehaviour, IDamageable
         if (HP <= 0)
             KillEntity();
 
-        if (!alive)
+        if (!Alive)
             Enemy.SetActive(false);
     }
 
@@ -221,7 +221,7 @@ public class DragonAI : MonoBehaviour, IDamageable
     public void KillEntity()
     {
         Angered = true;
-        alive = false;
+        Alive = false;
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(2000, EnemyPos);
     }
@@ -240,6 +240,17 @@ public class DragonAI : MonoBehaviour, IDamageable
                 col.transform.parent.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, 30);
             }
         }
+    }
+    public void OnSpawn()
+    {
+        HP = 10;
+        Alive = true;
+        Angered = false;
+        OneTime = true;
+    }
+
+    public void OnDeSpawn()
+    {
     }
 }
 
