@@ -95,7 +95,7 @@ public class CameraController : MonoBehaviour
             }
         }
         // Only player 1 exisits
-        if (player1 != null)
+        if (player1 != null && player2 == null)
             transform.position = new Vector3(player1.transform.position.x, player1.transform.position.y, transform.position.z);
 
     }
