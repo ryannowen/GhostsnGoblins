@@ -25,6 +25,7 @@ public class LevelDoor : MonoBehaviour
             {
                 Singleton_Sound.m_instance.PlayAudioClip("LevelFinished");
                 System_Spawn.instance.DisableAllSpawns();
+                playerC.SetHasKey(false);
 
                 if ("" == m_requiredEquippedItemName) // No equipped item required
                 {

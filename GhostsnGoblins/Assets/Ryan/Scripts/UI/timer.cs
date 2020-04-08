@@ -28,15 +28,17 @@ public class timer : MonoBehaviour
         timeTxt.text = ((int)remainingTime).ToString();
         if (remainingTime < 0)
         {
-            timeTxt.text = ("0");
+            timeTxt.text = "0";
 
             if (sceneName == "death") // Loads Main Menu
             {
-                SceneManager.LoadScene(0);
+                Singleton_Game.m_instance.ResetGame();
+                SceneManager.LoadScene("MenuScene");
             }
             else // Loads Death Scene
             {
-                SceneManager.LoadScene(1);
+                Singleton_Game.m_instance.SetPreviousScene(sceneName);
+                SceneManager.LoadScene("death");
             }
 
             isCountingDown = false;

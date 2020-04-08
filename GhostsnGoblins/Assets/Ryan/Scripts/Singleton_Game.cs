@@ -19,6 +19,7 @@ public class Singleton_Game : MonoBehaviour
     [SerializeField] private int m_insertedMoney = 0;
     [SerializeField] private int m_requiredPenceToStartGame = 100;
     [SerializeField] private int m_requiredPenceToSpawnPlayer2 = 100;
+    [SerializeField] private int m_requiredPenceToBuyLife = 100;
     [SerializeField] private bool m_canStartGame = false;
     [SerializeField] private bool m_spawnedPlayer2 = false;
     [Space]
@@ -31,9 +32,9 @@ public class Singleton_Game : MonoBehaviour
     [Space]
     [SerializeField] private Vector2 m_lastCheckPoint = new Vector2(0, 0);
     [SerializeField] private bool m_showLevelDoorItem = false;
+    [SerializeField] private string m_previousLevelName = "Level1_heaven";
 
     private Dictionary<int, GameObject> m_registeredPlayers = new Dictionary<int, GameObject>();
-
     private void Awake()
     {
         if (null == m_instance && this != m_instance)
@@ -95,19 +96,30 @@ public class Singleton_Game : MonoBehaviour
 
     public void InsertMoney(int argMoney)
     {
+        Scene currentScene = SceneManager.GetActiveScene();
         m_insertedMoney += argMoney;
 
-        if (0 == SceneManager.GetActiveScene().buildIndex) // is mainmennu
+        if ("MenuScene" == currentScene.name) // is mainmennu
         {
-            if (m_requiredPenceToStartGame <= m_insertedMoney) // Start game button
+            if (m_insertedMoney >= m_requiredPenceToStartGame) // Start game button
             {
                 m_canStartGame = true;
                 m_insertedMoney = 0;
             }
         }
+        else if("death" == currentScene.name) // is death scene
+        {
+            if(m_insertedMoney >= m_requiredPenceToBuyLife) // load previous scene
+            {
+                m_insertedMoney = 0;
+                m_playerLives += 1;
+                System_Spawn.instance.DisableAllSpawns();
+                LoadPreviousScene();
+            }
+        }
         else if(!m_spawnedPlayer2)
         {
-            if (m_requiredPenceToSpawnPlayer2 <= m_insertedMoney) // Spawn Player 2
+            if (m_insertedMoney >= m_requiredPenceToSpawnPlayer2) // Spawn Player 2
             {
                 SpawnPlayer2();
                 m_insertedMoney = 0;
@@ -154,7 +166,9 @@ public class Singleton_Game : MonoBehaviour
 
         if (m_playerLives <= 0)
         {
-            Debug.Log("RAN OUT OF LIVES");
+            System_Spawn.instance.DisableAllSpawns();
+            m_previousLevelName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene("death");
         }
     }
 
@@ -205,6 +219,8 @@ public class Singleton_Game : MonoBehaviour
         m_insertedMoney = 0;
         m_canStartGame = false;
         m_spawnedPlayer2 = false;
+        m_showLevelDoorItem = false;
+        m_previousLevelName = "Level1_heaven";
     }
 
     public void LoadGame()
@@ -245,5 +261,14 @@ public class Singleton_Game : MonoBehaviour
     public bool GetShowLevelDoorItem()
     {
         return m_showLevelDoorItem;
+    }
+
+    public void LoadPreviousScene()
+    {
+        SceneManager.LoadScene(m_previousLevelName);
+    }
+    public void SetPreviousScene(string argPreviousLevelName)
+    {
+        m_previousLevelName = argPreviousLevelName;
     }
 }
