@@ -223,7 +223,7 @@ public class DragonAI : MonoBehaviour, IDamageable
 
         alive = false;
         m_SpawnPickup.CreatePickup();
-        Singleton_Game.m_instance.AddScore(2000);
+        Singleton_Game.m_instance.AddScore(2000, EnemyPos);
     }
 
     void OnTriggerEnter2D(Collider2D col)

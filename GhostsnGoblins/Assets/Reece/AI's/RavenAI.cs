@@ -137,6 +137,6 @@ public class RavenAI : MonoBehaviour, IDamageable
 
         alive = false;
         m_SpawnPickup.CreatePickup();
-        Singleton_Game.m_instance.AddScore(100);
+        Singleton_Game.m_instance.AddScore(100, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
     }
 }
