@@ -211,15 +211,5 @@ public class ZombieAI : MonoBehaviour, IDamageable
             }
         }
     }
-
-    public void OnSpawn()
-    {
-        Angered = false;
-        OnGround = false;
-        Jump = false;
-        OneTime = true;
-        HP = 1;
-        Alive = false;
-    }
 }
 
