@@ -62,26 +62,38 @@ public class tempMovingPlatformScript : MonoBehaviour {
 		}
 	}
 
-	private void OnCollisionEnter2D(Collision2D col) {
-		if (col.gameObject.CompareTag("Player")) {
-			if (!fallingMode) {
-				col.gameObject.transform.parent = platformTransform;
-			}
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (enabled)
+        {
+            if (col.gameObject.CompareTag("Player"))
+            {
+                if (!fallingMode)
+                {
+                    col.gameObject.transform.parent = platformTransform;
+                }
 
-			if (pType == platformType.triggered) {
-				if (!hasTriggered && !fallingMode) {
-					currentPNum++;
-					hasTriggered = true;
-					StartCoroutine(moveP());
-				}
-			}
-		}
-	}
+                if (pType == platformType.triggered)
+                {
+                    if (!hasTriggered && !fallingMode)
+                    {
+                        currentPNum++;
+                        hasTriggered = true;
+                        StartCoroutine(moveP());
+                    }
+                }
+            }
+        }
+    }
 
 	private void OnCollisionExit2D(Collision2D col) {
-		if (col.gameObject.CompareTag("Player")) {
-			col.gameObject.transform.parent = null;
-		}
+        if (enabled)
+        {
+            if (col.gameObject.CompareTag("Player"))
+            {
+                col.gameObject.transform.parent = null;
+            }
+        }
 	}
 
 	private void FixedUpdate() {

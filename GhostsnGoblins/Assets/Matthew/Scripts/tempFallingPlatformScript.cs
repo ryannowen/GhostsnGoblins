@@ -32,7 +32,7 @@ public class tempFallingPlatformScript : MonoBehaviour {
 	private Vector3 initialPosition;
 	private bool isFalling = false;
 
-	private void Start() {
+	private void Awake() {
 		movingPlatformScript = gameObject.GetComponent<tempMovingPlatformScript>();
 		if (movingPlatformScript == null) {
 			print("Couldn't find the moving platform script on the child collider. Please attach one!");
@@ -69,16 +69,24 @@ public class tempFallingPlatformScript : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter2D(Collision2D col) {
-		if (col.gameObject.CompareTag("Player")) {
-			col.gameObject.transform.parent = platformTransform;
-			StartCoroutine(makePlatformFall());
-		}
+        if (enabled)
+        {
+            if (col.gameObject.CompareTag("Player"))
+            {
+                col.gameObject.transform.parent = platformTransform;
+                StartCoroutine(makePlatformFall());
+            }
+        }
 	}
 
 	private void OnCollisionExit2D(Collision2D col) {
-		if (col.gameObject.CompareTag("Player")) {
-			col.gameObject.transform.parent = null;
-		}
+        if (enabled)
+        {
+            if (col.gameObject.CompareTag("Player"))
+            {
+                col.gameObject.transform.parent = null;
+            }
+        }
 	}
 
 	private void FixedUpdate() {
@@ -96,7 +104,7 @@ public class tempFallingPlatformScript : MonoBehaviour {
 	private IEnumerator makePlatformFall() {
 		yield return new WaitForSeconds(fallDelay);
 
-		if (!movingPlatformScript.getFallingMode()) {
+        if (!movingPlatformScript.getFallingMode()) {
 			isFalling = true;
 			movingPlatformScript.setFallingMode(true);
 			platformScript.setTimer(99999999);

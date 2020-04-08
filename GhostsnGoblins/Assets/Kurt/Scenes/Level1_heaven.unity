@@ -973,10 +973,25 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2433192219583352756, guid: 2f59b96cd0764f644b004b24a4eb6075,
+        type: 3}
+      propertyPath: doesFade
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433192219583352756, guid: 2f59b96cd0764f644b004b24a4eb6075,
+        type: 3}
+      propertyPath: fadeSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433192219583352756, guid: 2f59b96cd0764f644b004b24a4eb6075,
+        type: 3}
+      propertyPath: fallDelay
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2433192219583352757, guid: 2f59b96cd0764f644b004b24a4eb6075,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5520133786379409509, guid: 2f59b96cd0764f644b004b24a4eb6075,
         type: 3}
@@ -3652,23 +3667,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2433192219583352756, guid: 2f59b96cd0764f644b004b24a4eb6075,
         type: 3}
-      propertyPath: shouldFall
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2433192219583352756, guid: 2f59b96cd0764f644b004b24a4eb6075,
-        type: 3}
-      propertyPath: enablePlatform
+      propertyPath: doesFade
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2433192219583352756, guid: 2f59b96cd0764f644b004b24a4eb6075,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
+      propertyPath: fadeSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433192219583352756, guid: 2f59b96cd0764f644b004b24a4eb6075,
+        type: 3}
+      propertyPath: fallDelay
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2433192219583352757, guid: 2f59b96cd0764f644b004b24a4eb6075,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f59b96cd0764f644b004b24a4eb6075, type: 3}
@@ -4769,6 +4784,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000,
         type: 0}
+    - target: {fileID: 5994802848540332662, guid: f2e264aef319b72409c5fe7d4a87cce2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8797055893074808123, guid: f2e264aef319b72409c5fe7d4a87cce2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4967,6 +4987,11 @@ PrefabInstance:
       propertyPath: m_objects.Array.data[0].dequeueObject
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 728479301884021639, guid: f2e264aef319b72409c5fe7d4a87cce2,
+        type: 3}
+      propertyPath: m_spawnOnLoad
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7934348026057928016, guid: f2e264aef319b72409c5fe7d4a87cce2,
         type: 3}
       propertyPath: m_Size.x
@@ -5028,10 +5053,25 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2433192219583352756, guid: 2f59b96cd0764f644b004b24a4eb6075,
+        type: 3}
+      propertyPath: doesFade
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433192219583352756, guid: 2f59b96cd0764f644b004b24a4eb6075,
+        type: 3}
+      propertyPath: fadeSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433192219583352756, guid: 2f59b96cd0764f644b004b24a4eb6075,
+        type: 3}
+      propertyPath: fallDelay
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2433192219583352757, guid: 2f59b96cd0764f644b004b24a4eb6075,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5520133786379409509, guid: 2f59b96cd0764f644b004b24a4eb6075,
         type: 3}
@@ -5097,6 +5137,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743059151727243078, guid: 2f59b96cd0764f644b004b24a4eb6075,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f59b96cd0764f644b004b24a4eb6075, type: 3}

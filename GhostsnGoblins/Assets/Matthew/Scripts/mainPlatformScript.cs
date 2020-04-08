@@ -16,7 +16,7 @@ public class mainPlatformScript : MonoBehaviour {
     private BoxCollider2D triggerCollider;
 
     // Start is called before the first frame update
-    void Start() {
+    void Awake() {
         triggerCollider = gameObject.GetComponent<BoxCollider2D>();
         if (triggerCollider == null) {
             print("Couldn't find a collider attached to the main platform. Please attach one!");
