@@ -17,8 +17,8 @@ public class Pickup : MonoBehaviour, ISpawn
         Shield, // Limited in range, destroys enemy projectiles, can also hit enemies
         Comb,
         Coin,
-        Key,
-        MoneyBag
+        MoneyBag,
+        Key
 
     }
 
@@ -84,6 +84,20 @@ public class Pickup : MonoBehaviour, ISpawn
 
         m_PickupType = newType;
         ChangeObjectSprite();
+        switch (m_PickupType)
+        {
+
+            case PickupType.CopperArmourPickup:
+            case PickupType.SilverArmourPickup:
+            case PickupType.GoldArmourPickup:
+                m_NeedsInteraction = true;
+                break;
+
+            default:
+                m_NeedsInteraction = false;
+                break;
+            
+        }
 
     }
 
@@ -131,17 +145,17 @@ public class Pickup : MonoBehaviour, ISpawn
                     break;
 
                 case PickupType.Coin:
-                    Singleton_Game.m_instance.AddScore(10);
+                    Singleton_Game.m_instance.AddScore(200, transform.position);
+                    Singleton_Sound.m_instance.PlayAudioClip("Pickup");
+                    break;
+
+                case PickupType.MoneyBag:
+                    Singleton_Game.m_instance.AddScore(500, transform.position);
                     Singleton_Sound.m_instance.PlayAudioClip("Pickup");
                     break;
 
                 case PickupType.Key:
                     playerC.SetHasKey(true);
-                    Singleton_Sound.m_instance.PlayAudioClip("Pickup");
-                    break;
-
-                case PickupType.MoneyBag:
-                    Singleton_Game.m_instance.AddScore(10);
                     Singleton_Sound.m_instance.PlayAudioClip("Pickup");
                     break;
 

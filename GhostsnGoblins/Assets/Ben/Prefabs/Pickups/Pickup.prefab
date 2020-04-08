@@ -211,12 +211,12 @@ MonoBehaviour:
   - name: Coin
     type: 9
     spr: {fileID: 21300000, guid: c66db3d88f48ab8429aa098983434baf, type: 3}
-  - name: Key
-    type: 10
-    spr: {fileID: 21300000, guid: f9d204fca0086b14d840d1a612f1046a, type: 3}
   - name: MoneyBag
-    type: 11
+    type: 10
     spr: {fileID: 21300000, guid: bbe9db7308273a9429162780c84c7b78, type: 3}
+  - name: Key
+    type: 11
+    spr: {fileID: 21300000, guid: f9d204fca0086b14d840d1a612f1046a, type: 3}
   m_Objects:
   - name: Lance
     type: 3

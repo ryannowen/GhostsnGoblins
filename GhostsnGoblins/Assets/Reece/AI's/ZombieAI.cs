@@ -192,7 +192,9 @@ public class ZombieAI : MonoBehaviour, IDamageable
     {
 
         Alive = false;
-        m_SpawnPickup.CreatePickup();
+        // gives a 50% chance to drop a pickup
+        if (Random.Range(0,2) == 0)
+            m_SpawnPickup.CreatePickup();
 
     }
 

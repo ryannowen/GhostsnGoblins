@@ -24,7 +24,9 @@ public class SpawnPickup : MonoBehaviour
 
         GameObject temp = System_Spawn.instance.GetObjectFromPool(m_Pickup);
         temp.transform.position = this.transform.position;
-        temp.gameObject.GetComponent<Pickup>().SetPickupType((Pickup.PickupType)Random.Range(0, 11));
+
+        // Get random pickup type excluding key
+        temp.gameObject.GetComponent<Pickup>().SetPickupType((Pickup.PickupType)Random.Range(0, 10));
 
     }
 
