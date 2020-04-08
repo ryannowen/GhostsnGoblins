@@ -5167,11 +5167,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
-        type: 3}
-      propertyPath: m_Pools.Array.data[0].m_Amount
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9156edf3ae21e574680b9d4e1d8d6f6e, type: 3}
 --- !u!1001 &1461267291
@@ -66730,11 +66725,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8599075003614674115, guid: a93fcb5d34abc7f4fac112a9d0493695,
-        type: 3}
-      propertyPath: m_score
-      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 8599075003614674115, guid: a93fcb5d34abc7f4fac112a9d0493695,
         type: 3}

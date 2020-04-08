@@ -165,3 +165,7 @@ MonoBehaviour:
     m_Object: {fileID: 1334296600702675361, guid: 528e2f6c61daaf64996eb38c4f306ae6,
       type: 3}
     m_Amount: 10
+  - m_InspectorName: ScorePopup
+    m_Object: {fileID: 2813823955592628715, guid: 7b788a974daf238428a02d16310fb2a3,
+      type: 3}
+    m_Amount: 15

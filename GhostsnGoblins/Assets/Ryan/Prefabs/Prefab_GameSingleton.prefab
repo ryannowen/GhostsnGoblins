@@ -47,12 +47,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HUDPrefab: {fileID: 1143225690213965483}
-  m_playerLives: 3
-  m_score: 500
   m_insertedMoney: 0
+  m_requiredPenceToStartGame: 100
+  m_requiredPenceToSpawnPlayer2: 100
+  m_requiredPenceToBuyLife: 100
   m_canStartGame: 0
   m_spawnedPlayer2: 0
+  m_playerLives: 3
+  m_score: 0
   m_highScores: 480300005802000022010000
+  m_scorePopupPrefab: {fileID: 2813823955592628715, guid: 7b788a974daf238428a02d16310fb2a3,
+    type: 3}
   layerColAry:
   - obj1: 0
     obj2: 13
@@ -142,7 +147,8 @@ MonoBehaviour:
     obj2: 8
     ignoreLayerCollision: 1
   m_lastCheckPoint: {x: 0, y: 0}
-  pointSpawner: {fileID: 0}
+  m_showLevelDoorItem: 0
+  m_previousLevelName: Level1_heaven
 --- !u!114 &7194745594129441944
 MonoBehaviour:
   m_ObjectHideFlags: 0

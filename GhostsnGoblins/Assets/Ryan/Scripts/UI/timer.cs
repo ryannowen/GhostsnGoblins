@@ -37,6 +37,7 @@ public class timer : MonoBehaviour
             }
             else // Loads Death Scene
             {
+                
                 Singleton_Game.m_instance.SetPreviousScene(sceneName);
                 SceneManager.LoadScene("death");
             }

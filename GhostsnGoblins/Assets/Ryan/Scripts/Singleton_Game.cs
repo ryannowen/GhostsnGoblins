@@ -27,6 +27,7 @@ public class Singleton_Game : MonoBehaviour
     [Space]
     [SerializeField] private int m_score = 0;
     [SerializeField] private int[] m_highScores = null;
+    [SerializeField] private GameObject m_scorePopupPrefab = null;
     [Space]
     [SerializeField] layerColObject[] layerColAry = null;
     [Space]
@@ -58,6 +59,14 @@ public class Singleton_Game : MonoBehaviour
     {
         m_score += argScore;
         CheckHighScore();
+    }
+
+    public void AddScore(int argScore, Vector2 argScorePopupPosition, float argScorePopupDisplayTime = 1.5f)
+    {
+        AddScore(argScore);
+
+        GameObject scorePopupObject = System_Spawn.instance.GetObjectFromPool(m_scorePopupPrefab);
+        StartCoroutine(scorePopupObject.GetComponent<ScorePopup>().ActivatePopup(argScorePopupPosition, argScore, argScorePopupDisplayTime));
     }
 
     private void CheckHighScore()
