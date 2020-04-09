@@ -33,6 +33,7 @@ public class tempFallingPlatformScript : MonoBehaviour {
 	private bool isFalling = false;
 
 	private void Awake() {
+		
 		movingPlatformScript = gameObject.GetComponent<tempMovingPlatformScript>();
 		if (movingPlatformScript == null) {
 			print("Couldn't find the moving platform script on the child collider. Please attach one!");
@@ -53,6 +54,8 @@ public class tempFallingPlatformScript : MonoBehaviour {
 			return;
 		}
 
+		initialPosition = new Vector3(platformTransform.position.x, platformTransform.position.y, 0);
+
 		platformRb2D = platformTransform.gameObject.GetComponent<Rigidbody2D>();
 		if (platformRb2D == null) {
 			print("Couldn't find a rigidbody2d attached to the parent platform. Please attach one.");
@@ -64,15 +67,11 @@ public class tempFallingPlatformScript : MonoBehaviour {
 			print("Couldn't find a sprite renderer attached to the parent platform. Please attach one.");
 			return;
 		}
-
-		initialPosition = new Vector3(transform.position.x, transform.position.y, 0);
 	}
 
 	private void OnCollisionEnter2D(Collision2D col) {
-        if (enabled)
-        {
-            if (col.gameObject.CompareTag("Player"))
-            {
+        if (enabled) {
+            if (col.gameObject.CompareTag("Player")) {
                 col.gameObject.transform.parent = platformTransform;
                 StartCoroutine(makePlatformFall());
             }
@@ -80,10 +79,8 @@ public class tempFallingPlatformScript : MonoBehaviour {
 	}
 
 	private void OnCollisionExit2D(Collision2D col) {
-        if (enabled)
-        {
-            if (col.gameObject.CompareTag("Player"))
-            {
+        if (enabled) {
+            if (col.gameObject.CompareTag("Player")) {
                 col.gameObject.transform.parent = null;
             }
         }

@@ -31,20 +31,13 @@ public class tempMovingPlatformScript : MonoBehaviour {
 	private bool switchMovementDir = false;
 	private bool initialTriggerMovement = true;
 
-	private void Start() {
+	private void Awake() {
 		platformMoveDelay = Mathf.Abs(platformMoveDelay);
 		platformDestinationTime = Mathf.Abs(platformDestinationTime);
 
 		if (positionArray == null) {
-			print("No GameObject found in the position array, please populate the array.");
 			gameObject.GetComponent<tempMovingPlatformScript>().enabled = false;
 			return;
-		}
-
-		if (positionArray.Length > 0) {
-			foreach (GameObject posObj in positionArray) {
-				posObj.transform.position = new Vector3(posObj.transform.position.x, posObj.transform.position.y, 0);
-			}
 		}
 
 		platformTransform = transform.parent;
@@ -54,29 +47,39 @@ public class tempMovingPlatformScript : MonoBehaviour {
 			return;
 		}
 
-		platformTransform.position = positionArray[startPNum].transform.position;
-		endPNum = (positionArray.Length - 1);
+		if (positionArray.Length > 0) {
+			positionArray[startPNum].transform.position = new Vector3(transform.parent.position.x, transform.parent.position.y, 0);
 
-		if (pType == platformType.looping) {
-			StartCoroutine(moveP());
+			foreach (GameObject posObj in positionArray) {
+				posObj.transform.position = new Vector3(posObj.transform.position.x, posObj.transform.position.y, 0);
+			}
+
+			platformTransform.position = positionArray[startPNum].transform.position;
+			endPNum = (positionArray.Length - 1);
+		} else {
+			print("Nothing is in the position array. Please attach GameObject points into the position array!");
+			gameObject.GetComponent<tempMovingPlatformScript>().enabled = false;
+			return;
 		}
 	}
 
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if (enabled)
-        {
-            if (col.gameObject.CompareTag("Player"))
-            {
-                if (!fallingMode)
-                {
+	private void Start() {
+		if (enabled) {
+			if (pType == platformType.looping) {
+				StartCoroutine(moveP());
+			}
+		}
+	}
+
+    private void OnCollisionEnter2D(Collision2D col) {
+        if (enabled) {
+            if (col.gameObject.CompareTag("Player")) {
+                if (!fallingMode) {
                     col.gameObject.transform.parent = platformTransform;
                 }
 
-                if (pType == platformType.triggered)
-                {
-                    if (!hasTriggered && !fallingMode)
-                    {
+                if (pType == platformType.triggered) {
+                    if (!hasTriggered && !fallingMode) {
                         currentPNum++;
                         hasTriggered = true;
                         StartCoroutine(moveP());
@@ -87,38 +90,18 @@ public class tempMovingPlatformScript : MonoBehaviour {
     }
 
 	private void OnCollisionExit2D(Collision2D col) {
-        if (enabled)
-        {
-            if (col.gameObject.CompareTag("Player"))
-            {
+        if (enabled) {
+            if (col.gameObject.CompareTag("Player")) {
                 col.gameObject.transform.parent = null;
             }
         }
 	}
 
 	private void FixedUpdate() {
-		switch (pType) {
-			case platformType.looping:
-				if (!fallingMode) {
-					if (currentlyMoving) {
-						if (!checkPState(platformTransform.position)) {
-							platformTransform.position = Vector3.SmoothDamp(platformTransform.position, positionArray[currentPNum].transform.position, ref vel, platformDestinationTime);
-						} else {
-							currentlyMoving = false;
-							StartCoroutine(moveP());
-						}
-					} else {
-						return;
-					}
-				} else {
-					return;
-				}
-
-				break;
-
-			case platformType.triggered:
-				if (!fallingMode) {
-					if (hasTriggered) {
+		if (enabled) {
+			switch (pType) {
+				case platformType.looping:
+					if (!fallingMode) {
 						if (currentlyMoving) {
 							if (!checkPState(platformTransform.position)) {
 								platformTransform.position = Vector3.SmoothDamp(platformTransform.position, positionArray[currentPNum].transform.position, ref vel, platformDestinationTime);
@@ -132,13 +115,33 @@ public class tempMovingPlatformScript : MonoBehaviour {
 					} else {
 						return;
 					}
-				} else {
-					return;
-				}
 
-				break;
-			default:
-				return;
+					break;
+
+				case platformType.triggered:
+					if (!fallingMode) {
+						if (hasTriggered) {
+							if (currentlyMoving) {
+								if (!checkPState(platformTransform.position)) {
+									platformTransform.position = Vector3.SmoothDamp(platformTransform.position, positionArray[currentPNum].transform.position, ref vel, platformDestinationTime);
+								} else {
+									currentlyMoving = false;
+									StartCoroutine(moveP());
+								}
+							} else {
+								return;
+							}
+						} else {
+							return;
+						}
+					} else {
+						return;
+					}
+
+					break;
+				default:
+					return;
+			}
 		}
 	}
 
@@ -151,10 +154,11 @@ public class tempMovingPlatformScript : MonoBehaviour {
 	}
 
 	public void setPlatformNumDefault() {
-		currentPNum = 0;
-		platformTransform.position = positionArray[startPNum].transform.position;
+		if (enabled) {
+			currentPNum = startPNum;
+			platformTransform.position = positionArray[startPNum].transform.position;
+		}
 	}
-
 	public platformType getPlatformType() {
 		return pType;
 	}
