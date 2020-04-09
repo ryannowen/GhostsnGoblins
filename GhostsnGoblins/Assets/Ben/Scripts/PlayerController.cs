@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     PlayerMovement m_MovementSystem = null;
     SpriteRenderer m_SpriteRenderer = null;
 
+    // Initial parent transform
+    private Transform initialParent;
 
     void Awake()
     {
@@ -66,6 +68,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
         m_EquippedItem = System_Spawn.instance.GetObjectFromPool(m_StartingWeapon, true, true);
 
+        // Set the initial parent of the player.
+        initialParent = transform.parent;
     }
 
     // Update is called once per frame
@@ -223,6 +227,10 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     public int GetID()
     {
         return m_ID;
+    }
+
+    public Transform originalParent() {
+        return initialParent;
     }
 
     public bool Interacting()

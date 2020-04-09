@@ -104,10 +104,10 @@ public class tempMovingPlatformScript : MonoBehaviour {
 
 	private void OnCollisionExit2D(Collision2D col) {
         if (enabled) {
-            if (col.gameObject.CompareTag("Player")) {
-                col.gameObject.transform.parent = null;
-            }
-        }
+			if (col.gameObject.CompareTag("Player")) {
+				col.gameObject.transform.parent = col.gameObject.GetComponent<PlayerController>().originalParent();
+			}
+		}
 	}
 
 	private void FixedUpdate() {
