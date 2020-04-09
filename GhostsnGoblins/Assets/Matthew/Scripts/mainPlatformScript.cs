@@ -13,13 +13,20 @@ public class mainPlatformScript : MonoBehaviour {
     [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject in the platform!")]
     [SerializeField] private float timer = 0f;
 
+    [Tooltip("Should error printing be enabled?")]
+    [SerializeField] private bool printErrors = false;
+
     private BoxCollider2D triggerCollider;
+    
 
     // Start is called before the first frame update
     void Awake() {
         triggerCollider = gameObject.GetComponent<BoxCollider2D>();
         if (triggerCollider == null) {
-            print("Couldn't find a collider attached to the main platform. Please attach one!");
+            if (printErrors) {
+                print("Couldn't find a collider attached to the main platform. Please attach one!");
+            }
+            
             Destroy(gameObject);
             return;
         }
@@ -72,6 +79,10 @@ public class mainPlatformScript : MonoBehaviour {
 
     public float getTimer() {
         return timer;
+    }
+
+    public bool getPrintErrorBool() {
+        return printErrors;
     }
 
     public void toggleTriggerCollider(bool triggerColBool) {

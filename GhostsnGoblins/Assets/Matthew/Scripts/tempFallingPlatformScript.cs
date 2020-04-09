@@ -33,23 +33,29 @@ public class tempFallingPlatformScript : MonoBehaviour {
 	private bool isFalling = false;
 
 	private void Awake() {
-		
-		movingPlatformScript = gameObject.GetComponent<tempMovingPlatformScript>();
-		if (movingPlatformScript == null) {
-			print("Couldn't find the moving platform script on the child collider. Please attach one!");
-			return;
-		}
-
 		platformScript = transform.parent.gameObject.GetComponent<mainPlatformScript>();
 		if (platformScript == null) {
 			print("Couldn't find the platform script on the child collider's parent. Please attach one!");
+
 			movingPlatformScript.enabled = false;
+			return;
+		}
+
+		movingPlatformScript = gameObject.GetComponent<tempMovingPlatformScript>();
+		if (movingPlatformScript == null) {
+			if (platformScript.getPrintErrorBool()) {
+				print("Couldn't find the moving platform script on the child collider. Please attach one!");
+			}
+			
 			return;
 		}
 
 		platformTransform = transform.parent;
 		if (platformTransform == null) {
-			print("Couldn't find a parent transform for the platform to function with!");
+			if (platformScript.getPrintErrorBool()) {
+				print("Couldn't find a parent transform for the platform to function with!");
+			}
+
 			movingPlatformScript.enabled = false;
 			return;
 		}
@@ -58,13 +64,19 @@ public class tempFallingPlatformScript : MonoBehaviour {
 
 		platformRb2D = platformTransform.gameObject.GetComponent<Rigidbody2D>();
 		if (platformRb2D == null) {
-			print("Couldn't find a rigidbody2d attached to the parent platform. Please attach one.");
+			if (platformScript.getPrintErrorBool()) {
+				print("Couldn't find a rigidbody2d attached to the parent platform. Please attach one.");
+			}
+
 			return;
 		}
 
 		spriteRend = platformTransform.gameObject.GetComponent<SpriteRenderer>();
 		if (spriteRend == null) {
-			print("Couldn't find a sprite renderer attached to the parent platform. Please attach one.");
+			if (platformScript.getPrintErrorBool()) {
+				print("Couldn't find a sprite renderer attached to the parent platform. Please attach one.");
+			}
+
 			return;
 		}
 	}

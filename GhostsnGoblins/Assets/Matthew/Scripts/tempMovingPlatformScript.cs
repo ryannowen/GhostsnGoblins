@@ -18,6 +18,7 @@ public class tempMovingPlatformScript : MonoBehaviour {
 	[Tooltip("Time (in seconds) it takes for the platform to move to a certain position.")]
 	[SerializeField] private float platformDestinationTime = 3;
 
+	private mainPlatformScript platformScript = null;
 	private Transform platformTransform = null;
 	private Vector3 vel;
 
@@ -35,6 +36,12 @@ public class tempMovingPlatformScript : MonoBehaviour {
 		platformMoveDelay = Mathf.Abs(platformMoveDelay);
 		platformDestinationTime = Mathf.Abs(platformDestinationTime);
 
+		platformScript = transform.parent.gameObject.GetComponent<mainPlatformScript>();
+		if (platformScript == null) {
+			print("Couldn't find the platform script on the child collider's parent. Please attach one!");
+			return;
+		}
+
 		if (positionArray == null) {
 			gameObject.GetComponent<tempMovingPlatformScript>().enabled = false;
 			return;
@@ -42,7 +49,10 @@ public class tempMovingPlatformScript : MonoBehaviour {
 
 		platformTransform = transform.parent;
 		if (platformTransform == null) {
-			print("Couldn't find a parent transform for the platform to function with!");
+			if (platformScript.getPrintErrorBool()) {
+				print("Couldn't find a parent transform for the platform to function with!");
+			}
+
 			gameObject.GetComponent<tempMovingPlatformScript>().enabled = false;
 			return;
 		}
@@ -57,7 +67,10 @@ public class tempMovingPlatformScript : MonoBehaviour {
 			platformTransform.position = positionArray[startPNum].transform.position;
 			endPNum = (positionArray.Length - 1);
 		} else {
-			print("Nothing is in the position array. Please attach GameObject points into the position array!");
+			if (platformScript.getPrintErrorBool()) {
+				print("Nothing is in the position array. Please attach GameObject points into the position array!");
+			}
+
 			gameObject.GetComponent<tempMovingPlatformScript>().enabled = false;
 			return;
 		}
