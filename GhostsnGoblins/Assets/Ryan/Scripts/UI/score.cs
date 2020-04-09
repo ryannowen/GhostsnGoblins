@@ -10,7 +10,12 @@ public class score : MonoBehaviour
     {
         for (int i = 0; i < m_highScores.Length; i++)
         {
-            m_highScores[i].text = Singleton_Game.m_instance.GetHighScore(i).ToString();
+            Singleton_Game.SHighScore highScore = Singleton_Game.m_instance.GetHighScore(i);
+
+            if (highScore.m_score <= 0)
+                m_highScores[i].text = "";
+            else
+                m_highScores[i].text = highScore.m_initials + ":   " + highScore.m_score.ToString();
         }
     }
 

@@ -66,9 +66,9 @@ public class HUD : MonoBehaviour
             m_scoreText.text = "Score: " + Singleton_Game.m_instance.GetScore();
 
         if (null != m_highScoreText)
-            m_highScoreText.text = "High Score: " + Singleton_Game.m_instance.GetHighScore(0);
+            m_highScoreText.text = "High Score: " + Singleton_Game.m_instance.GetHighScore(0).m_score;
 
-        if (previousInsertMoney != Input.GetAxisRaw("Fire3_P1") && Input.GetAxisRaw("Fire3_P1") > 0)
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button2))
             Singleton_Game.m_instance.InsertMoney(20);
 
         previousInsertMoney = Input.GetAxisRaw("Fire3_P1");

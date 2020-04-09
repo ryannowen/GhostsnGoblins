@@ -13,6 +13,19 @@ public class layerColObject
 
 public class Singleton_Game : MonoBehaviour
 {
+    [System.Serializable]
+    public struct SHighScore
+    {
+        public string m_initials;
+        public int m_score;
+
+        public SHighScore(string argInitials = "ERR", int argScore = 0)
+        {
+            m_initials = argInitials;
+            m_score = argScore;
+        }
+    };
+
     public static Singleton_Game m_instance;
 
     [SerializeField] private GameObject m_HUDPrefab = null;
@@ -26,7 +39,8 @@ public class Singleton_Game : MonoBehaviour
     [SerializeField] private int m_playerLives = 3;
     [Space]
     [SerializeField] private int m_score = 0;
-    [SerializeField] private int[] m_highScores = null;
+    [SerializeField] private SHighScore[] m_highScores = null;
+    [SerializeField] private bool m_isNewHighScore = false;
     [SerializeField] private GameObject m_scorePopupPrefab = null;
     [Space]
     [SerializeField] layerColObject[] layerColAry = null;
@@ -73,13 +87,38 @@ public class Singleton_Game : MonoBehaviour
     {
         for(int i = 0; i < m_highScores.Length; i++)
         {
-            if(m_score > m_highScores[i])
+            if(m_score > m_highScores[i].m_score)
             {
-                m_highScores[i] = m_score;
-                PlayerPrefs.SetInt("m_highScores_" + i, m_score);
+                m_isNewHighScore = true;
                 break;
             }
         }
+    }
+
+    public void SubmitHighScore(string argInitials)
+    {
+        string tempInitials = argInitials;
+        int tempScore = m_score;
+
+        for (int i = 0; i < m_highScores.Length; i++)
+        {
+            if (tempScore > m_highScores[i].m_score)
+            {
+                string currentInitials = m_highScores[i].m_initials;
+                int currentScore = m_highScores[i].m_score;
+
+                m_highScores[i].m_score = tempScore;
+                m_highScores[i].m_initials = tempInitials;
+                PlayerPrefs.SetInt("m_highScores_" + i, tempScore);
+                PlayerPrefs.SetString("m_highScoreInitials_" + i, tempInitials);
+
+                tempScore = currentScore;
+                tempInitials = currentInitials;
+            }
+        }
+
+        SaveGame();
+        ResetGame();
     }
 
     private void setLayerCollisions()
@@ -95,18 +134,27 @@ public class Singleton_Game : MonoBehaviour
         return m_score;
     }
     
-    public int GetHighScore(int argHighScore)
+    public SHighScore GetHighScore(int argHighScore)
     {
+        if (null == m_highScores)
+            return new SHighScore();
+
         if (argHighScore > m_highScores.Length)
-            return 0;
+            return new SHighScore();
 
         return m_highScores[argHighScore];
+    }
+
+    public bool GetIsNewHighScore()
+    {
+        return m_isNewHighScore;
     }
 
     public void InsertMoney(int argMoney)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         m_insertedMoney += argMoney;
+        Singleton_Sound.m_instance.PlayAudioClip("CoinUp", 0.1f);
 
         if ("MenuScene" == currentScene.name) // is mainmennu
         {
@@ -224,25 +272,27 @@ public class Singleton_Game : MonoBehaviour
     public void ResetGame()
     {
         m_score = 0;
-        m_playerLives = 0;
+        m_playerLives = 3;
         m_insertedMoney = 0;
         m_canStartGame = false;
         m_spawnedPlayer2 = false;
         m_showLevelDoorItem = false;
         m_previousLevelName = "Level1_heaven";
+        m_isNewHighScore = false;
     }
 
     public void LoadGame()
     {
         for (int i = 0; i < m_highScores.Length; i++)
         {
-            m_highScores[i] = PlayerPrefs.GetInt("m_highScores_" + i);
+            m_highScores[i].m_initials = PlayerPrefs.GetString("m_highScoreInitials_" + i);
+            m_highScores[i].m_score = PlayerPrefs.GetInt("m_highScores_" + i);
         }
     }
 
     public void SaveGame()
-    { 
-            
+    {
+
     }
 
     public void RegisterPlayer(int argID, GameObject argPlayer)

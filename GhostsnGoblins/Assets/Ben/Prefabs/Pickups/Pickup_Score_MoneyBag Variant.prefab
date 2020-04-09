@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 7554210138942769373, guid: af24cefca03bf6a45bf74206d7c56831,
         type: 3}
       propertyPath: m_Name
-      value: Pickup_Score_MoneyBag
+      value: Pickup_Score_MoneyBag Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7554210138942769369, guid: af24cefca03bf6a45bf74206d7c56831,
         type: 3}
@@ -70,7 +70,7 @@ PrefabInstance:
     - target: {fileID: 7554210138942769372, guid: af24cefca03bf6a45bf74206d7c56831,
         type: 3}
       propertyPath: m_PickupType
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7554210138942769372, guid: af24cefca03bf6a45bf74206d7c56831,
         type: 3}

@@ -52,6 +52,9 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         this.gameObject.name = "Player" + m_ID;
 
         Singleton_Game.m_instance.RegisterPlayer(m_ID, gameObject);
+
+        // Set the initial parent of the player.
+        initialParent = transform.parent;
     }
 
     // Start is called before the first frame update
@@ -68,8 +71,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
         m_EquippedItem = System_Spawn.instance.GetObjectFromPool(m_StartingWeapon, true, true);
 
-        // Set the initial parent of the player.
-        initialParent = transform.parent;
+
     }
 
     // Update is called once per frame

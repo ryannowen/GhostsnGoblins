@@ -107,10 +107,13 @@ public class System_Spawn : MonoBehaviour
     }
     public void DisableAllSpawns()
     {
-        DisableChildren(objectPoolContainer.transform);
+        GameObject player1 = Singleton_Game.m_instance.GetPlayer(0);
+        GameObject player2 = Singleton_Game.m_instance.GetPlayer(0);
 
-        Singleton_Game.m_instance.GetPlayer(0).SetActive(false);
-        Singleton_Game.m_instance.GetPlayer(1).SetActive(false);
+        player1.transform.parent = player1.GetComponent<PlayerController>().originalParent();
+        player2.transform.parent = player2.GetComponent<PlayerController>().originalParent();
+
+        DisableChildren(objectPoolContainer.transform);
     }
 
     private void DisableChildren(Transform argParentTransform)
