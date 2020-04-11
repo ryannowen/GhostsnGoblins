@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,13 +13,19 @@ public class Singleton_Sound : MonoBehaviour
 
     [SerializeField] private AudioClip[] createdSounds = null;
 
+    private AudioSource mainAudioSource = null;
+
     void Awake()
     {
         if (null == m_instance && this != m_instance)
             m_instance = this;
-    }
 
-    void Start() {
+        mainAudioSource = this.GetComponent<AudioSource>();
+
+        if (mainAudioSource == null) {
+            print("Couldn't find AudioSource component!");
+        }
+
         foreach (AudioClip aClip in createdSounds) {
             Singleton_Sound.m_instance.CreateAudioClip(aClip, false);
         }
@@ -53,8 +60,49 @@ public class Singleton_Sound : MonoBehaviour
     public AudioSource PlayAudioClip(string argAudioName, float argVolume = 1.0f)
     {
         AudioSource audioSource = System_Spawn.instance.GetObjectFromPool(audioSourcePrefab, true).GetComponent<AudioSource>();
-        audioSource.PlayOneShot(GetAudioClip(argAudioName), argVolume);
+        audioSource.clip = GetAudioClip(argAudioName);
+        audioSource.volume = argVolume;
+        audioSource.Play();
 
         return audioSource;
+    }
+
+    float curVolVel = 0.0f;
+
+    public void fadeOutSound(float timeToReachTarget) {
+        StartCoroutine(fadeOutSoundIE(timeToReachTarget));
+    }
+
+    private IEnumerator fadeOutSoundIE(float timeToTarget) {
+        while (mainAudioSource.volume > 0) {
+            if (mainAudioSource.isPlaying) {
+                float smoothDampVol = Mathf.SmoothDamp(mainAudioSource.volume, 0, ref curVolVel, timeToTarget);
+                mainAudioSource.volume = smoothDampVol;
+                yield return null;
+            }
+        }
+
+        mainAudioSource.Stop();
+    }
+
+    public void fadeInSound(float timeToReachTarget, float volumeDest) {
+        mainAudioSource.volume = 0;
+        mainAudioSource.Play();
+
+        StartCoroutine(fadeInSoundIE(timeToReachTarget, volumeDest));
+    }
+
+    private IEnumerator fadeInSoundIE(float timeToTarget, float vDest) {
+        while (mainAudioSource.volume < vDest) {
+            float smoothDampVol = Mathf.SmoothDamp(mainAudioSource.volume, vDest, ref curVolVel, timeToTarget);
+            mainAudioSource.volume = smoothDampVol;
+            yield return null;
+        }
+    }
+
+    public void transitionToDifferentSound(string argAudioName, float timeToReachDestOut, float timeToReachDestIn, float volumeDest) {
+        fadeOutSound(timeToReachDestOut);
+        mainAudioSource.clip = GetAudioClip(argAudioName);
+        fadeInSound(timeToReachDestIn, volumeDest);
     }
 }

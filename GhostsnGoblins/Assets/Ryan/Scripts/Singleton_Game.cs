@@ -48,6 +48,9 @@ public class Singleton_Game : MonoBehaviour
     [SerializeField] private Vector2 m_lastCheckPoint = new Vector2(0, 0);
     [SerializeField] private bool m_showLevelDoorItem = false;
     [SerializeField] private string m_previousLevelName = "Level1_heaven";
+    [SerializeField] private int m_livesScore = 0;
+
+    private AudioSource mainAudioSource;
 
     private Dictionary<int, GameObject> m_registeredPlayers = new Dictionary<int, GameObject>();
     private void Awake()
@@ -62,17 +65,54 @@ public class Singleton_Game : MonoBehaviour
             Destroy(gameObject);
 
         setLayerCollisions();
+
+        mainAudioSource = this.GetComponent<AudioSource>();
+
+        if (mainAudioSource == null) {
+            print("Couldn't find AudioSource component!");
+        }
+    }
+
+    private void OnEnable() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     // Start is called before the first frame update
-    void Start() {
+    void Start() 
+    {
         LoadGame();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
+    {
+        switch(scene.name) {
+            case "Level1_heaven":
+            case "Level2_mortal_world":
+            case "Level3_layers1_and_2_of_Hell":
+            case "Level4_layer3of_hell":
+            case "Level5":
+            case "FinalLevel":
+                mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("FullLevelBGM");
+                mainAudioSource.Play();
+                break;
+        }
     }
 
     public void AddScore(int argScore)
     {
         m_score += argScore;
+        m_livesScore += argScore;
+
         CheckHighScore();
+
+        if (m_playerLives < 3) 
+        {
+            if (m_livesScore >= 3000) 
+            {
+                m_livesScore = 0;
+                m_playerLives++;
+            }
+        }
     }
 
     public void AddScore(int argScore, Vector2 argScorePopupPosition, float argScorePopupDisplayTime = 1.5f)
