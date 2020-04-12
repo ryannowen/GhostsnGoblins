@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spawner_Point : MonoBehaviour, ISpawner
 {
     [SerializeField] private bool m_spawnOnLoad = true;
+    [SerializeField] private bool m_disableAllSpawnPointsInUseLog = false;
     [SerializeField] private bool m_showIfObjectCannotSpawn = false;
     [SerializeField] private bool m_timedSpawner = false;
     [SerializeField] private Vector2 m_spawnDelaySeconds = new Vector2(10.0f, 10.0f);
@@ -83,7 +84,9 @@ public class Spawner_Point : MonoBehaviour, ISpawner
 
                         if (availableSpawnPoints.Count == 0)
                         {
-                            Debug.LogWarning("cannot spawn object because all spawn points are in use");
+                            if(!m_disableAllSpawnPointsInUseLog)
+                                Debug.LogWarning("cannot spawn object because all spawn points are in use / cannot be used");
+
                             failedToSpawn = true;
                             break;
                         }
@@ -93,7 +96,7 @@ public class Spawner_Point : MonoBehaviour, ISpawner
                         break;
 
                     GameObject spawnedObject = System_Spawn.instance.GetObjectFromPool(spawnObject.item, spawnObject.ignoreAllActiveCheck, true, spawnObject.shouldPeek);
-                    if (null == gameObject)
+                    if (null == spawnedObject)
                     {
                         Debug.LogError("Cannot spawn object, spawn system returned null");
                         failedToSpawn = true;
@@ -102,7 +105,7 @@ public class Spawner_Point : MonoBehaviour, ISpawner
 
                     ActivateSpawnReactors(ESpawnReactorType.eOnEndSpawning, spawnObject, spawnedObject);
 
-                    spawnPoint.SetSpawnedObject(gameObject);
+                    spawnPoint.SetSpawnedObject(spawnedObject);
                     spawnedObject.transform.position = spawnPoint.transform.position;
                 }
 
