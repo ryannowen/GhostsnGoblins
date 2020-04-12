@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 7442735438330741987, guid: 3ea5773efa89555479f4d14f00a648f6,
         type: 3}
       propertyPath: m_Name
-      value: Pickup_Armour_Gold
+      value: Pickup_Armour_Gold Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7442735438330741991, guid: 3ea5773efa89555479f4d14f00a648f6,
         type: 3}

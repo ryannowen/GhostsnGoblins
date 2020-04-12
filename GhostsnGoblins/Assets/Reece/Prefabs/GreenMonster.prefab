@@ -173,3 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Pickup: {fileID: 2812206897624619931, guid: 44ee7d8eb5d9d1c47bfebad210615eb9,
     type: 3}
+  m_AvaliableDrops:
+  - name: Copper Armour
+    type: 0
+    dropChance: 20

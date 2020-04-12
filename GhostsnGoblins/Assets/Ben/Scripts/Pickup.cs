@@ -24,7 +24,7 @@ public class Pickup : MonoBehaviour, ISpawn
 
     public PickupType m_PickupType = PickupType.CopperArmourPickup;
     SpriteRenderer m_SpriteRenderer;
-    [SerializeField] private bool m_NeedsInteraction = false;
+    [SerializeField] private bool m_NeedsInteraction = true;
 
     [System.Serializable]
     class PickupSprite
@@ -84,6 +84,7 @@ public class Pickup : MonoBehaviour, ISpawn
 
         m_PickupType = newType;
         ChangeObjectSprite();
+        /*
         switch (m_PickupType)
         {
 
@@ -94,10 +95,11 @@ public class Pickup : MonoBehaviour, ISpawn
                 break;
 
             default:
-                m_NeedsInteraction = false;
+                m_NeedsInteraction = true;
                 break;
             
         }
+        */
 
     }
 

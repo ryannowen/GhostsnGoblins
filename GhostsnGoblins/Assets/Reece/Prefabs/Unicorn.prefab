@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 2288533703519710632, guid: 77620011d7e14634aabfb85386de7996, type: 3}
-  alive: 1
+  Alive: 1
 --- !u!61 &-429317876885971880
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -172,3 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Pickup: {fileID: 2812206897624619931, guid: 44ee7d8eb5d9d1c47bfebad210615eb9,
     type: 3}
+  m_AvaliableDrops:
+  - name: Copper Armour
+    type: 0
+    dropChance: 20
