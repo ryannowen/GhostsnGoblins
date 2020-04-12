@@ -2477,6 +2477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_master: {fileID: 24100000, guid: f9a2a2d609bc1e2448ae47d72018a5ea, type: 2}
+  m_masterSlider: {fileID: 754056969}
 --- !u!1 &1147402946
 GameObject:
   m_ObjectHideFlags: 0
