@@ -12,6 +12,7 @@ public class CombProjectile : MonoBehaviour
     Vector3 m_TargetPos = Vector3.zero;
     float m_ProjectileSpeed = 5f;
     Rigidbody2D m_Rigidbody = null;
+    AudioSource m_AudioSource = null;
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +52,12 @@ public class CombProjectile : MonoBehaviour
         {
 
             if (m_HasReachedTarget)
+            {
+                m_AudioSource.Stop();
+                m_AudioSource.loop = false;
+                m_AudioSource = null;
                 this.gameObject.SetActive(false);
+            }
 
         }
 
@@ -66,6 +72,11 @@ public class CombProjectile : MonoBehaviour
         m_TargetPos = argsTargetPosition;
         m_ProjectileSpeed = argsProjectileSpeed;
 
+    }
+
+    public void SetAudioInfo(AudioSource argsAudioSource)
+    {
+        m_AudioSource = argsAudioSource;
     }
 
 }

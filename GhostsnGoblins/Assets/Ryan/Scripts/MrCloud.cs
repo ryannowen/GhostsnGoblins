@@ -30,9 +30,13 @@ public class MrCloud : MonoBehaviour
             HUD hud = m_HUD.GetComponent<HUD>();
             itemShop vitemShop = m_HUD.GetComponent<itemShop>();
 
-            vitemShop.SetScoreText(Singleton_Game.m_instance.GetScore());
-            vitemShop.SetBuyingPlayer(playerC);
-            hud.ShowItemShop();
+            if (vitemShop.CurrentBuyingPlayer() == null)
+            {
+                playerC.SetUsingGUI(true);
+                vitemShop.SetScoreText(Singleton_Game.m_instance.GetScore());
+                vitemShop.SetBuyingPlayer(playerC);
+                hud.ShowItemShop();
+            }
         }
     }
 }

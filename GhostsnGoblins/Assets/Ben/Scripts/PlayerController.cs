@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     private bool m_IsInvulnerable = false;
     private float m_InvulnerabilityTimer = 0f;
     private float m_TimeSinceLastShot = 0f;
+    private bool usingGUI = false;
 
     [SerializeField] private GameObject m_StartingWeapon = null;
     [SerializeField] private GameObject m_EquippedItem = null;
@@ -96,17 +97,17 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
                 break;
 
             case ArmourType.Copper:
-                m_MovementSystem.SetMovementSpeed(5f);
+                m_MovementSystem.SetMovementSpeed(5.25f);
                 m_SpriteRenderer.sprite = sirArthurCopper;
                 break;
 
             case ArmourType.Silver:
-                m_MovementSystem.SetMovementSpeed(4.5f);
+                m_MovementSystem.SetMovementSpeed(5f);
                 m_SpriteRenderer.sprite = sirArthurSilver;
                 break;
 
             case ArmourType.Gold:
-                m_MovementSystem.SetMovementSpeed(4f);
+                m_MovementSystem.SetMovementSpeed(4.75f);
                 m_SpriteRenderer.sprite = sirArthurGold;
                 break;
 
@@ -117,7 +118,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
         ManageStats();
 
-        if (Input.GetAxisRaw("Fire1_P" + m_ID) > 0 && m_TimeSinceLastShot <= 0 && !m_IsInvulnerable)
+        // Player Shooting
+        if (Input.GetAxisRaw("Fire1_P" + m_ID) > 0 && m_TimeSinceLastShot <= 0 && !m_IsInvulnerable && !usingGUI)
         {
 
             m_MovementSystem.AddToMovementDelayTimer(m_FireRate);
@@ -204,6 +206,11 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
         m_EquippedItem = argsItem;
 
+    }
+
+    public void SetUsingGUI(bool argsState)
+    {
+        usingGUI = argsState;
     }
 
     public GameObject GetEquippedItem()

@@ -47,11 +47,21 @@ public class itemShop : MonoBehaviour
         }
     }
 
+    public void SetCurrentPlayerUsingGUIFasle()
+    {
+        m_buyingPlayer.SetUsingGUI(false);
+        m_buyingPlayer = null;
+    }
+
+    public PlayerController CurrentBuyingPlayer() 
+    {
+        return m_buyingPlayer;
+    }
+
     private IEnumerator FadeSwitch()
     {
         yield return m_fadeDelay;
         m_peasantText.SetActive(false);
-
     }
 
     public void SetBuyingPlayer(PlayerController argPlayerController)
