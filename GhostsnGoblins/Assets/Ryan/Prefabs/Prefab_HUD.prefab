@@ -1114,7 +1114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeTxt: {fileID: 1514714847445746943}
-  duration: 180
+  duration: 300
   remainingTime: 0
   isCountingDown: 0
 --- !u!1 &1514714847654125423
