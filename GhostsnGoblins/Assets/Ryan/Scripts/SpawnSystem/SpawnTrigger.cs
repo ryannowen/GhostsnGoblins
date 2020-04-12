@@ -56,6 +56,7 @@ public class SpawnTrigger : MonoBehaviour
             switch (spawner.m_triggerType)
             {
                 case ETriggerType.eActivateSpawner:
+                    spawner.m_spawner.SetActive(true);
                     TriggerSpawner(spawnInterface);
                     break;
 
@@ -71,6 +72,7 @@ public class SpawnTrigger : MonoBehaviour
                     break;
 
                 default:
+                    spawner.m_spawner.SetActive(true);
                     TriggerSpawner(spawnInterface);
                     Debug.LogWarning("TriggerType not specified, Defaulting to spawn, ");
                     break;

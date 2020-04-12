@@ -37,7 +37,7 @@ public class SpawnPoint : MonoBehaviour
         if (m_waitForSpawnedInactive)
         {
             if (!m_spawnedObject.activeSelf)
-                spawnDelay();
+                StartCoroutine(spawnDelay());
         }
     }
 
@@ -69,7 +69,7 @@ public class SpawnPoint : MonoBehaviour
             }
         }
 
-        return (m_canSpawnOnScreen ? true : m_isOnScreen) && (null == m_spawnedObject || !m_waitForSpawnedInactive) && inPlayerRange;
+        return (m_canSpawnOnScreen ? true : !m_isOnScreen) && (null == m_spawnedObject || !m_waitForSpawnedInactive) && inPlayerRange;
     }
 
     public void SetSpawnedObject(GameObject argNewObject)
