@@ -26,6 +26,7 @@ public class Singleton_Game : MonoBehaviour
         }
     };
 
+
     public static Singleton_Game m_instance;
 
     [SerializeField] private GameObject m_HUDPrefab = null;
