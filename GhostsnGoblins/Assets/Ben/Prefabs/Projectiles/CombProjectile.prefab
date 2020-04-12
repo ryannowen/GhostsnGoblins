@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 31430325449392555}
   - component: {fileID: 6794210619803571885}
   - component: {fileID: 6794210619803571884}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CombProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

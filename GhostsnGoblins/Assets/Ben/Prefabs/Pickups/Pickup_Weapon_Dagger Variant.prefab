@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 8406426653310770471, guid: cce151c47b18b144f9d4e1e75293d55a,
         type: 3}
       propertyPath: m_Name
-      value: Pickup_Weapon_Dagger
+      value: Pickup_Weapon_Dagger Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8406426653310770467, guid: cce151c47b18b144f9d4e1e75293d55a,
         type: 3}
