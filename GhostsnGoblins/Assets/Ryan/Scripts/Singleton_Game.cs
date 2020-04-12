@@ -39,6 +39,7 @@ public class Singleton_Game : MonoBehaviour
     [SerializeField] private int m_playerLives = 3;
     [Space]
     [SerializeField] private int m_score = 0;
+    [SerializeField] private int m_requiredScoreForLife = 10000;
     [SerializeField] private SHighScore[] m_highScores = null;
     [SerializeField] private bool m_isNewHighScore = false;
     [SerializeField] private GameObject m_scorePopupPrefab = null;
@@ -108,7 +109,7 @@ public class Singleton_Game : MonoBehaviour
 
         if (m_playerLives < 3) 
         {
-            if (m_livesScore >= 3000) 
+            if (m_livesScore >= m_requiredScoreForLife) 
             {
                 m_livesScore = 0;
                 m_playerLives++;
