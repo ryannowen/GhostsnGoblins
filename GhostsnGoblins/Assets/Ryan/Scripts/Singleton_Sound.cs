@@ -66,18 +66,18 @@ public class Singleton_Sound : MonoBehaviour
 
         return audioSource;
     }
-
-    float curVolVel = 0.0f;
-
-    public void fadeOutSound(float timeToReachTarget) {
-        StartCoroutine(fadeOutSoundIE(timeToReachTarget));
+    public void fadeOutSound(float fadingSpeed) {
+        StartCoroutine(fadeOutSoundIE(fadingSpeed));
     }
 
-    private IEnumerator fadeOutSoundIE(float timeToTarget) {
+    private IEnumerator fadeOutSoundIE(float fadeSpeed) {
         while (mainAudioSource.volume > 0) {
             if (mainAudioSource.isPlaying) {
-                float smoothDampVol = Mathf.SmoothDamp(mainAudioSource.volume, 0, ref curVolVel, timeToTarget);
-                mainAudioSource.volume = smoothDampVol;
+                mainAudioSource.volume -= 0.001f * fadeSpeed;
+
+                if (mainAudioSource.volume < 0) {
+                    mainAudioSource.volume = 0;
+                }
                 yield return null;
             }
         }
@@ -85,24 +85,27 @@ public class Singleton_Sound : MonoBehaviour
         mainAudioSource.Stop();
     }
 
-    public void fadeInSound(float timeToReachTarget, float volumeDest) {
+    public void fadeInSound(float fadingSpeed, float volumeDest) {
         mainAudioSource.volume = 0;
         mainAudioSource.Play();
 
-        StartCoroutine(fadeInSoundIE(timeToReachTarget, volumeDest));
+        StartCoroutine(fadeInSoundIE(fadingSpeed, volumeDest));
     }
 
-    private IEnumerator fadeInSoundIE(float timeToTarget, float vDest) {
+    private IEnumerator fadeInSoundIE(float fadeSpeed, float vDest) {
         while (mainAudioSource.volume < vDest) {
-            float smoothDampVol = Mathf.SmoothDamp(mainAudioSource.volume, vDest, ref curVolVel, timeToTarget);
-            mainAudioSource.volume = smoothDampVol;
+            mainAudioSource.volume += 0.001f * fadeSpeed;
+
+            if (mainAudioSource.volume > vDest) {
+                mainAudioSource.volume = vDest;
+            }
             yield return null;
         }
     }
 
-    public void transitionToDifferentSound(string argAudioName, float timeToReachDestOut, float timeToReachDestIn, float volumeDest) {
-        fadeOutSound(timeToReachDestOut);
+    public void transitionToDifferentSound(string argAudioName, float fadingSpeedOut, float fadingSpeedIn, float volumeDest) {
+        fadeOutSound(fadingSpeedOut);
         mainAudioSource.clip = GetAudioClip(argAudioName);
-        fadeInSound(timeToReachDestIn, volumeDest);
+        fadeInSound(fadingSpeedIn, volumeDest);
     }
 }

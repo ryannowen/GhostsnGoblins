@@ -93,6 +93,7 @@ public class Singleton_Game : MonoBehaviour
             case "Level5":
             case "FinalLevel":
                 mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("FullLevelBGM");
+                mainAudioSource.volume = 0.4f;
                 mainAudioSource.Play();
                 break;
         }
