@@ -202,8 +202,8 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
 
     public void KillEntity()
     {
-
         Alive = false;
+        Singleton_Sound.m_instance.fadeOutSound(5);
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(2000, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
     }
