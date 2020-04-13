@@ -222,6 +222,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
     {
         Angered = true;
         Alive = false;
+        Singleton_Sound.m_instance.fadeOutSound(5);
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(2000, EnemyPos);
     }

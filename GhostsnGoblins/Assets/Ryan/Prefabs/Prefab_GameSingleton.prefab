@@ -56,6 +56,7 @@ MonoBehaviour:
   m_spawnedPlayer2: 0
   m_playerLives: 3
   m_score: 0
+  m_requiredScoreForLife: 10000
   m_highScores:
   - m_initials: 
     m_score: 0
@@ -219,7 +220,8 @@ AudioSource:
   m_GameObject: {fileID: 22348242438514975}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: f9a2a2d609bc1e2448ae47d72018a5ea,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.4

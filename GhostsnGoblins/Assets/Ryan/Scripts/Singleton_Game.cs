@@ -87,13 +87,13 @@ public class Singleton_Game : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
     {
-        switch(scene.name) {
-            case "Level1_heaven":
-            case "Level2_mortal_world":
-            case "Level3_layers1_and_2_of_Hell":
-            case "Level4_layer3of_hell":
-            case "Level5":
-            case "FinalLevel":
+        switch(scene.buildIndex) {
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 7:
+            case 8:
                 mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("FullLevelBGM");
                 mainAudioSource.volume = 0.4f;
                 mainAudioSource.Play();

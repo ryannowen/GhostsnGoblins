@@ -179,6 +179,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
     {
 
         Alive = false;
+        Singleton_Sound.m_instance.fadeOutSound(5);
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(3000, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
     }

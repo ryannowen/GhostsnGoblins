@@ -66,6 +66,7 @@ public class Singleton_Sound : MonoBehaviour
 
         return audioSource;
     }
+
     public void fadeOutSound(float fadingSpeed) {
         StartCoroutine(fadeOutSoundIE(fadingSpeed));
     }
