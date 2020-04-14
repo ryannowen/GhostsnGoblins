@@ -38,12 +38,14 @@ public class CombManager : MonoBehaviour, IWeapon
         if (argsDirection.x > 0)
         {
             tempProjectile.gameObject.transform.localScale = new Vector3(1, 1, 1);
-            anim["Spin"].speed = 1;
+            if (anim != null)
+                anim["Spin"].speed = 1;
         }
         else
         {
             tempProjectile.gameObject.transform.localScale = new Vector3(-1, 1, 1);
-            anim["Spin"].speed = -1;
+            if (anim != null)
+                anim["Spin"].speed = -1;
         }
 
         AudioSource a = Singleton_Sound.m_instance.PlayAudioClip("Comberang", 0.2f);

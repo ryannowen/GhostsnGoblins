@@ -33,12 +33,14 @@ public class FireProjectile : MonoBehaviour
         if (argsDirection.x > 0)
         {
             tempProjectile.gameObject.transform.localScale = new Vector3(1, 1, 1);
-            anim["Spin"].speed = 1;
+            if(anim != null)
+                anim["Spin"].speed = 1;
         }
         else
         {
             tempProjectile.gameObject.transform.localScale = new Vector3(-1, 1, 1);
-            anim["Spin"].speed = -1;
+            if (anim != null)
+                anim["Spin"].speed = -1;
         }
 
         if (tempProjectile != null)
