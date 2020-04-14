@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1514714845954552952
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2658,7 +2658,7 @@ PrefabInstance:
     - target: {fileID: 54636721657162802, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
       propertyPath: m_itemCost
-      value: 50
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4422535768053453273, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
@@ -2679,12 +2679,12 @@ PrefabInstance:
     - target: {fileID: 4422535767402666132, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
       propertyPath: m_text
-      value: BUY - 50
+      value: BUY - 500
       objectReference: {fileID: 0}
     - target: {fileID: 4422535767402666132, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4422535767402666132, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
@@ -2839,7 +2839,7 @@ PrefabInstance:
     - target: {fileID: 54636721657162802, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
       propertyPath: m_itemCost
-      value: 100
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4422535768053453273, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
@@ -2860,7 +2860,7 @@ PrefabInstance:
     - target: {fileID: 4422535767402666132, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4422535767402666132, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
@@ -2880,7 +2880,7 @@ PrefabInstance:
     - target: {fileID: 4422535767402666132, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
       propertyPath: m_text
-      value: BUY - 100
+      value: BUY - 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4422535767402666132, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
@@ -3025,7 +3025,7 @@ PrefabInstance:
     - target: {fileID: 54636721657162802, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
       propertyPath: m_itemCost
-      value: 150
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 4422535768053453273, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
@@ -3046,7 +3046,7 @@ PrefabInstance:
     - target: {fileID: 4422535767402666132, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4422535767402666132, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
@@ -3066,7 +3066,7 @@ PrefabInstance:
     - target: {fileID: 4422535767402666132, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}
       propertyPath: m_text
-      value: BUY - 150
+      value: BUY - 1500
       objectReference: {fileID: 0}
     - target: {fileID: 4422535767402666132, guid: b486f2bf893d37a459c484f88c1f1fd9,
         type: 3}

@@ -30,7 +30,7 @@ public class itemShop : MonoBehaviour
             m_purchaseText.SetActive(true);
             m_peasantText.SetActive(false);
             Singleton_Game.m_instance.AddScore(-itemCost);
-
+            SetScoreText(Singleton_Game.m_instance.GetScore());
             if (null != m_buyingPlayer)
             {
                 m_buyingPlayer.SetArmourType(itemData.GetArmour());
