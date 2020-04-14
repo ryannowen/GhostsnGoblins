@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Projectile: {fileID: 6794210619803571887, guid: a813c825c9ef99a439442a5a66a57c21,
     type: 3}
-  m_ProjectileSpeed: 5
+  m_ProjectileSpeed: 10
   m_Range: 5

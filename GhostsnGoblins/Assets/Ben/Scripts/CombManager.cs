@@ -31,6 +31,23 @@ public class CombManager : MonoBehaviour, IWeapon
 
         GameObject tempProjectile = System_Spawn.instance.GetObjectFromPool(m_Projectile);
 
+        Animation anim = null;
+        if (tempProjectile.gameObject.GetComponent<Animation>())
+            anim = tempProjectile.gameObject.GetComponent<Animation>();
+
+        if (argsDirection.x > 0)
+        {
+            tempProjectile.gameObject.transform.localScale = new Vector3(1, 1, 1);
+            if (anim != null)
+                anim["Spin"].speed = 1;
+        }
+        else
+        {
+            tempProjectile.gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            if (anim != null)
+                anim["Spin"].speed = -1;
+        }
+
         AudioSource a = Singleton_Sound.m_instance.PlayAudioClip("Comberang", 0.2f);
         a.loop = true;
 

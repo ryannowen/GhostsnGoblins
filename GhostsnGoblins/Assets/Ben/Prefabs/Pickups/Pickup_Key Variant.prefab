@@ -12,6 +12,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pickup_Key Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4846370628155702033, guid: 8304161e2946df34d9eb85adb28c9ac4,
+        type: 3}
+      propertyPath: m_NeedsInteraction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4846370628155702033, guid: 8304161e2946df34d9eb85adb28c9ac4,
+        type: 3}
+      propertyPath: m_PickupType
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4846370628155702036, guid: 8304161e2946df34d9eb85adb28c9ac4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -66,16 +76,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4846370628155702033, guid: 8304161e2946df34d9eb85adb28c9ac4,
-        type: 3}
-      propertyPath: m_NeedsInteraction
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4846370628155702033, guid: 8304161e2946df34d9eb85adb28c9ac4,
-        type: 3}
-      propertyPath: m_PickupType
-      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8304161e2946df34d9eb85adb28c9ac4, type: 3}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 404115625410511373}
   - component: {fileID: 404115625410511370}
   - component: {fileID: 404115625410511371}
+  - component: {fileID: 7156699745809875796}
   m_Layer: 12
   m_Name: AxeProjectile
   m_TagString: Untagged
@@ -150,3 +151,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!111 &7156699745809875796
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404115625410511368}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 41692d6999e913046924f0e5eefe15f9, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 41692d6999e913046924f0e5eefe15f9, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

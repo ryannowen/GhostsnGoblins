@@ -165,6 +165,34 @@ MonoBehaviour:
     m_Object: {fileID: 1334296600702675361, guid: 528e2f6c61daaf64996eb38c4f306ae6,
       type: 3}
     m_Amount: 10
+  - m_InspectorName: Pickup Panties
+    m_Object: {fileID: 2736763081430082683, guid: 3c1345ece1c479245aaead896c9afb9c,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Necklace
+    m_Object: {fileID: 2366799735145429725, guid: 65c0b901da56f064da3d831d00c7b552,
+      type: 3}
+    m_Amount: 10
+  - m_InspectorName: Pickup Shoe
+    m_Object: {fileID: 4164037153909676507, guid: 914220422e08e874fb853e9ecd66d4e9,
+      type: 3}
+    m_Amount: 15
+  - m_InspectorName: Pickup Ring
+    m_Object: {fileID: 2588649071170121560, guid: 2b9d7978fdfff334b933da84c24a7490,
+      type: 3}
+    m_Amount: 15
+  - m_InspectorName: Pickup Dress
+    m_Object: {fileID: 4727437404408066059, guid: 0122f6c59b545b941a98144dd7b23678,
+      type: 3}
+    m_Amount: 15
+  - m_InspectorName: Pickup Doll
+    m_Object: {fileID: 5436545965663165822, guid: cac7f362d1fa240448831daee7072887,
+      type: 3}
+    m_Amount: 15
+  - m_InspectorName: Pickup Crown
+    m_Object: {fileID: 7238522412813916588, guid: 85c60762f33757842ada3e11f500d3cd,
+      type: 3}
+    m_Amount: 15
   - m_InspectorName: ScorePopup
     m_Object: {fileID: 2813823955592628715, guid: 7b788a974daf238428a02d16310fb2a3,
       type: 3}

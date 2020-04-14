@@ -26,10 +26,22 @@ public class FireProjectile : MonoBehaviour
         GameObject tempProjectile = System_Spawn.instance.GetObjectFromPool(m_Projectile);
         tempProjectile.GetComponent<SpriteRenderer>().flipX = false;
 
+        Animation anim = null;
+        if (tempProjectile.gameObject.GetComponent<Animation>())
+            anim = tempProjectile.gameObject.GetComponent<Animation>();
+
         if (argsDirection.x > 0)
-            tempProjectile.GetComponent<SpriteRenderer>().flipX = false;
+        {
+            tempProjectile.gameObject.transform.localScale = new Vector3(1, 1, 1);
+            if(anim != null)
+                anim["Spin"].speed = 1;
+        }
         else
-            tempProjectile.GetComponent<SpriteRenderer>().flipX = true;
+        {
+            tempProjectile.gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            if (anim != null)
+                anim["Spin"].speed = -1;
+        }
 
         if (tempProjectile != null)
         {
