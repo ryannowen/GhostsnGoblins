@@ -58,9 +58,9 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
             // Play random jump sound
             int r = Random.Range(0, 2);
             if (r == 0)
-                Singleton_Sound.m_instance.PlayAudioClip("Jump1");
+                Singleton_Sound.m_instance.PlayAudioClipOneShot("Jump1", 0.4f);
             else
-                Singleton_Sound.m_instance.PlayAudioClip("Jump2");
+                Singleton_Sound.m_instance.PlayAudioClipOneShot("Jump2", 0.4f);
 
             m_JumpTimer = m_JumpDelay;
             m_Rigidbody.velocity = Vector2.Lerp(m_Rigidbody.velocity, new Vector2(m_Rigidbody.velocity.x, m_JumpForce), 1f);

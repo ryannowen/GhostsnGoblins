@@ -262,7 +262,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
             else
                 m_PlayerHealth -= amount;
 
-            Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
+            Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
 
             // Set Invulnerability
             AddToInvulnerabilityTimer(2f);

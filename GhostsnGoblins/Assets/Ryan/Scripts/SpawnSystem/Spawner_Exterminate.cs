@@ -28,7 +28,8 @@ public class Spawner_Exterminate : MonoBehaviour, ISpawnReactor
 
             if(canSpawnItem)
             {
-                Singleton_Sound.m_instance.PlayAudioClip(m_soundToPlayWhenItemSpawns);
+                Singleton_Sound.m_instance.fadeOutSound(5);
+                Singleton_Sound.m_instance.PlayAudioClipOneShot(m_soundToPlayWhenItemSpawns, 0.4f);
 
                 GameObject spawnedItem = System_Spawn.instance.GetObjectFromPool(m_itemToSpawn, true);
                 spawnedItem.transform.position = m_spawnLocation.transform.position;

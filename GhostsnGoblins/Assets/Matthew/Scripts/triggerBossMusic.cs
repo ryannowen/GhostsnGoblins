@@ -7,7 +7,7 @@ public class triggerBossMusic : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D col) {
         if (enabled) {
             if (col.gameObject.CompareTag("Player")) {
-                Singleton_Sound.m_instance.transitionToDifferentSound("LevelStart", 0.5f, 1, 0.4f);
+                Singleton_Sound.m_instance.transitionToDifferentSound("BossBattle", 0.5f, 1, 0.75f);
                 enabled = false;
             }
         }

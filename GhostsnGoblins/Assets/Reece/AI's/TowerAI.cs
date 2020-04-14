@@ -38,8 +38,6 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
         m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
         Enemy = this.gameObject;
-
-        Singleton_Sound.m_instance.CreateAudioClip(Resources.Load("Sounds/EnemyShoot") as AudioClip, false);
     }
 
     // Update is called once per frame
@@ -97,7 +95,7 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
     {
 
         HP -= amount;
-        Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
+        Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
     }
 
     public void KillEntity()

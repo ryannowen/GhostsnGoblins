@@ -86,7 +86,7 @@ public class spikeTrapScript : MonoBehaviour {
             case t_Type.timed:
                 if (hasTriggered) {
                     if (canPlaySound) {
-                        Singleton_Sound.m_instance.PlayAudioClip("Spike", 0.25f);
+                        Singleton_Sound.m_instance.PlayAudioClipOneShot("Spike", 0.2f);
                         canPlaySound = false;
                     }
 

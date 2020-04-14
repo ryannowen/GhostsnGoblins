@@ -88,6 +88,14 @@ public class Singleton_Game : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
     {
         switch(scene.buildIndex) {
+            case 0:
+            case 1:
+            case 6:
+                mainAudioSource.clip = null;
+                mainAudioSource.volume = 0;
+                mainAudioSource.Stop();
+                break;
+
             case 2:
             case 3:
             case 4:
@@ -95,8 +103,14 @@ public class Singleton_Game : MonoBehaviour
             case 7:
             case 8:
                 mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("FullLevelBGM");
-                mainAudioSource.volume = 0.4f;
+                mainAudioSource.volume = 0.1f;
                 mainAudioSource.Play();
+                break;
+
+            default:
+                mainAudioSource.clip = null;
+                mainAudioSource.volume = 0;
+                mainAudioSource.Stop();
                 break;
         }
     }
@@ -114,6 +128,7 @@ public class Singleton_Game : MonoBehaviour
             {
                 m_livesScore = 0;
                 m_playerLives++;
+                Singleton_Sound.m_instance.PlayAudioClip("1Up", 0.8f);
             }
         }
     }

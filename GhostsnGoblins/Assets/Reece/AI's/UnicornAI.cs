@@ -197,13 +197,12 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
     {
         Angered = true;
         HP -= amount;
-        Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
+        Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound", 0.4f);
     }
 
     public void KillEntity()
     {
         Alive = false;
-        Singleton_Sound.m_instance.fadeOutSound(5);
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(2000, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
     }

@@ -57,6 +57,11 @@ public class Singleton_Sound : MonoBehaviour
         return m_audioClips[argAudioName];
     }
 
+    public void PlayAudioClipOneShot(string argAudioName, float argVolume = 1.0f) {
+        AudioSource audioSource = System_Spawn.instance.GetObjectFromPool(audioSourcePrefab, true).GetComponent<AudioSource>();
+        audioSource.PlayOneShot(GetAudioClip(argAudioName), argVolume);
+    }
+
     public AudioSource PlayAudioClip(string argAudioName, float argVolume = 1.0f)
     {
         AudioSource audioSource = System_Spawn.instance.GetObjectFromPool(audioSourcePrefab, true).GetComponent<AudioSource>();
@@ -72,36 +77,37 @@ public class Singleton_Sound : MonoBehaviour
     }
 
     private IEnumerator fadeOutSoundIE(float fadeSpeed) {
-        while (mainAudioSource.volume > 0) {
+        while (mainAudioSource.volume > 0.005) {
             if (mainAudioSource.isPlaying) {
-                mainAudioSource.volume -= 0.001f * fadeSpeed;
-
-                if (mainAudioSource.volume < 0) {
-                    mainAudioSource.volume = 0;
-                }
+                mainAudioSource.volume -= (0.002f * fadeSpeed);
                 yield return null;
             }
         }
 
         mainAudioSource.Stop();
+        print("Fade out succeeded!");
     }
 
     public void fadeInSound(float fadingSpeed, float volumeDest) {
-        mainAudioSource.volume = 0;
+        mainAudioSource.volume = 0.005f;
         mainAudioSource.Play();
+
+        print("HI");
 
         StartCoroutine(fadeInSoundIE(fadingSpeed, volumeDest));
     }
 
     private IEnumerator fadeInSoundIE(float fadeSpeed, float vDest) {
         while (mainAudioSource.volume < vDest) {
-            mainAudioSource.volume += 0.001f * fadeSpeed;
+            mainAudioSource.volume += (0.002f * fadeSpeed);
 
             if (mainAudioSource.volume > vDest) {
                 mainAudioSource.volume = vDest;
             }
             yield return null;
         }
+
+        print("Fade in succeeded!");
     }
 
     public void transitionToDifferentSound(string argAudioName, float fadingSpeedOut, float fadingSpeedIn, float volumeDest) {

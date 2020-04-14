@@ -31,7 +31,7 @@ public class CombManager : MonoBehaviour, IWeapon
 
         GameObject tempProjectile = System_Spawn.instance.GetObjectFromPool(m_Projectile);
 
-        AudioSource a = Singleton_Sound.m_instance.PlayAudioClip("Comberang");
+        AudioSource a = Singleton_Sound.m_instance.PlayAudioClip("Comberang", 0.2f);
         a.loop = true;
 
         tempProjectile.transform.position = argsStartPosition;

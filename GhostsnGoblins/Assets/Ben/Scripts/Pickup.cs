@@ -121,19 +121,19 @@ public class Pickup : MonoBehaviour, ISpawn
                 case PickupType.CopperArmourPickup:
                         playerC.SetArmourPoints(1);
                         playerC.SetArmourType(PlayerController.ArmourType.Copper);
-                        Singleton_Sound.m_instance.PlayAudioClip("ArmourPickup");
+                        Singleton_Sound.m_instance.PlayAudioClipOneShot("ArmourPickup", 0.3f);
                     break;
 
                 case PickupType.SilverArmourPickup:
                         playerC.SetArmourPoints(2);
                         playerC.SetArmourType(PlayerController.ArmourType.Silver);
-                        Singleton_Sound.m_instance.PlayAudioClip("ArmourPickup");
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("ArmourPickup", 0.3f);
                     break;
 
                 case PickupType.GoldArmourPickup:
                         playerC.SetArmourPoints(3);
                         playerC.SetArmourType(PlayerController.ArmourType.Gold);
-                        Singleton_Sound.m_instance.PlayAudioClip("ArmourPickup");
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("ArmourPickup", 0.3f);
                     break;
 
                 case PickupType.Lance:
@@ -143,22 +143,22 @@ public class Pickup : MonoBehaviour, ISpawn
                 case PickupType.Shield:
                 case PickupType.Comb:
                     playerC.SetEquippedItem(FindObjectToEquip());
-                    Singleton_Sound.m_instance.PlayAudioClip("Pickup");
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
                     break;
 
                 case PickupType.Coin:
                     Singleton_Game.m_instance.AddScore(200, transform.position);
-                    Singleton_Sound.m_instance.PlayAudioClip("Pickup");
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
                     break;
 
                 case PickupType.MoneyBag:
                     Singleton_Game.m_instance.AddScore(500, transform.position);
-                    Singleton_Sound.m_instance.PlayAudioClip("Pickup");
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
                     break;
 
                 case PickupType.Key:
                     playerC.SetHasKey(true);
-                    Singleton_Sound.m_instance.PlayAudioClip("Pickup");
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.4f);
                     break;
 
                 default:

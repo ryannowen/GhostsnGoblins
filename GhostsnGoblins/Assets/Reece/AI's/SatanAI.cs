@@ -172,14 +172,13 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
     {
         Angered = true;
         HP -= amount;
-        Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound");
+        Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
     }
 
     public void KillEntity()
     {
 
         Alive = false;
-        Singleton_Sound.m_instance.fadeOutSound(5);
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(3000, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
     }
