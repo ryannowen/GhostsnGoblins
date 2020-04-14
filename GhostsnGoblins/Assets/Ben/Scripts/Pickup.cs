@@ -18,6 +18,13 @@ public class Pickup : MonoBehaviour, ISpawn
         Comb,
         Coin,
         MoneyBag,
+        Panties,
+        Necklace,
+        Shoe,
+        Ring,
+        Dress,
+        Doll,
+        Crown,
         Key
 
     }
@@ -153,6 +160,41 @@ public class Pickup : MonoBehaviour, ISpawn
 
                 case PickupType.MoneyBag:
                     Singleton_Game.m_instance.AddScore(500, transform.position);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
+                case PickupType.Panties:
+                    Singleton_Game.m_instance.AddScore(200, transform.position);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
+                case PickupType.Necklace:
+                    Singleton_Game.m_instance.AddScore(400, transform.position);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
+                case PickupType.Shoe:
+                    Singleton_Game.m_instance.AddScore(800, transform.position);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
+                case PickupType.Ring:
+                    Singleton_Game.m_instance.AddScore(1000, transform.position);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
+                case PickupType.Dress:
+                    Singleton_Game.m_instance.AddScore(2000, transform.position);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
+                case PickupType.Doll:
+                    Singleton_Game.m_instance.AddScore(400, transform.position);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
+                case PickupType.Crown:
+                    Singleton_Game.m_instance.AddScore(5000, transform.position);
                     Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
                     break;
 

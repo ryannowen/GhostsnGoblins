@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 7769598207520070414, guid: 778f65e899b0cef4bab4b62a78ce0efd,
         type: 3}
       propertyPath: m_Name
-      value: Pickup_Score_Coin
+      value: Pickup_Score_Coin Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7769598207520070410, guid: 778f65e899b0cef4bab4b62a78ce0efd,
         type: 3}
@@ -71,6 +71,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_PickupType
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7769598207520070415, guid: 778f65e899b0cef4bab4b62a78ce0efd,
+        type: 3}
+      propertyPath: m_NeedsInteraction
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 778f65e899b0cef4bab4b62a78ce0efd, type: 3}

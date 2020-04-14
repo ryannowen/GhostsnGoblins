@@ -214,6 +214,27 @@ MonoBehaviour:
   - name: MoneyBag
     type: 10
     spr: {fileID: 21300000, guid: bbe9db7308273a9429162780c84c7b78, type: 3}
+  - name: Panties
+    type: 11
+    spr: {fileID: 21300000, guid: 640ede328d8c4674f890c639d6e483e4, type: 3}
+  - name: Necklace
+    type: 12
+    spr: {fileID: 21300000, guid: 1c4092b6716b069459ca963546577336, type: 3}
+  - name: Shoe
+    type: 13
+    spr: {fileID: 21300000, guid: e18912ac6ce7690468e16d431f4e9478, type: 3}
+  - name: Ring
+    type: 14
+    spr: {fileID: 21300000, guid: 3b4a0cc95533c1840916ef46731cf89e, type: 3}
+  - name: Dress
+    type: 15
+    spr: {fileID: 21300000, guid: b7cb3e417edf7e14a8387e198357329d, type: 3}
+  - name: Doll
+    type: 16
+    spr: {fileID: 21300000, guid: 09007b74be9f3954fb855e28997cd61a, type: 3}
+  - name: Crown
+    type: 17
+    spr: {fileID: 21300000, guid: cdd01ce0bf56300438db33f29e4524a3, type: 3}
   - name: Key
     type: 11
     spr: {fileID: 21300000, guid: f9d204fca0086b14d840d1a612f1046a, type: 3}
