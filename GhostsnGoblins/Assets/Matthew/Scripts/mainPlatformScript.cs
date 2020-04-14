@@ -34,6 +34,11 @@ public class mainPlatformScript : MonoBehaviour {
         if (childCol == null) {
             childCol = gameObject.transform.GetChild(0).gameObject.GetComponent<BoxCollider2D>();
         }
+
+        if(null != childCol)
+        {
+            childCol.GetComponent<SpriteRenderer>().size = GetComponent<SpriteRenderer>().size;
+        }
     }
 
     // Update is called once per frame
