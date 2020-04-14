@@ -92,22 +92,22 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         {
 
             case ArmourType.None:
-                m_MovementSystem.SetMovementSpeed(5.5f);
+                m_MovementSystem.SetMovementSpeed(7.5f);
                 m_SpriteRenderer.sprite = sirArthurNude;
                 break;
 
             case ArmourType.Copper:
-                m_MovementSystem.SetMovementSpeed(5.25f);
+                m_MovementSystem.SetMovementSpeed(7.25f);
                 m_SpriteRenderer.sprite = sirArthurCopper;
                 break;
 
             case ArmourType.Silver:
-                m_MovementSystem.SetMovementSpeed(5f);
+                m_MovementSystem.SetMovementSpeed(7f);
                 m_SpriteRenderer.sprite = sirArthurSilver;
                 break;
 
             case ArmourType.Gold:
-                m_MovementSystem.SetMovementSpeed(4.75f);
+                m_MovementSystem.SetMovementSpeed(6.75f);
                 m_SpriteRenderer.sprite = sirArthurGold;
                 break;
 
@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         if (Input.GetAxisRaw("Fire1_P" + m_ID) > 0 && m_TimeSinceLastShot <= 0 && !m_IsInvulnerable && !usingGUI)
         {
 
-            m_MovementSystem.AddToMovementDelayTimer(m_FireRate);
+            //m_MovementSystem.AddToMovementDelayTimer(m_FireRate);
 
             Vector3 directionToFire = Vector3.zero;
 
