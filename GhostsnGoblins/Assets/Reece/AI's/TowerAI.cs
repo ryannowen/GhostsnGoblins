@@ -83,6 +83,7 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
                         fireProj.Fire(transform.position, Vector3.left, transform.rotation);
                     else
                         fireProj.Fire(transform.position, Vector3.right, transform.rotation);
+                    Shoot = false;
                 }
             }
 

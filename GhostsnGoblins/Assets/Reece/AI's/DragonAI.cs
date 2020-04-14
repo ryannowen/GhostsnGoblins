@@ -112,10 +112,10 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
             if (RNG > 0)
             {
                 MoveTime = Time.time + 0.2f;
-                if (RNG <= 75 && RNG > 50)
+                if (RNG <= 90 && RNG > 50)
                     FlyUp = true;
 
-                else if (RNG <= 100 && RNG > 75)
+                else if (RNG <= 100 && RNG > 90)
                     FlyDown = true;
                 RNG = 0;
             }
@@ -131,7 +131,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
                 FlyDown = false;
                 FlyUp = true;
             }
-            else if (EnemyPos.y > PlayerPos.y + 5)
+            else if (EnemyPos.y > PlayerPos.y + 3)
             {
                 FlyUp = false;
                 FlyDown = true;
@@ -149,6 +149,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
             //Will move the Zombie to the left if the player is on the left.
             if (MoveLeft)
             {
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
                 if (EnemyPos.x > PlayerPos.x - 8)
                 {
                     Vector3 moveDirection = Vector3.left;
@@ -168,6 +169,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
             //Will move the Zombie to the right if the player is on the right
             else if (MoveRight)
             {
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
                 if (EnemyPos.x < PlayerPos.x + 8)
                 {
                     Vector3 moveDirection = Vector3.right;

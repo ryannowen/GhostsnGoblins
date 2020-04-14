@@ -109,6 +109,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
             //Will move the Zombie to the left if the player is on the left.
             if (MoveLeft && !InAir)
             {
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
                 if (EnemyX > PlayerX - 8)
                 {
                     EnemyX -= speed;
@@ -119,6 +120,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
             //Will move the Zombie to the right if the player is on the right
             else if (MoveRight && !InAir)
             {
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
                 if (EnemyX < PlayerX + 8)
                 {
                     EnemyX += speed;

@@ -115,6 +115,7 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (PlayerX < EnemyX)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
                     if (Time.time < JumpTimer - 0.8f)
                     {
                         //EnemyY += speed * 2;
@@ -130,6 +131,7 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
                 }
                 else if (PlayerX > EnemyX)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
                     if (Time.time < JumpTimer - 0.8f)
                     {
                         //EnemyY += speed * 2;

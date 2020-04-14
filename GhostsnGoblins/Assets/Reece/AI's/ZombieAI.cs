@@ -25,6 +25,10 @@ public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
     private bool MoveLeft;
     private bool MoveRight;
     private bool FindPlayer;
+    private float Origin;
+    private float EnemyXOrigin;
+    private float wait;
+    private bool CheckIfStill;
 
     Rigidbody2D rb;
 
@@ -85,6 +89,8 @@ public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
                 {
                     //Sets the Deathtimer of the zombie 5 seconds after it spawns.
                     Deathtimer = Time.time + 15;
+                    Origin = Time.time;
+                    wait = Time.time + 0.25f;
 
                     //Finds if the player is on the left.
                     if (PlayerX < EnemyX)
@@ -106,26 +112,59 @@ public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
                 }
             }
 
+            if (Time.time > Origin)
+            {
+                EnemyXOrigin = EnemyX;
+                Origin += 1f;
+            }
+
+            if (Time.time > wait)
+            {
+                wait += 0.5f;
+                CheckIfStill = true;
+            }
+
+
             //Will move the Zombie to the left if the player is on the left.
             if (MoveLeft)
             {
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
                 Vector3 moveDirection = GetDesiredMove();
                 moveDirection.Normalize();
                 moveDirection.y = rb.velocity.y;
                 moveDirection.x *= Speed;
 
                 rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+
+                if (EnemyX == EnemyXOrigin && CheckIfStill)
+                {
+                    MoveLeft = false;
+                    MoveRight = true;
+                    CheckIfStill = false;
+                }
+                else
+                    CheckIfStill = false;
             }
 
             //Will move the Zombie to the right if the player is on the right
             else if (MoveRight)
             {
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
                 Vector3 moveDirection = GetDesiredMove();
                 moveDirection.Normalize();
                 moveDirection.y = rb.velocity.y;
                 moveDirection.x *= Speed;
 
                 rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+
+                if (EnemyX == EnemyXOrigin && CheckIfStill)
+                {
+                    MoveLeft = true;
+                    MoveRight = false;
+                    CheckIfStill = false;
+                }
+                else
+                    CheckIfStill = false;
             }
 
             CheckGroundedState();

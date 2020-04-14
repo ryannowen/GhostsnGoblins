@@ -12,7 +12,7 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
     private int HP = 1;
     private float speed = 5f;
     private float Heightspeed = 2.5f;
-    private float time = 0.2f;
+    private float time;
     private float PlayerX;
     private float PlayerY;
     private float EnemyX;
@@ -78,12 +78,14 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
                     else if (PlayerX > EnemyX)
                         MoveRight = true;
                     OneTime = false;
+                    time = Time.time;
                 }
 
 
                 //Will move the Zombie to the left if the player is on the left.
                 if (MoveLeft)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
                     Vector3 moveDirection = Vector3.left + Vector3.up;
                     moveDirection.Normalize();
                     moveDirection.x *= speed;
@@ -100,6 +102,7 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
                 }
                 if (MoveRight)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
                     Vector3 moveDirection = Vector3.right + Vector3.up;
                     moveDirection.Normalize();
                     moveDirection.x *= speed;

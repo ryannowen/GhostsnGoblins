@@ -85,6 +85,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (PlayerX < EnemyX && PlayerY < EnemyY)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
                     EnemyX -= DistanceX / 40;
                     EnemyY -= DistanceY / 40;
                     if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
@@ -95,6 +96,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
                 }
                 if (PlayerX > EnemyX && PlayerY < EnemyY)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
                     EnemyX -= DistanceX / 40;
                     EnemyY -= DistanceY / 40;
                     if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)

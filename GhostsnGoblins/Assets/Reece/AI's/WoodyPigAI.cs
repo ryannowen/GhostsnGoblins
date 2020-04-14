@@ -12,6 +12,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
     private GameObject Enemy = null;
     private GameObject Player = null;
     private int HP = 1;
+    private int RNG;
     private float speed = 3f;
     private float PlayerX;
     private float PlayerY;
@@ -60,6 +61,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
         if (Time.time > ShootTime)
         {
             ShootTime += 3;
+            RNG = Random.Range(1, 3);
             Shoot = true;
         }
 
@@ -111,17 +113,20 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
 
             if (Shoot)
             {
-                fireProj.Fire(transform.position, Vector3.down, transform.rotation);
-                if (MoveLeft)
-                    fireProj.Fire(transform.position, Vector3.left, transform.rotation);
-                else
-                    fireProj.Fire(transform.position, Vector3.right, transform.rotation);
+                if (RNG == 1)
+                    fireProj.Fire(transform.position, Vector3.down, transform.rotation);
+                else if (RNG == 2)
+                    if (MoveLeft)
+                        fireProj.Fire(transform.position, Vector3.left, transform.rotation);
+                    else
+                        fireProj.Fire(transform.position, Vector3.right, transform.rotation);
                 Shoot = false;
             }
 
             //Will move the Zombie to the left if the player is on the left.
             if (MoveLeft)
             {
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
                 if (EnemyPos.x > PlayerX - 8)
                 {
                     //print("Moving Left");
@@ -195,6 +200,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
             //Will move the Zombie to the right if the player is on the right
             else if (MoveRight)
             {
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
                 if (EnemyPos.x < PlayerX + 8)
                 {
                     Vector3 moveDirection = Vector3.right;
