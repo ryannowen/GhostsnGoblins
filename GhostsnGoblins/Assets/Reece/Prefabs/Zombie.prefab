@@ -165,3 +165,51 @@ MonoBehaviour:
   - name: Copper Armour
     type: 0
     dropChance: 20
+  - name: Silver Armour
+    type: 1
+    dropChance: 20
+  - name: Lance
+    type: 3
+    dropChance: 20
+  - name: Dagger
+    type: 4
+    dropChance: 20
+  - name: Torch
+    type: 5
+    dropChance: 20
+  - name: Axe
+    type: 6
+    dropChance: 20
+  - name: Shield
+    type: 7
+    dropChance: 20
+  - name: Comb
+    type: 8
+    dropChance: 20
+  - name: Coin
+    type: 9
+    dropChance: 20
+  - name: Money Bag
+    type: 10
+    dropChance: 20
+  - name: Panties
+    type: 11
+    dropChance: 20
+  - name: Necklace
+    type: 12
+    dropChance: 20
+  - name: Shoe
+    type: 13
+    dropChance: 20
+  - name: Ring
+    type: 14
+    dropChance: 20
+  - name: Dress
+    type: 15
+    dropChance: 20
+  - name: Doll
+    type: 16
+    dropChance: 20
+  - name: Crown
+    type: 17
+    dropChance: 20

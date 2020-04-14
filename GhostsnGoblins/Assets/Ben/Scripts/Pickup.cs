@@ -91,6 +91,7 @@ public class Pickup : MonoBehaviour, ISpawn
 
         m_PickupType = newType;
         ChangeObjectSprite();
+        ChangeNeedsInteraction();
         /*
         switch (m_PickupType)
         {
@@ -227,6 +228,44 @@ public class Pickup : MonoBehaviour, ISpawn
 
     }
 
+    void ChangeNeedsInteraction() 
+    {
+
+        switch (m_PickupType)
+        {
+
+            case PickupType.CopperArmourPickup:
+            case PickupType.SilverArmourPickup:
+            case PickupType.GoldArmourPickup:
+            case PickupType.Lance:
+            case PickupType.Dagger:
+            case PickupType.Torch:
+            case PickupType.Axe:
+            case PickupType.Shield:
+            case PickupType.Comb:
+                m_NeedsInteraction = true;
+                break;
+
+            case PickupType.Coin:
+            case PickupType.MoneyBag:
+            case PickupType.Panties:
+            case PickupType.Necklace:
+            case PickupType.Shoe:
+            case PickupType.Ring:
+            case PickupType.Dress:
+            case PickupType.Doll:
+            case PickupType.Crown:
+            case PickupType.Key:
+                m_NeedsInteraction = false;
+                break;
+
+            default:
+                break;
+
+        }
+
+    }
+
     GameObject FindObjectToEquip()
     {
 
@@ -249,6 +288,7 @@ public class Pickup : MonoBehaviour, ISpawn
         if (m_SpriteRenderer == null)
             m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         ChangeObjectSprite();
+        ChangeNeedsInteraction();
 
     }
 
