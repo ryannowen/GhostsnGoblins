@@ -66,7 +66,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (Time.time > time)
                 {
-                    time += 1.5f;
+                    time += 2f;
                     FindPlayer = true;
                     Shoot = true;
                 }

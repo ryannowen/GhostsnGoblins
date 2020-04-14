@@ -139,10 +139,10 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
 
             if (Shoot)
             {
-                // if (EnemyPos.x > PlayerPos.x)
-                //    fireProj.Fire(transform.position, Vector3.left, transform.rotation);
-                // else
-                //     fireProj.Fire(transform.position, Vector3.right, transform.rotation);
+                if (EnemyPos.x > PlayerPos.x)
+                    fireProj.Fire(transform.position, Vector3.left, transform.rotation);
+                else
+                    fireProj.Fire(transform.position, Vector3.right, transform.rotation);
                 Shoot = false;
             }
 
