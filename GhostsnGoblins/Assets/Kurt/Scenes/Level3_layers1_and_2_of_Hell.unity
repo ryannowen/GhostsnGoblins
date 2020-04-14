@@ -814,7 +814,7 @@ Transform:
   - {fileID: 1907916622}
   - {fileID: 56504473}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &182078475
 PrefabInstance:
@@ -2601,6 +2601,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 728479301884021639, guid: f2e264aef319b72409c5fe7d4a87cce2,
         type: 3}
+      propertyPath: m_objects.Array.data[0].spawnReactors.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 728479301884021639, guid: f2e264aef319b72409c5fe7d4a87cce2,
+        type: 3}
       propertyPath: m_objects.Array.data[0].inspectorName
       value: Dragon
       objectReference: {fileID: 0}
@@ -2630,6 +2635,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5848739722893746580, guid: 5064c3ff7416a6f4c89fd3eca63034aa,
         type: 3}
+    - target: {fileID: 728479301884021639, guid: f2e264aef319b72409c5fe7d4a87cce2,
+        type: 3}
+      propertyPath: m_objects.Array.data[0].spawnReactors.Array.data[0]
+      value: 
+      objectReference: {fileID: 359986555}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2e264aef319b72409c5fe7d4a87cce2, type: 3}
 --- !u!1 &359986555 stripped
@@ -2774,7 +2784,7 @@ Transform:
   - {fileID: 262015653}
   - {fileID: 1254573348}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &507530328
 PrefabInstance:
@@ -6791,7 +6801,7 @@ Transform:
   - {fileID: 1353264746}
   - {fileID: 196314548}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1550244454
 PrefabInstance:
