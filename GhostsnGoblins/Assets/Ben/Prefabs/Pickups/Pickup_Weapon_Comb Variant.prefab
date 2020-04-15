@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 4177950289320297944, guid: cc3070d9cc0cb094197bc1168c21339d,
         type: 3}
       propertyPath: m_Name
-      value: Pickup_Weapon_Comb
+      value: Pickup_Weapon_Comb Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4177950289320297948, guid: cc3070d9cc0cb094197bc1168c21339d,
         type: 3}
@@ -67,6 +67,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4177950289320297947, guid: cc3070d9cc0cb094197bc1168c21339d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8b3d0526b659523438c439777b3ff47c,
+        type: 3}
     - target: {fileID: 4177950289320297945, guid: cc3070d9cc0cb094197bc1168c21339d,
         type: 3}
       propertyPath: m_PickupType

@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 998513154692721631, guid: ebdff1188c03dcf4a8613c1450e7abea,
         type: 3}
       propertyPath: m_Name
-      value: Pickup_Armour_Silver
+      value: Pickup_Armour_Silver Variant
       objectReference: {fileID: 0}
     - target: {fileID: 998513154692721627, guid: ebdff1188c03dcf4a8613c1450e7abea,
         type: 3}
@@ -67,6 +67,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 998513154692721628, guid: ebdff1188c03dcf4a8613c1450e7abea,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: aeabebcc55a89b14fbb22fc35e249530,
+        type: 3}
     - target: {fileID: 998513154692721630, guid: ebdff1188c03dcf4a8613c1450e7abea,
         type: 3}
       propertyPath: m_PickupType
