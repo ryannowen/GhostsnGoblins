@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class triggerBossMusic : MonoBehaviour {
 
-    [SerializeField] private float fadeOutSpeed = 1;
-    [SerializeField] private float fadeInSpeed = 50;
+    [Tooltip("This is the amount of time each increment of volume decreases on the main audio (in seconds).")]
+    [SerializeField] private float fadeOutTimeDelay = 0.02f;
+
+    [Tooltip("This is the amount of time each increment of volume increases on the main audio (in seconds).")]
+    [SerializeField] private float fadeInTimeDelay = 0.02f;
 
     private void OnTriggerEnter2D(Collider2D col) {
         if (enabled) {
             if (col.gameObject.CompareTag("Player")) {
-                Singleton_Sound.m_instance.transitionToDifferentSound("BossBattle", fadeOutSpeed, fadeInSpeed, 0.75f);
+                Singleton_Sound.m_instance.transitionToDifferentSound("BossBattle", fadeOutTimeDelay, fadeInTimeDelay, 0.75f);
                 enabled = false;
             }
         }
