@@ -90,7 +90,7 @@ public class spikeTrapScript : MonoBehaviour {
                         canPlaySound = false;
                     }
 
-                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up - new Vector2(0, 0.3f), Time.fixedDeltaTime * trapSpeed);
+                    transform.position = Vector3.Lerp(transform.position, new Vector2(originalTrapPosition.x, Mathf.Floor(originalTrapPosition.y) + 1), Time.fixedDeltaTime * trapSpeed);
                     StartCoroutine(resetSpikeTrap(trapResetDelay));
                 } else {
 
@@ -108,9 +108,9 @@ public class spikeTrapScript : MonoBehaviour {
                         canPlaySound = false;
                     }
 
-                    transform.position = Vector3.Lerp(transform.position, originalTrapPosition + (Vector2)transform.up - new Vector2(0, 0.3f), Time.fixedDeltaTime * trapSpeed);
+                    transform.position = Vector3.Lerp(transform.position, new Vector2(originalTrapPosition.x, Mathf.Floor(originalTrapPosition.y) + 1.5f), Time.fixedDeltaTime * trapSpeed);
 
-                    if (Vector2.Distance((Vector2)transform.position, (Vector2)transform.up - new Vector2(0, 0.3f)) < 0.05f && !isCurrentlyActive && runCoroutine) {
+                    if (Vector2.Distance((Vector2)transform.position, new Vector2(originalTrapPosition.x, Mathf.Floor(originalTrapPosition.y) + 1.5f)) < 0.05f && !isCurrentlyActive && runCoroutine) {
                         runCoroutine = false;
                         StartCoroutine(resetSpikeTrap(trapResetDelay));
                     }

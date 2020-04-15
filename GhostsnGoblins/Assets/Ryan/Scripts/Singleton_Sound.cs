@@ -72,47 +72,54 @@ public class Singleton_Sound : MonoBehaviour
         return audioSource;
     }
 
-    public void fadeOutSound(float fadingSpeed) {
-        StartCoroutine(fadeOutSoundIE(fadingSpeed));
+    public void fadeOutSound(float fadingSpeed, string argAudioName = "") {
+        StartCoroutine(fadeOutSoundIE(fadingSpeed, argAudioName));
     }
 
-    private IEnumerator fadeOutSoundIE(float fadeSpeed) {
-        while (mainAudioSource.volume > 0.005) {
+    private IEnumerator fadeOutSoundIE(float fSpeed, string argAudioName) {
+        while (mainAudioSource.volume > 0.005f) {
             if (mainAudioSource.isPlaying) {
-                mainAudioSource.volume -= (0.002f * fadeSpeed);
-                yield return null;
+                mainAudioSource.volume -= (0.002f * fSpeed);
             }
-        }
 
-        mainAudioSource.Stop();
-        print("Fade out succeeded!");
+            if (mainAudioSource.volume <= 0.005f) {
+                mainAudioSource.Stop();
+                mainAudioSource.volume = 0.005f;
+
+                if (argAudioName != "") {
+                    mainAudioSource.clip = GetAudioClip(argAudioName);
+                    mainAudioSource.Play(); 
+                }
+
+                print("Fade out succeeded!");
+                yield break;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
     }
 
     public void fadeInSound(float fadingSpeed, float volumeDest) {
-        mainAudioSource.volume = 0.005f;
-        mainAudioSource.Play();
-
-        print("HI");
-
         StartCoroutine(fadeInSoundIE(fadingSpeed, volumeDest));
     }
 
-    private IEnumerator fadeInSoundIE(float fadeSpeed, float vDest) {
-        while (mainAudioSource.volume < vDest) {
-            mainAudioSource.volume += (0.002f * fadeSpeed);
+    private IEnumerator fadeInSoundIE(float fadingSpeed, float volumeDest) {
+        while (mainAudioSource.volume < volumeDest ) {
 
-            if (mainAudioSource.volume > vDest) {
-                mainAudioSource.volume = vDest;
+            mainAudioSource.volume += (0.002f * fadingSpeed);
+
+            if (mainAudioSource.volume > volumeDest) {
+                mainAudioSource.volume = volumeDest;
+                print("Fade in succeeded!");
+                yield break;
             }
-            yield return null;
-        }
 
-        print("Fade in succeeded!");
+            yield return new WaitForFixedUpdate();
+        }
     }
 
     public void transitionToDifferentSound(string argAudioName, float fadingSpeedOut, float fadingSpeedIn, float volumeDest) {
-        fadeOutSound(fadingSpeedOut);
-        mainAudioSource.clip = GetAudioClip(argAudioName);
+        fadeOutSound(fadingSpeedOut, argAudioName);
         fadeInSound(fadingSpeedIn, volumeDest);
     }
 }
