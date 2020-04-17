@@ -71,7 +71,10 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         sirArthurGold = Resources.Load<Sprite>("Sprites/Characters/SirArthur_Gold") as Sprite;
 
         m_EquippedItem = System_Spawn.instance.GetObjectFromPool(m_StartingWeapon, true, true);
-
+        if (m_StartingWeapon.gameObject.GetComponent<WeaponManager>())
+            m_FireRate = m_StartingWeapon.gameObject.GetComponent<WeaponManager>().GetFireRate();
+        else if (m_StartingWeapon.gameObject.GetComponent<CombManager>())
+            m_FireRate = m_StartingWeapon.gameObject.GetComponent<CombManager>().GetFireRate();
 
     }
 
@@ -205,6 +208,10 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     {
 
         m_EquippedItem = argsItem;
+        if (argsItem.gameObject.GetComponent<WeaponManager>())
+            m_FireRate = argsItem.gameObject.GetComponent<WeaponManager>().GetFireRate();
+        else if (argsItem.gameObject.GetComponent<CombManager>())
+            m_FireRate = argsItem.gameObject.GetComponent<CombManager>().GetFireRate();
 
     }
 

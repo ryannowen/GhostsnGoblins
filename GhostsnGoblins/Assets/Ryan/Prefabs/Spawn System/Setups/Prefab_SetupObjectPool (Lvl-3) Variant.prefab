@@ -70,12 +70,12 @@ PrefabInstance:
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.data[0].m_InspectorName
-      value: Woody Pig
+      value: Dragon (Boss)
       objectReference: {fileID: 0}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
@@ -110,13 +110,13 @@ PrefabInstance:
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.data[0].m_Amount
-      value: 20
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.data[0].m_Object
       value: 
-      objectReference: {fileID: 1504599778298092010, guid: dc1bd983f5e69c748b668c14fb2a7c42,
+      objectReference: {fileID: 5848739722893746580, guid: 5064c3ff7416a6f4c89fd3eca63034aa,
         type: 3}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}

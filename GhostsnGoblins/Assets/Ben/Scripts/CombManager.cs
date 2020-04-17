@@ -8,6 +8,7 @@ public class CombManager : MonoBehaviour, IWeapon
     [SerializeField] private GameObject m_Projectile = null;
     [SerializeField] private float m_ProjectileSpeed = 5f;
     [SerializeField] private float m_Range = 5f;
+    [SerializeField] private float m_Firerate = 1.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +57,11 @@ public class CombManager : MonoBehaviour, IWeapon
         tempProjectile.GetComponent<CombProjectile>().SetPathInfo(objectFiring, targetPos, m_ProjectileSpeed);
         tempProjectile.GetComponent<CombProjectile>().SetAudioInfo(a);
 
+    }
+
+    public float GetFireRate()
+    {
+        return m_Firerate;
     }
 
 }
