@@ -29,7 +29,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
     private bool FindPlayer;
     private bool playerLevelReached = false;
     private bool Shoot;
-    private int ShootTime = 3;
+    private float ShootTime = 3;
 
     private Rigidbody2D rb;
     private FireProjectile fireProj;
@@ -58,13 +58,6 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
     void FixedUpdate()
     {
 
-        if (Time.time > ShootTime)
-        {
-            ShootTime += 3;
-            RNG = Random.Range(1, 3);
-            Shoot = true;
-        }
-
         if (!Angered)
         {
             PlayerX = Player.gameObject.transform.position.x;
@@ -82,12 +75,14 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
             EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
             PlayerY = Player.gameObject.transform.position.y;
             FindPlayer = true;
+           
+
             if (FindPlayer && OneTime)
             {
                 EnemyX = Enemy.gameObject.transform.position.x;
                 EnemyY = Enemy.gameObject.transform.position.y;
                 PlayerX = Player.gameObject.transform.position.x;
-
+                ShootTime = Time.time;
 
                 Deathtimer = Time.time + 30;
 
@@ -108,6 +103,13 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
                     speed = speed * 1.5f;
                 }
                 OneTime = false;
+            }
+
+            if (Time.time > ShootTime)
+            {
+                ShootTime += 3;
+                RNG = Random.Range(1, 3);
+                Shoot = true;
             }
 
 

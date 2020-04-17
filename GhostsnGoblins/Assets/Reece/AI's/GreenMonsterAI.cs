@@ -21,6 +21,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
     private bool Angered = false;
     private bool FindPlayer;
     public bool Shoot;
+    private bool Onetime = true;
 
     private FireProjectile fireProj;
 
@@ -86,6 +87,12 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
                     directionToFire.Normalize();
                     fireProj.Fire(transform.position, directionToFire, transform.rotation);
                     Shoot = false;
+
+                    if (Onetime)
+                    {
+                        timer = Time.time;
+                        Onetime = false;
+                    }
                 }
             }
 

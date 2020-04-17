@@ -81,13 +81,14 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
         {
             EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
             PlayerPos = new Vector2(Player.gameObject.transform.position.x, Player.gameObject.transform.position.y);
-            ShootTime = Time.time;
+           
 
             if (OneTime)
             {
                 EnemyX = Enemy.gameObject.transform.position.x;
                 EnemyY = Enemy.gameObject.transform.position.y;
                 PlayerX = Player.gameObject.transform.position.x;
+                ShootTime = Time.time;
 
                 //Finds if the player is on the left.
                 if (PlayerX < EnemyX)
