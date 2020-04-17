@@ -174,7 +174,7 @@ MonoBehaviour:
   m_ID: 1
   m_PlayerHealth: 2
   m_ArmourPoints: 0
-  m_FireRate: 0.5
+  m_FireRate: 1
   m_HasKey: 0
   m_StartingWeapon: {fileID: 2184593732081151199, guid: c1dfcd5a8835389468a68d0c1ce8fb91,
     type: 3}
