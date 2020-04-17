@@ -25,6 +25,7 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
     private bool Dash;
     private bool Shoot;
     private bool Angered;
+    private float InvicibleTimer;
 
     private FireProjectile fireProj;
     Rigidbody2D rb;
@@ -197,9 +198,13 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
 
     public void TakeDamage(int amount)
     {
-        Angered = true;
-        HP -= amount;
-        Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound", 0.4f);
+        if (InvicibleTimer < Time.time)
+        {
+            InvicibleTimer = Time.time + 1.5f;
+            Angered = true;
+            HP -= amount;
+            Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound", 0.4f);
+        }
     }
 
     public void KillEntity()

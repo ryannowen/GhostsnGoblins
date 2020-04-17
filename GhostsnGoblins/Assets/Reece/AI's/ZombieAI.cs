@@ -222,7 +222,6 @@ public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
 
     public void TakeDamage(int amount)
     {
-
         HP -= amount;
         Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
     }
