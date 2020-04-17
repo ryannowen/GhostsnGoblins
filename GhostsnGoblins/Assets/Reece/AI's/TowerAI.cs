@@ -19,6 +19,7 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
     private float EnemyY;
     private bool Angered = false;
     private bool FindPlayer;
+    private bool Onetime = true;
     public bool Shoot;
 
     private FireProjectile fireProj;
@@ -60,7 +61,7 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
             if (PlayerX + 10 > EnemyX && PlayerX + 10 > EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
-                timer = Time.time;
+                
             }
             if (Angered)
             {
@@ -85,6 +86,11 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
                     else
                         fireProj.Fire(transform.position, Vector3.right, transform.rotation);
                     Shoot = false;
+                }
+                if (Onetime)
+                {
+                    timer = Time.time;
+                    Onetime = false;
                 }
             }
 
