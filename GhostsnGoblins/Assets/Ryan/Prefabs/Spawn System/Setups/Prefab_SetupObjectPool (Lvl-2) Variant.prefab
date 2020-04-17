@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 2635101492231279446, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Name
-      value: Prefab_SetupObjectPool (Lvl-2)
+      value: Prefab_SetupObjectPool (Lvl-2) Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7484131877158998291, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
@@ -70,7 +70,7 @@ PrefabInstance:
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
@@ -80,12 +80,12 @@ PrefabInstance:
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.data[1].m_InspectorName
-      value: Dragon (Boss)
+      value: Woody Pig
       objectReference: {fileID: 0}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.data[2].m_InspectorName
-      value: Dragon (Boss)
+      value: Skeleton
       objectReference: {fileID: 0}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
@@ -100,12 +100,12 @@ PrefabInstance:
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.data[2].m_Amount
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.data[1].m_Amount
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
@@ -122,13 +122,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pools.Array.data[1].m_Object
       value: 
-      objectReference: {fileID: 8211447592868946982, guid: 50ade6f9b21bf8945969c79270b09397,
+      objectReference: {fileID: 1504599778298092010, guid: dc1bd983f5e69c748b668c14fb2a7c42,
         type: 3}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
       propertyPath: m_Pools.Array.data[2].m_Object
       value: 
-      objectReference: {fileID: 8211447592868946982, guid: 50ade6f9b21bf8945969c79270b09397,
+      objectReference: {fileID: 9031925705788515724, guid: 3fe0431668ebba546ad04d3cddddb4c1,
         type: 3}
     - target: {fileID: 905452287598617705, guid: 9156edf3ae21e574680b9d4e1d8d6f6e,
         type: 3}
