@@ -8,6 +8,7 @@ public class WeaponManager : MonoBehaviour, IWeapon
     FireProjectile m_FireProjectile = null;
     [SerializeField] private GameObject m_Projectile = null;
     [SerializeField] private Vector3 shootingDirectionModification = Vector3.zero;
+    [SerializeField] private float m_Firerate = 1f;
 
 
     // Start is called before the first frame update
@@ -37,6 +38,11 @@ public class WeaponManager : MonoBehaviour, IWeapon
 
         m_FireProjectile.Fire(argsStartPosition, argsDirection, transform.rotation);
 
+    }
+
+    public float GetFireRate()
+    {
+        return m_Firerate;
     }
 
 }

@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
 
     Rigidbody2D m_Rigidbody;
     CapsuleCollider2D m_PlayerCollider;
+    BoxCollider2D m_CrouchedCollider;
     SpriteRenderer m_spriteRenderer;
     // Start is called before the first frame update
     void Start()
@@ -53,7 +54,7 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
         ManageClimbingSettings();
 
         // Check if the player wants to jump
-        if (Input.GetAxisRaw("Jump_P" + m_ID) > 0 && m_Grounded && m_CanMove && m_JumpTimer <= 0f)
+        if (Input.GetAxisRaw("Jump_P" + m_ID) > 0 && m_Grounded && m_CanMove && m_JumpTimer <= 0f && !m_Crouched)
         {
             // Play random jump sound
             int r = Random.Range(0, 2);
@@ -77,7 +78,24 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
 
         // If crouched then manage player settings for crouching
         if (m_Crouched)
-            ManageCrouchingSettings();
+        {
+
+            // Stop the player from moving
+            m_Rigidbody.velocity = Vector3.zero;
+
+            // Disable Second Collider
+            m_CrouchedCollider.enabled = true;
+            m_PlayerCollider.enabled = false;
+
+        }
+        else
+        {
+
+            // Disable Second Collider
+            m_PlayerCollider.enabled = true;
+            m_CrouchedCollider.enabled = false;
+
+        }
 
         // Get the desired movement direction
         m_DesiredMove = GetDesiredMove();
@@ -113,6 +131,9 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
         {
             m_PlayerCollider = this.gameObject.AddComponent(typeof(CapsuleCollider2D)) as CapsuleCollider2D;
         }
+
+        if (this.gameObject.GetComponent<BoxCollider2D>())
+            m_CrouchedCollider = this.gameObject.GetComponent<BoxCollider2D>();
 
         if (this.gameObject.GetComponent<PlayerController>() != null)
             m_PlayerController = this.gameObject.GetComponent<PlayerController>();
@@ -203,17 +224,6 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
         {
             m_Rigidbody.gravityScale = 4f;
         }
-
-    }
-
-    void ManageCrouchingSettings()
-    {
-
-        // Stop the player from moving
-        m_Rigidbody.velocity = Vector3.zero;
-
-        // Disable Second Collider
-        
 
     }
 

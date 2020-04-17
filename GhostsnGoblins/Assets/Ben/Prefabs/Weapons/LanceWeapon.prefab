@@ -60,3 +60,4 @@ MonoBehaviour:
   m_Projectile: {fileID: 941576023956072921, guid: 542d0fcf77afb2d40891899e526d4f25,
     type: 3}
   shootingDirectionModification: {x: 0, y: 0, z: 0}
+  m_Firerate: 1.2
