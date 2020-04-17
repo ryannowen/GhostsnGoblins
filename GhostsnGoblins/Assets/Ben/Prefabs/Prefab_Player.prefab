@@ -178,6 +178,15 @@ MonoBehaviour:
   m_ArmourPoints: 0
   m_FireRate: 1
   m_HasKey: 0
+  m_Sprites:
+  - {fileID: 21300000, guid: 3bde4309fc79b454d9487ad644d8c33f, type: 3}
+  - {fileID: 21300000, guid: 531e61e46bbd01a4f8670eefa748d29b, type: 3}
+  - {fileID: 21300000, guid: b3d9c72e597613641ab6930d9efe6f60, type: 3}
+  - {fileID: 21300000, guid: 459a29735040bdd4cb9fc3895e37f020, type: 3}
+  - {fileID: 21300000, guid: 052be88a7545e1f4bbcebef905be5101, type: 3}
+  - {fileID: 21300000, guid: 20ad7729caf22c54b81b519dac0ff08b, type: 3}
+  - {fileID: 21300000, guid: 775020bf1ad83984d862d720c1d8d512, type: 3}
+  - {fileID: 21300000, guid: d6c3988ff3d6eec43bd3cc27d173539b, type: 3}
   m_StartingWeapon: {fileID: 2184593732081151199, guid: c1dfcd5a8835389468a68d0c1ce8fb91,
     type: 3}
   m_EquippedItem: {fileID: 0}

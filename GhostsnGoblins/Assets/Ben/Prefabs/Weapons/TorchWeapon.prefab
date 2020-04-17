@@ -59,4 +59,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Projectile: {fileID: 6033140465015285520, guid: 2d67291d9052b52418ec09a27a574d04,
     type: 3}
-  shootingDirectionModification: {x: 0, y: 0.5, z: 0}
+  shotDirectionAddition: {x: 0, y: 0.5, z: 0}
+  singleShotModification: {x: 1, y: 1, z: 1}
+  m_Firerate: 1
+  m_Projectiles:
+  - name: 
+    shootingDirectionAddition: {x: 0, y: 0.1, z: 0}
+    shootingDirectionModification: {x: 1, y: 1, z: 1}
+  - name: 
+    shootingDirectionAddition: {x: 0, y: 0.2, z: 0}
+    shootingDirectionModification: {x: 1, y: 1, z: 1}
+  - name: 
+    shootingDirectionAddition: {x: 0, y: 0.3, z: 0}
+    shootingDirectionModification: {x: 1, y: 1, z: 1}
+  - name: 
+    shootingDirectionAddition: {x: 0, y: 0.4, z: 0}
+    shootingDirectionModification: {x: 1, y: 1, z: 1}
+  - name: 
+    shootingDirectionAddition: {x: 0, y: 0.5, z: 0}
+    shootingDirectionModification: {x: 1, y: 1, z: 1}
+  - name: 
+    shootingDirectionAddition: {x: 0, y: 0.6, z: 0}
+    shootingDirectionModification: {x: 1, y: 1, z: 1}
+  - name: 
+    shootingDirectionAddition: {x: 0, y: 0.7, z: 0}
+    shootingDirectionModification: {x: 1, y: 1, z: 1}
