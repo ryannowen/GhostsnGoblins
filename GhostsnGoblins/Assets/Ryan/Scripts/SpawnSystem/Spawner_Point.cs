@@ -72,6 +72,13 @@ public class Spawner_Point : MonoBehaviour, ISpawner
                         int index = Random.Range(0, availableSpawnPoints.Count);
                         spawnPoint = availableSpawnPoints[index];
 
+                        if(null == spawnPoint)
+                        {
+                            Debug.Log("Cannot use spawn point because none are specified at index=" + index);
+                            availableSpawnPoints.RemoveAt(index);
+                            continue;
+                        }
+
                         if (spawnPoint.GetCanSpawn())
                             break;
                         else
