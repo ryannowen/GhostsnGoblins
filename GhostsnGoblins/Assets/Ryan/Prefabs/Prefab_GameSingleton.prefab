@@ -158,10 +158,14 @@ MonoBehaviour:
   - obj1: 0
     obj2: 10
     ignoreLayerCollision: 1
+  - obj1: 17
+    obj2: 16
+    ignoreLayerCollision: 1
   m_lastCheckPoint: {x: 0, y: 0}
   m_showLevelDoorItem: 0
   m_previousLevelName: Level1_heaven
   m_livesScore: 0
+  m_masterMixer: {fileID: 24100000, guid: f9a2a2d609bc1e2448ae47d72018a5ea, type: 2}
 --- !u!114 &7194745594129441944
 MonoBehaviour:
   m_ObjectHideFlags: 0

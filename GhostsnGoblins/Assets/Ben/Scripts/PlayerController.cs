@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     [SerializeField] private bool m_HasKey = false;
 
     // Sprites
+    [SerializeField] private Sprite[] m_Sprites;
+
     private Sprite sirArthurNude;
     private Sprite sirArthurCopper;
     private Sprite sirArthurSilver;
@@ -65,10 +67,10 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         m_SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
 
         // Load Sprites
-        sirArthurNude = Resources.Load<Sprite>("Sprites/Characters/SirArthur_Nude") as Sprite;
-        sirArthurCopper = Resources.Load<Sprite>("Sprites/Characters/SirArthur_Copper") as Sprite;
-        sirArthurSilver = Resources.Load<Sprite>("Sprites/Characters/SirArthur_Silver") as Sprite;
-        sirArthurGold = Resources.Load<Sprite>("Sprites/Characters/SirArthur_Gold") as Sprite;
+        sirArthurNude = m_Sprites[m_ID-1];
+        sirArthurCopper = m_Sprites[m_ID - 1 + 2];
+        sirArthurSilver = m_Sprites[m_ID - 1 + 4];
+        sirArthurGold = m_Sprites[m_ID - 1 + 6];
 
         m_EquippedItem = System_Spawn.instance.GetObjectFromPool(m_StartingWeapon, true, true);
         if (m_StartingWeapon.gameObject.GetComponent<WeaponManager>())
