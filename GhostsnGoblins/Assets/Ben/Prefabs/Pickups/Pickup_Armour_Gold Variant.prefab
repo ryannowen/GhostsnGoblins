@@ -78,5 +78,10 @@ PrefabInstance:
       propertyPath: m_PickupType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7442735438330741986, guid: 3ea5773efa89555479f4d14f00a648f6,
+        type: 3}
+      propertyPath: m_Sprites.Array.data[18].type
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ea5773efa89555479f4d14f00a648f6, type: 3}

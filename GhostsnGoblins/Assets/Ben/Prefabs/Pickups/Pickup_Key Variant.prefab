@@ -22,6 +22,11 @@ PrefabInstance:
       propertyPath: m_PickupType
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 4846370628155702033, guid: 8304161e2946df34d9eb85adb28c9ac4,
+        type: 3}
+      propertyPath: m_Sprites.Array.data[18].type
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 4846370628155702035, guid: 8304161e2946df34d9eb85adb28c9ac4,
         type: 3}
       propertyPath: m_Sprite
