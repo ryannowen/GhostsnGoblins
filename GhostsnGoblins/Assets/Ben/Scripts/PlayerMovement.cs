@@ -209,7 +209,6 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
             m_Grounded = false;
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, 1.1f, m_GroundCheckLayerMask);
-        Debug.DrawRay(transform.position, -transform.up * 1.1f);
 
         if (hit)
             if (hit.collider.gameObject.layer == 20)
