@@ -157,9 +157,10 @@ MonoBehaviour:
   m_Crouched: 0
   m_LastMovingRight: 1
   m_CanMove: 1
+  m_StandingOnLadder: 0
   m_GroundCheckLayerMask:
     serializedVersion: 2
-    m_Bits: 8197
+    m_Bits: 1056773
 --- !u!114 &8607762150274011217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,5 +242,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.6}
+  m_Size: {x: 0.8, y: 0.6}
   m_EdgeRadius: 0

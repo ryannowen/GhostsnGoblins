@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
     [SerializeField] private float m_GravityScale = 4f, m_JumpForce = 7f, m_MovementSpeed = 5f, m_ClimbingSpeed = 3f, m_MovementDelayTimer = 0f, m_JumpDelay = 0.1f;
     private float m_JumpTimer = 0f;
     Vector3 m_DesiredMove = Vector3.zero;
-    public bool m_Grounded = false, m_Jump = false, m_Climbing = false, m_Crouched = false, m_LastMovingRight = true, m_CanMove = true;
+    public bool m_Grounded = false, m_Jump = false, m_Climbing = false, m_Crouched = false, m_LastMovingRight = true, m_CanMove = true, m_StandingOnLadder = false;
 
     public LayerMask m_GroundCheckLayerMask;
     private PlayerController m_PlayerController;
@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
             m_Rigidbody.velocity = Vector2.Lerp(m_Rigidbody.velocity, new Vector2(m_Rigidbody.velocity.x, m_JumpForce), 1f);
         }
 
-        if (m_Grounded && Input.GetAxisRaw("Vertical_P" + m_ID) < -0.7)
+        if (m_Grounded && Input.GetAxisRaw("Vertical_P" + m_ID) < -0.7 && !m_Climbing && !m_StandingOnLadder)
         {
             m_Crouched = true;
         }
@@ -207,6 +207,15 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
             m_Grounded = true;
         else
             m_Grounded = false;
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, 1.1f, m_GroundCheckLayerMask);
+        Debug.DrawRay(transform.position, -transform.up * 1.1f);
+
+        if (hit)
+            if (hit.collider.gameObject.layer == 20)
+                m_StandingOnLadder = true;
+            else
+                m_StandingOnLadder = false;
 
     }
 
