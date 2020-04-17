@@ -33,6 +33,10 @@ public class SkeletonAI : MonoBehaviour, IDamageable, ISpawn
     private bool MoveLeft;
     private bool MoveRight;
     private bool FindPlayer;
+    private float Origin;
+    private float EnemyXOrigin;
+    private bool CheckIfStill;
+    private float wait;
 
     Rigidbody2D rb;
 
@@ -95,6 +99,8 @@ public class SkeletonAI : MonoBehaviour, IDamageable, ISpawn
                 {
                     //Sets the Deathtimer of the zombie 5 seconds after it spawns.
                     Deathtimer = Time.time + 15;
+                    Origin = Time.time;
+                    wait = Time.time + 0.25f;
 
                     //Finds if the player is on the left.
                     if (PlayerX < EnemyX)
@@ -112,6 +118,18 @@ public class SkeletonAI : MonoBehaviour, IDamageable, ISpawn
                 }
             }
 
+            if (Time.time > Origin)
+            {
+                EnemyXOrigin = EnemyX;
+                Origin += 1f;
+            }
+
+            if (Time.time > wait)
+            {
+                wait += 0.5f;
+                CheckIfStill = true;
+            }
+
             //Will move the Zombie to the left if the player is on the left.
             if (MoveLeft)
             {
@@ -122,6 +140,15 @@ public class SkeletonAI : MonoBehaviour, IDamageable, ISpawn
                 moveDirection.x *= Speed;
 
                 rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+
+                if (EnemyX == EnemyXOrigin && CheckIfStill)
+                {
+                    MoveLeft = false;
+                    MoveRight = true;
+                    CheckIfStill = false;
+                }
+                else
+                    CheckIfStill = false;
             }
 
             //Will move the Zombie to the right if the player is on the right
@@ -134,6 +161,15 @@ public class SkeletonAI : MonoBehaviour, IDamageable, ISpawn
                 moveDirection.x *= Speed;
 
                 rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+
+                if (EnemyX == EnemyXOrigin && CheckIfStill)
+                {
+                    MoveLeft = true;
+                    MoveRight = false;
+                    CheckIfStill = false;
+                }
+                else
+                    CheckIfStill = false;
             }
 
             CheckGroundedState();
