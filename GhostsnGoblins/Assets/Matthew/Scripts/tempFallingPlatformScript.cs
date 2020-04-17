@@ -82,12 +82,12 @@ public class tempFallingPlatformScript : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter2D(Collision2D col) {
-        if (enabled) {
-            if (col.gameObject.CompareTag("Player")) {
-                col.gameObject.transform.parent = platformTransform;
-                StartCoroutine(makePlatformFall());
-            }
-        }
+		if (enabled) {
+			if (col.gameObject.CompareTag("Player")) {
+				col.gameObject.transform.parent = platformTransform;
+				StartCoroutine(makePlatformFall());
+			}
+		}
 	}
 
 	private void OnCollisionExit2D(Collision2D col) {
@@ -113,7 +113,7 @@ public class tempFallingPlatformScript : MonoBehaviour {
 	private IEnumerator makePlatformFall() {
 		yield return new WaitForSeconds(fallDelay);
 
-        if (!movingPlatformScript.getFallingMode()) {
+		if (!movingPlatformScript.getFallingMode()) {
 			isFalling = true;
 			movingPlatformScript.setFallingMode(true);
 			platformScript.setTimer(99999999);
