@@ -6,13 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class timer : MonoBehaviour
 {
-    public Text timeTxt;
+    public TMPro.TextMeshProUGUI timeTxt;
     public int duration = 10;
     public float remainingTime;
     public bool isCountingDown = false;
+    [SerializeField] private Color m_startColour = Color.green;
+    [SerializeField] private Color m_endColour = Color.red;
 
     private void Start()
     {
+        timeTxt.color = m_startColour;
         remainingTime = duration;
     }
 
@@ -26,6 +29,9 @@ public class timer : MonoBehaviour
 
         remainingTime -= Time.deltaTime;
         timeTxt.text = ((int)remainingTime).ToString();
+
+        timeTxt.color = Color.Lerp(m_startColour, m_endColour, (1 - (remainingTime / duration)));
+
         if (remainingTime < 0)
         {
             timeTxt.text = "0";

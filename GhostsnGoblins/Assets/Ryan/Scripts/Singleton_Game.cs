@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 [System.Serializable]
 public class layerColObject
@@ -51,6 +52,8 @@ public class Singleton_Game : MonoBehaviour
     [SerializeField] private bool m_showLevelDoorItem = false;
     [SerializeField] private string m_previousLevelName = "Level1_heaven";
     [SerializeField] private int m_livesScore = 0;
+    [Space]
+    [SerializeField] private AudioMixer m_masterMixer;
 
     private AudioSource mainAudioSource;
 
@@ -346,6 +349,8 @@ public class Singleton_Game : MonoBehaviour
             m_highScores[i].m_initials = PlayerPrefs.GetString("m_highScoreInitials_" + i);
             m_highScores[i].m_score = PlayerPrefs.GetInt("m_highScores_" + i);
         }
+
+        m_masterMixer.SetFloat("MasterVolume", PlayerPrefs.GetFloat("MasterVolume"));
     }
 
     public void SaveGame()
