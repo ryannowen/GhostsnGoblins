@@ -23,6 +23,10 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
     private bool OneTime = true;
     private bool MoveLeft;
     private bool MoveRight;
+    private float Origin;
+    private float EnemyXOrigin;
+    private float wait;
+    private bool CheckIfStill;
 
     private Rigidbody2D rb;
 
@@ -69,6 +73,8 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
                     EnemyX = Enemy.gameObject.transform.position.x;
                     EnemyY = Enemy.gameObject.transform.position.y;
                     Deathtimer = Time.time + 7;
+                    Origin = Time.time;
+                    wait = Time.time + 0.25f;
 
                     //Finds if the player is on the left.
                     if (PlayerX < EnemyX)
@@ -81,6 +87,17 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
                     time = Time.time;
                 }
 
+                if (Time.time > Origin)
+                {
+                    EnemyXOrigin = transform.position.x;
+                    Origin += 1f;
+                }
+
+                if (Time.time > wait)
+                {
+                    wait += 0.5f;
+                    CheckIfStill = true;
+                }
 
                 //Will move the Zombie to the left if the player is on the left.
                 if (MoveLeft)
@@ -99,7 +116,18 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
                     moveDirection.y *= Heightspeed;
 
                     rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+
+                    if (transform.position.x == EnemyXOrigin && CheckIfStill)
+                    {
+                        MoveLeft = false;
+                        MoveRight = true;
+                        CheckIfStill = false;
+                    }
+                    else
+                        CheckIfStill = false;
+
                 }
+
                 if (MoveRight)
                 {
                     transform.localRotation = Quaternion.Euler(0, 180, 0);
@@ -116,6 +144,15 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
                     moveDirection.y *= Heightspeed;
 
                     rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+
+                    if (transform.position.x == EnemyXOrigin && CheckIfStill)
+                    {
+                        MoveLeft = true;
+                        MoveRight = false;
+                        CheckIfStill = false;
+                    }
+                    else
+                        CheckIfStill = false;
                 }
 
                 //After how long the DeathTimer is the zombie will stop moving.
