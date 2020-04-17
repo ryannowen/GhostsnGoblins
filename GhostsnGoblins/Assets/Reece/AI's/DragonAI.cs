@@ -26,7 +26,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
     private bool FlyDown;
     private float MoveTime;
     private bool Shoot;
-    private int ShootTime = 3;
+    private float ShootTime;
     private int RNG;
     private float RNGTimer;
     private bool OneTime = true;
@@ -81,6 +81,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
         {
             EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
             PlayerPos = new Vector2(Player.gameObject.transform.position.x, Player.gameObject.transform.position.y);
+            ShootTime = Time.time;
 
             if (OneTime)
             {
@@ -131,7 +132,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
                 FlyDown = false;
                 FlyUp = true;
             }
-            else if (EnemyPos.y > PlayerPos.y + 3)
+            else if (EnemyPos.y > PlayerPos.y + 2)
             {
                 FlyUp = false;
                 FlyDown = true;

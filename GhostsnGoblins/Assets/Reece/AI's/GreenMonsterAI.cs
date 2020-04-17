@@ -13,7 +13,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
     private GameObject Enemy = null;
     private GameObject Player = null;
     private int HP = 1;
-    private float time = 0.5f;
+    private float timer;
     private float PlayerX;
     private float PlayerY;
     private float EnemyX;
@@ -61,12 +61,13 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
             if (PlayerX + 10 > EnemyX && PlayerX + 10 > EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
+                timer = Time.time;
             }
             if (Angered)
             {
-                if (Time.time > time)
+                if (Time.time > timer)
                 {
-                    time += 2f;
+                    timer += 2f;
                     FindPlayer = true;
                     Shoot = true;
                 }
