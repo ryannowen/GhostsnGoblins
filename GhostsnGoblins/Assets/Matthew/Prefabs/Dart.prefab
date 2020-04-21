@@ -128,7 +128,7 @@ MonoBehaviour:
   m_DecayTime: 3
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
 --- !u!50 &-9189037848141003153
 Rigidbody2D:
   serializedVersion: 4
