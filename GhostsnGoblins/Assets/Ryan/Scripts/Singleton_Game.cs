@@ -93,7 +93,7 @@ public class Singleton_Game : MonoBehaviour
         switch(scene.buildIndex) {
             case 0:
             case 1:
-            case 6:
+            case 7:
                 mainAudioSource.clip = null;
                 mainAudioSource.volume = 0;
                 mainAudioSource.Stop();
@@ -103,8 +103,7 @@ public class Singleton_Game : MonoBehaviour
             case 3:
             case 4:
             case 5:
-            case 7:
-            case 8:
+            case 6:
                 mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("FullLevelBGM");
                 mainAudioSource.volume = 0.1f;
                 mainAudioSource.Play();

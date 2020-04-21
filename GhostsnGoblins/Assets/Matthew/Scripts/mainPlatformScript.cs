@@ -5,13 +5,13 @@ using UnityEngine;
 /*
  *  Dear Matthew:
  * 
- * When you wrote your platform code, only God and you knew how it worked,
- * because they were insane.
- * Now after you've rewrote them atleast once, only God knows sit!
+ * When you wrote your platform code, only God and you knew how it worked.
+ * They were insane.
+ * Now after you've rewrote them at least once, only God knows it!
  * 
- * Therefore, if you're trying to optimize or fix the routines and
+ * Therefore, if you're trying to optimize or fix the coroutines and
  * you fail (most surely), please increase the counter
- * as a warning for next time you attempt it
+ * as a warning for next time you attempt it.
  * 
  * long long int total_hours_wasted_doing_more_platforms:  567
  * 

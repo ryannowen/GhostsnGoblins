@@ -161,6 +161,9 @@ MonoBehaviour:
   - obj1: 17
     obj2: 16
     ignoreLayerCollision: 1
+  - obj1: 17
+    obj2: 17
+    ignoreLayerCollision: 1
   m_lastCheckPoint: {x: 0, y: 0}
   m_showLevelDoorItem: 0
   m_previousLevelName: Level1_heaven

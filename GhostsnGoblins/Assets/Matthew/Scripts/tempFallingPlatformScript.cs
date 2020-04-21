@@ -32,6 +32,8 @@ public class tempFallingPlatformScript : MonoBehaviour {
 	private Vector3 initialPosition;
 	private bool isFalling = false;
 
+	private bool isUndergoingTriggeredCoroutine = false;
+
 	private void Awake() {
 		platformScript = transform.parent.gameObject.GetComponent<mainPlatformScript>();
 		if (platformScript == null) {
@@ -87,8 +89,10 @@ public class tempFallingPlatformScript : MonoBehaviour {
 				col.gameObject.transform.parent = platformTransform;
                 
 
-                // TODO ADD TRIGGERED CHECK
-                StartCoroutine(makePlatformFall());
+				if (isUndergoingTriggeredCoroutine == false) {
+					isUndergoingTriggeredCoroutine = true;
+					StartCoroutine(makePlatformFall());
+				}
 			}
 		}
 	}
@@ -159,5 +163,6 @@ public class tempFallingPlatformScript : MonoBehaviour {
 
 		platformScript.toggleTriggerCollider(true);
 		platformScript.setTimer(0);
+		isUndergoingTriggeredCoroutine = false;
 	}
 }
