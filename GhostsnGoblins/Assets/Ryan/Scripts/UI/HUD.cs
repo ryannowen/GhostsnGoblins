@@ -154,9 +154,9 @@ public class HUD : MonoBehaviour
         m_healthbarImages[argPlayerID].sprite = m_armourSprites[currentPlayerIndex];
     }
 
-    public void SetWeaponSprite(int argPlayerID/*, PlayerController.EEquippedWeaponType argType*/)
+    public void SetWeaponSprite(int argPlayerID, PlayerController.EEquippedWeaponType argType)
     {
-        /* m_weaponImages[argPlayerID].sprite = m_weaponSprite[(int)argType];*/
+        m_weaponImages[argPlayerID].sprite = m_weaponSprite[(int)argType];
     }
 
 
