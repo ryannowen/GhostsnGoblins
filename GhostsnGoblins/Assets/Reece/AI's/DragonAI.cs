@@ -11,7 +11,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy = null;
     private GameObject Player = null;
-    private int HP = 10;
+    private int HP = 6;
     private float speed = 5f;
     private float PlayerX;
     private float PlayerY;
@@ -142,11 +142,16 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
 
             if (Shoot)
             {
-                if (EnemyPos.x > PlayerPos.x)
+
+                Vector3 directionToFire = Player.transform.position - transform.position;
+                directionToFire.Normalize();
+                fireProj.Fire(transform.position, directionToFire, transform.rotation);
+                Shoot = false;
+               /* if (EnemyPos.x > PlayerPos.x)
                     fireProj.Fire(transform.position, Vector3.left, transform.rotation);
                 else
                     fireProj.Fire(transform.position, Vector3.right, transform.rotation);
-                Shoot = false;
+                Shoot = false;*/
             }
 
             //Will move the Zombie to the left if the player is on the left.
@@ -252,7 +257,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
     }
     public void OnSpawn()
     {
-        HP = 10;
+        HP = 6;
         Alive = true;
         Angered = false;
         OneTime = true;

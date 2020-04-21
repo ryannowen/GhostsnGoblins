@@ -30,6 +30,11 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
     private bool playerLevelReached = false;
     private bool Shoot;
     private float ShootTime = 3;
+    private float Origin;
+    private float EnemyXOrigin;
+    private float wait;
+    private bool CheckIfStill;
+
 
     private Rigidbody2D rb;
     private FireProjectile fireProj;
@@ -83,7 +88,8 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
                 EnemyY = Enemy.gameObject.transform.position.y;
                 PlayerX = Player.gameObject.transform.position.x;
                 ShootTime = Time.time;
-
+                Origin = Time.time;
+                wait = Time.time + 0.25f;
                 Deathtimer = Time.time + 30;
 
                 //Finds if the player is on the left.
@@ -196,6 +202,14 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
                     }
                 }
 
+                if (transform.position.x == EnemyXOrigin && CheckIfStill)
+                {
+                    MoveLeft = false;
+                    MoveRight = true;
+                    CheckIfStill = false;
+                }
+                else
+                    CheckIfStill = false;
 
             }
 
@@ -273,6 +287,27 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
                             playerLevelReached = false;
                     }
                 }
+
+                if (transform.position.x == EnemyXOrigin && CheckIfStill)
+                {
+                    MoveLeft = true;
+                    MoveRight = false;
+                    CheckIfStill = false;
+                }
+                else
+                    CheckIfStill = false;
+            }
+
+            if (Time.time > Origin)
+            {
+                EnemyXOrigin = transform.position.x;
+                Origin += 1f;
+            }
+
+            if (Time.time > wait)
+            {
+                wait += 0.5f;
+                CheckIfStill = true;
             }
 
             //After how long the DeathTimer is the zombie will stop moving.
