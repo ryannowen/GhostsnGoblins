@@ -2,6 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *  Dear Matthew:
+ * 
+ * When you wrote your platform code, only God and you knew how it worked,
+ * because they were insane.
+ * Now after you've rewrote them atleast once, only God knows sit!
+ * 
+ * Therefore, if you're trying to optimize or fix the routines and
+ * you fail (most surely), please increase the counter
+ * as a warning for next time you attempt it
+ * 
+ * long long int total_hours_wasted_doing_more_platforms:  567
+ * 
+ */
+
 public class mainPlatformScript : MonoBehaviour {
 
     [Tooltip("Platform settings are now stored in the 'ChildCollider' GameObject in the platform!")]
@@ -55,26 +70,44 @@ public class mainPlatformScript : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
-        if (timer > solidTime) {
-            return;
-        } else {
-            timer = solidTime;
+        if (col.gameObject.CompareTag("Player"))
+        {
+            if (timer > solidTime)
+            {
+                return;
+            }
+            else
+            {
+                timer = solidTime;
+            }
         }
     }
 
     private void OnTriggerStay2D(Collider2D col) {
-        if (timer > solidTime) {
-            return;
-        } else {
-            timer = solidTime;
+        if (col.gameObject.CompareTag("Player"))
+        {
+            if (timer > solidTime)
+            {
+                return;
+            }
+            else
+            {
+                timer = solidTime;
+            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D col) {
-        if (timer > solidTime) {
-            return;
-        } else {
-            timer = solidTime;
+        if (col.gameObject.CompareTag("Player"))
+        {
+            if (timer > solidTime)
+            {
+                return;
+            }
+            else
+            {
+                timer = solidTime;
+            }
         }
     }
 
