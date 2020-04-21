@@ -53,7 +53,7 @@ public class Singleton_Game : MonoBehaviour
     [SerializeField] private string m_previousLevelName = "Level1_heaven";
     [SerializeField] private int m_livesScore = 0;
     [Space]
-    [SerializeField] private AudioMixer m_masterMixer;
+    [SerializeField] private AudioMixer m_masterMixer = null;
 
     private AudioSource mainAudioSource;
 

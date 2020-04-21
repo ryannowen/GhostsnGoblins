@@ -5,6 +5,25 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+
+
+/*
+ *  Dear Matthew:
+ * 
+ * When you wrote your platform code, only God and you knew how it worked,
+ * because they were insane.
+ * Now after you've rewrote them atleast once, only God knows sit!
+ * 
+ * Therefore, if you're trying to optimize or fix the routines and
+ * you fail (most surely), please increase the counter
+ * as a warning for next time you attempt it
+ * 
+ * long long int total_hours_wasted_doing_more_platforms:  567
+ * 
+ */
+
+
+
 public class HUD : MonoBehaviour
 {
     [System.Serializable]
@@ -33,6 +52,8 @@ public class HUD : MonoBehaviour
     [SerializeField] private Healthbar[] m_healthbars = null;
     [SerializeField] private Image[] m_healthbarImages = null;
     [SerializeField] private Sprite[] m_armourSprites = null;
+    [SerializeField] private Image[] m_weaponImages = null;
+    [SerializeField] private Sprite[] m_weaponSprite = null;
 
     [SerializeField] private int[] m_currentArmours = null;
     [SerializeField] private float[] m_healthbarTargets = null;
@@ -40,14 +61,13 @@ public class HUD : MonoBehaviour
     private GameObject m_player1 = null;
     private GameObject m_player2 = null;
 
-    private float previousInsertMoney = 0.0f;
     void Start()
     {
         m_currentArmours = new int[m_healthBarsGameObjects.Length];
         m_healthbarTargets = new float[m_healthBarsGameObjects.Length];
 
         m_player1 = Singleton_Game.m_instance.GetPlayer(0);
-        m_player2 = Singleton_Game.m_instance.GetPlayer(1);
+        m_player2 = Singleton_Game.m_instance.GetPlayer(1);      
     }
 
     void Update()
@@ -70,8 +90,6 @@ public class HUD : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button1))
             Singleton_Game.m_instance.InsertMoney(20);
-
-        previousInsertMoney = Input.GetAxisRaw("Fire3_P1");
     }
 
     private void OnEnable()
@@ -120,10 +138,12 @@ public class HUD : MonoBehaviour
 
         m_currentArmours[argPlayerID] = (PlayerController.ArmourType.None == argArmourType) ? 3 : (int)argArmourType;
 
-        Image healthBarFill = m_healthBarsGameObjects[argPlayerID]/*.transform.Find("barMask").*/.transform.Find("colourFill").GetComponent<Image>();
+        Image healthBarFill = m_healthBarsGameObjects[argPlayerID].transform.Find("colourFill").GetComponent<Image>();
 
-        if(null != healthBarFill)
-            healthBarFill.color = m_healthbars[(int)argArmourType].healthbarColour;
+        int currentPlayerIndex = (int)argArmourType == 0 ? (argPlayerID == 1 ? (int)argArmourType + 1 : (int)argArmourType) : (int)argArmourType + 1;
+
+        if (null != healthBarFill)
+            healthBarFill.color = m_healthbars[currentPlayerIndex].healthbarColour;
 
         if ((int)argArmourType > m_armourSprites.Length)
         {
@@ -131,8 +151,14 @@ public class HUD : MonoBehaviour
             return;
         }
 
-        m_healthbarImages[argPlayerID].sprite = m_armourSprites[(int)argArmourType];
+        m_healthbarImages[argPlayerID].sprite = m_armourSprites[currentPlayerIndex];
     }
+
+    public void SetWeaponSprite(int argPlayerID/*, PlayerController.EEquippedWeaponType argType*/)
+    {
+        /* m_weaponImages[argPlayerID].sprite = m_weaponSprite[(int)argType];*/
+    }
+
 
     public void SetPlayerHUDActive(int argPlayerID, bool argActiveState)
     {
