@@ -24,6 +24,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
     private bool Angered;
     private bool AntiSwoopLeft;
     private bool AntiSwoopRight;
+    private float InvicibleTimer;
 
     //private float Deathtimer = 100f;
 
@@ -172,14 +173,17 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
 
     public void TakeDamage(int amount)
     {
-        Angered = true;
-        HP -= amount;
-        Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
+        if (InvicibleTimer < Time.time)
+        {
+            InvicibleTimer = Time.time + 1.5f;
+            Angered = true;
+            HP -= amount;
+            Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
+        }
     }
 
     public void KillEntity()
     {
-
         Alive = false;
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(3000, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));

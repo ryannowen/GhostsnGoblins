@@ -29,6 +29,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
     private float ShootTime;
     private int RNG;
     private float RNGTimer;
+    private float InvicibleTimer;
     private bool OneTime = true;
 
     private Rigidbody2D rb;
@@ -217,9 +218,13 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
 
     public void TakeDamage(int amount)
     {
-
-        HP -= amount;
-        Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
+        if (InvicibleTimer < Time.time)
+        {
+            InvicibleTimer = Time.time + 1.5f;
+            Angered = true;
+            HP -= amount;
+            Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
+        }
     }
 
     public void KillEntity()

@@ -29,6 +29,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
     private bool InAir;
     private bool AntiSwoopLeft;
     private bool AntiSwoopRight;
+    private float InvicibleTimer;
 
     //private float Deathtimer = 100f;
 
@@ -239,9 +240,13 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
 
     public void TakeDamage(int amount)
     {
-
-        HP -= amount;
-        Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
+        if (InvicibleTimer < Time.time)
+        {
+            InvicibleTimer = Time.time + 1.5f;
+            Angered = true;
+            HP -= amount;
+            Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
+        }
     }
 
     public void KillEntity()
