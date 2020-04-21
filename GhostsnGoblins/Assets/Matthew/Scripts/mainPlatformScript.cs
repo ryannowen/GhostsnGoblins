@@ -32,7 +32,6 @@ public class mainPlatformScript : MonoBehaviour {
     [SerializeField] private bool printErrors = false;
 
     private BoxCollider2D triggerCollider;
-    
 
     // Start is called before the first frame update
     void Awake() {
@@ -60,13 +59,17 @@ public class mainPlatformScript : MonoBehaviour {
     void FixedUpdate() {
         if (timer >= 0f) {
             timer -= Time.deltaTime;
-        } 
-        
-        if (timer <= 0f) {
+        }
+
+        if (timer <= 0f)
+        {
             childCol.enabled = true;
-        } else {
+        }
+        else
+        {
             childCol.enabled = false;
-        }   
+        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D col) {

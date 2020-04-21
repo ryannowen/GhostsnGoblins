@@ -5,25 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-
-
-/*
- *  Dear Matthew:
- * 
- * When you wrote your platform code, only God and you knew how it worked,
- * because they were insane.
- * Now after you've rewrote them atleast once, only God knows sit!
- * 
- * Therefore, if you're trying to optimize or fix the routines and
- * you fail (most surely), please increase the counter
- * as a warning for next time you attempt it
- * 
- * long long int total_hours_wasted_doing_more_platforms:  567
- * 
- */
-
-
-
 public class HUD : MonoBehaviour
 {
     [System.Serializable]

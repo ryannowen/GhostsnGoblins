@@ -85,7 +85,10 @@ public class tempFallingPlatformScript : MonoBehaviour {
 		if (enabled) {
 			if (col.gameObject.CompareTag("Player")) {
 				col.gameObject.transform.parent = platformTransform;
-				StartCoroutine(makePlatformFall());
+                
+
+                // TODO ADD TRIGGERED CHECK
+                StartCoroutine(makePlatformFall());
 			}
 		}
 	}
@@ -116,8 +119,8 @@ public class tempFallingPlatformScript : MonoBehaviour {
 		if (!movingPlatformScript.getFallingMode()) {
 			isFalling = true;
 			movingPlatformScript.setFallingMode(true);
-			platformScript.setTimer(99999999);
 			platformScript.toggleTriggerCollider(false);
+			platformScript.setTimer(99999999);
 
 			if (shouldFall) {
 				platformRb2D.bodyType = RigidbodyType2D.Dynamic;

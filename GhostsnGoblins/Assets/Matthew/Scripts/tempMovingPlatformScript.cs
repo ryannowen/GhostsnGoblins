@@ -93,6 +93,7 @@ public class tempMovingPlatformScript : MonoBehaviour {
 
                 if (pType == platformType.triggered) {
                     if (!hasTriggered && !fallingMode) {
+
                         currentPNum++;
                         hasTriggered = true;
                         StartCoroutine(moveP());
