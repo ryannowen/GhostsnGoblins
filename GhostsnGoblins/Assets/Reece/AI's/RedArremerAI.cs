@@ -69,10 +69,10 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
 
         if (Angered)
         {
-            if !(PlayerX + 5 > EnemyX && PlayerX - 5 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
-            {
-                Angered = false;
-            }
+            //if !(PlayerX + 5 > EnemyX && PlayerX - 5 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+            //{
+            //    Angered = false;
+            //}
         }
 
         if (Time.time > RNGtimer)
