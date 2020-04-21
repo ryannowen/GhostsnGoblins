@@ -58,7 +58,7 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
         if (Alive)
         {
             Enemy.SetActive(true);
-            if (PlayerX + 10 > EnemyX && PlayerX + 10 > EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+            if (PlayerX + 10 > EnemyX && PlayerX > EnemyX - 10 && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
                 
