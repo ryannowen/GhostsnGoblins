@@ -41,7 +41,6 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
     private Sprite sirArthurSilver;
     private Sprite sirArthurGold;
 
-    private EEquippedWeaponType m_EquippedWeaponType = EEquippedWeaponType.eLance;
     private ArmourType m_Armour = ArmourType.None;
 
     private bool m_IsInvulnerable = false;
@@ -225,6 +224,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
             m_FireRate = argsItem.gameObject.GetComponent<WeaponManager>().GetFireRate();
         else if (argsItem.gameObject.GetComponent<CombManager>())
             m_FireRate = argsItem.gameObject.GetComponent<CombManager>().GetFireRate();
+
+        Singleton_Game.m_instance.GetHUD().GetComponent<HUD>().SetWeaponSprite(m_ID-1, argsType);
 
     }
 
