@@ -106,7 +106,7 @@ public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
 
                     if (Random.Range(1, 100) > 70)
                     {
-                        Speed = Speed * 1.5f;
+                        Speed = Speed * 1.25f;
                     }
                     OneTime = false;
                 }
