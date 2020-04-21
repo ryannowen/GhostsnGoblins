@@ -59,18 +59,22 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
         if (Alive)
         {
             Enemy.SetActive(true);
-            if (PlayerX + 10 > EnemyX && PlayerX + 10 > EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+            if (PlayerX + 10 > EnemyX && PlayerX > EnemyX -10 && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
-                timer = Time.time;
+                if (Onetime)
+                {
+                    timer = Time.time;
+                    Onetime = false;
+                }
             }
             if (Angered)
             {
                 if (Time.time > timer)
                 {
-                    timer += 2f;
                     FindPlayer = true;
                     Shoot = true;
+                    timer += 2f;
                 }
                 // FindPlayer = true;
                 if (FindPlayer)
@@ -87,12 +91,6 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
                     directionToFire.Normalize();
                     fireProj.Fire(transform.position, directionToFire, transform.rotation);
                     Shoot = false;
-
-                    if (Onetime)
-                    {
-                        timer = Time.time;
-                        Onetime = false;
-                    }
                 }
             }
 

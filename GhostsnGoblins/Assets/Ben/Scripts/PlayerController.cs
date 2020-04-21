@@ -5,6 +5,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 {
 
+    public enum EEquippedWeaponType
+    {
+        eLance,
+        eComb,
+        eDagger,
+        eShield,
+        eTorch,
+        eAxe
+    }
+
     public enum ArmourType
     {
 
@@ -206,7 +216,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
     }
 
-    public void SetEquippedItem(GameObject argsItem)
+    public void SetEquippedItem(GameObject argsItem, EEquippedWeaponType argsType)
     {
 
         m_EquippedItem = argsItem;
@@ -214,6 +224,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
             m_FireRate = argsItem.gameObject.GetComponent<WeaponManager>().GetFireRate();
         else if (argsItem.gameObject.GetComponent<CombManager>())
             m_FireRate = argsItem.gameObject.GetComponent<CombManager>().GetFireRate();
+
+        Singleton_Game.m_instance.GetHUD().GetComponent<HUD>().SetWeaponSprite(m_ID-1, argsType);
 
     }
 
@@ -275,7 +287,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
             // Set Invulnerability
             AddToInvulnerabilityTimer(2f);
-            m_MovementSystem.AddToMovementDelayTimer(1.5f);
+            m_MovementSystem.AddToMovementDelayTimer(1f);
 
         }
 

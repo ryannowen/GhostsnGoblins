@@ -145,12 +145,32 @@ public class Pickup : MonoBehaviour, ISpawn
                     break;
 
                 case PickupType.Lance:
+                    playerC.SetEquippedItem(FindObjectToEquip(), PlayerController.EEquippedWeaponType.eLance);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
                 case PickupType.Dagger:
+                    playerC.SetEquippedItem(FindObjectToEquip(), PlayerController.EEquippedWeaponType.eDagger);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
                 case PickupType.Torch:
+                    playerC.SetEquippedItem(FindObjectToEquip(), PlayerController.EEquippedWeaponType.eTorch);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
                 case PickupType.Axe:
+                    playerC.SetEquippedItem(FindObjectToEquip(), PlayerController.EEquippedWeaponType.eAxe);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
                 case PickupType.Shield:
+                    playerC.SetEquippedItem(FindObjectToEquip(), PlayerController.EEquippedWeaponType.eShield);
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
+                    break;
+
                 case PickupType.Comb:
-                    playerC.SetEquippedItem(FindObjectToEquip());
+                    playerC.SetEquippedItem(FindObjectToEquip(), PlayerController.EEquippedWeaponType.eComb);
                     Singleton_Sound.m_instance.PlayAudioClipOneShot("Pickup", 0.15f);
                     break;
 

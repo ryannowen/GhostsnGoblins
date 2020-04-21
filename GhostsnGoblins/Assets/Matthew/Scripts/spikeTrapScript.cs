@@ -70,12 +70,14 @@ public class spikeTrapScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.tag == "Player") {
-            if (col.gameObject.GetComponent<IDamageable>() != null) {
-                col.gameObject.GetComponent<IDamageable>().TakeDamage(spikeTrapDamage);
-            }
+            if (hasTriggered == true) {
+                if (col.gameObject.GetComponent<IDamageable>() != null) {
+                    col.gameObject.GetComponent<IDamageable>().TakeDamage(spikeTrapDamage);
+                }
 
-            if (col.gameObject.GetComponent<ICanTakeKnockback>() != null) {
-                col.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(col.transform.position, 20);
+                if (col.gameObject.GetComponent<ICanTakeKnockback>() != null) {
+                    col.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(col.transform.position, 20);
+                }
             }
         }
     }

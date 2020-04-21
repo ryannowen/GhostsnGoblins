@@ -67,6 +67,14 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
             }
         }
 
+        if (Angered)
+        {
+            if (PlayerX > EnemyX + 12 && PlayerX < EnemyX - 12 && PlayerY > EnemyY + 7 && PlayerY < EnemyY - 7)
+            {
+                Angered = false;
+            }
+        }
+
         if (Time.time > RNGtimer)
         {
             RNG = Random.Range(2, 100);
