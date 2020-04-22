@@ -129,7 +129,7 @@ public class Singleton_Game : MonoBehaviour
             if (m_livesScore >= m_requiredScoreForLife) 
             {
                 m_livesScore = 0;
-                m_playerLives++;
+                AddPlayerLives(1);
                 Singleton_Sound.m_instance.PlayAudioClip("1Up", 0.8f);
             }
         }
@@ -256,15 +256,18 @@ public class Singleton_Game : MonoBehaviour
 
     public void ReSpawnPlayerAtCheckpoint(int argPlayerID)
     {
+        if (m_playerLives <= 0)
+            return;
+
         if (1 == argPlayerID && !m_spawnedPlayer2)
             return;
 
-        GameObject player2 = GetPlayer(argPlayerID);
-        if(player2.GetComponent<PlayerController>().GetHealth() <= 0)
-            player2.GetComponent<ISpawn>().OnSpawn();
+        GameObject player = GetPlayer(argPlayerID);
+        if (player.GetComponent<PlayerController>().GetHealth() <= 0)
+            player.GetComponent<ISpawn>().OnSpawn();
 
-        player2.transform.position = m_lastCheckPoint;
-        player2.SetActive(true);
+        player.transform.position = m_lastCheckPoint;
+        player.SetActive(true);
     }
 
     public int GetPlayerLives()
@@ -281,32 +284,41 @@ public class Singleton_Game : MonoBehaviour
     {
         m_playerLives += argPlayerLives;
 
+        m_HUDPrefab.GetComponent<HUD>().SetPlayerLives(m_playerLives);
+
         if (m_playerLives <= 0)
         {
-            System_Spawn.instance.DisableAllSpawns();
-            m_previousLevelName = SceneManager.GetActiveScene().name;
-            SceneManager.LoadScene("death");
+            if (!GetPlayer(0).activeSelf && (m_spawnedPlayer2 ? !GetPlayer(1).activeSelf : true))
+            {
+                GoToDeathScene();
+            }
         }
     }
 
     public void CheckPlayersAlive()
     {
-        GameObject player1 = GetPlayer(0);
-        GameObject player2 = GetPlayer(1);
-
-        if (!player1.activeSelf && (m_spawnedPlayer2 ? !player2.activeSelf : true))
+        if (m_playerLives > 0)
         {
-            player1.SetActive(true);
-            player1.transform.position = m_lastCheckPoint;
-            player1.GetComponent<PlayerController>().OnSpawn();
-        }
+            GameObject player1 = GetPlayer(0);
+            GameObject player2 = GetPlayer(1);
 
-        if(m_spawnedPlayer2 && !player2.activeSelf && !player1.activeSelf)
-        { 
-            player2.SetActive(true);
-            player2.transform.position = m_lastCheckPoint;
-            player2.GetComponent<PlayerController>().OnSpawn();
+            if (!player1.activeSelf && (m_spawnedPlayer2 ? !player2.activeSelf : true))
+            {
+                ReSpawnPlayerAtCheckpoint(0);
+            }
+
+            if (m_spawnedPlayer2 && !player2.activeSelf && !player1.activeSelf)
+            {
+                ReSpawnPlayerAtCheckpoint(1);
+            }
         }
+    }
+
+    private void GoToDeathScene()
+    {
+        System_Spawn.instance.DisableAllSpawns();
+        m_previousLevelName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene("death");
     }
 
     public void SetCheckPoint(Vector2 argCheckPointLocation)

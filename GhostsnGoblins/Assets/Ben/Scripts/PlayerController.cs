@@ -299,11 +299,11 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         // Add functionality to kill the player
         print("Player Died");
 
-        // Subtract from player lives
-        Singleton_Game.m_instance.AddPlayerLives(-1);
-
         // Deactivate player
         this.gameObject.SetActive(false);
+
+        // Subtract from player lives
+        Singleton_Game.m_instance.AddPlayerLives(-1);
 
         // Checks if both players are dead, respawns them at checkpoint if they are
         Singleton_Game.m_instance.CheckPlayersAlive();

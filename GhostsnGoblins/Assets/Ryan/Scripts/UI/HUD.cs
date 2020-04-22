@@ -31,7 +31,8 @@ public class HUD : MonoBehaviour
 
     [SerializeField] private GameObject[] m_healthBarsGameObjects = null;
     [SerializeField] private Healthbar[] m_healthbars = null;
-    [SerializeField] private Image[] m_healthbarImages = null;
+    [SerializeField] private GameObject[] m_healthbarPanels = null;
+    [SerializeField] private Image[] m_playerLifeImages = null;
     [SerializeField] private Sprite[] m_armourSprites = null;
     [SerializeField] private Image[] m_weaponImages = null;
     [SerializeField] private Sprite[] m_weaponSprite = null;
@@ -48,7 +49,9 @@ public class HUD : MonoBehaviour
         m_healthbarTargets = new float[m_healthBarsGameObjects.Length];
 
         m_player1 = Singleton_Game.m_instance.GetPlayer(0);
-        m_player2 = Singleton_Game.m_instance.GetPlayer(1);      
+        m_player2 = Singleton_Game.m_instance.GetPlayer(1);
+
+        SetPlayerLives(Singleton_Game.m_instance.GetPlayerLives());
     }
 
     void Update()
@@ -132,14 +135,18 @@ public class HUD : MonoBehaviour
             return;
         }
 
-        m_healthbarImages[argPlayerID].sprite = m_armourSprites[currentPlayerIndex];
+        
+        for(int i = argPlayerID; i < m_playerLifeImages.Length; i+=2)
+        {
+
+            m_playerLifeImages[i].sprite = m_armourSprites[currentPlayerIndex];     
+        }
     }
 
     public void SetWeaponSprite(int argPlayerID, PlayerController.EEquippedWeaponType argType)
     {
         m_weaponImages[argPlayerID].sprite = m_weaponSprite[(int)argType];
     }
-
 
     public void SetPlayerHUDActive(int argPlayerID, bool argActiveState)
     {
@@ -151,12 +158,20 @@ public class HUD : MonoBehaviour
         m_healthBarsGameObjects[argPlayerID].SetActive(argActiveState);
 
 
-        if (argPlayerID > m_healthbarImages.Length)
+        if (argPlayerID > m_healthbarPanels.Length)
         {
             Debug.LogWarning("Cannot set active state of player HUD because the player ID excedes the number of healthbar images");
             return;
         }
-        m_healthbarImages[argPlayerID].gameObject.SetActive(argActiveState);
+        m_healthbarPanels[argPlayerID].gameObject.SetActive(argActiveState);
+    }
+
+    public void SetPlayerLives(int argLives)
+    {
+        for(int i = 0; i < m_playerLifeImages.Length; i++)
+        {
+            m_playerLifeImages[i].enabled = (i <= (argLives * 2) - 1);
+        }
     }
 
     public void ToggleUI()
@@ -188,10 +203,18 @@ public class HUD : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Enables timer if not on death scene or Main Menu
-        m_HUDTimer.enabled = (1 != scene.buildIndex && 0 != scene.buildIndex);
+        if (m_shopUI.activeSelf)
+            m_shopUI.SetActive(false);
 
-        if (m_HUDTimer.enabled)
+        //if not on death scene or Main Menu
+        bool isOnGameLevel = (1 != scene.buildIndex && 0 != scene.buildIndex);
+
+        // Enables timer 
+        m_HUDTimer.enabled = isOnGameLevel;
+        if(m_HUDTimer.enabled)
             m_HUDTimer.ResetTimer();
+
+
+        m_gameUI.SetActive(isOnGameLevel);
     }
 }
