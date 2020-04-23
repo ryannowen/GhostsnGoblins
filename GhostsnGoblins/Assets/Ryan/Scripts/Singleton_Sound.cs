@@ -94,7 +94,6 @@ public class Singleton_Sound : MonoBehaviour
                     mainAudioSource.Play(); 
                 }
 
-                print("Fade out succeeded!");
                 hasFadedOut = true;
                 yield break;
             }
@@ -114,7 +113,6 @@ public class Singleton_Sound : MonoBehaviour
 
                 if (mainAudioSource.volume > volumeDest) {
                     mainAudioSource.volume = volumeDest;
-                    print("Fade in succeeded!");
                     hasFadedOut = false;
                     yield break;
                 }

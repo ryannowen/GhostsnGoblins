@@ -49,8 +49,7 @@ public class mainPlatformScript : MonoBehaviour {
             childCol = gameObject.transform.GetChild(0).gameObject.GetComponent<BoxCollider2D>();
         }
 
-        if(null != childCol)
-        {
+        if(null != childCol) {
             childCol.GetComponent<SpriteRenderer>().size = GetComponent<SpriteRenderer>().size;
         }
     }
@@ -61,54 +60,38 @@ public class mainPlatformScript : MonoBehaviour {
             timer -= Time.deltaTime;
         }
 
-        if (timer <= 0f)
-        {
+        if (timer <= 0f) {
             childCol.enabled = true;
-        }
-        else
-        {
+        } else {
             childCol.enabled = false;
         }
-        
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
-        if (col.gameObject.CompareTag("Player"))
-        {
-            if (timer > solidTime)
-            {
+        if (col.gameObject.CompareTag("Player")) {
+            if (timer > solidTime) {
                 return;
-            }
-            else
-            {
+            } else {
                 timer = solidTime;
             }
         }
     }
 
     private void OnTriggerStay2D(Collider2D col) {
-        if (col.gameObject.CompareTag("Player"))
-        {
-            if (timer > solidTime)
-            {
+        if (col.gameObject.CompareTag("Player")) {
+            if (timer > solidTime) {
                 return;
-            }
-            else
-            {
+            } else {
                 timer = solidTime;
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D col) {
-        if (col.gameObject.CompareTag("Player"))
-        {
-            if (timer > solidTime)
-            {
+        if (col.gameObject.CompareTag("Player")) {
+            if (timer > solidTime) {
                 return;
-            }
-            else
-            {
+            } else {
                 timer = solidTime;
             }
         }

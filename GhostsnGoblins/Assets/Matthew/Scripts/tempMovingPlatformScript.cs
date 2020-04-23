@@ -15,12 +15,11 @@ public class tempMovingPlatformScript : MonoBehaviour {
 	[Tooltip("The amount of time it takes to move a platform to a point in the position array.")]
 	[SerializeField] private float platformMoveDelay = 1;
 
-	[Tooltip("Time (in seconds) it takes for the platform to move to a certain position.")]
-	[SerializeField] private float platformDestinationTime = 3;
+	[Tooltip("The speed of the platform, multiplied by a Time.fixedDeltaTime.")]
+	[SerializeField] private float platformSpeed = 2;
 
 	private mainPlatformScript platformScript = null;
 	private Transform platformTransform = null;
-	private Vector3 vel;
 
 	private int startPNum = 0;
 	private int currentPNum = -1;
@@ -34,7 +33,7 @@ public class tempMovingPlatformScript : MonoBehaviour {
 
 	private void Awake() {
 		platformMoveDelay = Mathf.Abs(platformMoveDelay);
-		platformDestinationTime = Mathf.Abs(platformDestinationTime);
+		platformSpeed = Mathf.Abs(platformSpeed);
 
 		platformScript = transform.parent.gameObject.GetComponent<mainPlatformScript>();
 		if (platformScript == null) {
@@ -93,8 +92,7 @@ public class tempMovingPlatformScript : MonoBehaviour {
 
                 if (pType == platformType.triggered) {
                     if (!hasTriggered && !fallingMode) {
-
-                        currentPNum++;
+						currentPNum++;
                         hasTriggered = true;
                         StartCoroutine(moveP());
                     }
@@ -118,7 +116,7 @@ public class tempMovingPlatformScript : MonoBehaviour {
 					if (!fallingMode) {
 						if (currentlyMoving) {
 							if (!checkPState(platformTransform.position)) {
-								platformTransform.position = Vector3.SmoothDamp(platformTransform.position, positionArray[currentPNum].transform.position, ref vel, platformDestinationTime);
+								platformTransform.position = Vector3.MoveTowards(transform.position, positionArray[currentPNum].transform.position, Time.fixedDeltaTime * platformSpeed);
 							} else {
 								currentlyMoving = false;
 								StartCoroutine(moveP());
@@ -137,7 +135,7 @@ public class tempMovingPlatformScript : MonoBehaviour {
 						if (hasTriggered) {
 							if (currentlyMoving) {
 								if (!checkPState(platformTransform.position)) {
-									platformTransform.position = Vector3.SmoothDamp(platformTransform.position, positionArray[currentPNum].transform.position, ref vel, platformDestinationTime);
+									platformTransform.position = Vector3.MoveTowards(transform.position, positionArray[currentPNum].transform.position, Time.fixedDeltaTime * platformSpeed);
 								} else {
 									currentlyMoving = false;
 									StartCoroutine(moveP());
