@@ -41,8 +41,8 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
         if (Bullet == null)
             Bullet = (GameObject)Resources.Load("Prefabs/Bullet") as GameObject;
 
-        fireProj = this.gameObject.GetComponent<FireProjectile>();
-        fireProj.SetProjectile(Bullet);
+        //fireProj = this.gameObject.GetComponent<FireProjectile>();
+       // fireProj.SetProjectile(Bullet);
 
         m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
@@ -164,17 +164,6 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
                     AntiSwoopRight = false;
                 }
             }
-
-            /* if (EnemyX > PlayerX + 8.1f)
-             {
-                 EnemyX -= speed * 5;
-                 // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
-             }
-             else if (EnemyX < PlayerX - 8.1f)
-             {
-                 EnemyX += speed * 5;
-                 // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
-             }*/
             Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
         }
 
