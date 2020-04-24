@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Alive: 1
+  Bullet: {fileID: 2288533703519710632, guid: 77620011d7e14634aabfb85386de7996, type: 3}
 --- !u!50 &9133371381008278196
 Rigidbody2D:
   serializedVersion: 4
