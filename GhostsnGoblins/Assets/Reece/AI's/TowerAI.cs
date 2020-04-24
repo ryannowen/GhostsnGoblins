@@ -21,6 +21,7 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
     private bool FindPlayer;
     private bool Onetime = true;
     public bool Shoot;
+    private float ShootHeight;
 
     private FireProjectile fireProj;
 
@@ -70,6 +71,7 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
                     timer += 2f;
                     FindPlayer = true;
                     Shoot = true;
+                    ShootHeight = Random.Range(0, 2);
                 }
                 // FindPlayer = true;
                 if (FindPlayer)
@@ -82,9 +84,9 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
                 if (Shoot)
                 {
                     if (PlayerX < EnemyX)
-                        fireProj.Fire(transform.position, Vector3.left, transform.rotation);
+                        fireProj.Fire(transform.position - new Vector3(0,ShootHeight - 0.5f ,0) , Vector3.left, transform.rotation);
                     else
-                        fireProj.Fire(transform.position, Vector3.right, transform.rotation);
+                        fireProj.Fire(transform.position - new Vector3(0, ShootHeight - 0.5f , 0) , Vector3.right, transform.rotation);
                     Shoot = false;
                 }
                 if (Onetime)
