@@ -115,7 +115,7 @@ MonoBehaviour:
     ignoreLayerCollision: 1
   - obj1: 13
     obj2: 16
-    ignoreLayerCollision: 1
+    ignoreLayerCollision: 0
   - obj1: 13
     obj2: 17
     ignoreLayerCollision: 1
