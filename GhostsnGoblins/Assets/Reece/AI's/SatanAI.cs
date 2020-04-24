@@ -6,6 +6,8 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
 {
     public bool Alive = true;
 
+    [SerializeField] private GameObject Bullet = null;
+
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
@@ -21,11 +23,13 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
     private float DistanceY;
     private bool FindPlayer = true;
     private bool Swoop;
+    private bool Shoot;
     private bool Angered;
     private bool AntiSwoopLeft;
     private bool AntiSwoopRight;
     private float InvicibleTimer;
 
+    private FireProjectile fireProj;
     //private float Deathtimer = 100f;
 
     // Start is called before the first frame update
@@ -33,6 +37,12 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
+
+        if (Bullet == null)
+            Bullet = (GameObject)Resources.Load("Prefabs/Bullet") as GameObject;
+
+        fireProj = this.gameObject.GetComponent<FireProjectile>();
+        fireProj.SetProjectile(Bullet);
 
         m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
@@ -69,14 +79,19 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
             FindPlayer = true;
         }
 
-        if (!Swoop && !AntiSwoopLeft && !AntiSwoopRight)
+        if (!Swoop && !AntiSwoopLeft && !AntiSwoopRight && !Shoot)
         {
-
-            if (RNG > 50)
+            if (RNG > 30)
             {
                 Swoop = true;
             }
+            if (RNG > 0 && RNG <= 30)
+            {
+                Shoot = true;
+            }
+
             RNG = 0;
+            
         }
 
         if (Angered && Alive)
@@ -163,6 +178,14 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
             Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
         }
 
+        if (Shoot)
+        {
+            Vector3 directionToFire = Player.transform.position - transform.position;
+            directionToFire.Normalize();
+            fireProj.Fire(transform.position, directionToFire, transform.rotation);
+            Shoot = false;
+        }
+
         if (HP <= 0)
             KillEntity();
 
@@ -175,7 +198,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (InvicibleTimer < Time.time)
         {
-            InvicibleTimer = Time.time + 1.5f;
+            InvicibleTimer = Time.time + 0.5f;
             Angered = true;
             HP -= amount;
             Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);

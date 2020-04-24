@@ -11,7 +11,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy = null;
     private GameObject Player = null;
-    private int HP = 6;
+    private int HP = 3;
     private float speed = 5f;
     private float PlayerX;
     private float PlayerY;
@@ -225,7 +225,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (InvicibleTimer < Time.time)
         {
-            InvicibleTimer = Time.time + 1.5f;
+            InvicibleTimer = Time.time + 0.5f;
             Angered = true;
             HP -= amount;
             Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);

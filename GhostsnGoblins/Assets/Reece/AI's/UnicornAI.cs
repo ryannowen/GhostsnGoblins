@@ -84,23 +84,23 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
         {
             FindPlayer = true;
             RNG = Random.Range(2, 100);
-            RNGtimer += 1.5f;
+            RNGtimer += 1;
         }
 
 
 
         if (!Jump && !Shoot && !Dash)
         {
-            if (RNG <= 49 && RNG > 0)
+            if (RNG <= 65 && RNG > 0)
             {
                 Jump = true;
                 JumpTimer = Time.time + 1;
             }
-            else if (RNG <= 50 && RNG > 49)
+            else if (RNG <= 66 && RNG > 65)
             {
                 Shoot = true;
             }
-            else if (RNG <= 100 && RNG > 50)
+            else if (RNG <= 100 && RNG > 66)
             {
                 Dash = true;
                 DashTime = Time.time + 0.2f;
@@ -200,7 +200,7 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (InvicibleTimer < Time.time)
         {
-            InvicibleTimer = Time.time + 1.5f;
+            InvicibleTimer = Time.time + 0.5f;
             Angered = true;
             HP -= amount;
             Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound", 0.4f);

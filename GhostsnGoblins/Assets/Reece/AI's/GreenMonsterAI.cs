@@ -37,6 +37,8 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
         fireProj = this.gameObject.GetComponent<FireProjectile>();
         fireProj.SetProjectile(Bullet);
 
+        Bullet.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
         m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
         Enemy = this.gameObject;
