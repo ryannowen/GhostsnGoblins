@@ -175,7 +175,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (InvicibleTimer < Time.time)
         {
-            InvicibleTimer = Time.time + 1.5f;
+            InvicibleTimer = Time.time + 0.5f;
             Angered = true;
             HP -= amount;
             Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
