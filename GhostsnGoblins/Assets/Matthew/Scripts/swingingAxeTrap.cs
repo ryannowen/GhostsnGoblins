@@ -25,7 +25,7 @@ public class swingingAxeTrap : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-        if (col.gameObject.tag == "Player") {
+        if (col.gameObject.tag == "Player" || col.gameObject.tag == "Enemy") {
             if (col.gameObject.GetComponent<IDamageable>() != null){
                 col.gameObject.GetComponent<IDamageable>().TakeDamage(axeDamage);
             }

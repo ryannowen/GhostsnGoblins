@@ -26,7 +26,7 @@ public class pressurePlateScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col) {
         if (!pressurePlateTriggered) {
-            if (col.gameObject.tag == "Player") {
+            if (col.gameObject.tag == "Player" || col.gameObject.tag == "Enemy") {
             
                 for (int i = 0; i < trapsList.Length; i++) {
                     switch (trapsList[i].tag) {

@@ -51,7 +51,7 @@ public class spikeTrapScript : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-        if (col.gameObject.tag == "Player") {
+        if (col.gameObject.tag == "Player" || col.gameObject.tag == "Enemy") {
             if (!hasTriggered) {
                 if (trapType == t_Type.triggerable) {
                     if (isCurrentlyActive) { 
