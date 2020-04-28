@@ -31,7 +31,7 @@ public class dartTrapScript : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D col) {
-        if (col.gameObject.tag == "Player") {
+        if (col.gameObject.tag == "Player" || col.gameObject.tag == "Enemy") {
             if (trapType == t_Type.triggerable) {
                 activateDartTrap();
             }

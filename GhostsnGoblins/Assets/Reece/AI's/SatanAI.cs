@@ -35,6 +35,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
     // Start is called before the first frame update
     void Start()
     {
+
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
 
@@ -42,7 +43,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
             Bullet = (GameObject)Resources.Load("Prefabs/Bullet") as GameObject;
 
         fireProj = this.gameObject.GetComponent<FireProjectile>();
-        
+        fireProj.SetProjectile(Bullet);
 
         m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
@@ -56,8 +57,8 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
         {
             PlayerX = Player.gameObject.transform.position.x;
             PlayerY = Player.gameObject.transform.position.y;
-            EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
+            EnemyX = Enemy.gameObject.transform.position.x;
             DistanceY = EnemyY - PlayerY;
             DistanceX = EnemyX - PlayerX;
             FindPlayer = false;
@@ -169,7 +170,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
 
         if (Shoot)
         {
-            fireProj.SetProjectile(Bullet);
+           
             Vector3 directionToFire = Player.transform.position - transform.position;
             directionToFire.Normalize();
             fireProj.Fire(transform.position, directionToFire, transform.rotation);
