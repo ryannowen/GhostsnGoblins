@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class dartTrapScript : MonoBehaviour {
+public class dartTrapScript : MonoBehaviour, ITrap {
 
     enum t_Type { triggerable, timed, pressurePlated };
 
@@ -33,7 +33,7 @@ public class dartTrapScript : MonoBehaviour {
     void OnTriggerStay2D(Collider2D col) {
         if (col.gameObject.tag == "Player" || col.gameObject.tag == "Enemy") {
             if (trapType == t_Type.triggerable) {
-                activateDartTrap();
+                activateTrap();
             }
         }
     }
@@ -41,7 +41,7 @@ public class dartTrapScript : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (trapType == t_Type.timed) {
-            activateDartTrap();
+            activateTrap();
         }
     }
 
@@ -51,7 +51,7 @@ public class dartTrapScript : MonoBehaviour {
         canSpawnPart = true;
     }
 
-    public void activateDartTrap() {
+    public void activateTrap() {
         if (canSpawnPart) {
             Singleton_Sound.m_instance.PlayAudioClipOneShot("DartFire", 0.2f);
 

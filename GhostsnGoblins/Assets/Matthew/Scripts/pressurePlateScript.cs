@@ -29,17 +29,12 @@ public class pressurePlateScript : MonoBehaviour {
             if (col.gameObject.tag == "Player" || col.gameObject.tag == "Enemy") {
             
                 for (int i = 0; i < trapsList.Length; i++) {
-                    switch (trapsList[i].tag) {
-                        case "SpikeTrap":
-                            trapsList[i].GetComponent<spikeTrapScript>().activateSpikeTrap();
-                            break;
+                    ITrap iTrapObj = trapsList[i].GetComponent<ITrap>();
 
-                        case "DartTrap":
-                            trapsList[i].GetComponent<dartTrapScript>().activateDartTrap();
-                            break;
+                    if (iTrapObj != null) {
+                        iTrapObj.activateTrap();
                     }
                 }
-
                 
                 pressurePlateTriggered = true;
                 oneTimeBool = true;

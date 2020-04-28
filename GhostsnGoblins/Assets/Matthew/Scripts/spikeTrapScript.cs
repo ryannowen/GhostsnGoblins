@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class spikeTrapScript : MonoBehaviour {
+public class spikeTrapScript : MonoBehaviour, ITrap {
 
     enum t_Type { triggerable, timed, pressurePlated };
 
@@ -46,7 +46,7 @@ public class spikeTrapScript : MonoBehaviour {
         }
     }
 
-    public void activateSpikeTrap() {
+    public void activateTrap() {
         hasTriggered = true;
     }
 
