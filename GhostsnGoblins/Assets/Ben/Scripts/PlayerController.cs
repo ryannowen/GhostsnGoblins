@@ -287,7 +287,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 
             // Set Invulnerability
             AddToInvulnerabilityTimer(2f);
-            m_MovementSystem.AddToMovementDelayTimer(1f);
+            //m_MovementSystem.AddToMovementDelayTimer(1f);
 
         }
 
