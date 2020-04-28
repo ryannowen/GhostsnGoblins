@@ -94,4 +94,9 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
 
     }
 
+    public void SetProjectileProperties(bool canDecay, float decayTime) 
+    {
+        m_DecayAfterTime = canDecay;
+        m_DecayTime = decayTime;
+    }
 }

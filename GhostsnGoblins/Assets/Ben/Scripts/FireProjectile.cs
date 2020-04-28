@@ -7,6 +7,8 @@ public class FireProjectile : MonoBehaviour
 
     private GameObject m_Projectile = null;
     [SerializeField] private float m_ProjectileSpeed = 5f;
+    [SerializeField] private bool doesDecay = true;
+    [SerializeField] private float decayTime = 3f;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +50,7 @@ public class FireProjectile : MonoBehaviour
             tempProjectile.transform.position = argsStartPosition;
             tempProjectile.transform.rotation = argsRotation;
             tempProjectile.GetComponent<Rigidbody2D>().AddForce(argsDirection * m_ProjectileSpeed, ForceMode2D.Impulse);
+            tempProjectile.GetComponent<Projectile>().SetProjectileProperties(doesDecay, decayTime);
         }
 
     }
