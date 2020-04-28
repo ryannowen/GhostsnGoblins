@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9c358fea7a2f5449dc66124f091a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ProjectileSpeed: 8
+  m_ProjectileSpeed: 7
 --- !u!114 &5046551668258086277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,6 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Projectile: {fileID: 2447005794682650670, guid: 0ecbebc2c89b15f49a0132661f9d9601,
     type: 3}
-  singleShotModificationDirection: {x: 1, y: 1, z: 1}
+  shotDirectionAddition: {x: 0, y: 0, z: 0}
+  singleShotModification: {x: 1, y: 1, z: 1}
   m_Firerate: 1
   m_Projectiles: []

@@ -45,7 +45,7 @@ public class dartTrapScript : MonoBehaviour {
         }
     }
 
-    // Wait time before the trap can spawn another dart.
+    // Wait time before the trap can spawn another dart., 
     private IEnumerator delayDartSpawn(float wTime) {
         yield return new WaitForSeconds(wTime);
         canSpawnPart = true;

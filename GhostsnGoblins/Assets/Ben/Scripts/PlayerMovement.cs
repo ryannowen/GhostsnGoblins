@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour, ICanTakeKnockback
         // If the player is not crouched then Lerp the player velocity to the desired movement direction
         if (!m_Crouched)
             m_Rigidbody.velocity = Vector3.Lerp(m_Rigidbody.velocity, m_DesiredMove, 0.25f);
-           
+
     }
 
     void Setup() 
