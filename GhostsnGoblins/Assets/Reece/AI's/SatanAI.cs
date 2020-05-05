@@ -8,6 +8,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
 
     [SerializeField] private GameObject Bullet = null;
 
+
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
@@ -95,6 +96,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
             
         }
 
+
         if (Angered && Alive)
         {
 
@@ -127,17 +129,17 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
 
             if (AntiSwoopLeft)
             {
-                if (PlayerX - 8 < EnemyX)
+                if (PlayerX - 6 < EnemyX)
                 {
-                    EnemyX -= speed * 4;
+                    EnemyX -= speed * 3;
                 }
                 else
                 {
                     AntiSwoopLeft = false;
                 }
-                if (PlayerY + 4 > EnemyY)
+                if (PlayerY + 3 > EnemyY)
                 {
-                    EnemyY += speed * 2;
+                    EnemyY += speed * 1.5f;
                 }
                 else
                 {
@@ -148,17 +150,17 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
 
             if (AntiSwoopRight)
             {
-                if (PlayerX + 8 > EnemyX)
+                if (PlayerX + 6 > EnemyX)
                 {
-                    EnemyX += speed * 4;
+                    EnemyX += speed * 3;
                 }
                 else
                 {
                     AntiSwoopRight = false;
                 }
-                if (PlayerY + 4 > EnemyY)
+                if (PlayerY + 3 > EnemyY)
                 {
-                    EnemyY += speed * 2;
+                    EnemyY += speed * 1.5f;
                 }
                 else
                 {
