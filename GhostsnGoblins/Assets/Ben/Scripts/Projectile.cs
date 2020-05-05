@@ -12,6 +12,9 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
     [SerializeField] private bool m_DestroyedOnCollision = true;
     [SerializeField] private float m_DecayTime = 3f;
     [SerializeField] private LayerMask m_LayerMask = new LayerMask();
+    [SerializeField] private bool m_LeaveObjectBehind = false;
+    [SerializeField] private GameObject m_ObjectToLeaveBehind = null;
+    private bool flipXObjectToLeaveBehind = false;
 
     private float m_StoredDecayTime = 0f;
 
@@ -60,7 +63,19 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
                 collision.gameObject.GetComponent<ICanTakeKnockback>().TakeKnockback(transform.position, m_KnockbackPower);
 
             if (m_DestroyedOnCollision)
+            {
+                if (m_LeaveObjectBehind && collision.gameObject.layer == 0)
+                {
+                    GameObject temp = System_Spawn.instance.GetObjectFromPool(m_ObjectToLeaveBehind);
+                    temp.transform.position = transform.position;
+                    //temp.transform.rotation = transform.rotation;
+                    if (flipXObjectToLeaveBehind)
+                        temp.gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                    else
+                        temp.gameObject.GetComponent<SpriteRenderer>().flipX = false;
+                }
                 KillEntity();
+            }
         }
 
     }
@@ -99,4 +114,10 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
         m_DecayAfterTime = canDecay;
         m_DecayTime = decayTime;
     }
+
+    public void SetObjectToLeaveBehindFlipX(bool argsValue)
+    {
+        flipXObjectToLeaveBehind = argsValue;
+    }
+
 }

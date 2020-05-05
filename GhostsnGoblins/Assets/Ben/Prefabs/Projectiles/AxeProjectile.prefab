@@ -104,6 +104,9 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 73783
+  m_LeaveObjectBehind: 1
+  m_ObjectToLeaveBehind: {fileID: 4275565186979509950, guid: df4be29f3f191c94ca69f56af79c38fe,
+    type: 3}
 --- !u!61 &404115625410511370
 BoxCollider2D:
   m_ObjectHideFlags: 0

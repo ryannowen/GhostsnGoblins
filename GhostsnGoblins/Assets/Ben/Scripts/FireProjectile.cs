@@ -37,12 +37,14 @@ public class FireProjectile : MonoBehaviour
             tempProjectile.gameObject.transform.localScale = new Vector3(1, 1, 1);
             if(anim != null)
                 anim["Spin"].speed = 1;
+            tempProjectile.GetComponent<Projectile>().SetObjectToLeaveBehindFlipX(false);
         }
         else
         {
             tempProjectile.gameObject.transform.localScale = new Vector3(-1, 1, 1);
             if (anim != null)
                 anim["Spin"].speed = -1;
+            tempProjectile.GetComponent<Projectile>().SetObjectToLeaveBehindFlipX(true);
         }
 
         if (tempProjectile != null)
