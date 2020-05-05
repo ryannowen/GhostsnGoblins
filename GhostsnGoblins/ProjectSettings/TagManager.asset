@@ -8,6 +8,7 @@ TagManager:
   - DartTrap
   - SpikeTrap
   - Bullet
+  - Projectile
   layers:
   - Default
   - TransparentFX

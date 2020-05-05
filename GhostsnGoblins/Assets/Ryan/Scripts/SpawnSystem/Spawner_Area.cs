@@ -19,9 +19,16 @@ public class Spawner_Area : MonoBehaviour, ISpawner
     {
         m_boxCollider = GetComponent<BoxCollider2D>();
 
+        System_Spawn.instance.RegisterSpawner(gameObject);
+
+        ActivateSpawner();
+    }
+
+    public void ActivateSpawner()
+    {
         if (m_spawnOnLoad)
             BeginSpawning();
-        else if(m_timedSpawner)
+        else if (m_timedSpawner)
             StartCoroutine(SpawnDelay());
     }
 

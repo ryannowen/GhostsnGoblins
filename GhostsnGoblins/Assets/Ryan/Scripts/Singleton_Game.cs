@@ -14,6 +14,14 @@ public class layerColObject
 
 public class Singleton_Game : MonoBehaviour
 {
+    public enum EGameStat
+    {
+        eDeaths,
+        EKills,
+        EPickups,
+        eLivesGained
+    }
+
     [System.Serializable]
     public struct SHighScore
     {
@@ -26,7 +34,6 @@ public class Singleton_Game : MonoBehaviour
             m_score = argScore;
         }
     };
-
 
     public static Singleton_Game m_instance;
 
@@ -55,6 +62,7 @@ public class Singleton_Game : MonoBehaviour
     [Space]
     [SerializeField] private AudioMixer m_masterMixer = null;
 
+    [SerializeField] Dictionary<EGameStat, int> m_gameStats;
     private AudioSource mainAudioSource;
 
     private Dictionary<int, GameObject> m_registeredPlayers = new Dictionary<int, GameObject>();
@@ -231,6 +239,15 @@ public class Singleton_Game : MonoBehaviour
                 m_insertedMoney = 0;
                 m_playerLives += 1;
                 System_Spawn.instance.DisableAllSpawns();
+                GetPlayer(0).SetActive(true);
+                GetPlayer(0).transform.position = m_lastCheckPoint;
+                GetPlayer(0).GetComponent<ISpawn>().OnSpawn();
+                if (m_spawnedPlayer2)
+                {
+                    GetPlayer(1).SetActive(true);
+                    GetPlayer(1).transform.position = m_lastCheckPoint;
+                    GetPlayer(1).GetComponent<ISpawn>().OnSpawn();
+                }
                 LoadPreviousScene();
             }
         }
@@ -302,6 +319,12 @@ public class Singleton_Game : MonoBehaviour
             GameObject player1 = GetPlayer(0);
             GameObject player2 = GetPlayer(1);
 
+            if (!player1.activeSelf && !player2.activeSelf)
+            {
+                System_Spawn.instance.DisableAllSpawnType(System_Spawn.ESpawnType.eEnemy);
+                System_Spawn.instance.ActivateRegisteredSpawners();
+            }
+
             if (!player1.activeSelf && (m_spawnedPlayer2 ? !player2.activeSelf : true))
             {
                 ReSpawnPlayerAtCheckpoint(0);
@@ -317,6 +340,12 @@ public class Singleton_Game : MonoBehaviour
     private void GoToDeathScene()
     {
         System_Spawn.instance.DisableAllSpawns();
+
+        GetPlayer(0).SetActive(true);
+
+        if (m_spawnedPlayer2)
+            GetPlayer(1).SetActive(true);
+
         m_previousLevelName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("death");
     }
@@ -403,5 +432,25 @@ public class Singleton_Game : MonoBehaviour
     public void SetPreviousScene(string argPreviousLevelName)
     {
         m_previousLevelName = argPreviousLevelName;
+    }
+
+    public void AddGameStat(EGameStat argGameStat, int argAmount)
+    {
+        if (m_gameStats.ContainsKey(argGameStat))
+        {
+            m_gameStats[argGameStat] += argAmount;
+        }
+        else
+        {
+            m_gameStats.Add(argGameStat, argAmount);
+        }
+    }
+
+    public int GetGameStat(EGameStat argGameStat)
+    {
+        if (m_gameStats.ContainsKey(argGameStat))
+            return m_gameStats[argGameStat];
+        else
+            return 0;
     }
 }

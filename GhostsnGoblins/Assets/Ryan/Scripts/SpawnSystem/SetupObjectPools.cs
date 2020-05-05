@@ -10,6 +10,7 @@ public class SetupObjectPools : MonoBehaviour
     {
         public string m_InspectorName;
         public GameObject m_Object;
+        public System_Spawn.ESpawnType spawnType;
         public int m_Amount;
     }
 
@@ -25,6 +26,6 @@ public class SetupObjectPools : MonoBehaviour
 
         // Creates Objects in Pool
         foreach (ObjectPool objectPool in m_Pools)
-            System_Spawn.instance.CreatePool(objectPool.m_Object, objectPool.m_Amount);
+            System_Spawn.instance.CreatePool(objectPool.m_Object, objectPool.m_Amount, objectPool.spawnType);
     }
 }

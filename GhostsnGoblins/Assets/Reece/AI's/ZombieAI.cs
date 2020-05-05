@@ -207,7 +207,7 @@ public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
             OnGround = false;
     }
 
-    //Checks to see if there is a wall withing a certain distance of the Zombie in which it will know to jump or not
+    //Checks to see if there is a wall within a certain distance of the Zombie in which it will know to jump or not
     void CheckSideState()
     {
         RaycastHit2D Left = Physics2D.Raycast(transform.position, Vector3.left, (transform.localScale.x / 2 + 2f), OnGroundCheckLayerMask);

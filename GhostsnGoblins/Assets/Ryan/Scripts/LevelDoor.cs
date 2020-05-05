@@ -9,6 +9,8 @@ public class LevelDoor : MonoBehaviour
     [Space]
     [SerializeField] private string m_requiredEquippedItemName = "";
     [SerializeField] private SpriteRenderer m_requiredItemRenderer = null;
+    [SerializeField] private bool m_requireKey = false;
+    [SerializeField] private bool m_doorOpen = false;
 
     private void Start()
     {
@@ -21,11 +23,13 @@ public class LevelDoor : MonoBehaviour
         {
             PlayerController playerC = collision.GetComponent<PlayerController>();
 
-            if (playerC.HasKey())
+            if (m_requireKey ? playerC.HasKey() : true || m_doorOpen)
             {
                 Singleton_Sound.m_instance.PlayAudioClip("LevelFinished");
                 System_Spawn.instance.DisableAllSpawns();
-                playerC.SetHasKey(false);
+
+                if (m_requireKey)
+                    playerC.SetHasKey(false);
 
                 if ("" == m_requiredEquippedItemName) // No equipped item required
                 {
@@ -38,8 +42,10 @@ public class LevelDoor : MonoBehaviour
                         Singleton_Game.m_instance.SetShowLevelDoorItem(false);
                         LoadNextScene();
                     }
-                    else // Player doessn't have item
+                    else // Player doesn't have item
                     {
+                        System_Spawn.instance.ClearSpawners();
+
                         Singleton_Game.m_instance.SetShowLevelDoorItem(true);
                         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                     }
@@ -50,9 +56,16 @@ public class LevelDoor : MonoBehaviour
 
     private void LoadNextScene()
     {
+        System_Spawn.instance.ClearSpawners();
+
         if (m_customSceneName == "") // Next Scene
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         else // Custom Scene
             SceneManager.LoadScene(m_customSceneName);
+    }
+
+    public void SetDoorOpen(bool argState)
+    {
+        m_doorOpen = argState;
     }
 }
