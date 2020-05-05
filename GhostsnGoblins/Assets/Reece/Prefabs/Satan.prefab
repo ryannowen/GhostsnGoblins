@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9133371381008278196}
   - component: {fileID: 6097680794892791118}
   - component: {fileID: 1350219323466524589}
+  - component: {fileID: 53735582582447749}
   m_Layer: 16
   m_Name: Satan
   m_TagString: Untagged
@@ -210,3 +211,18 @@ MonoBehaviour:
   - name: Crown
     type: 17
     dropChance: 20
+--- !u!114 &53735582582447749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3111163907792383847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9c358fea7a2f5449dc66124f091a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ProjectileSpeed: 5
+  doesDecay: 1
+  decayTime: 3
