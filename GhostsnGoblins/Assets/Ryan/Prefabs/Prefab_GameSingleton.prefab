@@ -227,6 +227,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cfba780a02f1144099dff30ffebf5f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_spawnTypeNames:
+  - name: SpawnType_Undefined
+    type: 0
+  - name: SpawnType_Enemy
+    type: 1
   m_seed: 500
 --- !u!82 &-7967622223718333169
 AudioSource:

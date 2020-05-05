@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour, IDamageable, ISpawn
 {
 
@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISpawn
         }
 
         // Check for player death
-        if (m_PlayerHealth <= 0)
+        if (m_PlayerHealth <= 0 && "death" != SceneManager.GetActiveScene().name)
             KillEntity();
 
     }

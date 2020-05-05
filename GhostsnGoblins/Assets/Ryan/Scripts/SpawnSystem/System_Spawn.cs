@@ -1,9 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class System_Spawn : MonoBehaviour
 {
+    [System.Serializable]
+    public enum ESpawnType
+    {
+        eUndefined,
+        eEnemy
+    }
+
+    [System.Serializable]
+    public struct SSpawnTypeNames
+    {
+        public string name;
+        public ESpawnType type;
+    }
+
+    [SerializeField] private SSpawnTypeNames[] m_spawnTypeNames = null;
+
     public static System_Spawn instance;
 
     [SerializeField] private int m_seed = 500;
@@ -11,22 +28,28 @@ public class System_Spawn : MonoBehaviour
     private Dictionary<string, Queue<GameObject>> m_objectPool = new Dictionary<string, Queue<GameObject>>();
     private List<int> m_setupObjectPoolIDs = new List<int>();
     private GameObject objectPoolContainer = null;
-
+    private List<ISpawner> m_levelSpawners = new List<ISpawner>();
     private void Awake()
     {
         if (null == instance && this != instance)
         {
-            Random.InitState(m_seed);
+            UnityEngine.Random.InitState(m_seed);
 
             instance = this;
             objectPoolContainer = new GameObject("System_Spawn_ObjectPool");
             objectPoolContainer.transform.parent = transform;
+
+            for(int i = 0; i < m_spawnTypeNames.Length; i++)
+            {
+                GameObject typeName = new GameObject(m_spawnTypeNames[i].name);
+                typeName.transform.parent = objectPoolContainer.transform;
+            }
         }
         else
             Destroy(gameObject);
     }
 
-    public void CreatePool(GameObject argGameObject, int argAmount)
+    public void CreatePool(GameObject argGameObject, int argAmount, ESpawnType argSpawnType = ESpawnType.eUndefined)
     {
         GameObject parent;
         Queue<GameObject> queue;
@@ -39,11 +62,23 @@ public class System_Spawn : MonoBehaviour
         else
         {
             Queue<GameObject> newQueue = new Queue<GameObject>();
+            GameObject typeParent = null;
+
             m_objectPool.Add(argGameObject.name, newQueue);
             queue = newQueue;
 
             parent = new GameObject("P_" + argGameObject.name);
-            parent.transform.parent = objectPoolContainer.transform;
+
+            for (int i = 0; i < m_spawnTypeNames.Length; i++)
+            {
+                if (m_spawnTypeNames[i].type == argSpawnType)
+                {
+                    typeParent = objectPoolContainer.transform.Find(m_spawnTypeNames[i].name).gameObject;
+                    break;
+                }
+            }
+
+            parent.transform.parent = typeParent.transform;
         }
 
         for (int i = 0; i < argAmount; i++)
@@ -81,7 +116,8 @@ public class System_Spawn : MonoBehaviour
                 m_objectPool[argGameObject.name].Enqueue(poolObject);                
             }
 
-            poolObject.SetActive(argActivateGameObject);
+            if(argActivateGameObject)
+                poolObject.SetActive(true);
 
             ISpawn spawnInterface = poolObject.GetComponent<ISpawn>();
 
@@ -124,6 +160,38 @@ public class System_Spawn : MonoBehaviour
                 childTransform.gameObject.SetActive(false);
 
             DisableChildren(childTransform);
+        }
+    }
+
+    public void DisableAllSpawnType(ESpawnType argSpawnType)
+    {
+        for(int i = 0; i < m_spawnTypeNames.Length; i++)
+        {
+            if(m_spawnTypeNames[i].type == argSpawnType)
+                DisableChildren(objectPoolContainer.transform.Find(m_spawnTypeNames[i].name));
+        }
+    }
+
+    public void RegisterSpawner(GameObject argSpawner)
+    {
+        ISpawner spawner = argSpawner.GetComponent<ISpawner>();
+
+        if (null == spawner)
+            return;
+
+        m_levelSpawners.Add(spawner);
+    }
+
+    public void ClearSpawners()
+    {
+        m_levelSpawners.Clear();
+    }
+
+    public void ActivateRegisteredSpawners()
+    {
+        foreach(ISpawner spawner in m_levelSpawners)
+        {
+            spawner.ActivateSpawner();
         }
     }
 }

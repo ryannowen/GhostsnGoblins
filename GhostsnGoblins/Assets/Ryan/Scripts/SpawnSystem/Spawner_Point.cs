@@ -8,6 +8,9 @@ public class Spawner_Point : MonoBehaviour, ISpawner
     [SerializeField] private bool m_disableAllSpawnPointsInUseLog = false;
     [SerializeField] private bool m_showIfObjectCannotSpawn = false;
     [SerializeField] private bool m_timedSpawner = false;
+    [SerializeField] private bool m_reuseActiveObjects = true;
+    [SerializeField] private bool m_registerSelf = true;
+
     [SerializeField] private Vector2 m_spawnDelaySeconds = new Vector2(10.0f, 10.0f);
     [Space]
     [SerializeField] private SpawnObject[] m_objects = null;
@@ -19,9 +22,17 @@ public class Spawner_Point : MonoBehaviour, ISpawner
     // Start is called before the first frame update
     void Start()
     {
+        if(m_registerSelf)
+            System_Spawn.instance.RegisterSpawner(gameObject);
+
+        ActivateSpawner();
+    }
+
+    public void ActivateSpawner()
+    {
         if (m_spawnOnLoad)
             BeginSpawning();
-        else if(m_timedSpawner)
+        else if (m_timedSpawner)
             StartCoroutine(SpawnDelay());
     }
 
@@ -102,7 +113,8 @@ public class Spawner_Point : MonoBehaviour, ISpawner
                     if (failedToSpawn)
                         break;
 
-                    GameObject spawnedObject = System_Spawn.instance.GetObjectFromPool(spawnObject.item, spawnObject.ignoreAllActiveCheck, true, spawnObject.shouldPeek);
+                    GameObject spawnedObject = System_Spawn.instance.GetObjectFromPool(spawnObject.item, spawnObject.ignoreAllActiveCheck, false, spawnObject.shouldPeek);
+
                     if (null == spawnedObject)
                     {
                         Debug.LogError("Cannot spawn object, spawn system returned null");
@@ -111,9 +123,17 @@ public class Spawner_Point : MonoBehaviour, ISpawner
                     }
 
                     ActivateSpawnReactors(ESpawnReactorType.eOnEndSpawning, spawnObject, spawnedObject);
+                    Debug.Log("Spawning " + spawnedObject.name);
 
-                    spawnPoint.SetSpawnedObject(spawnedObject);
-                    spawnedObject.transform.position = spawnPoint.transform.position;
+                    if (m_reuseActiveObjects ? true : !spawnedObject.activeSelf)
+                    {
+                        Debug.Log("Reusing " + spawnedObject.name + " Current active state=" + spawnedObject.activeSelf);
+                        spawnedObject.SetActive(true);
+
+                        spawnPoint.SetSpawnedObject(spawnedObject);
+                        spawnedObject.transform.position = spawnPoint.transform.position;
+                    }
+
                 }
 
                 ActivateSpawnReactors(ESpawnReactorType.eOnEndSpawning, spawnObject);
