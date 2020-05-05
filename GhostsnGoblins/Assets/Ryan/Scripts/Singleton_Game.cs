@@ -442,6 +442,7 @@ public class Singleton_Game : MonoBehaviour
         }
         else
         {
+            m_gameStats.Add(argGameStat, argAmount);
         }
     }
 
