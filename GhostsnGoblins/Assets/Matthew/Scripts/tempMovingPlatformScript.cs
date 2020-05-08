@@ -20,6 +20,7 @@ public class tempMovingPlatformScript : MonoBehaviour {
 
 	private mainPlatformScript platformScript = null;
 	private Transform platformTransform = null;
+	private Rigidbody2D platformRb2D = null;
 
 	private int startPNum = 0;
 	private int currentPNum = -1;
@@ -56,6 +57,16 @@ public class tempMovingPlatformScript : MonoBehaviour {
 			return;
 		}
 
+		platformRb2D = platformTransform.gameObject.GetComponent<Rigidbody2D>();
+		if (platformRb2D == null) {
+			if (platformScript.getPrintErrorBool()) {
+				print("Couldn't find a rigidbody2D attached to the platform!");
+			}
+
+			gameObject.GetComponent<tempMovingPlatformScript>().enabled = false;
+			return;
+		}
+
 		if (positionArray.Length > 0) {
 			positionArray[startPNum].transform.position = new Vector3(transform.parent.position.x, transform.parent.position.y, 0);
 
@@ -83,13 +94,19 @@ public class tempMovingPlatformScript : MonoBehaviour {
 		}
 	}
 
-    private void OnCollisionEnter2D(Collision2D col) {
+	private void OnCollisionStay2D(Collision2D col) {
+		if (enabled) {
+			if (col.gameObject.CompareTag("Player")) {
+				if (!fallingMode) {
+					col.gameObject.transform.parent = platformTransform;
+				}
+			}
+		}
+	}
+
+	private void OnCollisionEnter2D(Collision2D col) {
         if (enabled) {
             if (col.gameObject.CompareTag("Player")) {
-                if (!fallingMode) {
-                    col.gameObject.transform.parent = platformTransform;
-                }
-
                 if (pType == platformType.triggered) {
                     if (!hasTriggered && !fallingMode) {
 						currentPNum++;
@@ -116,7 +133,7 @@ public class tempMovingPlatformScript : MonoBehaviour {
 					if (!fallingMode) {
 						if (currentlyMoving) {
 							if (!checkPState(platformTransform.position)) {
-								platformTransform.position = Vector3.MoveTowards(transform.position, positionArray[currentPNum].transform.position, Time.fixedDeltaTime * platformSpeed);
+								platformRb2D.MovePosition(Vector3.MoveTowards(transform.position, positionArray[currentPNum].transform.position, Time.fixedDeltaTime * platformSpeed));
 							} else {
 								currentlyMoving = false;
 								StartCoroutine(moveP());
@@ -135,7 +152,7 @@ public class tempMovingPlatformScript : MonoBehaviour {
 						if (hasTriggered) {
 							if (currentlyMoving) {
 								if (!checkPState(platformTransform.position)) {
-									platformTransform.position = Vector3.MoveTowards(transform.position, positionArray[currentPNum].transform.position, Time.fixedDeltaTime * platformSpeed);
+									platformRb2D.MovePosition(Vector3.MoveTowards(transform.position, positionArray[currentPNum].transform.position, Time.fixedDeltaTime * platformSpeed));
 								} else {
 									currentlyMoving = false;
 									StartCoroutine(moveP());
@@ -176,7 +193,7 @@ public class tempMovingPlatformScript : MonoBehaviour {
 	}
 
 	private bool checkPState(Vector3 platformPos) {
-		if (Vector3.Distance(platformPos, positionArray[currentPNum].transform.position) <= 0.05f) {
+		if (Vector3.Distance(platformPos, positionArray[currentPNum].transform.position) <= 0.02f) {
 			return true;
 		}
 
