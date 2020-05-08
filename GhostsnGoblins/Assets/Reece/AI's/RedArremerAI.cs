@@ -10,7 +10,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
     private GameObject Enemy;
     private GameObject Player;
     private int RNG;
-    private int HP = 2;
+    private int HP = 3;
     private float speed = 0.1f;
     private float RNGtimer = 3;
     private float PlayerX;
@@ -283,7 +283,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
 
     public void OnSpawn()
     {
-        HP = 2;
+        HP = 3;
         Alive = true;
         Angered = false;
         FindPlayer = true;
