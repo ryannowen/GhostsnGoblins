@@ -170,6 +170,63 @@ MonoBehaviour:
   - obj1: 2
     obj2: 15
     ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 1
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 2
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 3
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 4
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 5
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 6
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 7
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 8
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 9
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 10
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 11
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 12
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 13
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 15
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 16
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 17
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 18
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 19
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 20
+    ignoreLayerCollision: 1
   m_lastCheckPoint: {x: 0, y: 0}
   m_showLevelDoorItem: 0
   m_previousLevelName: Level1_heaven
