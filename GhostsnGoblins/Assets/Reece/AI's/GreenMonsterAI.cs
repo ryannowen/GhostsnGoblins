@@ -117,7 +117,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
                 {
                     if (Distance < Distance2)
                     {
-                        Vector3 directionToFire = Player.transform.position - transform.position;
+                        Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position - transform.position;
                         directionToFire.Normalize();
                         fireProj.Fire(transform.position, directionToFire, transform.rotation);
                         Shoot = false;

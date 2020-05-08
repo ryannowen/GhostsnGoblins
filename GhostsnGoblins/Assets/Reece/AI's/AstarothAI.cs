@@ -10,12 +10,15 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
-    private int RNG;
     private int HP = 4;
     private float speed = 5f;
     private float DelayTimer;
     private float PlayerX;
     private float PlayerY;
+    private float PlayerX2;
+    private float PlayerY2;
+    private float Distance;
+    private float Distance2;
     private float EnemyX;
     private float EnemyY;
     private float DashTime;
@@ -23,7 +26,6 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
     private bool Dash;
     private bool DashForward;
     private bool DashBackwards;
-    private float Distance;
     private bool Shoot;
     private bool Angered;
     private float InvicibleTimer;
@@ -66,13 +68,20 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (FindPlayer)
         {
-            PlayerX = Player.transform.position.x;
-            PlayerY = Player.transform.position.y;
+            PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
+            PlayerY = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.y;
+            PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
+            PlayerY2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.y;
             EnemyX = Enemy.transform.position.x;
             EnemyY = Enemy.transform.position.y;
-            Distance = PlayerX - EnemyX;
+            Distance = EnemyX - PlayerX;
+            Distance2 = EnemyX - PlayerX2;
+
             if (Distance < 0)
                 Distance = -Distance;
+            if (Distance2 < 0)
+                Distance2 = -Distance2;
+
             FindPlayer = false;
         }
 
@@ -82,11 +91,15 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
             {
                 Angered = true;
             }
+            if (PlayerX2 + 10 > EnemyX && PlayerX2 - 10 < EnemyX && PlayerY2 + 3 > EnemyY && PlayerY2 - 3 < EnemyY)
+            {
+                Angered = true;
+            }
         }
 
         if (Angered)
         {
-            if (PlayerX > EnemyX + 16 && PlayerX < EnemyX - 16 && PlayerY > EnemyY + 10 && PlayerY < EnemyY - 10)
+            if (PlayerX > EnemyX + 16 && PlayerX < EnemyX - 16 && PlayerY > EnemyY + 10 && PlayerY < EnemyY - 10 && PlayerX2 > EnemyX + 16 && PlayerX2 < EnemyX - 16 && PlayerY2 > EnemyY + 10 && PlayerY2 < EnemyY - 10)
             {
                 Angered = false;
             }
@@ -132,34 +145,71 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
         {
             if (Shoot)
             {
-                Vector3 directionToFire = Player.transform.position - transform.position;
-                directionToFire.Normalize();
-                fireProj.Fire(transform.position, directionToFire, transform.rotation);
+                if (Distance < Distance2)
+                {
+                    Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position - transform.position;
+                    directionToFire.Normalize();
+                    fireProj.Fire(transform.position, directionToFire, transform.rotation);
+                }
+                if (Distance2 < Distance)
+                {
+                    Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position - transform.position;
+                    directionToFire.Normalize();
+                    fireProj.Fire(transform.position, directionToFire, transform.rotation);
+                }
                 Shoot = false;
             }
 
             if (DashForward)
             {
-                if (PlayerX < EnemyX)
+                if (Distance < Distance2)
                 {
-                    transform.localRotation = Quaternion.Euler(0, 0, 0);
-                    Vector3 moveDirection = GetDesiredMove();
-                    moveDirection.Normalize();
-                    moveDirection.y = rb.velocity.y;
-                    moveDirection.x *= speed;
+                    if (PlayerX < EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
 
-                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                    }
+
+                    else if (PlayerX > EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
+
+                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                    }
                 }
 
-                else if (PlayerX > EnemyX)
+                if (Distance2 < Distance)
                 {
-                    transform.localRotation = Quaternion.Euler(0, 180, 0);
-                    Vector3 moveDirection = GetDesiredMove();
-                    moveDirection.Normalize();
-                    moveDirection.y = rb.velocity.y;
-                    moveDirection.x *= speed;
+                    if (PlayerX2 < EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
 
-                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                    }
+
+                    else if (PlayerX2 > EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
+
+                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                    }
                 }
 
                 if (DashTime < Time.time)
@@ -170,26 +220,54 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
 
             if (DashBackwards)
             {
-                if (PlayerX < EnemyX)
+                if (Distance < Distance2)
                 {
-                    transform.localRotation = Quaternion.Euler(0, 0, 0);
-                    Vector3 moveDirection = GetDesiredMove();
-                    moveDirection.Normalize();
-                    moveDirection.y = rb.velocity.y;
-                    moveDirection.x *= speed;
+                    if (PlayerX < EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
 
-                    rb.velocity = Vector3.Lerp(rb.velocity, -moveDirection, 1f);
+                        rb.velocity = Vector3.Lerp(rb.velocity, -moveDirection, 1f);
+                    }
+
+                    else if (PlayerX > EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
+
+                        rb.velocity = Vector3.Lerp(rb.velocity, -moveDirection, 1f);
+                    }
                 }
 
-                else if (PlayerX > EnemyX)
+                if (Distance2 < Distance)
                 {
-                    transform.localRotation = Quaternion.Euler(0, 180, 0);
-                    Vector3 moveDirection = GetDesiredMove();
-                    moveDirection.Normalize();
-                    moveDirection.y = rb.velocity.y;
-                    moveDirection.x *= speed;
+                    if (PlayerX2 < EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
 
-                    rb.velocity = Vector3.Lerp(rb.velocity, -moveDirection, 1f);
+                        rb.velocity = Vector3.Lerp(rb.velocity, -moveDirection, 1f);
+                    }
+
+                    else if (PlayerX2 > EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
+
+                        rb.velocity = Vector3.Lerp(rb.velocity, -moveDirection, 1f);
+                    }
                 }
 
                 if (DashTime < Time.time)
