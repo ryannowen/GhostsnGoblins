@@ -11,7 +11,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy = null;
     private GameObject Player = null;
-    private int HP = 1;
+    private int HP = 2;
     private int RNG;
     private float speed = 3f;
     private float PlayerX;
@@ -357,7 +357,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
     }
     public void OnSpawn()
     {
-        HP = 1;
+        HP = 2;
         Alive = true;
         Angered = false;
         OneTime = true;
