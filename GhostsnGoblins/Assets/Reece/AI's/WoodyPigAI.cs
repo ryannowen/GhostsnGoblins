@@ -16,10 +16,6 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
     private float speed = 3f;
     private float PlayerX;
     private float PlayerY;
-    private float PlayerX2;
-    private float PlayerY2;
-    private float Distance;
-    private float Distance2;
     private float EnemyX;
     private float EnemyY;
     private Vector2 EnemyPos;
@@ -69,17 +65,11 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
 
         if (!Angered)
         {
-            PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
-            PlayerY = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.y;
-            PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
-            PlayerY2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.y;
+            PlayerX = Player.gameObject.transform.position.x;
+            PlayerY = Player.gameObject.transform.position.y;
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
             if (PlayerX + 5 > EnemyX && PlayerX - 5 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
-            {
-                Angered = true;
-            }
-            if (PlayerX2 + 5 > EnemyX && PlayerX2 - 5 < EnemyX && PlayerY2 + 3 > EnemyY && PlayerY2 - 3 < EnemyY)
             {
                 Angered = true;
             }
@@ -88,8 +78,7 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
         if (Alive && Angered)
         {
             EnemyPos = new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y);
-            PlayerY = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.y;
-            PlayerY2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.y;
+            PlayerY = Player.gameObject.transform.position.y;
             FindPlayer = true;
            
 
@@ -97,42 +86,22 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
             {
                 EnemyX = Enemy.gameObject.transform.position.x;
                 EnemyY = Enemy.gameObject.transform.position.y;
-                PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
-                PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
-
+                PlayerX = Player.gameObject.transform.position.x;
                 ShootTime = Time.time;
                 Origin = Time.time;
                 wait = Time.time + 0.25f;
                 Deathtimer = Time.time + 30;
 
-                if (Distance < Distance2)
+                //Finds if the player is on the left.
+                if (PlayerX < EnemyX)
                 {
-                    //Finds if the player is on the left.
-                    if (PlayerX < EnemyX)
-                    {
-                        MoveLeft = true;
-                    }
-
-                    //Finds if the player is on the right.
-                    if (PlayerX > EnemyX)
-                    {
-                        MoveRight = true;
-                    }
+                    MoveLeft = true;
                 }
 
-                if (Distance2 < Distance)
+                //Finds if the player is on the right.
+                if (PlayerX > EnemyX)
                 {
-                    //Finds if the player is on the left.
-                    if (PlayerX2 < EnemyX)
-                    {
-                        MoveLeft = true;
-                    }
-
-                    //Finds if the player is on the right.
-                    if (PlayerX2 > EnemyX)
-                    {
-                        MoveRight = true;
-                    }
+                    MoveRight = true;
                 }
 
                 if (Random.Range(2, 101) > 70)
