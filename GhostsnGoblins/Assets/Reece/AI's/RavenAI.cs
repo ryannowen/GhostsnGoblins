@@ -15,6 +15,10 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
     private float time;
     private float PlayerX;
     private float PlayerY;
+    private float PlayerX2;
+    private float PlayerY2;
+    private float Distance;
+    private float Distance2;
     private float EnemyX;
     private float EnemyY;
     private float Deathtimer;
@@ -49,8 +53,10 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (!Angered)
         {
-            PlayerX = Player.gameObject.transform.position.x;
-            PlayerY = Player.gameObject.transform.position.y;
+            PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
+            PlayerY = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.y;
+            PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
+            PlayerY2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.y;
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
         }
@@ -64,25 +70,44 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
             {
                 Angered = true;
             }
+            if (PlayerX2 + 7 > EnemyX && PlayerX2 - 7 < EnemyX && PlayerY2 + 3 > EnemyY && PlayerY2 - 3 < EnemyY)
+            {
+                Angered = true;
+            }
+
             if (Angered)
             {
                 FindPlayer = true;
                 if (FindPlayer && OneTime)
                 {
-                    PlayerX = Player.gameObject.transform.position.x;
+                    PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
+                    PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
                     EnemyX = Enemy.gameObject.transform.position.x;
                     EnemyY = Enemy.gameObject.transform.position.y;
                     Deathtimer = Time.time + 7;
                     Origin = Time.time;
                     wait = Time.time + 0.25f;
 
-                    //Finds if the player is on the left.
-                    if (PlayerX < EnemyX)
+                    if (Distance < Distance2)
                     {
-                        MoveLeft = true;
+                        //Finds if the player is on the left.
+                        if (PlayerX < EnemyX)
+                        {
+                            MoveLeft = true;
+                        }
+                        else if (PlayerX > EnemyX)
+                            MoveRight = true;
                     }
-                    else if (PlayerX > EnemyX)
-                        MoveRight = true;
+                    if (Distance2 < Distance)
+                    {
+                        if (PlayerX2 < EnemyX)
+                        {
+                            MoveLeft = true;
+                        }
+                        else if (PlayerX2 > EnemyX)
+                            MoveRight = true;
+                    }
+
                     OneTime = false;
                     time = Time.time;
                 }
