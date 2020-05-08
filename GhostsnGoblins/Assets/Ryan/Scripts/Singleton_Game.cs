@@ -98,15 +98,20 @@ public class Singleton_Game : MonoBehaviour
         LoadGame();
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
-    {
-        switch(scene.buildIndex) {
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        switch (scene.buildIndex) {
             case 0:
+                mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("MainMenu");
+                mainAudioSource.loop = true;
+                mainAudioSource.volume = 1;
+                mainAudioSource.Play();
+                break;
+
             case 1:
-            case 7:
-                mainAudioSource.clip = null;
-                mainAudioSource.volume = 0;
-                mainAudioSource.Stop();
+                mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("GameOver");
+                mainAudioSource.loop = false;
+                mainAudioSource.volume = 0.5f;
+                mainAudioSource.Play();
                 break;
 
             case 2:
@@ -114,13 +119,24 @@ public class Singleton_Game : MonoBehaviour
             case 4:
             case 5:
             case 6:
+            case 7:
+            case 8:
                 mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("FullLevelBGM");
+                mainAudioSource.loop = true;
                 mainAudioSource.volume = 0.1f;
+                mainAudioSource.Play();
+                break;
+
+            case 9:
+                mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("Victory");
+                mainAudioSource.loop = false;
+                mainAudioSource.volume = 1;
                 mainAudioSource.Play();
                 break;
 
             default:
                 mainAudioSource.clip = null;
+                mainAudioSource.loop = true;
                 mainAudioSource.volume = 0;
                 mainAudioSource.Stop();
                 break;
