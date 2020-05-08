@@ -16,6 +16,10 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
     private float timer;
     private float PlayerX;
     private float PlayerY;
+    private float PlayerX2;
+    private float PlayerY2;
+    private float Distance;
+    private float Distance2;
     private float EnemyX;
     private float EnemyY;
     private bool Angered = false;
@@ -49,8 +53,10 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (!Angered)
         {
-            PlayerX = Player.gameObject.transform.position.x;
-            PlayerY = Player.gameObject.transform.position.y;
+            PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
+            PlayerY = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.y;
+            PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
+            PlayerY2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.y;
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
         }
@@ -70,6 +76,17 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
                     Onetime = false;
                 }
             }
+
+            if (PlayerX2 + 10 > EnemyX && PlayerX2 > EnemyX - 10 && PlayerY2 + 3 > EnemyY && PlayerY2 - 3 < EnemyY)
+            {
+                Angered = true;
+                if (Onetime)
+                {
+                    timer = Time.time;
+                    Onetime = false;
+                }
+            }
+
             if (Angered)
             {
                 if (Time.time > timer)
@@ -81,18 +98,37 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
                 // FindPlayer = true;
                 if (FindPlayer)
                 {
-                    PlayerX = Player.gameObject.transform.position.x;
-                    PlayerY = Player.gameObject.transform.position.y;
+                    PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
+                    PlayerY = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.y;
+                    PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
+                    PlayerY2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.y;
+                    Distance = EnemyX - PlayerX;
+                    Distance2 = EnemyX - PlayerX2;
                     EnemyX = Enemy.gameObject.transform.position.x;
+
+                    if (Distance < 0)
+                        Distance = -Distance;
+                    if (Distance2 < 0)
+                        Distance2 = -Distance2;
 
                     FindPlayer = false;
                 }
                 if (Shoot)
                 {
-                    Vector3 directionToFire = Player.transform.position - transform.position;
-                    directionToFire.Normalize();
-                    fireProj.Fire(transform.position, directionToFire, transform.rotation);
-                    Shoot = false;
+                    if (Distance < Distance2)
+                    {
+                        Vector3 directionToFire = Player.transform.position - transform.position;
+                        directionToFire.Normalize();
+                        fireProj.Fire(transform.position, directionToFire, transform.rotation);
+                        Shoot = false;
+                    }
+                    if (Distance2 < Distance)
+                    {
+                        Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position - transform.position;
+                        directionToFire.Normalize();
+                        fireProj.Fire(transform.position, directionToFire, transform.rotation);
+                        Shoot = false;
+                    }
                 }
             }
 
