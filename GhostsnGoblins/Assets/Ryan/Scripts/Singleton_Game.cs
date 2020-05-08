@@ -62,8 +62,10 @@ public class Singleton_Game : MonoBehaviour
     [Space]
     [SerializeField] private AudioMixer m_masterMixer = null;
 
-    [SerializeField] Dictionary<EGameStat, int> m_gameStats;
+    [SerializeField] Dictionary<EGameStat, int> m_gameStats = new Dictionary<EGameStat, int>();
     private AudioSource mainAudioSource;
+
+    private GameObject m_camera;
 
     private Dictionary<int, GameObject> m_registeredPlayers = new Dictionary<int, GameObject>();
     private void Awake()
@@ -452,5 +454,16 @@ public class Singleton_Game : MonoBehaviour
             return m_gameStats[argGameStat];
         else
             return 0;
+    }
+
+
+    public GameObject GetCamera()
+    {
+        return m_camera;
+    }
+
+    public void SetCamera(GameObject argCamera)
+    {
+        m_camera = argCamera;
     }
 }

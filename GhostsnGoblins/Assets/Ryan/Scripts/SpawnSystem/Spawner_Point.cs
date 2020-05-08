@@ -123,11 +123,8 @@ public class Spawner_Point : MonoBehaviour, ISpawner
                     }
 
                     ActivateSpawnReactors(ESpawnReactorType.eOnEndSpawning, spawnObject, spawnedObject);
-                    Debug.Log("Spawning " + spawnedObject.name);
-
                     if (m_reuseActiveObjects ? true : !spawnedObject.activeSelf)
                     {
-                        Debug.Log("Reusing " + spawnedObject.name + " Current active state=" + spawnedObject.activeSelf);
                         spawnedObject.SetActive(true);
 
                         spawnPoint.SetSpawnedObject(spawnedObject);
