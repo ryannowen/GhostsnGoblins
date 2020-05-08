@@ -76,6 +76,14 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
             EnemyX = Enemy.transform.position.x;
             EnemyY = Enemy.transform.position.y;
             FindPlayer = false;
+
+            Distance = EnemyX - PlayerX;
+            Distance2 = EnemyX - PlayerX2;
+
+            if (Distance < 0)
+                Distance = -Distance;
+            if (Distance2 < 0)
+                Distance2 = -Distance2;
         }
 
         if (!Angered)

@@ -103,6 +103,14 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
                 PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
                 ShootTime = Time.time;
 
+                Distance = EnemyX - PlayerX;
+                Distance2 = EnemyX - PlayerX2;
+
+                if (Distance < 0)
+                    Distance = -Distance;
+                if (Distance2 < 0)
+                    Distance2 = -Distance2;
+
                 if (Distance < Distance2)
                 {
                     //Finds if the player is on the left.
