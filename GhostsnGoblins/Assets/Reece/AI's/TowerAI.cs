@@ -91,6 +91,12 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
                     PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
                     Distance = EnemyX - PlayerX;
                     Distance2 = EnemyX - PlayerX2;
+
+                    if (Distance < 0)
+                        Distance = -Distance;
+                    if (Distance2 < 0)
+                        Distance2 = -Distance2;
+
                     EnemyX = Enemy.gameObject.transform.position.x;
 
                     FindPlayer = false;
