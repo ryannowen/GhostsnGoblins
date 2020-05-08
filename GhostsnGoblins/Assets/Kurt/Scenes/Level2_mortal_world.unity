@@ -92079,12 +92079,12 @@ PrefabInstance:
     - target: {fileID: 4425900346037991534, guid: d046312681e9d1a41b71f4804cc0bc67,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -36.13
+      value: -36.126
       objectReference: {fileID: 0}
     - target: {fileID: 4425900346037991534, guid: d046312681e9d1a41b71f4804cc0bc67,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.738
+      value: -13.733
       objectReference: {fileID: 0}
     - target: {fileID: 4425900346037991534, guid: d046312681e9d1a41b71f4804cc0bc67,
         type: 3}
@@ -94161,10 +94161,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193bca3a57d62e24599582c3f086f785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_itemToSpawn: {fileID: 1046504827}
+  m_itemToSpawn: {fileID: 0}
   m_spawnLocation: {fileID: 2019941682}
   m_soundToPlayWhenItemSpawns: BossDefeated
-  m_levelDoor: {fileID: 0}
+  m_levelDoor: {fileID: 1046504827}
 --- !u!1001 &2034216921
 PrefabInstance:
   m_ObjectHideFlags: 0
