@@ -27,6 +27,7 @@ public class LevelDoor : MonoBehaviour
             {
                 Singleton_Sound.m_instance.PlayAudioClip("LevelFinished");
                 System_Spawn.instance.DisableAllSpawns();
+                Singleton_Game.m_instance.GetCamera().SetActive(true);
 
                 if (m_requireKey)
                     playerC.SetHasKey(false);

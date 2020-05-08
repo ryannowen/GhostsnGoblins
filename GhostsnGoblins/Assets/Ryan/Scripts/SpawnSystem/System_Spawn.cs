@@ -145,7 +145,7 @@ public class System_Spawn : MonoBehaviour
     {
         GameObject player1 = Singleton_Game.m_instance.GetPlayer(0);
         GameObject player2 = Singleton_Game.m_instance.GetPlayer(0);
-
+        
         player1.transform.parent = player1.GetComponent<PlayerController>().originalParent();
         player2.transform.parent = player2.GetComponent<PlayerController>().originalParent();
 

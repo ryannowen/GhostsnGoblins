@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class CameraController : MonoBehaviour
 {
 
@@ -12,6 +12,24 @@ public class CameraController : MonoBehaviour
     [SerializeField] private int minSize = 5;
     [SerializeField] private int maxSize = 10;
     [SerializeField] private int maxTetherDistanceFromPlayerOne = 10;
+
+    [System.Serializable]
+    public struct SLevelBackgrounds
+    {
+        public Sprite[] backgrounds;
+    }
+
+    [System.Serializable]
+    public struct SParalaxBackgrounds
+    {
+        public SpriteRenderer bg1;
+        public SpriteRenderer bg2;
+        public SpriteRenderer bg3;
+    }
+
+
+    [SerializeField] private SLevelBackgrounds[] levelBackgrounds;
+    [SerializeField] private SParalaxBackgrounds[] paralaxBackgrounds;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +43,9 @@ public class CameraController : MonoBehaviour
         player1 = Singleton_Game.m_instance.GetPlayer(0);
         player2 = Singleton_Game.m_instance.GetPlayer(1);
 
+        Singleton_Game.m_instance.SetCamera(gameObject);
+
+        UpdateBackgrounds();
     }
 
     // Update is called once per frame
@@ -90,4 +111,24 @@ public class CameraController : MonoBehaviour
 
     }
 
+    private void OnLevelWasLoaded(int level)
+    {
+
+        UpdateBackgrounds();
+    }
+
+    private void UpdateBackgrounds()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        if ("victory" == sceneName || "death" == sceneName || "MenuScene" == sceneName)
+            return;
+
+        int sceneID = SceneManager.GetActiveScene().buildIndex - 2;
+        for (int i = 0; i < 6; i++)
+        {
+            paralaxBackgrounds[i].bg1.sprite = levelBackgrounds[sceneID].backgrounds[i];
+            paralaxBackgrounds[i].bg2.sprite = levelBackgrounds[sceneID].backgrounds[i];
+            paralaxBackgrounds[i].bg3.sprite = levelBackgrounds[sceneID].backgrounds[i];
+        }
+    }
 }

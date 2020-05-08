@@ -26,7 +26,6 @@ public class Keith : MonoBehaviour, IDamageable
         m_animator = GetComponent<Animator>();
         m_player = Singleton_Game.m_instance.GetPlayer(0);
         m_rigidbody = GetComponent<Rigidbody2D>();
-
     }
 
     // Update is called once per frame
