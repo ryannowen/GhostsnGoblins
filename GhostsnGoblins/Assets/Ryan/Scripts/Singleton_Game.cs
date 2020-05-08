@@ -53,8 +53,6 @@ public class Singleton_Game : MonoBehaviour
     [SerializeField] private bool m_isNewHighScore = false;
     [SerializeField] private GameObject m_scorePopupPrefab = null;
     [Space]
-    [SerializeField] layerColObject[] layerColAry = null;
-    [Space]
     [SerializeField] private Vector2 m_lastCheckPoint = new Vector2(0, 0);
     [SerializeField] private bool m_showLevelDoorItem = false;
     [SerializeField] private string m_previousLevelName = "Level1_heaven";
@@ -78,8 +76,6 @@ public class Singleton_Game : MonoBehaviour
         }
         else
             Destroy(gameObject);
-
-        setLayerCollisions();
 
         mainAudioSource = this.GetComponent<AudioSource>();
 
@@ -205,14 +201,6 @@ public class Singleton_Game : MonoBehaviour
 
         SaveGame();
         ResetGame();
-    }
-
-    private void setLayerCollisions()
-    {
-        foreach (layerColObject lObj in layerColAry)
-        {
-            Physics2D.IgnoreLayerCollision(lObj.obj1, lObj.obj2, lObj.ignoreLayerCollision);
-        }
     }
 
     public int GetScore()
