@@ -99,11 +99,18 @@ public class WoodyPigAI : MonoBehaviour, IDamageable, ISpawn
                 EnemyY = Enemy.gameObject.transform.position.y;
                 PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
                 PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
-
                 ShootTime = Time.time;
                 Origin = Time.time;
                 wait = Time.time + 0.25f;
                 Deathtimer = Time.time + 30;
+
+                Distance = EnemyX - PlayerX;
+                Distance2 = EnemyX - PlayerX2;
+
+                if (Distance < 0)
+                    Distance = -Distance;
+                if (Distance2 < 0)
+                    Distance2 = -Distance2;
 
                 if (Distance < Distance2)
                 {

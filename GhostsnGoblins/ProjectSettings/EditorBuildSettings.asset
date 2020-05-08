@@ -30,6 +30,12 @@ EditorBuildSettings:
     path: Assets/Kurt/Scenes/Level5.unity
     guid: 03b1448d984fa4f4e97f3ae4222f44ac
   - enabled: 1
+    path: Assets/Kurt/Scenes/Level6.unity
+    guid: f797d1332be69e84ea20f6863a5e45a3
+  - enabled: 1
+    path: Assets/Kurt/Scenes/Level7.unity
+    guid: 6c420d670f9765c4d97a4ad9b5bae69c
+  - enabled: 1
     path: Assets/Ryan/Scenes/victory.unity
     guid: 95be1e0faa9694b41822cbc3aa7dd16e
   m_configObjects: {}

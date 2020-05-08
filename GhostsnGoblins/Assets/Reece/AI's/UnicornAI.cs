@@ -24,6 +24,7 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
     private float EnemyY;
     private float JumpTimer;
     private float DashTime;
+    private float ClosestPlayer = 0;
     private bool FindPlayer = true;
     private bool Jump;
     private bool Dash;
@@ -76,11 +77,24 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
             EnemyX = Enemy.transform.position.x;
             EnemyY = Enemy.transform.position.y;
             FindPlayer = false;
+
+            Distance = EnemyX - PlayerX;
+            Distance2 = EnemyX - PlayerX2;
+
+            if (Distance < 0)
+                Distance = -Distance;
+            if (Distance2 < 0)
+                Distance2 = -Distance2;
+
+            if (Distance < Distance2)
+                ClosestPlayer = 1;
+            if (Distance2 < Distance)
+                ClosestPlayer = 2;
         }
 
         if (!Angered)
         {
-            if (Distance < Distance2)
+            if (ClosestPlayer == 1)
             {
                 if (PlayerX + 10 > EnemyX && PlayerX - 10 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
                 {
@@ -88,9 +102,9 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
                 }
             }
 
-            if (Distance2 < Distance)
+            if (ClosestPlayer == 2)
             {
-                if (PlayerX + 10 > EnemyX && PlayerX - 10 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+                if (PlayerX2 + 10 > EnemyX && PlayerX2 - 10 < EnemyX && PlayerY2 + 3 > EnemyY && PlayerY2 - 3 < EnemyY)
                 {
                     Angered = true;
                 }
@@ -131,7 +145,7 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
         {
             if (Jump)
             {
-                if (Distance < Distance2)
+                if (ClosestPlayer == 1)
                 {
                     if (PlayerX < EnemyX)
                     {
@@ -167,7 +181,7 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
                     }
                 }
 
-                if (Distance2 < Distance)
+                if (ClosestPlayer == 2)
                 {
                     if (PlayerX2 < EnemyX)
                     {
@@ -211,7 +225,7 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
 
             if (Shoot)
             {
-                if (Distance < Distance2)
+                if (ClosestPlayer == 1)
                 {
                     if (PlayerX < EnemyX)
                         fireProj.Fire(transform.position, Vector3.left, transform.rotation);
@@ -219,7 +233,7 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
                         fireProj.Fire(transform.position, Vector3.right, transform.rotation);
                 }
 
-                if (Distance2 < Distance)
+                if (ClosestPlayer == 2)
                 {
                     if (PlayerX2 < EnemyX)
                         fireProj.Fire(transform.position, Vector3.left, transform.rotation);
@@ -232,7 +246,7 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
 
             if (Dash)
             {
-                if (Distance < Distance2)
+                if (ClosestPlayer == 1)
                 {
                     if (PlayerX < EnemyX)
                     {
@@ -255,7 +269,7 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
                     }
                 }
 
-                if (Distance2 < Distance)
+                if (ClosestPlayer == 2)
                 {
                     if (PlayerX2 < EnemyX)
                     {

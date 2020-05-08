@@ -88,6 +88,14 @@ public class RavenAI : MonoBehaviour, IDamageable, ISpawn
                     Origin = Time.time;
                     wait = Time.time + 0.25f;
 
+                    Distance = EnemyX - PlayerX;
+                    Distance2 = EnemyX - PlayerX2;
+
+                    if (Distance < 0)
+                        Distance = -Distance;
+                    if (Distance2 < 0)
+                        Distance2 = -Distance2;
+
                     if (Distance < Distance2)
                     {
                         //Finds if the player is on the left.
