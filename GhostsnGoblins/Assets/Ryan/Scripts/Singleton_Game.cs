@@ -275,6 +275,7 @@ public class Singleton_Game : MonoBehaviour
 
     public void ReSpawnPlayerAtCheckpoint(int argPlayerID)
     {
+
         if (m_playerLives <= 0)
             return;
 

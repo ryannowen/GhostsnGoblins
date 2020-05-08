@@ -6,6 +6,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
 {
     public bool Alive = true;
 
+    [SerializeField] private GameObject Bullet = null;
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
@@ -29,8 +30,10 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
     private bool InAir;
     private bool AntiSwoopLeft;
     private bool AntiSwoopRight;
+    private bool Shoot;
     private float InvicibleTimer;
 
+    private FireProjectile fireProj;
     //private float Deathtimer = 100f;
 
     // Start is called before the first frame update
@@ -38,6 +41,11 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
+        if (Bullet == null)
+            Bullet = (GameObject)Resources.Load("Prefabs/Bullet") as GameObject;
+
+        fireProj = this.gameObject.GetComponent<FireProjectile>();
+        fireProj.SetProjectile(Bullet);
 
         m_SpawnPickup = this.gameObject.GetComponent<SpawnPickup>();
 
@@ -100,15 +108,19 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
         }
 
 
-        else if (InAir && !FlyUp && !FlyDown && !Swoop && !AntiSwoopLeft && !AntiSwoopRight)
+        else if (InAir && !FlyUp && !FlyDown && !Swoop && !AntiSwoopLeft && !AntiSwoopRight && !Shoot)
         {
             if (RNG <= 70 && RNG > 30)
             {
                 FlyDown = true;
             }
-            else if (RNG > 70)
+            else if (RNG > 70 && RNG <= 90)
             {
                 Swoop = true;
+            }
+            else if (RNG > 90)
+            {
+                Shoot = true;
             }
             RNG = 0;
         }
@@ -241,6 +253,14 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
                 // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
             }
             Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
+        }
+
+        if (Shoot)
+        {
+            Vector3 directionToFire = Player.transform.position - transform.position;
+            directionToFire.Normalize();
+            fireProj.Fire(transform.position, directionToFire, transform.rotation);
+            Shoot = false;
         }
 
         if (HP <= 0)
