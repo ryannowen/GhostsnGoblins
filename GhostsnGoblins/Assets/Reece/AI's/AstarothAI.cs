@@ -22,6 +22,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
     private float EnemyX;
     private float EnemyY;
     private float DashTime;
+    private float ClosestPlayer = 0;
     private bool FindPlayer = true;
     private bool Dash;
     private bool DashForward;
@@ -81,6 +82,11 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
                 Distance = -Distance;
             if (Distance2 < 0)
                 Distance2 = -Distance2;
+
+            if (Distance < Distance2)
+                ClosestPlayer = 1;
+            else if (Distance2 < Distance)
+                ClosestPlayer = 2;
 
             FindPlayer = false;
         }
@@ -145,13 +151,13 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
         {
             if (Shoot)
             {
-                if (Distance < Distance2)
+                if (ClosestPlayer == 1)
                 {
                     Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position - transform.position;
                     directionToFire.Normalize();
                     fireProj.Fire(transform.position, directionToFire, transform.rotation);
                 }
-                if (Distance2 < Distance)
+                if (ClosestPlayer == 2)
                 {
                     Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position - transform.position;
                     directionToFire.Normalize();
@@ -162,7 +168,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
 
             if (DashForward)
             {
-                if (Distance < Distance2)
+                if (ClosestPlayer == 1)
                 {
                     if (PlayerX < EnemyX)
                     {
@@ -187,7 +193,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
                     }
                 }
 
-                if (Distance2 < Distance)
+                if (ClosestPlayer == 2)
                 {
                     if (PlayerX2 < EnemyX)
                     {
@@ -220,7 +226,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
 
             if (DashBackwards)
             {
-                if (Distance < Distance2)
+                if (ClosestPlayer == 1)
                 {
                     if (PlayerX < EnemyX)
                     {
@@ -245,7 +251,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
                     }
                 }
 
-                if (Distance2 < Distance)
+                if (ClosestPlayer == 2)
                 {
                     if (PlayerX2 < EnemyX)
                     {

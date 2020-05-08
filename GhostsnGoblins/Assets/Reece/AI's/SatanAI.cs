@@ -26,6 +26,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
     private float EnemyY;
     private float DistanceX;
     private float DistanceY;
+    private float ClosestPlayer = 0;
     private bool FindPlayer = true;
     private bool Swoop;
     private bool Shoot;
@@ -78,12 +79,14 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
             {
                 DistanceY = EnemyY - PlayerY;
                 DistanceX = EnemyX - PlayerX;
+                ClosestPlayer = 1;
             }
 
             if (Distance2 < Distance)
             {
                 DistanceY = EnemyY - PlayerY2;
                 DistanceX = EnemyX - PlayerX2;
+                ClosestPlayer = 2;
             }
 
             FindPlayer = false;
@@ -131,7 +134,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
 
             if (Swoop)
             {
-                if (Distance < Distance2)
+                if (ClosestPlayer == 1)
                 {
                     if (PlayerX < EnemyX && PlayerY < EnemyY)
                     {
@@ -157,7 +160,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
                     }
                 }
 
-                if (Distance2 < Distance)
+                if (ClosestPlayer == 2)
                 {
                     if (PlayerX2 < EnemyX && PlayerY2 < EnemyY)
                     {
@@ -188,7 +191,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
             if (AntiSwoopLeft)
             {
                 transform.localRotation = Quaternion.Euler(0, 180, 0);
-                if (Distance < Distance2)
+                if (ClosestPlayer == 1)
                 {
                     if (PlayerX - 6 < EnemyX)
                     {
@@ -208,7 +211,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
                     }
                 }
 
-                if (Distance2 < Distance)
+                if (ClosestPlayer == 2)
                 {
                     if (PlayerX2 - 6 < EnemyX)
                     {
@@ -233,7 +236,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
             if (AntiSwoopRight)
             {
                 transform.localRotation = Quaternion.Euler(0, 0, 0);
-                if (Distance < Distance2)
+                if (ClosestPlayer == 1)
                 {
                     if (PlayerX + 6 > EnemyX)
                     {
@@ -253,7 +256,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
                     }
                 }
 
-                if (Distance2 < Distance)
+                if (ClosestPlayer == 2)
                 {
                     if (PlayerX2 + 6 > EnemyX)
                     {
@@ -278,10 +281,20 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
 
         if (Shoot)
         {
-            Vector3 directionToFire = Player.transform.position - transform.position;
-            directionToFire.Normalize();
-            fireProj.Fire(transform.position, directionToFire, transform.rotation);
-            Shoot = false;
+            if (ClosestPlayer == 1)
+            {
+                Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position - transform.position;
+                directionToFire.Normalize();
+                fireProj.Fire(transform.position, directionToFire, transform.rotation);
+                Shoot = false;
+            }
+            if (ClosestPlayer == 2)
+            {
+                Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position - transform.position;
+                directionToFire.Normalize();
+                fireProj.Fire(transform.position, directionToFire, transform.rotation);
+                Shoot = false;
+            }
         }
 
         if (HP <= 0)

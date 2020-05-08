@@ -16,10 +16,15 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
     private float RNGtimer = 3;
     private float PlayerX;
     private float PlayerY;
+    private float PlayerX2;
+    private float PlayerY2;
+    private float Distance;
+    private float Distance2;
     private float EnemyX;
     private float EnemyY;
     private float DistanceX;
     private float DistanceY;
+    private float ClosestPlayer = 0;
     private bool FindPlayer = true;
     private bool MoveLeft;
     private bool MoveRight;
@@ -57,12 +62,35 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (FindPlayer)
         {
-            PlayerX = Player.gameObject.transform.position.x;
-            PlayerY = Player.gameObject.transform.position.y;
+            PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
+            PlayerY = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.y;
+            PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
+            PlayerY2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.y;
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
-            DistanceY = EnemyY - PlayerY;
-            DistanceX = EnemyX - PlayerX;
+
+            Distance = EnemyX - PlayerX;
+            Distance2 = EnemyX - PlayerX2;
+
+            if (Distance < 0)
+                Distance = -Distance;
+            if (Distance2 < 0)
+                Distance2 = -Distance2;
+
+            if (Distance < Distance2)
+            {
+                DistanceY = EnemyY - PlayerY;
+                DistanceX = EnemyX - PlayerX;
+                ClosestPlayer = 1;
+            }
+
+            if (Distance2 < Distance)
+            {
+                DistanceY = EnemyY - PlayerY2;
+                DistanceX = EnemyX - PlayerX2;
+                ClosestPlayer = 2;
+            }
+
             FindPlayer = false;
         }
 
@@ -73,11 +101,15 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
             {
                 Angered = true;
             }
+            if (PlayerX2 + 5 > EnemyX && PlayerX2 - 5 < EnemyX && PlayerY2 + 3 > EnemyY && PlayerY2 - 3 < EnemyY)
+            {
+                Angered = true;
+            }
         }
 
         if (Angered)
         {
-            if (PlayerX > EnemyX + 12 && PlayerX < EnemyX - 12 && PlayerY > EnemyY + 7 && PlayerY < EnemyY - 7)
+            if (PlayerX > EnemyX + 12 && PlayerX < EnemyX - 12 && PlayerY > EnemyY + 7 && PlayerY < EnemyY - 7 && PlayerX2 > EnemyX + 12 && PlayerX2 < EnemyX - 12 && PlayerY2 > EnemyY + 7 && PlayerY2 < EnemyY - 7)
             {
                 Angered = false;
             }
@@ -127,147 +159,291 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
 
         if (Angered && Alive)
         {
-            //Will move the Zombie to the left if the player is on the left.
-            if (MoveLeft && !InAir)
+            if (ClosestPlayer == 1)
             {
-                transform.localRotation = Quaternion.Euler(0, 0, 0);
-                if (EnemyX > PlayerX - 8)
-                {
-                    EnemyX -= speed;
-                }
-                else
-                    MoveLeft = false;
-            }
-            //Will move the Zombie to the right if the player is on the right
-            else if (MoveRight && !InAir)
-            {
-                transform.localRotation = Quaternion.Euler(0, 180, 0);
-                if (EnemyX < PlayerX + 8)
-                {
-                    EnemyX += speed;
-                }
-                else
-                    MoveRight = false;
-            }
-
-
-            if (FlyUp)
-            {
-                if (EnemyY < PlayerY + 4)
-                {
-                    EnemyY += speed;
-                    InAir = true;
-                }
-                else
-                    FlyUp = false;
-            }
-            else if (FlyDown)
-            {
-                if (EnemyY > PlayerY)
-                {
-                    EnemyY -= speed;
-                    InAir = false;
-                }
-                else
-                    FlyDown = false;
-            }
-
-
-            if (Swoop && InAir)
-            {
-                if (PlayerX < EnemyX && PlayerY < EnemyY)
+                //Will move the Zombie to the left if the player is on the left.
+                if (MoveLeft && !InAir)
                 {
                     transform.localRotation = Quaternion.Euler(0, 0, 0);
-                    EnemyX -= DistanceX / 40;
-                    EnemyY -= DistanceY / 40;
-                    if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
+                    if (EnemyX > PlayerX - 8)
                     {
-                        AntiSwoopLeft = true;
-                        Swoop = false;
+                        EnemyX -= speed;
                     }
+                    else
+                        MoveLeft = false;
                 }
-                if (PlayerX > EnemyX && PlayerY < EnemyY)
+                //Will move the Zombie to the right if the player is on the right
+                else if (MoveRight && !InAir)
                 {
                     transform.localRotation = Quaternion.Euler(0, 180, 0);
-                    EnemyX -= DistanceX / 40;
-                    EnemyY -= DistanceY / 40;
-                    if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
+                    if (EnemyX < PlayerX + 8)
                     {
-                        AntiSwoopRight = true;
-                        Swoop = false;
+                        EnemyX += speed;
+                    }
+                    else
+                        MoveRight = false;
+                }
+
+
+                if (FlyUp)
+                {
+                    if (EnemyY < PlayerY + 4)
+                    {
+                        EnemyY += speed;
+                        InAir = true;
+                    }
+                    else
+                        FlyUp = false;
+                }
+                else if (FlyDown)
+                {
+                    if (EnemyY > PlayerY)
+                    {
+                        EnemyY -= speed;
+                        InAir = false;
+                    }
+                    else
+                        FlyDown = false;
+                }
+
+
+                if (Swoop && InAir)
+                {
+                    if (PlayerX < EnemyX && PlayerY < EnemyY)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        EnemyX -= DistanceX / 40;
+                        EnemyY -= DistanceY / 40;
+                        if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
+                        {
+                            AntiSwoopLeft = true;
+                            Swoop = false;
+                        }
+                    }
+                    if (PlayerX > EnemyX && PlayerY < EnemyY)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        EnemyX -= DistanceX / 40;
+                        EnemyY -= DistanceY / 40;
+                        if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
+                        {
+                            AntiSwoopRight = true;
+                            Swoop = false;
+                        }
                     }
                 }
+
+
+                if (AntiSwoopLeft)
+                {
+                    if (PlayerX - 8 < EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        EnemyX -= speed * 4;
+                    }
+                    else
+                    {
+                        AntiSwoopLeft = false;
+                    }
+                    if (PlayerY + 4 > EnemyY)
+                    {
+                        EnemyY += speed * 2;
+                    }
+                    else
+                    {
+                        AntiSwoopLeft = false;
+                    }
+                }
+
+
+                if (AntiSwoopRight)
+                {
+                    if (PlayerX + 8 > EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        EnemyX += speed * 4;
+                    }
+                    else
+                    {
+                        AntiSwoopRight = false;
+                    }
+                    if (PlayerY + 4 > EnemyY)
+                    {
+                        EnemyY += speed * 2;
+                    }
+                    else
+                    {
+                        AntiSwoopRight = false;
+                    }
+                }
+                if (EnemyX > PlayerX + 8.1f)
+                {
+                    EnemyX -= speed * 5;
+                    // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
+                }
+                else if (EnemyX < PlayerX - 8.1f)
+                {
+                    EnemyX += speed * 5;
+                    // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
+                }
+                Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
             }
 
-
-            if (AntiSwoopLeft)
+            if (ClosestPlayer == 2)
             {
-                if (PlayerX - 8 < EnemyX)
+                //Will move the Zombie to the left if the player is on the left.
+                if (MoveLeft && !InAir)
+                {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
+                    if (EnemyX > PlayerX2 - 8)
+                    {
+                        EnemyX -= speed;
+                    }
+                    else
+                        MoveLeft = false;
+                }
+                //Will move the Zombie to the right if the player is on the right
+                else if (MoveRight && !InAir)
                 {
                     transform.localRotation = Quaternion.Euler(0, 180, 0);
-                    EnemyX -= speed * 4;
+                    if (EnemyX < PlayerX2 + 8)
+                    {
+                        EnemyX += speed;
+                    }
+                    else
+                        MoveRight = false;
                 }
-                else
+
+
+                if (FlyUp)
                 {
-                    AntiSwoopLeft = false;
+                    if (EnemyY < PlayerY2 + 4)
+                    {
+                        EnemyY += speed;
+                        InAir = true;
+                    }
+                    else
+                        FlyUp = false;
                 }
-                if (PlayerY + 4 > EnemyY)
+                else if (FlyDown)
                 {
-                    EnemyY += speed * 2;
+                    if (EnemyY > PlayerY2)
+                    {
+                        EnemyY -= speed;
+                        InAir = false;
+                    }
+                    else
+                        FlyDown = false;
                 }
-                else
+
+
+                if (Swoop && InAir)
                 {
-                    AntiSwoopLeft = false;
+                    if (PlayerX2 < EnemyX && PlayerY2 < EnemyY)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        EnemyX -= DistanceX / 40;
+                        EnemyY -= DistanceY / 40;
+                        if (PlayerX2 + 0.3f > EnemyX && PlayerX2 - 0.3f < EnemyX)
+                        {
+                            AntiSwoopLeft = true;
+                            Swoop = false;
+                        }
+                    }
+                    if (PlayerX2 > EnemyX && PlayerY2 < EnemyY)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        EnemyX -= DistanceX / 40;
+                        EnemyY -= DistanceY / 40;
+                        if (PlayerX2 + 0.3f > EnemyX && PlayerX2 - 0.3f < EnemyX)
+                        {
+                            AntiSwoopRight = true;
+                            Swoop = false;
+                        }
+                    }
                 }
+
+
+                if (AntiSwoopLeft)
+                {
+                    if (PlayerX2 - 8 < EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        EnemyX -= speed * 4;
+                    }
+                    else
+                    {
+                        AntiSwoopLeft = false;
+                    }
+                    if (PlayerY2 + 4 > EnemyY)
+                    {
+                        EnemyY += speed * 2;
+                    }
+                    else
+                    {
+                        AntiSwoopLeft = false;
+                    }
+                }
+
+
+                if (AntiSwoopRight)
+                {
+                    if (PlayerX2 + 8 > EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        EnemyX += speed * 4;
+                    }
+                    else
+                    {
+                        AntiSwoopRight = false;
+                    }
+                    if (PlayerY2 + 4 > EnemyY)
+                    {
+                        EnemyY += speed * 2;
+                    }
+                    else
+                    {
+                        AntiSwoopRight = false;
+                    }
+                }
+                if (EnemyX > PlayerX2 + 8.1f)
+                {
+                    EnemyX -= speed * 5;
+                    // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
+                }
+                else if (EnemyX < PlayerX2 - 8.1f)
+                {
+                    EnemyX += speed * 5;
+                    // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
+                }
+                Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
             }
 
 
-            if (AntiSwoopRight)
+            if (Shoot)
             {
-                if (PlayerX + 8 > EnemyX)
+                if (ClosestPlayer == 1)
                 {
-                    transform.localRotation = Quaternion.Euler(0, 0, 0); 
-                    EnemyX += speed * 4;
+                    Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position - transform.position;
+                    directionToFire.Normalize();
+                    fireProj.Fire(transform.position, directionToFire, transform.rotation);
+                    Shoot = false;
                 }
-                else
+                if (ClosestPlayer == 2)
                 {
-                    AntiSwoopRight = false;
-                }
-                if (PlayerY + 4 > EnemyY)
-                { 
-                    EnemyY += speed * 2;
-                }
-                else
-                {
-                    AntiSwoopRight = false;
+                    Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position - transform.position;
+                    directionToFire.Normalize();
+                    fireProj.Fire(transform.position, directionToFire, transform.rotation);
+                    Shoot = false;
                 }
             }
-            if (EnemyX > PlayerX + 8.1f)
-            {
-                EnemyX -= speed * 5;
-                // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
-            }
-            else if (EnemyX < PlayerX - 8.1f)
-            {
-                EnemyX += speed * 5;
-                // Enemy.gameObject.transform.position = new Vector3(EnemyX, Enemy.gameObject.transform.position.y, Enemy.gameObject.transform.position.z)
-            }
-            Enemy.gameObject.transform.position = new Vector3(EnemyX, EnemyY, Enemy.gameObject.transform.position.z);
+
+            if (HP <= 0)
+                KillEntity();
+
+            if (!Alive)
+                Enemy.SetActive(false);
         }
-
-        if (Shoot)
-        {
-            Vector3 directionToFire = Player.transform.position - transform.position;
-            directionToFire.Normalize();
-            fireProj.Fire(transform.position, directionToFire, transform.rotation);
-            Shoot = false;
-        }
-
-        if (HP <= 0)
-            KillEntity();
-
-        if (!Alive)
-            Enemy.SetActive(false);
     }
 
     public void TakeDamage(int amount)
