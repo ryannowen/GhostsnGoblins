@@ -10,7 +10,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
     private GameObject Enemy;
     private GameObject Player;
     private int RNG;
-    private int HP = 2;
+    private int HP = 3;
     private float speed = 0.1f;
     private float RNGtimer = 3;
     private float PlayerX;
@@ -165,6 +165,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (PlayerX < EnemyX && PlayerY < EnemyY)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
                     EnemyX -= DistanceX / 40;
                     EnemyY -= DistanceY / 40;
                     if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
@@ -175,6 +176,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
                 }
                 if (PlayerX > EnemyX && PlayerY < EnemyY)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
                     EnemyX -= DistanceX / 40;
                     EnemyY -= DistanceY / 40;
                     if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
@@ -190,6 +192,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (PlayerX - 8 < EnemyX)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
                     EnemyX -= speed * 4;
                 }
                 else
@@ -211,6 +214,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (PlayerX + 8 > EnemyX)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0); 
                     EnemyX += speed * 4;
                 }
                 else
@@ -218,7 +222,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
                     AntiSwoopRight = false;
                 }
                 if (PlayerY + 4 > EnemyY)
-                {
+                { 
                     EnemyY += speed * 2;
                 }
                 else
@@ -283,7 +287,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
 
     public void OnSpawn()
     {
-        HP = 2;
+        HP = 3;
         Alive = true;
         Angered = false;
         FindPlayer = true;

@@ -142,6 +142,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (PlayerX < EnemyX)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
                     Vector3 moveDirection = GetDesiredMove();
                     moveDirection.Normalize();
                     moveDirection.y = rb.velocity.y;
@@ -152,6 +153,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
 
                 else if (PlayerX > EnemyX)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
                     Vector3 moveDirection = GetDesiredMove();
                     moveDirection.Normalize();
                     moveDirection.y = rb.velocity.y;
@@ -170,6 +172,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (PlayerX < EnemyX)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
                     Vector3 moveDirection = GetDesiredMove();
                     moveDirection.Normalize();
                     moveDirection.y = rb.velocity.y;
@@ -180,6 +183,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
 
                 else if (PlayerX > EnemyX)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
                     Vector3 moveDirection = GetDesiredMove();
                     moveDirection.Normalize();
                     moveDirection.y = rb.velocity.y;

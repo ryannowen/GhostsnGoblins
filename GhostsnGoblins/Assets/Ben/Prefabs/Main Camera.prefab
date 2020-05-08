@@ -269,11 +269,39 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 56e3e261fb3958f429f3d8552c119d97, type: 3}
     - {fileID: 21300000, guid: f8171fc367341aa4885e56cef5fab3b7, type: 3}
   - backgrounds:
-    - {fileID: 21300000, guid: ce0d5a8b424ebc44d84e70f883cee5e7, type: 3}
-    - {fileID: 4057481830782898085, guid: 54edbdb16f3791e41a659230f5d30cd6, type: 3}
-    - {fileID: 21300000, guid: 80517c91e73d3c7499f2d70c3660241d, type: 3}
-    - {fileID: 21300000, guid: a5c3aa09fe2a7a140b744776d20dca86, type: 3}
-    - {fileID: 21300000, guid: fa2bf0726afa2564c8cfed1e68468ea4, type: 3}
+    - {fileID: 21300000, guid: c77faa18117849a438361a927cea0277, type: 3}
+    - {fileID: 21300000, guid: 2bb5543400120ab4ca13916edad9f58b, type: 3}
+    - {fileID: 21300000, guid: a4e9113116bd0e04e92f94fdbf66a17c, type: 3}
+    - {fileID: 21300000, guid: b6d8ff6ccd35e0a459bcff02b7e09be1, type: 3}
+    - {fileID: 21300000, guid: 56e3e261fb3958f429f3d8552c119d97, type: 3}
+    - {fileID: 21300000, guid: f8171fc367341aa4885e56cef5fab3b7, type: 3}
+  - backgrounds:
+    - {fileID: 21300000, guid: c77faa18117849a438361a927cea0277, type: 3}
+    - {fileID: 21300000, guid: 2bb5543400120ab4ca13916edad9f58b, type: 3}
+    - {fileID: 21300000, guid: a4e9113116bd0e04e92f94fdbf66a17c, type: 3}
+    - {fileID: 21300000, guid: b6d8ff6ccd35e0a459bcff02b7e09be1, type: 3}
+    - {fileID: 21300000, guid: 56e3e261fb3958f429f3d8552c119d97, type: 3}
+    - {fileID: 21300000, guid: f8171fc367341aa4885e56cef5fab3b7, type: 3}
+  - backgrounds:
+    - {fileID: 21300000, guid: c77faa18117849a438361a927cea0277, type: 3}
+    - {fileID: 21300000, guid: 2bb5543400120ab4ca13916edad9f58b, type: 3}
+    - {fileID: 21300000, guid: a4e9113116bd0e04e92f94fdbf66a17c, type: 3}
+    - {fileID: 21300000, guid: b6d8ff6ccd35e0a459bcff02b7e09be1, type: 3}
+    - {fileID: 21300000, guid: 56e3e261fb3958f429f3d8552c119d97, type: 3}
+    - {fileID: 21300000, guid: f8171fc367341aa4885e56cef5fab3b7, type: 3}
+  - backgrounds:
+    - {fileID: 21300000, guid: c77faa18117849a438361a927cea0277, type: 3}
+    - {fileID: 21300000, guid: 2bb5543400120ab4ca13916edad9f58b, type: 3}
+    - {fileID: 21300000, guid: a4e9113116bd0e04e92f94fdbf66a17c, type: 3}
+    - {fileID: 21300000, guid: b6d8ff6ccd35e0a459bcff02b7e09be1, type: 3}
+    - {fileID: 21300000, guid: 56e3e261fb3958f429f3d8552c119d97, type: 3}
+    - {fileID: 21300000, guid: f8171fc367341aa4885e56cef5fab3b7, type: 3}
+  - backgrounds:
+    - {fileID: 21300000, guid: c77faa18117849a438361a927cea0277, type: 3}
+    - {fileID: 21300000, guid: 2bb5543400120ab4ca13916edad9f58b, type: 3}
+    - {fileID: 21300000, guid: a4e9113116bd0e04e92f94fdbf66a17c, type: 3}
+    - {fileID: 21300000, guid: b6d8ff6ccd35e0a459bcff02b7e09be1, type: 3}
+    - {fileID: 21300000, guid: 56e3e261fb3958f429f3d8552c119d97, type: 3}
     - {fileID: 21300000, guid: f8171fc367341aa4885e56cef5fab3b7, type: 3}
   paralaxBackgrounds:
   - bg1: {fileID: 4694914295428174683}
