@@ -12,6 +12,11 @@ public class Spawner_Exterminate : MonoBehaviour, ISpawnReactor
 
     [SerializeField] private GameObject m_levelDoor = null;
 
+    void Start()
+    {
+        System_Spawn.instance.RegisterIReactor(gameObject);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -51,6 +56,12 @@ public class Spawner_Exterminate : MonoBehaviour, ISpawnReactor
             }
         }
     }
+
+    public void ReactorReset()
+    {
+        m_exterminateTargets.Clear();
+    }
+
     public void ReactorOnBeginSpawning() { }
 
     public void ReactorOnSpawn(GameObject argSpawnedObject)

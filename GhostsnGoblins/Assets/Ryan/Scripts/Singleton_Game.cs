@@ -324,6 +324,7 @@ public class Singleton_Game : MonoBehaviour
 
             if (!player1.activeSelf && !player2.activeSelf)
             {
+                System_Spawn.instance.ResetRegisteredIReactors();
                 System_Spawn.instance.DisableAllSpawnType(System_Spawn.ESpawnType.eEnemy);
                 System_Spawn.instance.ActivateRegisteredSpawners();
             }

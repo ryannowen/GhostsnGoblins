@@ -29,6 +29,8 @@ public class System_Spawn : MonoBehaviour
     private List<int> m_setupObjectPoolIDs = new List<int>();
     private GameObject objectPoolContainer = null;
     private List<ISpawner> m_levelSpawners = new List<ISpawner>();
+    private List<ISpawnReactor> m_levelReactors = new List<ISpawnReactor>();
+
     private void Awake()
     {
         if (null == instance && this != instance)
@@ -182,9 +184,27 @@ public class System_Spawn : MonoBehaviour
         m_levelSpawners.Add(spawner);
     }
 
+    public void RegisterIReactor(GameObject argReactor)
+    {
+        ISpawnReactor reactor = argReactor.GetComponent<ISpawnReactor>();
+
+        if (null == reactor)
+            return;
+
+        m_levelReactors.Add(reactor);
+    }
+
     public void ClearSpawners()
     {
         m_levelSpawners.Clear();
+    }
+
+    public void ResetRegisteredIReactors()
+    {
+        foreach (ISpawnReactor reactor in m_levelReactors)
+        {
+            reactor.ReactorReset();
+        }
     }
 
     public void ActivateRegisteredSpawners()
