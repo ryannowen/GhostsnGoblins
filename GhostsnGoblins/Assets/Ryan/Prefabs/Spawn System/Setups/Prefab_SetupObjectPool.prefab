@@ -48,152 +48,200 @@ MonoBehaviour:
   - m_InspectorName: Player
     m_Object: {fileID: 8607762150274011244, guid: b1cc5173de8e21e4685886e002af6e67,
       type: 3}
+    spawnType: 0
     m_Amount: 2
   - m_InspectorName: Camera
     m_Object: {fileID: 2045863726979690021, guid: 2a1cc1b119c983d48a1529de43570471,
       type: 3}
+    spawnType: 0
     m_Amount: 1
   - m_InspectorName: LanceWeapon
     m_Object: {fileID: 2184593732081151199, guid: c1dfcd5a8835389468a68d0c1ce8fb91,
       type: 3}
+    spawnType: 0
     m_Amount: 1
   - m_InspectorName: DaggerWeapon
     m_Object: {fileID: 2476796797623981099, guid: bc426bf1329cb1e4db12313337c11c35,
       type: 3}
+    spawnType: 0
     m_Amount: 1
   - m_InspectorName: TorchWeapon
     m_Object: {fileID: 3127533158545038734, guid: 45cfea4b670343a47ac82dfbb518bb3a,
       type: 3}
+    spawnType: 0
     m_Amount: 1
   - m_InspectorName: AxeWeapon
     m_Object: {fileID: 4977625943202022156, guid: 6dd93da9118474d43935987ff0620c6b,
       type: 3}
+    spawnType: 0
     m_Amount: 1
   - m_InspectorName: ShieldWeapon
     m_Object: {fileID: 5046551668258086296, guid: d242f41a5c46e82479390875d61595b0,
       type: 3}
+    spawnType: 0
     m_Amount: 1
   - m_InspectorName: CombWeapon
     m_Object: {fileID: 806048072815751598, guid: 2e3ac5ad3df17e8459b8714f9815c3c4,
       type: 3}
+    spawnType: 0
     m_Amount: 1
   - m_InspectorName: Lance Projectile
     m_Object: {fileID: 941576023956072921, guid: 542d0fcf77afb2d40891899e526d4f25,
       type: 3}
+    spawnType: 0
     m_Amount: 20
   - m_InspectorName: Dagger Projectile
     m_Object: {fileID: 5398193262887971773, guid: 55dac7275ff1aef4ca87892f4f6d25d6,
       type: 3}
+    spawnType: 0
     m_Amount: 20
   - m_InspectorName: Torch Projectile
     m_Object: {fileID: 6033140465015285520, guid: 2d67291d9052b52418ec09a27a574d04,
       type: 3}
+    spawnType: 0
     m_Amount: 20
   - m_InspectorName: Axe Projectile
     m_Object: {fileID: 404115625410511368, guid: 1e089bc94f6b9d84cb99966155920d8f,
       type: 3}
+    spawnType: 0
     m_Amount: 20
   - m_InspectorName: Shield Projectile
     m_Object: {fileID: 2447005794682650670, guid: 0ecbebc2c89b15f49a0132661f9d9601,
       type: 3}
+    spawnType: 0
     m_Amount: 20
   - m_InspectorName: Comb Projectile
     m_Object: {fileID: 6794210619803571887, guid: a813c825c9ef99a439442a5a66a57c21,
       type: 3}
+    spawnType: 0
     m_Amount: 20
   - m_InspectorName: Bullet
     m_Object: {fileID: 2288533703519710632, guid: 77620011d7e14634aabfb85386de7996,
       type: 3}
+    spawnType: 0
     m_Amount: 20
   - m_InspectorName: Dart
     m_Object: {fileID: 3075841005207888016, guid: 45423e71ac2ada14abbd2f0ba2d2e089,
       type: 3}
+    spawnType: 0
     m_Amount: 20
   - m_InspectorName: Pickups
     m_Object: {fileID: 2812206897624619931, guid: 44ee7d8eb5d9d1c47bfebad210615eb9,
       type: 3}
+    spawnType: 0
     m_Amount: 20
   - m_InspectorName: Audio Source
     m_Object: {fileID: 1325273796964493441, guid: b8f504ffb973e274ba0a988754329dbf,
       type: 3}
+    spawnType: 0
     m_Amount: 30
   - m_InspectorName: Pickup Armour Copper
     m_Object: {fileID: 998513154692721631, guid: ebdff1188c03dcf4a8613c1450e7abea,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Armour Silver
     m_Object: {fileID: 7442735438330741987, guid: 3ea5773efa89555479f4d14f00a648f6,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Armour Gold
     m_Object: {fileID: 2800220768220481563, guid: dcd72915440cede4293d15e665f145bf,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Weapon Comb
     m_Object: {fileID: 7769598207520070414, guid: 778f65e899b0cef4bab4b62a78ce0efd,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Weapon Lance
     m_Object: {fileID: 8406426653310770471, guid: cce151c47b18b144f9d4e1e75293d55a,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Weapon Dagger
     m_Object: {fileID: 744260173173092363, guid: e522b600951d27f469da7c1ae31b98c4,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Weapon Torch
     m_Object: {fileID: 6065614150375753046, guid: 891d69ecd9eef2443990987ef3d41cf4,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Weapon Axe
     m_Object: {fileID: 5133152901897007921, guid: 2474092732977c143b9039667e5a99a3,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Weapon Shield
     m_Object: {fileID: 4177950289320297944, guid: cc3070d9cc0cb094197bc1168c21339d,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Score Coin
     m_Object: {fileID: 7554210138942769373, guid: af24cefca03bf6a45bf74206d7c56831,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Score MoneyBag
     m_Object: {fileID: 4846370628155702032, guid: 8304161e2946df34d9eb85adb28c9ac4,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Key
     m_Object: {fileID: 1334296600702675361, guid: 528e2f6c61daaf64996eb38c4f306ae6,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Panties
     m_Object: {fileID: 2736763081430082683, guid: 3c1345ece1c479245aaead896c9afb9c,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Necklace
     m_Object: {fileID: 2366799735145429725, guid: 65c0b901da56f064da3d831d00c7b552,
       type: 3}
+    spawnType: 0
     m_Amount: 10
   - m_InspectorName: Pickup Shoe
     m_Object: {fileID: 4164037153909676507, guid: 914220422e08e874fb853e9ecd66d4e9,
       type: 3}
+    spawnType: 0
     m_Amount: 15
   - m_InspectorName: Pickup Ring
     m_Object: {fileID: 2588649071170121560, guid: 2b9d7978fdfff334b933da84c24a7490,
       type: 3}
+    spawnType: 0
     m_Amount: 15
   - m_InspectorName: Pickup Dress
     m_Object: {fileID: 4727437404408066059, guid: 0122f6c59b545b941a98144dd7b23678,
       type: 3}
+    spawnType: 0
     m_Amount: 15
   - m_InspectorName: Pickup Doll
     m_Object: {fileID: 5436545965663165822, guid: cac7f362d1fa240448831daee7072887,
       type: 3}
+    spawnType: 0
     m_Amount: 15
   - m_InspectorName: Pickup Crown
     m_Object: {fileID: 7238522412813916588, guid: 85c60762f33757842ada3e11f500d3cd,
       type: 3}
+    spawnType: 0
     m_Amount: 15
   - m_InspectorName: ScorePopup
     m_Object: {fileID: 2813823955592628715, guid: 7b788a974daf238428a02d16310fb2a3,
       type: 3}
+    spawnType: 0
+    m_Amount: 15
+  - m_InspectorName: StoppedAxe
+    m_Object: {fileID: 4275565186979509950, guid: df4be29f3f191c94ca69f56af79c38fe,
+      type: 3}
+    spawnType: 0
+    m_Amount: 15
+  - m_InspectorName: TorchExplosion
+    m_Object: {fileID: 1705749093212046485, guid: 334e227730d1b8c49a0783cb97761f2d,
+      type: 3}
+    spawnType: 0
     m_Amount: 15

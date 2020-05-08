@@ -10,17 +10,22 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
     [SerializeField] private float m_KnockbackPower = 1f;
     [SerializeField] private bool m_DecayAfterTime = false;
     [SerializeField] private bool m_DestroyedOnCollision = true;
+    [SerializeField] private int m_NumberOfHits = 2;
     [SerializeField] private float m_DecayTime = 3f;
     [SerializeField] private LayerMask m_LayerMask = new LayerMask();
+    [SerializeField] private LayerMask m_ObjectToLeaveLayerMask = new LayerMask();
     [SerializeField] private bool m_LeaveObjectBehind = false;
+    [SerializeField] private bool m_ShouldObjectUseRotation = false;
     [SerializeField] private GameObject m_ObjectToLeaveBehind = null;
     private bool flipXObjectToLeaveBehind = false;
 
     private float m_StoredDecayTime = 0f;
+    private int m_NumberOfHitsRemaining = 0;
 
     void Awake()
     {
 
+        m_NumberOfHitsRemaining = m_NumberOfHits;
         m_Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
         m_StoredDecayTime = m_DecayTime;
 
@@ -50,6 +55,15 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
             }
         }
 
+        if (m_NumberOfHitsRemaining <= 0 && !m_DestroyedOnCollision)
+        {
+            KillEntity();
+            if (gameObject.GetComponent<CombProjectile>() != null)
+            {
+                gameObject.GetComponent<CombProjectile>().StopAudioSource();
+            }
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -64,18 +78,28 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
 
             if (m_DestroyedOnCollision)
             {
-                if (m_LeaveObjectBehind && collision.gameObject.layer == 0)
+
+                if (m_LeaveObjectBehind && ((1 << collision.gameObject.layer) & m_ObjectToLeaveLayerMask) != 0)
                 {
                     GameObject temp = System_Spawn.instance.GetObjectFromPool(m_ObjectToLeaveBehind);
                     temp.transform.position = transform.position;
-                    //temp.transform.rotation = transform.rotation;
-                    if (flipXObjectToLeaveBehind)
-                        temp.gameObject.GetComponent<SpriteRenderer>().flipX = true;
-                    else
-                        temp.gameObject.GetComponent<SpriteRenderer>().flipX = false;
+                    if (m_ShouldObjectUseRotation)
+                        temp.transform.rotation = transform.rotation;
+                    if (temp.gameObject.GetComponent<SpriteRenderer>())
+                    {
+                        if (flipXObjectToLeaveBehind)
+                            temp.gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                        else
+                            temp.gameObject.GetComponent<SpriteRenderer>().flipX = false;
+                    }
                 }
                 KillEntity();
             }
+            else if (m_NumberOfHitsRemaining > 0)
+            {
+                m_NumberOfHitsRemaining--;
+            }
+
         }
 
     }
@@ -85,6 +109,7 @@ public class Projectile : MonoBehaviour, ISpawn, IDamageable
     {
         m_Rigidbody.velocity = Vector3.zero;
         m_DecayTime = m_StoredDecayTime;
+        m_NumberOfHitsRemaining = m_NumberOfHits;
     }
 
     public void OnDeSpawn()
