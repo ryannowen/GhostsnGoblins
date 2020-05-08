@@ -16,6 +16,10 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
     private float RNGtimer;
     private float PlayerX;
     private float PlayerY;
+    private float PlayerX2;
+    private float PlayerY2;
+    private float Distance;
+    private float Distance2;
     private float EnemyX;
     private float EnemyY;
     private float JumpTimer;
@@ -65,8 +69,10 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (FindPlayer)
         {
-            PlayerX = Player.transform.position.x;
-            PlayerY = Player.transform.position.y;
+            PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
+            PlayerY = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.y;
+            PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
+            PlayerY2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.y;
             EnemyX = Enemy.transform.position.x;
             EnemyY = Enemy.transform.position.y;
             FindPlayer = false;
@@ -74,9 +80,20 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
 
         if (!Angered)
         {
-            if (PlayerX + 10 > EnemyX && PlayerX - 10 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+            if (Distance < Distance2)
             {
-                Angered = true;
+                if (PlayerX + 10 > EnemyX && PlayerX - 10 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+                {
+                    Angered = true;
+                }
+            }
+
+            if (Distance2 < Distance)
+            {
+                if (PlayerX + 10 > EnemyX && PlayerX - 10 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+                {
+                    Angered = true;
+                }
             }
         }
 
@@ -114,38 +131,78 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
         {
             if (Jump)
             {
-                if (PlayerX < EnemyX)
+                if (Distance < Distance2)
                 {
-                    transform.localRotation = Quaternion.Euler(0, 0, 0);
-                    if (Time.time < JumpTimer - 0.8f)
+                    if (PlayerX < EnemyX)
                     {
-                        //EnemyY += speed * 2;
-                        //EnemyX -= speed;
-                        Vector3 moveDirection = GetDesiredMove();
-                        moveDirection.Normalize();
-                        moveDirection.y = rb.velocity.y;
-                        moveDirection.x *= speed;
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        if (Time.time < JumpTimer - 0.8f)
+                        {
+                            //EnemyY += speed * 2;
+                            //EnemyX -= speed;
+                            Vector3 moveDirection = GetDesiredMove();
+                            moveDirection.Normalize();
+                            moveDirection.y = rb.velocity.y;
+                            moveDirection.x *= speed;
 
-                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
-                        rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, 14), 1f);
+                            rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                            rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, 14), 1f);
+                        }
+                    }
+                    else if (PlayerX > EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        if (Time.time < JumpTimer - 0.8f)
+                        {
+                            //EnemyY += speed * 2;
+                            //EnemyX += speed;
+                            Vector3 moveDirection = GetDesiredMove();
+                            moveDirection.Normalize();
+                            moveDirection.y = rb.velocity.y;
+                            moveDirection.x *= speed;
+
+                            rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                            rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, 14), 1f);
+                        }
                     }
                 }
-                else if (PlayerX > EnemyX)
-                {
-                    transform.localRotation = Quaternion.Euler(0, 180, 0);
-                    if (Time.time < JumpTimer - 0.8f)
-                    {
-                        //EnemyY += speed * 2;
-                        //EnemyX += speed;
-                        Vector3 moveDirection = GetDesiredMove();
-                        moveDirection.Normalize();
-                        moveDirection.y = rb.velocity.y;
-                        moveDirection.x *= speed;
 
-                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
-                        rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, 14), 1f);
+                if (Distance2 < Distance)
+                {
+                    if (PlayerX2 < EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        if (Time.time < JumpTimer - 0.8f)
+                        {
+                            //EnemyY += speed * 2;
+                            //EnemyX -= speed;
+                            Vector3 moveDirection = GetDesiredMove();
+                            moveDirection.Normalize();
+                            moveDirection.y = rb.velocity.y;
+                            moveDirection.x *= speed;
+
+                            rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                            rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, 14), 1f);
+                        }
+                    }
+                    else if (PlayerX2 > EnemyX)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        if (Time.time < JumpTimer - 0.8f)
+                        {
+                            //EnemyY += speed * 2;
+                            //EnemyX += speed;
+                            Vector3 moveDirection = GetDesiredMove();
+                            moveDirection.Normalize();
+                            moveDirection.y = rb.velocity.y;
+                            moveDirection.x *= speed;
+
+                            rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                            rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, 14), 1f);
+                        }
                     }
                 }
+
                 if (Time.time > JumpTimer)
                 {
                     Jump = false;
@@ -154,33 +211,71 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
 
             if (Shoot)
             {
-                if (PlayerX < EnemyX)
-                    fireProj.Fire(transform.position, Vector3.left, transform.rotation);
-                else
-                    fireProj.Fire(transform.position, Vector3.right, transform.rotation);
+                if (Distance < Distance2)
+                {
+                    if (PlayerX < EnemyX)
+                        fireProj.Fire(transform.position, Vector3.left, transform.rotation);
+                    else
+                        fireProj.Fire(transform.position, Vector3.right, transform.rotation);
+                }
+
+                if (Distance2 < Distance)
+                {
+                    if (PlayerX2 < EnemyX)
+                        fireProj.Fire(transform.position, Vector3.left, transform.rotation);
+                    else
+                        fireProj.Fire(transform.position, Vector3.right, transform.rotation);
+                }
+
                 Shoot = false;
             }
 
             if (Dash)
             {
-                if (PlayerX < EnemyX)
+                if (Distance < Distance2)
                 {
-                    Vector3 moveDirection = GetDesiredMove();
-                    moveDirection.Normalize();
-                    moveDirection.y = rb.velocity.y;
-                    moveDirection.x *= speed;
+                    if (PlayerX < EnemyX)
+                    {
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
 
-                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                    }
+
+                    else if (PlayerX > EnemyX)
+                    {
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
+
+                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                    }
                 }
 
-                else if (PlayerX > EnemyX)
+                if (Distance2 < Distance)
                 {
-                    Vector3 moveDirection = GetDesiredMove();
-                    moveDirection.Normalize();
-                    moveDirection.y = rb.velocity.y;
-                    moveDirection.x *= speed;
+                    if (PlayerX2 < EnemyX)
+                    {
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
 
-                    rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                    }
+
+                    else if (PlayerX2 > EnemyX)
+                    {
+                        Vector3 moveDirection = GetDesiredMove();
+                        moveDirection.Normalize();
+                        moveDirection.y = rb.velocity.y;
+                        moveDirection.x *= speed;
+
+                        rb.velocity = Vector3.Lerp(rb.velocity, moveDirection, 1f);
+                    }
                 }
 
                 if (DashTime < Time.time)
