@@ -172,7 +172,6 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
 
         if (Shoot)
         {
-           
             Vector3 directionToFire = Player.transform.position - transform.position;
             directionToFire.Normalize();
             fireProj.Fire(transform.position, directionToFire, transform.rotation);

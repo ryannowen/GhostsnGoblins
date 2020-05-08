@@ -154,7 +154,10 @@ public class UnicornAI : MonoBehaviour, IDamageable, ISpawn
 
             if (Shoot)
             {
-                fireProj.Fire(transform.position, Vector3.left, transform.rotation);
+                if (PlayerX < EnemyX)
+                    fireProj.Fire(transform.position, Vector3.left, transform.rotation);
+                else
+                    fireProj.Fire(transform.position, Vector3.right, transform.rotation);
                 Shoot = false;
             }
 
