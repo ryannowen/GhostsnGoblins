@@ -222,7 +222,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
     {
         Alive = false;
         m_SpawnPickup.CreatePickup();
-        Singleton_Game.m_instance.AddScore(2000, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
+        Singleton_Game.m_instance.AddScore(10000, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
     }
 
     void OnTriggerEnter2D(Collider2D col)
