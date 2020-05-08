@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -2215872771440502241}
   - component: {fileID: 1753528968091497423}
   - component: {fileID: 5991247036509434453}
+  - component: {fileID: 5235343203869071490}
   m_Layer: 16
   m_Name: RedArremer
   m_TagString: Untagged
@@ -96,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Alive: 1
+  Bullet: {fileID: 2288533703519710632, guid: 77620011d7e14634aabfb85386de7996, type: 3}
 --- !u!61 &-2215872771440502241
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -209,3 +211,18 @@ MonoBehaviour:
   - name: Crown
     type: 17
     dropChance: 20
+--- !u!114 &5235343203869071490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694580479443325814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9c358fea7a2f5449dc66124f091a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ProjectileSpeed: 5
+  doesDecay: 1
+  decayTime: 3

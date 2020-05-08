@@ -112,6 +112,8 @@ public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
                 }
             }
 
+            
+
             if (Time.time > Origin)
             {
                 EnemyXOrigin = EnemyX;
@@ -123,7 +125,7 @@ public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
                 wait += 0.5f;
                 CheckIfStill = true;
             }
-
+            
 
             //Will move the Zombie to the left if the player is on the left.
             if (MoveLeft)
@@ -225,7 +227,7 @@ public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
         HP -= amount;
         Singleton_Sound.m_instance.PlayAudioClipOneShot("DamageInflictedSound", 0.2f);
     }
-
+  
     public void KillEntity()
     {
 
@@ -235,7 +237,6 @@ public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
         if (Random.Range(0,2) == 0)
             m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(200, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
-
     }
 
     void OnTriggerEnter2D(Collider2D col)
