@@ -1482,6 +1482,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Astaroth
       objectReference: {fileID: 0}
+    - target: {fileID: 5052678448373410042, guid: 522847d06f83a1e4c96da3fad66e9421,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5052678448373410037, guid: 522847d06f83a1e4c96da3fad66e9421,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1855,7 +1860,7 @@ PrefabInstance:
     - target: {fileID: 9031925705788515724, guid: 3fe0431668ebba546ad04d3cddddb4c1,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9031925705788515729, guid: 3fe0431668ebba546ad04d3cddddb4c1,
         type: 3}
@@ -1911,6 +1916,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031925705788515726, guid: 3fe0431668ebba546ad04d3cddddb4c1,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fe0431668ebba546ad04d3cddddb4c1, type: 3}

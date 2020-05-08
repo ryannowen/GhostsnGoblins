@@ -192,6 +192,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (PlayerX - 8 < EnemyX)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
                     EnemyX -= speed * 4;
                 }
                 else
@@ -213,7 +214,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (PlayerX + 8 > EnemyX)
                 {
-                    transform.localRotation = Quaternion.Euler(0, 180, 0);
+                    transform.localRotation = Quaternion.Euler(0, 0, 0); 
                     EnemyX += speed * 4;
                 }
                 else
@@ -221,8 +222,7 @@ public class RedArremerAI : MonoBehaviour, IDamageable, ISpawn
                     AntiSwoopRight = false;
                 }
                 if (PlayerY + 4 > EnemyY)
-                {
-                    transform.localRotation = Quaternion.Euler(0, 0, 0);
+                { 
                     EnemyY += speed * 2;
                 }
                 else

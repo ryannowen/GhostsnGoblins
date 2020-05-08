@@ -131,6 +131,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (PlayerX - 6 < EnemyX)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
                     EnemyX -= speed * 3;
                 }
                 else
@@ -152,6 +153,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
             {
                 if (PlayerX + 6 > EnemyX)
                 {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
                     EnemyX += speed * 3;
                 }
                 else
