@@ -24,6 +24,10 @@ public class SkeletonAI : MonoBehaviour, IDamageable, ISpawn
     private float JumpForce = 7;
     private float PlayerX;
     private float PlayerY;
+    private float PlayerX2;
+    private float PlayerY2;
+    private float Distance;
+    private float Distance2;
     private float EnemyX;
     private float EnemyY;
     private float Deathtimer;
@@ -73,11 +77,17 @@ public class SkeletonAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (!Angered)
         {
-            PlayerX = Player.gameObject.transform.position.x;
-            PlayerY = Player.gameObject.transform.position.y;
+            PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
+            PlayerY = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.y;
+            PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
+            PlayerY2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.y;
             EnemyX = Enemy.gameObject.transform.position.x;
             EnemyY = Enemy.gameObject.transform.position.y;
             if (PlayerX + 8 > EnemyX && PlayerX - 8 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+            {
+                Angered = true;
+            }
+            if (PlayerX2 + 8 > EnemyX && PlayerX2 - 8 < EnemyX && PlayerY2 + 3 > EnemyY && PlayerY2 - 3 < EnemyY)
             {
                 Angered = true;
             }
@@ -91,8 +101,16 @@ public class SkeletonAI : MonoBehaviour, IDamageable, ISpawn
             FindPlayer = true;
             if (FindPlayer)
             {
-                PlayerX = Player.gameObject.transform.position.x;
+                PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
+                PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
+                Distance = EnemyX - PlayerX;
+                Distance2 = EnemyX - PlayerX2;
                 EnemyX = Enemy.gameObject.transform.position.x;
+
+                if (Distance < 0)
+                    Distance = -Distance;
+                if (Distance2 < 0)
+                    Distance2 = -Distance2;
 
                 //A Onetime run to tell the zombie it needs to go a certain direction from where the player is when the zombie is angered.
                 if (OneTime)
@@ -103,15 +121,33 @@ public class SkeletonAI : MonoBehaviour, IDamageable, ISpawn
                     wait = Time.time + 0.25f;
 
                     //Finds if the player is on the left.
-                    if (PlayerX < EnemyX)
+                    if (Distance < Distance2)
                     {
-                        MoveLeft = true;
+                        //Finds if the player is on the left.
+                        if (PlayerX < EnemyX)
+                        {
+                            MoveLeft = true;
+                        }
+
+                        //Finds if the player is on the right.
+                        if (PlayerX > EnemyX)
+                        {
+                            MoveRight = true;
+                        }
                     }
 
-                    //Finds if the player is on the right.
-                    if (PlayerX > EnemyX)
+                    if (Distance2 < Distance)
                     {
-                        MoveRight = true;
+                        if (PlayerX2 < EnemyX)
+                        {
+                            MoveLeft = true;
+                        }
+
+                        //Finds if the player is on the right.
+                        if (PlayerX2 > EnemyX)
+                        {
+                            MoveRight = true;
+                        }
                     }
 
                     OneTime = false;
