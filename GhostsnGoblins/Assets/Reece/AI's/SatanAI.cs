@@ -13,7 +13,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
     private GameObject Enemy;
     private GameObject Player;
     private int RNG;
-    private int HP = 10;
+    private int HP = 4;
     private float speed = 0.1f;
     private float RNGtimer = 3;
     private float PlayerX;
@@ -341,7 +341,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
 
     public void OnSpawn()
     {
-        HP = 10;
+        HP = 4;
         Alive = true;
         Angered = false;
         FindPlayer = true;
