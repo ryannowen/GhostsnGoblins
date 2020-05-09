@@ -135,6 +135,15 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
 
         if (Angered && Alive)
         {
+
+            if (OneTime)
+            {
+                Origin = Time.time;
+                wait = Time.time + 0.25f;
+                OneTime = false;
+                DelayTimer = Time.time + 1f;
+            }
+
             if (Time.time > DelayTimer)
             {
                 FindPlayer = true;
@@ -169,12 +178,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
                 }
             }
 
-            if (OneTime)
-            {
-                Origin = Time.time;
-                wait = Time.time + 0.25f;
-                OneTime = false;
-            }
+
 
             if (EnemyX == EnemyXOrigin && CheckIfStill)
             {

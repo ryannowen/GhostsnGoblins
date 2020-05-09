@@ -66,28 +66,30 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
         if (HP <= 0)
             KillEntity();
 
+        if (PlayerX + 15 > EnemyX && PlayerX - 15 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+        {
+            Angered = true;
+            if (Onetime)
+            {
+                timer = Time.time;
+                Onetime = false;
+            }
+        }
+
+        if (PlayerX2 + 15 > EnemyX && PlayerX2 > EnemyX - 15 && PlayerY2 + 3 > EnemyY && PlayerY2 - 3 < EnemyY)
+        {
+            Angered = true;
+            if (Onetime)
+            {
+                timer = Time.time;
+                Onetime = false;
+            }
+        }
+
         if (Alive)
         {
             Enemy.SetActive(true);
-            if (PlayerX + 15 > EnemyX && PlayerX - 15 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
-            {
-                Angered = true;
-                if (Onetime)
-                {
-                    timer = Time.time;
-                    Onetime = false;
-                }
-            }
-
-            if (PlayerX2 + 10 > EnemyX && PlayerX2 > EnemyX - 10 && PlayerY2 + 3 > EnemyY && PlayerY2 - 3 < EnemyY)
-            {
-                Angered = true;
-                if (Onetime)
-                {
-                    timer = Time.time;
-                    Onetime = false;
-                }
-            }
+           
 
             if (Angered)
             {
