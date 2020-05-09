@@ -68,7 +68,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
         if (Alive)
         {
             Enemy.SetActive(true);
-            if (PlayerX + 10 > EnemyX && PlayerX - 10 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+            if (PlayerX + 15 > EnemyX && PlayerX - 15 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
                 if (Onetime)
