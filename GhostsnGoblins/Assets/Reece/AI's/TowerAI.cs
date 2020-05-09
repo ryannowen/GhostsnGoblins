@@ -52,6 +52,7 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (!Angered)
         {
+            Shoot = false;
             PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
             PlayerY = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.y;
             PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
