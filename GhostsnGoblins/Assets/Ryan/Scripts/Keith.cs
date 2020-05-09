@@ -35,10 +35,12 @@ public class Keith : MonoBehaviour, IDamageable
 
     [SerializeField] private GameObject m_beamGameObject = null;
 
+    private GameObject m_focusedPlayer = null;
     private GameObject m_chosenIdle = null;
 
     private WaitForSeconds m_delayRandomiseStateSeconds;
     private WaitForSeconds m_delayStopBeamSeconds;
+
 
     private bool m_changingState = false;
     private bool m_playerOnRight = false;
@@ -58,7 +60,7 @@ public class Keith : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        if(m_player.transform.position.x - transform.position.x > 0)
+        if(m_focusedPlayer.transform.position.x - transform.position.x > 0)
             m_playerOnRight = true;
         else
             m_playerOnRight = false;
@@ -82,12 +84,12 @@ public class Keith : MonoBehaviour, IDamageable
                 break;
 
             case EState.eRoll:
-                transform.position = Vector3.MoveTowards(transform.position, m_player.transform.position, Time.deltaTime * m_rollSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, m_focusedPlayer.transform.position, Time.deltaTime * m_rollSpeed);
 
                 break;
 
             case EState.eBeam:
-                transform.position = Vector3.MoveTowards(transform.position, m_player.transform.position, Time.deltaTime * m_beamSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, m_focusedPlayer.transform.position, Time.deltaTime * m_beamSpeed);
 
                 break;
 
@@ -252,6 +254,12 @@ public class Keith : MonoBehaviour, IDamageable
 
             default:
             case EState.eIdle:
+                if (Vector2.Distance(transform.position, Singleton_Game.m_instance.GetPlayer(0).transform.position) < Vector2.Distance(transform.position, Singleton_Game.m_instance.GetPlayer(1).transform.position))
+                    m_focusedPlayer = Singleton_Game.m_instance.GetPlayer(0);
+                else
+                    m_focusedPlayer = Singleton_Game.m_instance.GetPlayer(1);
+
+              
                 m_animator.SetBool("isRolling", false);
                 m_animator.SetBool("isIdle", true);
                 m_animator.SetBool("isBeaming", false);
@@ -266,7 +274,7 @@ public class Keith : MonoBehaviour, IDamageable
         {
             m_beamGameObject.SetActive(true);
 
-            if (m_player.transform.position.x - transform.position.x > 0)
+            if (m_focusedPlayer.transform.position.x - transform.position.x > 0)
             {
                 m_beamGameObject.transform.localPosition = new Vector2(2.2f, 1f) ;
             }

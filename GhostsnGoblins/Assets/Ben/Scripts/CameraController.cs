@@ -28,8 +28,8 @@ public class CameraController : MonoBehaviour
     }
 
 
-    [SerializeField] private SLevelBackgrounds[] levelBackgrounds;
-    [SerializeField] private SParalaxBackgrounds[] paralaxBackgrounds;
+    [SerializeField] private SLevelBackgrounds[] levelBackgrounds = null;
+    [SerializeField] private SParalaxBackgrounds[] paralaxBackgrounds = null;
 
     // Start is called before the first frame update
     void Start()
