@@ -25,7 +25,6 @@ public class Keith : MonoBehaviour, IDamageable
     [SerializeField] private string m_defeatedSound = "LevelFinished";
     [SerializeField] private string m_damagedSound = "DamageInflictedSound";
     private Animator m_animator;
-    private GameObject m_player;
 
     [SerializeField] private int m_health = 10;
     [SerializeField] private int m_normalSpeed = 10;
@@ -48,7 +47,6 @@ public class Keith : MonoBehaviour, IDamageable
     void Start()
     {
         m_animator = GetComponent<Animator>();
-        m_player = Singleton_Game.m_instance.GetPlayer(0);
 
         m_delayRandomiseStateSeconds = new WaitForSeconds(m_switchStateDelay);
         m_delayStopBeamSeconds = new WaitForSeconds(m_beamStopAttackDelay);
@@ -60,7 +58,10 @@ public class Keith : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        if(m_focusedPlayer.transform.position.x - transform.position.x > 0)
+        if (null == m_focusedPlayer)
+            return;
+
+        if (m_focusedPlayer.transform.position.x - transform.position.x > 0)
             m_playerOnRight = true;
         else
             m_playerOnRight = false;
@@ -270,31 +271,35 @@ public class Keith : MonoBehaviour, IDamageable
 
     private IEnumerator BeamAttack()
     {
-        if (null != m_beamGameObject)
-        {
-            m_beamGameObject.SetActive(true);
-
-            if (m_focusedPlayer.transform.position.x - transform.position.x > 0)
-            {
-                m_beamGameObject.transform.localPosition = new Vector2(2.2f, 1f) ;
-            }
-            else
-            {
-                m_beamGameObject.transform.localPosition = new Vector2(-2.2f, 1);
-            }
-
-        }
-
-        yield return m_delayStopBeamSeconds;
-
-        if (m_state == EState.eBeam)
+        if (null != m_focusedPlayer)
         {
 
             if (null != m_beamGameObject)
-                m_beamGameObject.SetActive(false);
+            {
+                m_beamGameObject.SetActive(true);
 
-            m_state = EState.eIdle;
-            ActivateNewState();
+                if (m_focusedPlayer.transform.position.x - transform.position.x > 0)
+                {
+                    m_beamGameObject.transform.localPosition = new Vector2(2.2f, 1f);
+                }
+                else
+                {
+                    m_beamGameObject.transform.localPosition = new Vector2(-2.2f, 1);
+                }
+
+            }
+
+            yield return m_delayStopBeamSeconds;
+
+            if (m_state == EState.eBeam)
+            {
+
+                if (null != m_beamGameObject)
+                    m_beamGameObject.SetActive(false);
+
+                m_state = EState.eIdle;
+                ActivateNewState();
+            }
         }
     }
 

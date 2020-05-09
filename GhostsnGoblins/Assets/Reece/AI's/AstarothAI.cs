@@ -98,6 +98,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
 
         if (!Angered)
         {
+            Shoot = false;
             if (PlayerX + 10 > EnemyX && PlayerX - 10 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
             {
                 Angered = true;
