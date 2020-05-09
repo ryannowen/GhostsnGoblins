@@ -117,12 +117,12 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
             
             if (!Shoot && !DashForward && !DashBackwards && Angered)
             {
-                if (Distance > 10)
+                if (Distance > 8)
                 {
                     Shoot = true;
                     DelayTimer += 1;
                 }
-                else if (Distance <= 10)
+                else if (Distance <= 8)
                 {
                     Dash = true;
                     DashTime = Time.time + 0.2f;
@@ -138,7 +138,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
                 DashForward = true;
                 Dash = false;
             }
-            else if (Distance > 5 && Distance <= 10)
+            else if (Distance > 7 && Distance <= 8)
             {
                 DashBackwards = true;
                 Dash = false;
@@ -327,7 +327,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
 
     public void OnSpawn()
     {
-        HP = 4;
+        HP = 5;
         Alive = true;
         Angered = false;
         FindPlayer = true;
