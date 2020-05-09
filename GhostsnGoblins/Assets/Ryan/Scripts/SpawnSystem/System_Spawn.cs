@@ -210,6 +210,14 @@ public class System_Spawn : MonoBehaviour
         }
     }
 
+    public void ResetRegisteredISpawners()
+    {
+        foreach (ISpawner spawner in m_levelSpawners)
+        {
+            spawner.ResetSpawner();
+        }
+    }
+
     public void ActivateRegisteredSpawners()
     {
         foreach(ISpawner spawner in m_levelSpawners)
