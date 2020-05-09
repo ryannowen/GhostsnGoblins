@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ProjectileSpeed: 13
+  doesDecay: 1
+  decayTime: 3
 --- !u!114 &2476796797623981100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,9 +68,12 @@ MonoBehaviour:
   - name: 
     shootingDirectionAddition: {x: 0, y: 0, z: 0}
     shootingDirectionModification: {x: 1, y: 1, z: 1}
+    rotation: {x: 0, y: 0, z: 0}
   - name: 
     shootingDirectionAddition: {x: 0, y: 0.25, z: 0}
     shootingDirectionModification: {x: 1, y: 1, z: 1}
+    rotation: {x: 0, y: 0, z: 19}
   - name: 
     shootingDirectionAddition: {x: 0, y: 0.5, z: 0}
     shootingDirectionModification: {x: 1, y: 1, z: 1}
+    rotation: {x: 0, y: 0, z: 37}

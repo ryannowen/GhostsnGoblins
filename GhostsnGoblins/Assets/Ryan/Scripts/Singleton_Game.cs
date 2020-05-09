@@ -53,8 +53,6 @@ public class Singleton_Game : MonoBehaviour
     [SerializeField] private bool m_isNewHighScore = false;
     [SerializeField] private GameObject m_scorePopupPrefab = null;
     [Space]
-    [SerializeField] layerColObject[] layerColAry = null;
-    [Space]
     [SerializeField] private Vector2 m_lastCheckPoint = new Vector2(0, 0);
     [SerializeField] private bool m_showLevelDoorItem = false;
     [SerializeField] private string m_previousLevelName = "Level1_heaven";
@@ -79,8 +77,6 @@ public class Singleton_Game : MonoBehaviour
         else
             Destroy(gameObject);
 
-        setLayerCollisions();
-
         mainAudioSource = this.GetComponent<AudioSource>();
 
         if (mainAudioSource == null) {
@@ -98,15 +94,20 @@ public class Singleton_Game : MonoBehaviour
         LoadGame();
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
-    {
-        switch(scene.buildIndex) {
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        switch (scene.buildIndex) {
             case 0:
+                mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("MainMenu");
+                mainAudioSource.loop = true;
+                mainAudioSource.volume = 1;
+                mainAudioSource.Play();
+                break;
+
             case 1:
-            case 7:
-                mainAudioSource.clip = null;
-                mainAudioSource.volume = 0;
-                mainAudioSource.Stop();
+                mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("GameOver");
+                mainAudioSource.loop = false;
+                mainAudioSource.volume = 0.5f;
+                mainAudioSource.Play();
                 break;
 
             case 2:
@@ -114,13 +115,24 @@ public class Singleton_Game : MonoBehaviour
             case 4:
             case 5:
             case 6:
+            case 7:
+            case 8:
                 mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("FullLevelBGM");
+                mainAudioSource.loop = true;
                 mainAudioSource.volume = 0.1f;
+                mainAudioSource.Play();
+                break;
+
+            case 9:
+                mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("Victory");
+                mainAudioSource.loop = false;
+                mainAudioSource.volume = 1;
                 mainAudioSource.Play();
                 break;
 
             default:
                 mainAudioSource.clip = null;
+                mainAudioSource.loop = true;
                 mainAudioSource.volume = 0;
                 mainAudioSource.Stop();
                 break;
@@ -189,14 +201,6 @@ public class Singleton_Game : MonoBehaviour
 
         SaveGame();
         ResetGame();
-    }
-
-    private void setLayerCollisions()
-    {
-        foreach (layerColObject lObj in layerColAry)
-        {
-            Physics2D.IgnoreLayerCollision(lObj.obj1, lObj.obj2, lObj.ignoreLayerCollision);
-        }
     }
 
     public int GetScore()
@@ -324,6 +328,7 @@ public class Singleton_Game : MonoBehaviour
 
             if (!player1.activeSelf && !player2.activeSelf)
             {
+                System_Spawn.instance.ResetRegisteredIReactors();
                 System_Spawn.instance.DisableAllSpawnType(System_Spawn.ESpawnType.eEnemy);
                 System_Spawn.instance.ActivateRegisteredSpawners();
             }

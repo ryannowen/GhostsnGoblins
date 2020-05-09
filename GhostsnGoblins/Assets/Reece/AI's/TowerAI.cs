@@ -21,6 +21,7 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
     private float Distance2;
     private float EnemyX;
     private float EnemyY;
+    private float ClosestPlayer = 0;
     private bool Angered = false;
     private bool FindPlayer;
     private bool Onetime = true;
@@ -97,13 +98,18 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
                     if (Distance2 < 0)
                         Distance2 = -Distance2;
 
+                    if (Distance < Distance2)
+                        ClosestPlayer = 1;
+                    if (Distance2 < Distance)
+                        ClosestPlayer = 2;
+
                     EnemyX = Enemy.gameObject.transform.position.x;
 
                     FindPlayer = false;
                 }
                 if (Shoot)
                 {
-                    if (Distance < Distance2)
+                    if (ClosestPlayer == 1)
                     {
                         if (PlayerX < EnemyX)
                             fireProj.Fire(transform.position - new Vector3(0, ShootHeight - 0.5f, 0), Vector3.left, transform.rotation);
@@ -111,7 +117,7 @@ public class TowerAI : MonoBehaviour, IDamageable, ISpawn
                             fireProj.Fire(transform.position - new Vector3(0, ShootHeight - 0.5f, 0), Vector3.right, transform.rotation);
                         Shoot = false;
                     }
-                    if (Distance2 < Distance)
+                    if (ClosestPlayer == 2)
                     {
                         if (PlayerX2 < EnemyX)
                             fireProj.Fire(transform.position - new Vector3(0, ShootHeight - 0.5f, 0), Vector3.left, transform.rotation);

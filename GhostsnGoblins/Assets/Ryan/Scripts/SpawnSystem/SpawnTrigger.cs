@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnTrigger : MonoBehaviour
+public class SpawnTrigger : MonoBehaviour, ISpawnReactor
 {
     enum ETriggerType
     {
@@ -28,6 +28,8 @@ public class SpawnTrigger : MonoBehaviour
 
     private void Start()
     {
+        System_Spawn.instance.RegisterIReactor(gameObject);
+
         if (!m_canTrigger)
            StartCoroutine(TriggerDelay(m_activeDelaySeconds));
     }
@@ -100,5 +102,14 @@ public class SpawnTrigger : MonoBehaviour
         yield return argDelay;
         m_canTrigger = true;
     }
+
+    public void ReactorReset()
+    {
+        if (m_singleUse && !m_canTrigger)
+            m_canTrigger = true;
+    }
+    public void ReactorOnBeginSpawning() { }
+    public void ReactorOnSpawn(GameObject argSpawnedObject) { }
+    public void ReactorOnEndSpawning() { }
 
 }

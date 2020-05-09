@@ -170,6 +170,63 @@ MonoBehaviour:
   - obj1: 2
     obj2: 15
     ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 1
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 2
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 3
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 4
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 5
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 6
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 7
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 8
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 9
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 10
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 11
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 12
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 13
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 15
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 16
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 17
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 18
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 19
+    ignoreLayerCollision: 1
+  - obj1: 14
+    obj2: 20
+    ignoreLayerCollision: 1
   m_lastCheckPoint: {x: 0, y: 0}
   m_showLevelDoorItem: 0
   m_previousLevelName: Level1_heaven
@@ -210,11 +267,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 339c5c97c31392944a361c5608307e59, type: 3}
   - {fileID: 8300000, guid: 2b084ec4f4186764396fc0dfefac3cbe, type: 3}
   - {fileID: 8300000, guid: 131e7dfdad7704c4c9d149701b0dd6ad, type: 3}
+  - {fileID: 8300000, guid: a47c3afdbd41dec4f8cd8a449ee77dcd, type: 3}
   - {fileID: 8300000, guid: 557613c77b058c445a5e6b62c39fbc43, type: 3}
   - {fileID: 8300000, guid: 8bed72eef77ab4e49be864304e5b9eee, type: 3}
   - {fileID: 8300000, guid: 82e6bf7bd0441944e9ed73bb7f0e312a, type: 3}
   - {fileID: 8300000, guid: a9ab30ab863f97d4baabe2b01474ecf9, type: 3}
   - {fileID: 8300000, guid: 5a7840f8829c9c54da4ae1cd50f3a10d, type: 3}
+  - {fileID: 8300000, guid: 9ba90470a9ee8e14087e2cee41486c70, type: 3}
 --- !u!114 &6170136227004477515
 MonoBehaviour:
   m_ObjectHideFlags: 0

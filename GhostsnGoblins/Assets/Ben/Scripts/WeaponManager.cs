@@ -18,6 +18,7 @@ public class WeaponManager : MonoBehaviour, IWeapon
         public string name = "";
         public Vector3 shootingDirectionAddition = Vector3.zero;
         public Vector3 shootingDirectionModification = Vector3.one;
+        public Vector3 rotation = Vector3.zero;
 
     }
 
@@ -64,9 +65,14 @@ public class WeaponManager : MonoBehaviour, IWeapon
 
                 Vector3 shotDirection = new Vector3((argsDirection.x + p.shootingDirectionAddition.x) * p.shootingDirectionModification.x, (argsDirection.y + p.shootingDirectionAddition.y) * p.shootingDirectionModification.y, (argsDirection.z + p.shootingDirectionAddition.z) * p.shootingDirectionModification.z);
                 //Vector3 shotDirection = Vector3.one;
+                Quaternion rotation;
+                if (shotDirection.x > 0)
+                    rotation = Quaternion.Euler(p.rotation.x, p.rotation.y, p.rotation.z);
+                else
+                    rotation = Quaternion.Euler(p.rotation.x, p.rotation.y, -p.rotation.z);
                 shotDirection.Normalize();
 
-                m_FireProjectile.Fire(argsStartPosition, shotDirection, transform.rotation);
+                m_FireProjectile.Fire(argsStartPosition, shotDirection, rotation);
 
             }
 

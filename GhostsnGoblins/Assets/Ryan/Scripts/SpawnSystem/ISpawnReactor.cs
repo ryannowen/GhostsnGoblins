@@ -11,6 +11,7 @@ public enum ESpawnReactorType
 
 public interface ISpawnReactor
 {
+    void ReactorReset();
     void ReactorOnBeginSpawning();
     void ReactorOnSpawn(GameObject argSpawnedObject);
     void ReactorOnEndSpawning();

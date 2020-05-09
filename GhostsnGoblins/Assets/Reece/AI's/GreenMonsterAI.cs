@@ -22,6 +22,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
     private float Distance2;
     private float EnemyX;
     private float EnemyY;
+    private float ClosestPlayer = 0;
     private bool Angered = false;
     private bool FindPlayer;
     public bool Shoot;
@@ -111,18 +112,23 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
                     if (Distance2 < 0)
                         Distance2 = -Distance2;
 
+                    if (Distance < Distance2)
+                        ClosestPlayer = 1;
+                    if (Distance2 < Distance)
+                        ClosestPlayer = 2;
+
                     FindPlayer = false;
                 }
                 if (Shoot)
                 {
-                    if (Distance < Distance2)
+                    if (ClosestPlayer == 1)
                     {
-                        Vector3 directionToFire = Player.transform.position - transform.position;
+                        Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position - transform.position;
                         directionToFire.Normalize();
                         fireProj.Fire(transform.position, directionToFire, transform.rotation);
                         Shoot = false;
                     }
-                    if (Distance2 < Distance)
+                    if (ClosestPlayer == 2)
                     {
                         Vector3 directionToFire = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position - transform.position;
                         directionToFire.Normalize();

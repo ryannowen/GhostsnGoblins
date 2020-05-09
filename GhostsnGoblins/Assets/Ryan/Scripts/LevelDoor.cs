@@ -23,7 +23,7 @@ public class LevelDoor : MonoBehaviour
         {
             PlayerController playerC = collision.GetComponent<PlayerController>();
 
-            if (m_requireKey ? playerC.HasKey() : true || m_doorOpen)
+            if (m_requireKey ? playerC.HasKey() : false || m_doorOpen)
             {
                 Singleton_Sound.m_instance.PlayAudioClip("LevelFinished");
                 System_Spawn.instance.DisableAllSpawns();
