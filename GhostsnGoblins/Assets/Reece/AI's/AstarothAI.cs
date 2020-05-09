@@ -116,25 +116,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
             }
         }
 
-        if (Time.time > DelayTimer)
-        {
-            FindPlayer = true;
-            
-            if (!Shoot && !DashForward && !DashBackwards && Angered)
-            {
-                if (Distance > 8)
-                {
-                    Shoot = true;
-                    DelayTimer += 1.5f;
-                }
-                else if (Distance <= 8)
-                {
-                    Dash = true;
-                    DashTime = Time.time + 0.2f;
-                    DelayTimer += 1;
-                }
-            }
-        }
+        
 
         if (Time.time > Origin)
         {
@@ -148,24 +130,44 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
             CheckIfStill = true;
         }
 
-        if (Dash == true)
-        {
-            if (Distance <= 5)
-            {
-                DashForward = true;
-                Dash = false;
-            }
-            else if (Distance > 7 && Distance <= 8)
-            {
-                DashBackwards = true;
-                Dash = false;
-            }
-        }
-
         GetDesiredMove();
 
         if (Angered && Alive)
         {
+            if (Time.time > DelayTimer)
+            {
+                FindPlayer = true;
+
+                if (!Shoot && !DashForward && !DashBackwards && Angered)
+                {
+                    if (Distance > 8)
+                    {
+                        Shoot = true;
+                        DelayTimer += 1.5f;
+                    }
+                    else if (Distance <= 8)
+                    {
+                        Dash = true;
+                        DashTime = Time.time + 0.2f;
+                        DelayTimer += 1;
+                    }
+                }
+            }
+
+            if (Dash == true)
+            {
+                if (Distance <= 5)
+                {
+                    DashForward = true;
+                    Dash = false;
+                }
+                else if (Distance > 7 && Distance <= 8)
+                {
+                    DashBackwards = true;
+                    Dash = false;
+                }
+            }
+
             if (OneTime)
             {
                 Origin = Time.time;
@@ -365,6 +367,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
     {
         HP = 5;
         Alive = true;
+        OneTime = true;
         Angered = false;
         FindPlayer = true;
     }
