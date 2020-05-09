@@ -10,7 +10,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
     SpawnPickup m_SpawnPickup = null;
     private GameObject Enemy;
     private GameObject Player;
-    private int HP = 4;
+    private int HP = 5;
     private float speed = 5f;
     private float DelayTimer;
     private float PlayerX;
@@ -30,6 +30,11 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
     private bool Shoot;
     private bool Angered;
     private float InvicibleTimer;
+    private bool OneTime = true;
+    private float Origin;
+    private float EnemyXOrigin;
+    private float wait;
+    private bool CheckIfStill;
 
     private FireProjectile fireProj;
     Rigidbody2D rb;
@@ -120,7 +125,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
                 if (Distance > 8)
                 {
                     Shoot = true;
-                    DelayTimer += 1;
+                    DelayTimer += 1.5f;
                 }
                 else if (Distance <= 8)
                 {
@@ -129,6 +134,18 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
                     DelayTimer += 1;
                 }
             }
+        }
+
+        if (Time.time > Origin)
+        {
+            EnemyXOrigin = EnemyX;
+            Origin += 1f;
+        }
+
+        if (Time.time > wait)
+        {
+            wait += 1.5f;
+            CheckIfStill = true;
         }
 
         if (Dash == true)
@@ -149,6 +166,24 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
 
         if (Angered && Alive)
         {
+            if (OneTime)
+            {
+                Origin = Time.time;
+                wait = Time.time + 0.25f;
+                OneTime = false;
+            }
+
+            if (EnemyX == EnemyXOrigin && CheckIfStill)
+            {
+                Dash = false;
+                DashBackwards = false;
+                DashForward = false;
+                Shoot = true;
+                CheckIfStill = false;
+            }
+            else
+                CheckIfStill = false;
+
             if (Shoot)
             {
                 if (ClosestPlayer == 1)
@@ -299,6 +334,7 @@ public class AstarothAI : MonoBehaviour, IDamageable, ISpawn
             Angered = true;
             HP -= amount;
             Singleton_Sound.m_instance.PlayAudioClip("DamageInflictedSound", 0.4f);
+            DashForward = true;
         }
     }
 
