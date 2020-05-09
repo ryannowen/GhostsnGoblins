@@ -321,6 +321,7 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
         Alive = false;
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(3000, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
+        Singleton_Game.m_instance.AddGameStat(Singleton_Game.EGameStat.EKills, 1);
     }
 
     void OnTriggerEnter2D(Collider2D col)

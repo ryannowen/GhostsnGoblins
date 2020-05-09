@@ -266,13 +266,12 @@ public class ZombieAI : MonoBehaviour, IDamageable, ISpawn
   
     public void KillEntity()
     {
-
         Alive = false;
-        
         // gives a 50% chance to drop a pickup
         if (Random.Range(0,2) == 0)
             m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(200, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
+        Singleton_Game.m_instance.AddGameStat(Singleton_Game.EGameStat.EKills, 1);
     }
 
     void OnTriggerEnter2D(Collider2D col)
