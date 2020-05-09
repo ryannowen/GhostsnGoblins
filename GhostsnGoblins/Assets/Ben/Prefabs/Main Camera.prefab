@@ -276,12 +276,12 @@ MonoBehaviour:
     - {fileID: 21300000, guid: ff90c9678609a3a44be30a53c047ed92, type: 3}
     - {fileID: 21300000, guid: f8171fc367341aa4885e56cef5fab3b7, type: 3}
   - backgrounds:
-    - {fileID: 21300000, guid: c77faa18117849a438361a927cea0277, type: 3}
-    - {fileID: 21300000, guid: 2bb5543400120ab4ca13916edad9f58b, type: 3}
-    - {fileID: 21300000, guid: a4e9113116bd0e04e92f94fdbf66a17c, type: 3}
-    - {fileID: 21300000, guid: b6d8ff6ccd35e0a459bcff02b7e09be1, type: 3}
-    - {fileID: 21300000, guid: 56e3e261fb3958f429f3d8552c119d97, type: 3}
-    - {fileID: 21300000, guid: f8171fc367341aa4885e56cef5fab3b7, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 21300000, guid: 2b0feb67fd9bcda459d479989ac8908e, type: 3}
+    - {fileID: 21300000, guid: a43b820a11db5eb4e8423e4615edbf7e, type: 3}
+    - {fileID: 21300000, guid: ab0f7d0b9aff74640b2258e8426276ee, type: 3}
+    - {fileID: 21300000, guid: 2ccfb2f8d17e57f4f9a2c1ce314bae72, type: 3}
   - backgrounds:
     - {fileID: 0}
     - {fileID: 21300000, guid: 7aac52617616f2243ba62cdc4fb14e2d, type: 3}
