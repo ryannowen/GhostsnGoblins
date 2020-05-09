@@ -139,8 +139,8 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
                     if (PlayerX < EnemyX && PlayerY < EnemyY)
                     {
                         transform.localRotation = Quaternion.Euler(0, 0, 0);
-                        EnemyX -= DistanceX / 40;
-                        EnemyY -= DistanceY / 40;
+                        EnemyX -= DistanceX / 80;
+                        EnemyY -= DistanceY / 80;
                         if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
                         {
                             AntiSwoopLeft = true;
@@ -150,8 +150,8 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
                     if (PlayerX > EnemyX && PlayerY < EnemyY)
                     {
                         transform.localRotation = Quaternion.Euler(0, 180, 0);
-                        EnemyX -= DistanceX / 40;
-                        EnemyY -= DistanceY / 40;
+                        EnemyX -= DistanceX / 80;
+                        EnemyY -= DistanceY / 80;
                         if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
                         {
                             AntiSwoopRight = true;
@@ -165,8 +165,8 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
                     if (PlayerX2 < EnemyX && PlayerY2 < EnemyY)
                     {
                         transform.localRotation = Quaternion.Euler(0, 0, 0);
-                        EnemyX -= DistanceX / 40;
-                        EnemyY -= DistanceY / 40;
+                        EnemyX -= DistanceX / 60;
+                        EnemyY -= DistanceY / 60;
                         if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
                         {
                             AntiSwoopLeft = true;
@@ -176,8 +176,8 @@ public class SatanAI : MonoBehaviour, IDamageable, ISpawn
                     if (PlayerX2 > EnemyX && PlayerY2 < EnemyY)
                     {
                         transform.localRotation = Quaternion.Euler(0, 180, 0);
-                        EnemyX -= DistanceX / 40;
-                        EnemyY -= DistanceY / 40;
+                        EnemyX -= DistanceX / 60;
+                        EnemyY -= DistanceY / 60;
                         if (PlayerX + 0.3f > EnemyX && PlayerX - 0.3f < EnemyX)
                         {
                             AntiSwoopRight = true;
