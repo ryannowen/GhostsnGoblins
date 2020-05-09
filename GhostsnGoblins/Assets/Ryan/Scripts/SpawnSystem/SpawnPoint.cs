@@ -41,6 +41,11 @@ public class SpawnPoint : MonoBehaviour
         }
     }
 
+    public void ResetSpawnPoint()
+    {
+        m_spawnedObject = null;
+    }
+
     private IEnumerator spawnDelay()
     {
         yield return m_spawnWait;

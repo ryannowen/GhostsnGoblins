@@ -22,7 +22,7 @@ public class Spawner_Point : MonoBehaviour, ISpawner
     // Start is called before the first frame update
     void Start()
     {
-        if(m_registerSelf)
+        if (m_registerSelf)
             System_Spawn.instance.RegisterSpawner(gameObject);
 
         ActivateSpawner();
@@ -88,7 +88,7 @@ public class Spawner_Point : MonoBehaviour, ISpawner
                         int index = Random.Range(0, availableSpawnPoints.Count);
                         spawnPoint = availableSpawnPoints[index];
 
-                        if(null == spawnPoint)
+                        if (null == spawnPoint)
                         {
                             Debug.Log("Cannot use spawn point because none are specified at index=" + index);
                             availableSpawnPoints.RemoveAt(index);
@@ -107,7 +107,7 @@ public class Spawner_Point : MonoBehaviour, ISpawner
 
                         if (availableSpawnPoints.Count == 0)
                         {
-                            if(!m_disableAllSpawnPointsInUseLog)
+                            if (!m_disableAllSpawnPointsInUseLog)
                                 Debug.LogWarning("cannot spawn object because all spawn points are in use / cannot be used");
 
                             failedToSpawn = true;
@@ -146,7 +146,17 @@ public class Spawner_Point : MonoBehaviour, ISpawner
         }
 
         if (m_timedSpawner)
-            StartCoroutine(SpawnDelay());        
+            StartCoroutine(SpawnDelay());
+    }
+
+    public void ResetSpawner()
+    {
+        m_canSpawnObjects = false;
+
+        foreach (SpawnPoint spawnPoint in m_spawnPoints)
+        {
+            spawnPoint.ResetSpawnPoint();
+        }
     }
 
     private void ActivateSpawnReactors(ESpawnReactorType argReactorType, SpawnObject argSpawnObjectData, GameObject argSpawnedObject = null)

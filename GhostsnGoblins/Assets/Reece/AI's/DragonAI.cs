@@ -35,6 +35,10 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
     private float RNGTimer;
     private float InvicibleTimer;
     private bool OneTime = true;
+    private float Origin;
+    private float EnemyXOrigin;
+    private float wait;
+    private bool CheckIfStill;
 
     private Rigidbody2D rb;
     private FireProjectile fireProj;
@@ -102,6 +106,8 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
                 PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
                 PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
                 ShootTime = Time.time;
+                Origin = Time.time;
+                wait = Time.time + 0.25f;
 
                 Distance = EnemyX - PlayerX;
                 Distance2 = EnemyX - PlayerX2;
@@ -150,6 +156,18 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
                 Shoot = true;
             }
 
+            if (Time.time > Origin)
+            {
+                EnemyXOrigin = EnemyX;
+                Origin += 1f;
+            }
+
+            if (Time.time > wait)
+            {
+                wait += 1.5f;
+                CheckIfStill = true;
+            }
+
             if (RNG > 0)
             {
                 MoveTime = Time.time + 0.2f;
@@ -180,16 +198,10 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
 
             if (Shoot)
             {
-
                 Vector3 directionToFire = Player.transform.position - transform.position;
                 directionToFire.Normalize();
                 fireProj.Fire(transform.position, directionToFire, transform.rotation);
                 Shoot = false;
-               /* if (EnemyPos.x > PlayerPos.x)
-                    fireProj.Fire(transform.position, Vector3.left, transform.rotation);
-                else
-                    fireProj.Fire(transform.position, Vector3.right, transform.rotation);
-                Shoot = false;*/
             }
 
             //Will move the Zombie to the left if the player is on the left.
@@ -210,6 +222,15 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
                     MoveLeft = false;
                     MoveRight = true;
                 }
+
+                if (EnemyX == EnemyXOrigin && CheckIfStill)
+                {
+                    MoveLeft = false;
+                    MoveRight = true;
+                    CheckIfStill = false;
+                }
+                else
+                    CheckIfStill = false;
             }
 
             //Will move the Zombie to the right if the player is on the right
@@ -230,6 +251,15 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
                     MoveLeft = true;
                     MoveRight = false;
                 }
+
+                if (EnemyX == EnemyXOrigin && CheckIfStill)
+                {
+                    MoveLeft = true;
+                    MoveRight = false;
+                    CheckIfStill = false;
+                }
+                else
+                    CheckIfStill = false;
             }
 
             if (FlyUp)
@@ -276,6 +306,7 @@ public class DragonAI : MonoBehaviour, IDamageable, ISpawn
         Alive = false;
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(2000, EnemyPos);
+        Singleton_Game.m_instance.AddGameStat(Singleton_Game.EGameStat.EKills, 1);
     }
 
     void OnTriggerEnter2D(Collider2D col)

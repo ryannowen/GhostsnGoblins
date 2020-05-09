@@ -7,6 +7,8 @@ public class Spawner_Area : MonoBehaviour, ISpawner
 {
     [SerializeField] private bool m_spawnOnLoad = true;
     [SerializeField] private bool m_timedSpawner = false;
+    [SerializeField] private bool m_registerSelf = true;
+
     [SerializeField] private Vector2 m_spawnDelaySeconds = new Vector2(10.0f, 10.0f);
     [Space]
     [SerializeField] private SpawnObject[] m_objects = null;
@@ -19,7 +21,8 @@ public class Spawner_Area : MonoBehaviour, ISpawner
     {
         m_boxCollider = GetComponent<BoxCollider2D>();
 
-        System_Spawn.instance.RegisterSpawner(gameObject);
+        if(m_registerSelf)
+            System_Spawn.instance.RegisterSpawner(gameObject);
 
         ActivateSpawner();
     }
@@ -79,6 +82,11 @@ public class Spawner_Area : MonoBehaviour, ISpawner
 
         if (m_timedSpawner)
             StartCoroutine(SpawnDelay());
+    }
+
+    public void ResetSpawner()
+    {
+
     }
 
     private void ActivateSpawnReactors(ESpawnReactorType argReactorType, SpawnObject argSpawnObjectData, GameObject argSpawnedObject = null)

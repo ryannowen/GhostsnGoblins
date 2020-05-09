@@ -54,6 +54,7 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
     {
         if (!Angered)
         {
+            Shoot = false;
             PlayerX = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.x;
             PlayerY = Singleton_Game.m_instance.GetPlayer(0).gameObject.transform.position.y;
             PlayerX2 = Singleton_Game.m_instance.GetPlayer(1).gameObject.transform.position.x;
@@ -65,28 +66,30 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
         if (HP <= 0)
             KillEntity();
 
+        if (PlayerX + 15 > EnemyX && PlayerX - 15 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
+        {
+            Angered = true;
+            if (Onetime)
+            {
+                timer = Time.time;
+                Onetime = false;
+            }
+        }
+
+        if (PlayerX2 + 15 > EnemyX && PlayerX2 > EnemyX - 15 && PlayerY2 + 3 > EnemyY && PlayerY2 - 3 < EnemyY)
+        {
+            Angered = true;
+            if (Onetime)
+            {
+                timer = Time.time;
+                Onetime = false;
+            }
+        }
+
         if (Alive)
         {
             Enemy.SetActive(true);
-            if (PlayerX + 15 > EnemyX && PlayerX - 15 < EnemyX && PlayerY + 3 > EnemyY && PlayerY - 3 < EnemyY)
-            {
-                Angered = true;
-                if (Onetime)
-                {
-                    timer = Time.time;
-                    Onetime = false;
-                }
-            }
-
-            if (PlayerX2 + 10 > EnemyX && PlayerX2 > EnemyX - 10 && PlayerY2 + 3 > EnemyY && PlayerY2 - 3 < EnemyY)
-            {
-                Angered = true;
-                if (Onetime)
-                {
-                    timer = Time.time;
-                    Onetime = false;
-                }
-            }
+           
 
             if (Angered)
             {
@@ -152,11 +155,10 @@ public class GreenMonsterAI : MonoBehaviour, IDamageable, ISpawn
 
     public void KillEntity()
     {
-
         Alive = false;
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(100, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
-
+        Singleton_Game.m_instance.AddGameStat(Singleton_Game.EGameStat.EKills, 1);
     }
 
     void OnTriggerEnter2D(Collider2D col)

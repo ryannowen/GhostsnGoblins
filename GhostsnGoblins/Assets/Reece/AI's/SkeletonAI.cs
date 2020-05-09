@@ -265,11 +265,10 @@ public class SkeletonAI : MonoBehaviour, IDamageable, ISpawn
 
 public void KillEntity()
 {
-
     Alive = false;
         m_SpawnPickup.CreatePickup();
         Singleton_Game.m_instance.AddScore(100, new Vector2(Enemy.gameObject.transform.position.x, Enemy.gameObject.transform.position.y));
-
+        Singleton_Game.m_instance.AddGameStat(Singleton_Game.EGameStat.EKills, 1);
     }
 
 void ChangeSprite()
