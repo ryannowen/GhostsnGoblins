@@ -127,7 +127,7 @@ public class Spawner_Point : MonoBehaviour, ISpawner
                         break;
                     }
 
-                    ActivateSpawnReactors(ESpawnReactorType.eOnEndSpawning, spawnObject, spawnedObject);
+                    ActivateSpawnReactors(ESpawnReactorType.eOnSpawn, spawnObject, spawnedObject);
                     if (m_reuseActiveObjects ? true : !spawnedObject.activeSelf)
                     {
                         spawnedObject.SetActive(true);
