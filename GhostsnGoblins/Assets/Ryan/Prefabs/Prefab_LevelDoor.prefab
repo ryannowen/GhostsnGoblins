@@ -152,8 +152,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_customSceneName: 
-  m_requiredEquippedItem: {fileID: 0}
+  m_requiredEquippedItemName: 
   m_requiredItemRenderer: {fileID: 5451590710200995289}
+  m_requireKey: 0
+  m_doorOpen: 0
 --- !u!212 &470945464736996814
 SpriteRenderer:
   m_ObjectHideFlags: 0

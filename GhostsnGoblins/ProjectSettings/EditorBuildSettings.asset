@@ -38,4 +38,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Ryan/Scenes/victory.unity
     guid: 95be1e0faa9694b41822cbc3aa7dd16e
+  - enabled: 1
+    path: Assets/Ryan/Scenes/Keith.unity
+    guid: 84d4d020bc645e446be5a22a68e3b751
   m_configObjects: {}
