@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2571076853a2c414da3728a99c8ec1bc, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.026395798, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -99,10 +99,17 @@ MonoBehaviour:
   m_KnockbackPower: 30
   m_DecayAfterTime: 1
   m_DestroyedOnCollision: 1
+  m_NumberOfHits: 2
   m_DecayTime: 3
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 25398
+  m_ObjectToLeaveLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LeaveObjectBehind: 0
+  m_ShouldObjectUseRotation: 0
+  m_ObjectToLeaveBehind: {fileID: 0}
 --- !u!50 &2288533703519710628
 Rigidbody2D:
   serializedVersion: 4
