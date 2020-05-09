@@ -130,6 +130,13 @@ public class Singleton_Game : MonoBehaviour
                 mainAudioSource.Play();
                 break;
 
+            case 10:
+                mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("BossBattle");
+                mainAudioSource.loop = true;
+                mainAudioSource.volume = 1;
+                mainAudioSource.Play();
+                break;
+
             default:
                 mainAudioSource.clip = null;
                 mainAudioSource.loop = true;

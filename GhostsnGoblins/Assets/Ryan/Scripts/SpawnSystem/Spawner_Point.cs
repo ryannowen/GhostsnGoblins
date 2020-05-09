@@ -28,6 +28,11 @@ public class Spawner_Point : MonoBehaviour, ISpawner
         ActivateSpawner();
     }
 
+    public void ForceSpawn()
+    {
+        BeginSpawning();
+    }
+
     public void ActivateSpawner()
     {
         if (m_spawnOnLoad)

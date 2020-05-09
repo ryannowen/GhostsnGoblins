@@ -53,32 +53,34 @@ public class System_Spawn : MonoBehaviour
 
     public void CreatePool(GameObject argGameObject, int argAmount, ESpawnType argSpawnType = ESpawnType.eUndefined)
     {
+        GameObject typeParent = null;
         GameObject parent;
         Queue<GameObject> queue;
 
+        for (int i = 0; i < m_spawnTypeNames.Length; i++)
+        {
+            if (m_spawnTypeNames[i].type == argSpawnType)
+            {
+                typeParent = objectPoolContainer.transform.Find(m_spawnTypeNames[i].name).gameObject;
+                break;
+            }
+        }
+
         if (m_objectPool.ContainsKey(argGameObject.name))
         {
-            parent = objectPoolContainer.transform.Find("P_" + argGameObject.name).gameObject;
+            parent = typeParent.transform.Find("P_" + argGameObject.name).gameObject;
             queue = m_objectPool[argGameObject.name];
         }
         else
         {
             Queue<GameObject> newQueue = new Queue<GameObject>();
-            GameObject typeParent = null;
 
             m_objectPool.Add(argGameObject.name, newQueue);
             queue = newQueue;
 
             parent = new GameObject("P_" + argGameObject.name);
 
-            for (int i = 0; i < m_spawnTypeNames.Length; i++)
-            {
-                if (m_spawnTypeNames[i].type == argSpawnType)
-                {
-                    typeParent = objectPoolContainer.transform.Find(m_spawnTypeNames[i].name).gameObject;
-                    break;
-                }
-            }
+
 
             parent.transform.parent = typeParent.transform;
         }
@@ -197,6 +199,7 @@ public class System_Spawn : MonoBehaviour
     public void ClearSpawners()
     {
         m_levelSpawners.Clear();
+        m_levelReactors.Clear();
     }
 
     public void ResetRegisteredIReactors()
