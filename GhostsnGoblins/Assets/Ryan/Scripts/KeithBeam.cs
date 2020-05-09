@@ -8,6 +8,9 @@ public class KeithBeam : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("Projectile"))
+            return;
+
         if (18 != collision.gameObject.layer) // player layer
             return;
 
