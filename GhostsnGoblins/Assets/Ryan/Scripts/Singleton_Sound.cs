@@ -64,10 +64,11 @@ public class Singleton_Sound : MonoBehaviour
         audioSource.PlayOneShot(GetAudioClip(argAudioName), argVolume);
     }
 
-    public AudioSource PlayAudioClip(string argAudioName, float argVolume = 1.0f)
+    public AudioSource PlayAudioClip(string argAudioName, float argVolume = 1.0f, bool argLoopSound = false)
     {
         AudioSource audioSource = System_Spawn.instance.GetObjectFromPool(audioSourcePrefab, true).GetComponent<AudioSource>();
         audioSource.clip = GetAudioClip(argAudioName);
+        audioSource.loop = argLoopSound;
         audioSource.volume = argVolume;
         audioSource.Play();
 

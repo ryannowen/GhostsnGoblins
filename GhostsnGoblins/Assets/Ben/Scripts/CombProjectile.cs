@@ -84,4 +84,14 @@ public class CombProjectile : MonoBehaviour
         m_AudioSource.Stop();
     }
 
+    private void OnDisable()
+    {
+        if (null == m_AudioSource)
+            return;
+
+        m_AudioSource.Stop();
+        m_AudioSource.loop = false;
+        m_AudioSource = null;
+    }
+
 }

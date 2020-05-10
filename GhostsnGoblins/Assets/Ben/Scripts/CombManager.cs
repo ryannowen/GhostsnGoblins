@@ -49,8 +49,7 @@ public class CombManager : MonoBehaviour, IWeapon
                 anim["Spin"].speed = -1;
         }
 
-        AudioSource a = Singleton_Sound.m_instance.PlayAudioClip("Comberang", 0.2f);
-        a.loop = true;
+        AudioSource a = Singleton_Sound.m_instance.PlayAudioClip("Comberang", 0.2f, true);
 
         tempProjectile.transform.position = argsStartPosition;
         tempProjectile.transform.rotation = transform.rotation;
