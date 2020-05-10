@@ -7,7 +7,8 @@ public class Spawner_Exterminate : MonoBehaviour, ISpawnReactor
     [SerializeField] private GameObject m_itemToSpawn = null;
     [SerializeField] private GameObject m_spawnLocation = null;
     [SerializeField] private string m_soundToPlayWhenItemSpawns = "";
-
+    [SerializeField] private bool m_fadeMusic = true;
+    
     private List<GameObject> m_exterminateTargets = new List<GameObject>();
 
     [SerializeField] private GameObject m_levelDoor = null;
@@ -35,8 +36,11 @@ public class Spawner_Exterminate : MonoBehaviour, ISpawnReactor
 
             if(exterminatedEnemies)
             {
-                Singleton_Sound.m_instance.fadeOutSound(0.005f);
-                Singleton_Sound.m_instance.PlayAudioClipOneShot(m_soundToPlayWhenItemSpawns, 0.4f);
+                if(m_fadeMusic)
+                    Singleton_Sound.m_instance.fadeOutSound(0.15f);
+
+                if(m_soundToPlayWhenItemSpawns.Length != 0)
+                    Singleton_Sound.m_instance.PlayAudioClipOneShot(m_soundToPlayWhenItemSpawns, 0.4f);
 
                 if (null != m_itemToSpawn)
                 {
