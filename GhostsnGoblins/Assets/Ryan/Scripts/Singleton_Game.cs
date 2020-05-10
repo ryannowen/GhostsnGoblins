@@ -95,6 +95,8 @@ public class Singleton_Game : MonoBehaviour
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        mainAudioSource.volume = 0;
+
         switch (scene.buildIndex) {
             case 0:
                 mainAudioSource.clip = Singleton_Sound.m_instance.GetAudioClip("MainMenu");
