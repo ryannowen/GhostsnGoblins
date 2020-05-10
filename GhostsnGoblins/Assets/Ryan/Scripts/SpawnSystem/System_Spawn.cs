@@ -222,7 +222,7 @@ public class System_Spawn : MonoBehaviour
     {
         foreach(ISpawner spawner in m_levelSpawners)
         {
-            spawner.ActivateSpawner();
+            spawner.ForceSpawn();
         }
     }
 }
