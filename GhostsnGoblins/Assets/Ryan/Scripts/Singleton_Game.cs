@@ -159,6 +159,8 @@ public class Singleton_Game : MonoBehaviour
             {
                 m_livesScore = 0;
                 AddPlayerLives(1);
+                AddGameStat(EGameStat.eLivesGained, 1);
+
                 Singleton_Sound.m_instance.PlayAudioClip("1Up", 0.8f);
             }
         }
@@ -363,6 +365,8 @@ public class Singleton_Game : MonoBehaviour
             GetPlayer(1).SetActive(true);
 
         m_previousLevelName = SceneManager.GetActiveScene().name;
+        AddGameStat(EGameStat.eDeaths, 1);
+
         SceneManager.LoadScene("death");
     }
 

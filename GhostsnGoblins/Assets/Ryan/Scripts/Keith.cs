@@ -255,7 +255,11 @@ public class Keith : MonoBehaviour, IDamageable
 
             default:
             case EState.eIdle:
-                if (Vector2.Distance(transform.position, Singleton_Game.m_instance.GetPlayer(0).transform.position) < Vector2.Distance(transform.position, Singleton_Game.m_instance.GetPlayer(1).transform.position))
+                if(Singleton_Game.m_instance.GetPlayer(0).activeSelf && !Singleton_Game.m_instance.GetPlayer(1).activeSelf)
+                    m_focusedPlayer = Singleton_Game.m_instance.GetPlayer(0);
+                else if (!Singleton_Game.m_instance.GetPlayer(0).activeSelf && Singleton_Game.m_instance.GetPlayer(1).activeSelf)
+                    m_focusedPlayer = Singleton_Game.m_instance.GetPlayer(1);
+                else if(Vector2.Distance(transform.position, Singleton_Game.m_instance.GetPlayer(0).transform.position) < Vector2.Distance(transform.position, Singleton_Game.m_instance.GetPlayer(1).transform.position))
                     m_focusedPlayer = Singleton_Game.m_instance.GetPlayer(0);
                 else
                     m_focusedPlayer = Singleton_Game.m_instance.GetPlayer(1);

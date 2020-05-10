@@ -123,6 +123,8 @@ public class Pickup : MonoBehaviour, ISpawn
                 if (!playerC.Interacting())
                     return;
 
+            Singleton_Game.m_instance.AddGameStat(Singleton_Game.EGameStat.EPickups, 1);
+
             switch (m_PickupType)
             {
 
